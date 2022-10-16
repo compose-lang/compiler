@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "target": "ES6",
+    "module": "ES2020",
+    "moduleResolution": "Node",
+    "declaration": true,
+    "declarationDir": "dist",
+    "sourceMap": true
+  }
+}
