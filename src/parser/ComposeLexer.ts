@@ -1,6 +1,5 @@
 // Generated from ComposeLexer.g4 by ANTLR 4.11.1
-// noinspection ES6UnusedImports,JSUnusedGlobalSymbols
-
+// noinspection ES6UnusedImports,JSUnusedGlobalSymbols,JSUnusedLocalSymbols
 import {
 	ATN,
 	ATNDeserializer,
@@ -8,10 +7,10 @@ import {
 	DecisionState, DFA,
 	Lexer,
 	LexerATNSimulator,
+	RuleContext,
 	PredictionContextCache,
 	Token
 } from "antlr4";
-
 export default class ComposeLexer extends Lexer {
 	public static readonly I32 = 1;
 	public static readonly I64 = 2;
@@ -93,46 +92,62 @@ export default class ComposeLexer extends Lexer {
 	public static readonly EOF = Token.EOF;
 
 	public static readonly channelNames: string[] = [ "DEFAULT_TOKEN_CHANNEL", "HIDDEN" ];
-	public static readonly literalNames = [ null, "'i32'", "'i64'", "'u32'", 
-                                         "'u64'", "'f32'", "'f64'", "'v128'", 
-                                         "'string'", "'boolean'", "'void'", 
-                                         "'attr'", "'abstract'", "'class'", 
-                                         "'extends'", "'fn'", "'if'", "'else'", 
-                                         "'for'", "'do'", "'while'", "'break'", 
-                                         "'try'", "'when'", "'('", "')'", 
-                                         "'['", "']'", "'{'", "'}'", "'=>'", 
-                                         "'>'", "'<'", "'<='", "'>='", "'=='", 
-                                         "'!='", "'!'", "'&&'", "'||'", 
-                                         "'?'", "':'", "','", "'.'", "'@'", 
-                                         "'++'", "'--'", "'+'", "'-'", "'*'", 
-                                         "'/'", "'\\'", "'^'", "'%'", "'&'", 
-                                         "'|'", "'='", "'+='", "'-='", "'*='", 
-                                         "'/='", "'&='", "'|='", "'^='", 
-                                         "'%='", "'<<='", "'>>='", "'>>>='", 
-                                         null, null, null, null, null, "'null'" ];
-	public static readonly symbolicNames = [ null, "I32", "I64", "U32", "U64", 
-                                          "F32", "F64", "V128", "STRING", 
-                                          "BOOLEAN", "VOID", "ATTR", "ABSTRACT", 
-                                          "CLASS", "EXTENDS", "FN", "IF", 
-                                          "ELSE", "FOR", "DO", "WHILE", 
-                                          "BREAK", "TRY", "WHEN", "LPAR", 
-                                          "RPAR", "LBRAK", "RBRAK", "LCURL", 
-                                          "RCURL", "ARROW", "GT", "LT", 
-                                          "LTE", "GTE", "EQUAL", "NOTEQUAL", 
-                                          "BANG", "AND", "OR", "QUESTION", 
-                                          "COLON", "COMMA", "DOT", "AT", 
-                                          "INC", "DEC", "PLUS", "MINUS", 
-                                          "STAR", "SLASH", "BSLASH", "CARET", 
-                                          "PERCENT", "AMP", "PIPE", "ASSIGN", 
-                                          "ADD_ASSIGN", "SUB_ASSIGN", "MUL_ASSIGN", 
-                                          "DIV_ASSIGN", "AND_ASSIGN", "OR_ASSIGN", 
-                                          "XOR_ASSIGN", "MOD_ASSIGN", "LSHIFT_ASSIGN", 
-                                          "RSHIFT_ASSIGN", "URSHIFT_ASSIGN", 
-                                          "INTEGER_LITERAL", "DECIMAL_LITERAL", 
-                                          "BOOLEAN_LITERAL", "CHAR_LITERAL", 
-                                          "STRING_LITERAL", "NULL_LITERAL", 
-                                          "IDENTIFIER", "WS", "COMMENT", 
-                                          "LINE_COMMENT" ];
+	public static readonly literalNames: string[] = [ null, "'i32'", "'i64'", 
+                                                   "'u32'", "'u64'", "'f32'", 
+                                                   "'f64'", "'v128'", "'string'", 
+                                                   "'boolean'", "'void'", 
+                                                   "'attr'", "'abstract'", 
+                                                   "'class'", "'extends'", 
+                                                   "'fn'", "'if'", "'else'", 
+                                                   "'for'", "'do'", "'while'", 
+                                                   "'break'", "'try'", "'when'", 
+                                                   "'('", "')'", "'['", 
+                                                   "']'", "'{'", "'}'", 
+                                                   "'=>'", "'>'", "'<'", 
+                                                   "'<='", "'>='", "'=='", 
+                                                   "'!='", "'!'", "'&&'", 
+                                                   "'||'", "'?'", "':'", 
+                                                   "','", "'.'", "'@'", 
+                                                   "'++'", "'--'", "'+'", 
+                                                   "'-'", "'*'", "'/'", 
+                                                   "'\\'", "'^'", "'%'", 
+                                                   "'&'", "'|'", "'='", 
+                                                   "'+='", "'-='", "'*='", 
+                                                   "'/='", "'&='", "'|='", 
+                                                   "'^='", "'%='", "'<<='", 
+                                                   "'>>='", "'>>>='", null, 
+                                                   null, null, null, null, 
+                                                   "'null'" ];
+	public static readonly symbolicNames: string[] = [ null, "I32", "I64", 
+                                                    "U32", "U64", "F32", 
+                                                    "F64", "V128", "STRING", 
+                                                    "BOOLEAN", "VOID", "ATTR", 
+                                                    "ABSTRACT", "CLASS", 
+                                                    "EXTENDS", "FN", "IF", 
+                                                    "ELSE", "FOR", "DO", 
+                                                    "WHILE", "BREAK", "TRY", 
+                                                    "WHEN", "LPAR", "RPAR", 
+                                                    "LBRAK", "RBRAK", "LCURL", 
+                                                    "RCURL", "ARROW", "GT", 
+                                                    "LT", "LTE", "GTE", 
+                                                    "EQUAL", "NOTEQUAL", 
+                                                    "BANG", "AND", "OR", 
+                                                    "QUESTION", "COLON", 
+                                                    "COMMA", "DOT", "AT", 
+                                                    "INC", "DEC", "PLUS", 
+                                                    "MINUS", "STAR", "SLASH", 
+                                                    "BSLASH", "CARET", "PERCENT", 
+                                                    "AMP", "PIPE", "ASSIGN", 
+                                                    "ADD_ASSIGN", "SUB_ASSIGN", 
+                                                    "MUL_ASSIGN", "DIV_ASSIGN", 
+                                                    "AND_ASSIGN", "OR_ASSIGN", 
+                                                    "XOR_ASSIGN", "MOD_ASSIGN", 
+                                                    "LSHIFT_ASSIGN", "RSHIFT_ASSIGN", 
+                                                    "URSHIFT_ASSIGN", "INTEGER_LITERAL", 
+                                                    "DECIMAL_LITERAL", "BOOLEAN_LITERAL", 
+                                                    "CHAR_LITERAL", "STRING_LITERAL", 
+                                                    "NULL_LITERAL", "IDENTIFIER", 
+                                                    "WS", "COMMENT", "LINE_COMMENT" ];
 	public static readonly modeNames: string[] = [ "DEFAULT_MODE", ];
 
 	public static readonly ruleNames: string[] = [

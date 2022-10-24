@@ -7,5 +7,9 @@
     "declaration": true,
     "declarationDir": "dist",
     "sourceMap": true
+  },
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
   }
 }
