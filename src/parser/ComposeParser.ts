@@ -1074,7 +1074,7 @@ export default class ComposeParser extends BaseParser {
 			this.state = 180;
 			this.match(ComposeParser.CLASS);
 			this.state = 181;
-			this.class_type();
+			localctx._id = this.class_type();
 			this.state = 193;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
@@ -2534,6 +2534,7 @@ export class ParameterContext extends ParserRuleContext {
 
 
 export class Class_declarationContext extends ParserRuleContext {
+	public _id!: Class_typeContext;
 	constructor(parser?: ComposeParser, parent?: ParserRuleContext, invokingState?: number) {
 		super(parent, invokingState);
     	this.parser = parser;
@@ -2541,17 +2542,17 @@ export class Class_declarationContext extends ParserRuleContext {
 	public CLASS(): TerminalNode {
 		return this.getToken(ComposeParser.CLASS, 0);
 	}
-	public class_type_list(): Class_typeContext[] {
-		return this.getTypedRuleContexts(Class_typeContext) as Class_typeContext[];
-	}
-	public class_type(i: number): Class_typeContext {
-		return this.getTypedRuleContext(Class_typeContext, i) as Class_typeContext;
-	}
 	public LCURL(): TerminalNode {
 		return this.getToken(ComposeParser.LCURL, 0);
 	}
 	public RCURL(): TerminalNode {
 		return this.getToken(ComposeParser.RCURL, 0);
+	}
+	public class_type_list(): Class_typeContext[] {
+		return this.getTypedRuleContexts(Class_typeContext) as Class_typeContext[];
+	}
+	public class_type(i: number): Class_typeContext {
+		return this.getTypedRuleContext(Class_typeContext, i) as Class_typeContext;
 	}
 	public ABSTRACT(): TerminalNode {
 		return this.getToken(ComposeParser.ABSTRACT, 0);

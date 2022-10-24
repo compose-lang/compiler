@@ -5,12 +5,24 @@ import {
     FileStream, ParserRuleContext, ParseTree, ParseTreeWalker, Token
 } from "antlr4";
 import {fileExists} from "../utils/FileUtils";
-import ComposeParser, {IdentifierContext} from "../parser/ComposeParser";
+import ComposeParser, {
+    Attribute_declarationContext, Attribute_typeContext, Class_declarationContext, Class_typeContext,
+    Data_typeContext, DeclarationContext,
+    IdentifierContext,
+    Native_typeContext,
+    String_typeContext, UnitContext
+} from "../parser/ComposeParser";
 import ComposeLexer from "../parser/ComposeLexer";
 import ComposeParserListener from "../parser/ComposeParserListener";
 import Identifier from "./Identifier";
 import Section from "./Section";
 import CodeSection from "./CodeSection";
+import StringType from "../type/StringType";
+import IDataType from "../type/IDataType";
+import AttributeDeclaration from "../declaration/AttributeDeclaration";
+import IDeclaration from "../declaration/IDeclaration";
+import ClassDeclaration from "../declaration/ClassDeclaration";
+import MethodDeclaration from "../declaration/MethodDeclaration";
 
 interface IndexedNode {
     __id?: number;
@@ -114,7 +126,7 @@ export default class Builder extends ComposeParserListener {
         const token = this.parser._input.get(idx);
         const text = token.text;
         // ignore trailing whitespace
-        if (text != null && text.replace(/(\n|\r|\t| )/g, "").length > 0) {
+        if (text != null && text.replace(/([\n\r\t ])/g, "").length > 0) {
             return token;
         } else {
             return null;
@@ -123,6 +135,54 @@ export default class Builder extends ComposeParserListener {
 
     exitIdentifier = (ctx: IdentifierContext) => {
         const id = new Identifier(ctx.getText());
-
+        this.setNodeValue(ctx, id);
     }
+
+    exitAttribute_type = (ctx: Attribute_typeContext) => {
+        this.setNodeValue(ctx, this.getNodeValue<Identifier>(ctx.IDENTIFIER()))
+    }
+
+    exitClass_type = (ctx: Class_typeContext) => {
+        this.setNodeValue(ctx, this.getNodeValue<Identifier>(ctx.IDENTIFIER()))
+    }
+
+    exitString_type = (ctx: String_typeContext) => {
+        this.setNodeValue(ctx, StringType.instance);
+    }
+
+    exitNative_type = (ctx: Native_typeContext) => {
+        this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
+    }
+
+    exitData_type = (ctx: Data_typeContext) => {
+        this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
+    }
+
+    exitAttribute_declaration = (ctx: Attribute_declarationContext) => {
+        const id = this.getNodeValue<Identifier>(ctx.identifier());
+        const type = this.getNodeValue<IDataType>(ctx.data_type());
+        this.setNodeValue(ctx, new AttributeDeclaration(id, type));
+    }
+
+    exitClass_declaration = (ctx: Class_declarationContext) => {
+        const id = this.getNodeValue<Identifier>(ctx._id);
+        const attributes = ctx.attribute_type_list()
+            .map(child => this.getNodeValue<Identifier>(child), this);
+        const parents = ctx.class_type_list()
+            .map(child => this.getNodeValue<Identifier>(child), this);
+        const methods = ctx.method_declaration_list()
+            .map(child => this.getNodeValue<MethodDeclaration>(child), this);
+        this.setNodeValue(ctx, new ClassDeclaration(id, attributes, parents, methods, ctx.ABSTRACT() != null));
+    }
+
+    exitDeclaration = (ctx: DeclarationContext) => {
+        this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
+    }
+
+    exitUnit = (ctx: UnitContext) => {
+        const declarations = ctx.declaration_list()
+            .map(child => this.getNodeValue<IDeclaration>(child), this);
+        this.setNodeValue(ctx, new CompilationUnit(declarations));
+    }
+
 }

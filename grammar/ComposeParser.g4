@@ -117,7 +117,7 @@ parameter:
     ;
 
 class_declaration:
-    ABSTRACT? CLASS class_type ( LPAR attribute_type (COMMA attribute_type)* RPAR )?
+    ABSTRACT? CLASS id = class_type ( LPAR attribute_type (COMMA attribute_type)* RPAR )?
             ( EXTENDS class_type (COMMA class_type)* )?
         LCURL
             (method_declaration (COMMA method_declaration)*)?

@@ -1,5 +1,5 @@
-import ISection from "../builder/ISection";
+import ICodeSection from "../builder/ICodeSection";
 
-export default interface IDeclaration extends ISection {
+export default interface IDeclaration extends ICodeSection {
     name: string;
 }
