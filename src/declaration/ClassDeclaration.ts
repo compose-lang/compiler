@@ -3,18 +3,17 @@ import Identifier from "../builder/Identifier";
 import IdentifierList from "../builder/IdentifierList";
 import CodeSection from "../builder/CodeSection";
 import MethodList from "../builder/MethodList";
+import DeclarationBase from "./DeclarationBase";
 
-export default class ClassDeclaration extends CodeSection implements IDeclaration {
+export default class ClassDeclaration extends DeclarationBase implements IDeclaration {
 
-    id: Identifier;
     attributes: IdentifierList;
     parents: IdentifierList;
     methods: MethodList;
     abstract: boolean;
 
     constructor(id: Identifier, attributes: IdentifierList, parents: IdentifierList, methods: MethodList, abstract: boolean) {
-        super();
-        this.id = id;
+        super(id);
         this.attributes = attributes;
         this.parents = parents;
         this.methods = methods;

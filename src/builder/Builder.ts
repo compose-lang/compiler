@@ -6,11 +6,21 @@ import {
 } from "antlr4";
 import {fileExists} from "../utils/FileUtils";
 import ComposeParser, {
-    Attribute_declarationContext, Attribute_typeContext, Class_declarationContext, Class_typeContext,
-    Data_typeContext, DeclarationContext,
+    Abstract_method_declarationContext,
+    Attribute_declarationContext,
+    Attribute_typeContext, AttributeParameterContext,
+    Boolean_typeContext,
+    Class_declarationContext,
+    Class_typeContext,
+    Data_typeContext,
+    DeclarationContext,
     IdentifierContext,
+    Method_declarationContext,
+    Method_prototypeContext,
     Native_typeContext,
-    String_typeContext, UnitContext
+    String_typeContext,
+    TypeContext,
+    UnitContext
 } from "../parser/ComposeParser";
 import ComposeLexer from "../parser/ComposeLexer";
 import ComposeParserListener from "../parser/ComposeParserListener";
@@ -22,7 +32,15 @@ import IDataType from "../type/IDataType";
 import AttributeDeclaration from "../declaration/AttributeDeclaration";
 import IDeclaration from "../declaration/IDeclaration";
 import ClassDeclaration from "../declaration/ClassDeclaration";
-import MethodDeclaration from "../declaration/MethodDeclaration";
+import MethodDeclarationBase from "../declaration/MethodDeclarationBase";
+import AttributeType from "../type/AttributeType";
+import ClassType from "../type/ClassType";
+import IParameter from "../parameter/IParameter";
+import IType from "../type/IType";
+import MethodPrototype from "../declaration/MethodPrototype";
+import AbstractMethodDeclaration from "../declaration/AbstractMethodDeclaration";
+import BooleanType from "../type/BooleanType";
+import AttributeParameter from "../parameter/AttributeParameter";
 
 interface IndexedNode {
     __id?: number;
@@ -134,16 +152,19 @@ export default class Builder extends ComposeParserListener {
     }
 
     exitIdentifier = (ctx: IdentifierContext) => {
-        const id = new Identifier(ctx.getText());
-        this.setNodeValue(ctx, id);
+        this.setNodeValue(ctx, new Identifier(ctx.getText()));
     }
 
     exitAttribute_type = (ctx: Attribute_typeContext) => {
-        this.setNodeValue(ctx, this.getNodeValue<Identifier>(ctx.IDENTIFIER()))
+        this.setNodeValue(ctx, new Identifier(ctx.IDENTIFIER().getText()));
     }
 
     exitClass_type = (ctx: Class_typeContext) => {
-        this.setNodeValue(ctx, this.getNodeValue<Identifier>(ctx.IDENTIFIER()))
+        this.setNodeValue(ctx, new Identifier(ctx.IDENTIFIER().getText()));
+    }
+
+    exitBoolean_type = (ctx: Boolean_typeContext) => {
+        this.setNodeValue(ctx, BooleanType.instance);
     }
 
     exitString_type = (ctx: String_typeContext) => {
@@ -158,6 +179,10 @@ export default class Builder extends ComposeParserListener {
         this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
     }
 
+    exitType = (ctx: TypeContext) => {
+        this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
+    }
+
     exitAttribute_declaration = (ctx: Attribute_declarationContext) => {
         const id = this.getNodeValue<Identifier>(ctx.identifier());
         const type = this.getNodeValue<IDataType>(ctx.data_type());
@@ -169,10 +194,34 @@ export default class Builder extends ComposeParserListener {
         const attributes = ctx.attribute_type_list()
             .map(child => this.getNodeValue<Identifier>(child), this);
         const parents = ctx.class_type_list()
+            .slice(1) // skip id which is also a class_type
             .map(child => this.getNodeValue<Identifier>(child), this);
         const methods = ctx.method_declaration_list()
-            .map(child => this.getNodeValue<MethodDeclaration>(child), this);
+            .map(child => this.getNodeValue<MethodDeclarationBase>(child), this);
         this.setNodeValue(ctx, new ClassDeclaration(id, attributes, parents, methods, ctx.ABSTRACT() != null));
+    }
+
+    exitAttributeParameter = (ctx: AttributeParameterContext) => {
+        const id = this.getNodeValue<Identifier>(ctx.attribute_type());
+        this.setNodeValue(ctx, new AttributeParameter(new AttributeType(id)));
+    }
+
+    exitMethod_prototype = (ctx: Method_prototypeContext) => {
+        const id = this.getNodeValue<Identifier>(ctx.identifier());
+        const params = ctx.parameter_list()
+            .map(child => this.getNodeValue<IParameter>(child), this);
+        const returns = ctx.type__list()
+            .map(child => this.getNodeValue<IType>(child), this);
+        this.setNodeValue(ctx, new MethodPrototype(id, params, returns));
+    }
+
+    exitAbstract_method_declaration = (ctx: Abstract_method_declarationContext) => {
+        const proto = this.getNodeValue<MethodPrototype>(ctx.method_prototype());
+        this.setNodeValue(ctx, new AbstractMethodDeclaration(proto));
+    }
+
+    exitMethod_declaration = (ctx: Method_declarationContext) => {
+        this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
     }
 
     exitDeclaration = (ctx: DeclarationContext) => {

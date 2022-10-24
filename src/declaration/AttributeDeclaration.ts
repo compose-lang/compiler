@@ -1,20 +1,15 @@
 import IDeclaration from "./IDeclaration";
 import Identifier from "../builder/Identifier";
 import IDataType from "../type/IDataType";
-import CodeSection from "../builder/CodeSection";
+import DeclarationBase from "./DeclarationBase";
 
-export default class AttributeDeclaration extends CodeSection implements IDeclaration {
+export default class AttributeDeclaration extends DeclarationBase implements IDeclaration {
 
-    id: Identifier;
     type: IDataType;
 
     constructor(id: Identifier, type: IDataType) {
-        super();
-        this.id = id;
+        super(id);
         this.type = type;
     }
 
-    get name(): string {
-        return this.id.value;
-    }
 }

@@ -25,7 +25,9 @@ import { Void_typeContext } from "./ComposeParser";
 import { Class_typeContext } from "./ComposeParser";
 import { Method_typeContext } from "./ComposeParser";
 import { Attribute_typeContext } from "./ComposeParser";
-import { ParameterContext } from "./ComposeParser";
+import { AttributeParameterContext } from "./ComposeParser";
+import { TypedParameterContext } from "./ComposeParser";
+import { MethodParameterContext } from "./ComposeParser";
 import { Class_declarationContext } from "./ComposeParser";
 import { Method_declarationContext } from "./ComposeParser";
 import { Abstract_method_declarationContext } from "./ComposeParser";
@@ -267,15 +269,41 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 */
 	exitAttribute_type?: (ctx: Attribute_typeContext) => void;
 	/**
-	 * Enter a parse tree produced by `ComposeParser.parameter`.
+	 * Enter a parse tree produced by the `AttributeParameter`
+	 * labeled alternative in `ComposeParser.parameter`.
 	 * @param ctx the parse tree
 	 */
-	enterParameter?: (ctx: ParameterContext) => void;
+	enterAttributeParameter?: (ctx: AttributeParameterContext) => void;
 	/**
-	 * Exit a parse tree produced by `ComposeParser.parameter`.
+	 * Exit a parse tree produced by the `AttributeParameter`
+	 * labeled alternative in `ComposeParser.parameter`.
 	 * @param ctx the parse tree
 	 */
-	exitParameter?: (ctx: ParameterContext) => void;
+	exitAttributeParameter?: (ctx: AttributeParameterContext) => void;
+	/**
+	 * Enter a parse tree produced by the `TypedParameter`
+	 * labeled alternative in `ComposeParser.parameter`.
+	 * @param ctx the parse tree
+	 */
+	enterTypedParameter?: (ctx: TypedParameterContext) => void;
+	/**
+	 * Exit a parse tree produced by the `TypedParameter`
+	 * labeled alternative in `ComposeParser.parameter`.
+	 * @param ctx the parse tree
+	 */
+	exitTypedParameter?: (ctx: TypedParameterContext) => void;
+	/**
+	 * Enter a parse tree produced by the `MethodParameter`
+	 * labeled alternative in `ComposeParser.parameter`.
+	 * @param ctx the parse tree
+	 */
+	enterMethodParameter?: (ctx: MethodParameterContext) => void;
+	/**
+	 * Exit a parse tree produced by the `MethodParameter`
+	 * labeled alternative in `ComposeParser.parameter`.
+	 * @param ctx the parse tree
+	 */
+	exitMethodParameter?: (ctx: MethodParameterContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.class_declaration`.
 	 * @param ctx the parse tree

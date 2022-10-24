@@ -1,10 +1,10 @@
-import IDataType from "./IDataType";
+import NativeType from "./NativeType";
 
-export default class StringType implements IDataType {
+export default class StringType extends NativeType {
 
     static instance = new StringType()
 
-    typeName = "string";
-
-    private constructor() {}
+    private constructor() {
+        super("string")
+    }
 }

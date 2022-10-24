@@ -1009,6 +1009,7 @@ export default class ComposeParser extends BaseParser {
 			this._errHandler.sync(this);
 			switch ( this._interp.adaptivePredict(this._input, 12, this._ctx) ) {
 			case 1:
+				localctx = new AttributeParameterContext(this, localctx);
 				this.enterOuterAlt(localctx, 1);
 				{
 				this.state = 166;
@@ -1016,6 +1017,7 @@ export default class ComposeParser extends BaseParser {
 				}
 				break;
 			case 2:
+				localctx = new TypedParameterContext(this, localctx);
 				this.enterOuterAlt(localctx, 2);
 				{
 				this.state = 167;
@@ -1027,6 +1029,7 @@ export default class ComposeParser extends BaseParser {
 				}
 				break;
 			case 3:
+				localctx = new MethodParameterContext(this, localctx);
 				this.enterOuterAlt(localctx, 3);
 				{
 				this.state = 171;
@@ -2502,8 +2505,36 @@ export class ParameterContext extends ParserRuleContext {
 		super(parent, invokingState);
     	this.parser = parser;
 	}
+    public get ruleIndex(): number {
+    	return ComposeParser.RULE_parameter;
+	}
+	public copyFrom(ctx: ParameterContext): void {
+		super.copyFrom(ctx);
+	}
+}
+export class AttributeParameterContext extends ParameterContext {
+	constructor(parser: ComposeParser, ctx: ParameterContext) {
+		super(parser, ctx.parentCtx, ctx.invokingState);
+		super.copyFrom(ctx);
+	}
 	public attribute_type(): Attribute_typeContext {
 		return this.getTypedRuleContext(Attribute_typeContext, 0) as Attribute_typeContext;
+	}
+	public enterRule(listener: ComposeParserListener): void {
+	    if(listener.enterAttributeParameter) {
+	 		listener.enterAttributeParameter(this);
+		}
+	}
+	public exitRule(listener: ComposeParserListener): void {
+	    if(listener.exitAttributeParameter) {
+	 		listener.exitAttributeParameter(this);
+		}
+	}
+}
+export class TypedParameterContext extends ParameterContext {
+	constructor(parser: ComposeParser, ctx: ParameterContext) {
+		super(parser, ctx.parentCtx, ctx.invokingState);
+		super.copyFrom(ctx);
 	}
 	public identifier(): IdentifierContext {
 		return this.getTypedRuleContext(IdentifierContext, 0) as IdentifierContext;
@@ -2514,20 +2545,39 @@ export class ParameterContext extends ParserRuleContext {
 	public data_type(): Data_typeContext {
 		return this.getTypedRuleContext(Data_typeContext, 0) as Data_typeContext;
 	}
-	public method_type(): Method_typeContext {
-		return this.getTypedRuleContext(Method_typeContext, 0) as Method_typeContext;
-	}
-    public get ruleIndex(): number {
-    	return ComposeParser.RULE_parameter;
-	}
 	public enterRule(listener: ComposeParserListener): void {
-	    if(listener.enterParameter) {
-	 		listener.enterParameter(this);
+	    if(listener.enterTypedParameter) {
+	 		listener.enterTypedParameter(this);
 		}
 	}
 	public exitRule(listener: ComposeParserListener): void {
-	    if(listener.exitParameter) {
-	 		listener.exitParameter(this);
+	    if(listener.exitTypedParameter) {
+	 		listener.exitTypedParameter(this);
+		}
+	}
+}
+export class MethodParameterContext extends ParameterContext {
+	constructor(parser: ComposeParser, ctx: ParameterContext) {
+		super(parser, ctx.parentCtx, ctx.invokingState);
+		super.copyFrom(ctx);
+	}
+	public identifier(): IdentifierContext {
+		return this.getTypedRuleContext(IdentifierContext, 0) as IdentifierContext;
+	}
+	public COLON(): TerminalNode {
+		return this.getToken(ComposeParser.COLON, 0);
+	}
+	public method_type(): Method_typeContext {
+		return this.getTypedRuleContext(Method_typeContext, 0) as Method_typeContext;
+	}
+	public enterRule(listener: ComposeParserListener): void {
+	    if(listener.enterMethodParameter) {
+	 		listener.enterMethodParameter(this);
+		}
+	}
+	public exitRule(listener: ComposeParserListener): void {
+	    if(listener.exitMethodParameter) {
+	 		listener.exitMethodParameter(this);
 		}
 	}
 }

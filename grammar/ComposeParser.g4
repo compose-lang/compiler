@@ -111,9 +111,9 @@ attribute_type:
     ;
 
 parameter:
-    attribute_type
-    | identifier COLON data_type
-    | identifier COLON method_type
+    attribute_type                  # AttributeParameter
+    | identifier COLON data_type    # TypedParameter
+    | identifier COLON method_type  # MethodParameter
     ;
 
 class_declaration:
