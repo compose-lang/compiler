@@ -22,9 +22,12 @@ import { F32_typeContext } from "./ComposeParser";
 import { F64_typeContext } from "./ComposeParser";
 import { String_typeContext } from "./ComposeParser";
 import { Void_typeContext } from "./ComposeParser";
-import { Class_typeContext } from "./ComposeParser";
-import { Method_typeContext } from "./ComposeParser";
 import { Attribute_typeContext } from "./ComposeParser";
+import { Attribute_refContext } from "./ComposeParser";
+import { Class_typeContext } from "./ComposeParser";
+import { Class_refContext } from "./ComposeParser";
+import { Method_typeContext } from "./ComposeParser";
+import { Return_typesContext } from "./ComposeParser";
 import { AttributeParameterContext } from "./ComposeParser";
 import { TypedParameterContext } from "./ComposeParser";
 import { MethodParameterContext } from "./ComposeParser";
@@ -239,6 +242,26 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 */
 	exitVoid_type?: (ctx: Void_typeContext) => void;
 	/**
+	 * Enter a parse tree produced by `ComposeParser.attribute_type`.
+	 * @param ctx the parse tree
+	 */
+	enterAttribute_type?: (ctx: Attribute_typeContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.attribute_type`.
+	 * @param ctx the parse tree
+	 */
+	exitAttribute_type?: (ctx: Attribute_typeContext) => void;
+	/**
+	 * Enter a parse tree produced by `ComposeParser.attribute_ref`.
+	 * @param ctx the parse tree
+	 */
+	enterAttribute_ref?: (ctx: Attribute_refContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.attribute_ref`.
+	 * @param ctx the parse tree
+	 */
+	exitAttribute_ref?: (ctx: Attribute_refContext) => void;
+	/**
 	 * Enter a parse tree produced by `ComposeParser.class_type`.
 	 * @param ctx the parse tree
 	 */
@@ -248,6 +271,16 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitClass_type?: (ctx: Class_typeContext) => void;
+	/**
+	 * Enter a parse tree produced by `ComposeParser.class_ref`.
+	 * @param ctx the parse tree
+	 */
+	enterClass_ref?: (ctx: Class_refContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.class_ref`.
+	 * @param ctx the parse tree
+	 */
+	exitClass_ref?: (ctx: Class_refContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.method_type`.
 	 * @param ctx the parse tree
@@ -259,15 +292,15 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 */
 	exitMethod_type?: (ctx: Method_typeContext) => void;
 	/**
-	 * Enter a parse tree produced by `ComposeParser.attribute_type`.
+	 * Enter a parse tree produced by `ComposeParser.return_types`.
 	 * @param ctx the parse tree
 	 */
-	enterAttribute_type?: (ctx: Attribute_typeContext) => void;
+	enterReturn_types?: (ctx: Return_typesContext) => void;
 	/**
-	 * Exit a parse tree produced by `ComposeParser.attribute_type`.
+	 * Exit a parse tree produced by `ComposeParser.return_types`.
 	 * @param ctx the parse tree
 	 */
-	exitAttribute_type?: (ctx: Attribute_typeContext) => void;
+	exitReturn_types?: (ctx: Return_typesContext) => void;
 	/**
 	 * Enter a parse tree produced by the `AttributeParameter`
 	 * labeled alternative in `ComposeParser.parameter`.

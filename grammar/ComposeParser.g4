@@ -27,7 +27,7 @@ identifier:
 
 type:
     data_type
-    | void_type
+    | attribute_type
     | method_type
     ;
 
@@ -95,19 +95,31 @@ void_type:
     VOID
     ;
 
+attribute_type:
+    attribute_ref
+    ;
+
+attribute_ref:
+    { this.willBeLowercase() }? IDENTIFIER
+    ;
+
 class_type:
+    class_ref
+    ;
+
+class_ref:
     { this.willBeUppercase() }? IDENTIFIER
     ;
 
 method_type:
-    ( LPAR (parameter (COMMA parameter)*)? RPAR
-        | attribute_type )
-    ARROW
-    type ( COMMA type )*
+    ( attribute_type
+        | LPAR (parameter (COMMA parameter)*)? RPAR )
+    ARROW return_types
     ;
 
-attribute_type:
-    { this.willBeLowercase() }? IDENTIFIER
+return_types:
+    void_type
+    | type ( COMMA type )*
     ;
 
 parameter:
@@ -117,8 +129,8 @@ parameter:
     ;
 
 class_declaration:
-    ABSTRACT? CLASS id = class_type ( LPAR attribute_type (COMMA attribute_type)* RPAR )?
-            ( EXTENDS class_type (COMMA class_type)* )?
+    ABSTRACT? CLASS id = class_ref ( LPAR attribute_ref (COMMA attribute_ref)* RPAR )?
+            ( EXTENDS class_ref (COMMA class_ref)* )?
         LCURL
             (method_declaration (COMMA method_declaration)*)?
         RCURL
@@ -130,15 +142,19 @@ method_declaration:
     ;
 
 abstract_method_declaration:
-    ABSTRACT method_prototype
+    ABSTRACT method_prototype[true]
     ;
 
-method_prototype:
-    FN identifier LPAR ( parameter ( COMMA parameter )* )? RPAR ( COLON type ( COMMA type )* )
+method_prototype[boolean mandatory_return]:
+    FN identifier LPAR ( parameter ( COMMA parameter )* )? RPAR
+        (
+            { $mandatory_return }? COLON return_types
+            | { !$mandatory_return }? (COLON return_types) ?
+        )
     ;
 
 concrete_method_declaration:
-    method_prototype
+    method_prototype[false]
         LCURL statement* RCURL
     ;
 

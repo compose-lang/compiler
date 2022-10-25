@@ -7,19 +7,19 @@ import {
 import {fileExists} from "../utils/FileUtils";
 import ComposeParser, {
     Abstract_method_declarationContext,
-    Attribute_declarationContext,
+    Attribute_declarationContext, Attribute_refContext,
     Attribute_typeContext, AttributeParameterContext,
     Boolean_typeContext,
-    Class_declarationContext,
+    Class_declarationContext, Class_refContext,
     Class_typeContext,
     Data_typeContext,
     DeclarationContext,
     IdentifierContext,
     Method_declarationContext,
-    Method_prototypeContext,
-    Native_typeContext,
+    Method_prototypeContext, Method_typeContext,
+    Native_typeContext, Return_typesContext,
     String_typeContext,
-    TypeContext,
+    TypeContext, TypedParameterContext,
     UnitContext
 } from "../parser/ComposeParser";
 import ComposeLexer from "../parser/ComposeLexer";
@@ -37,10 +37,14 @@ import AttributeType from "../type/AttributeType";
 import ClassType from "../type/ClassType";
 import IParameter from "../parameter/IParameter";
 import IType from "../type/IType";
-import MethodPrototype from "../declaration/MethodPrototype";
+import Prototype from "../declaration/Prototype";
 import AbstractMethodDeclaration from "../declaration/AbstractMethodDeclaration";
 import BooleanType from "../type/BooleanType";
 import AttributeParameter from "../parameter/AttributeParameter";
+import TypedParameter from "../parameter/TypedParameter";
+import MethodType from "../type/MethodType";
+import TypeList from "../type/TypeList";
+import VoidType from "../type/VoidType";
 
 interface IndexedNode {
     __id?: number;
@@ -50,6 +54,10 @@ export default class Builder extends ComposeParserListener {
 
     static parse_unit(data: string): CompilationUnit | null {
         return Builder.doParse<CompilationUnit>((parser: ComposeParser) => parser.unit(), data)
+    }
+
+    static parse_method_type(data: string): MethodType | null {
+        return Builder.doParse<MethodType>((parser: ComposeParser) => parser.method_type(), data)
     }
 
     static doParse<T>(rule: (parser: ComposeParser) => ParseTree, data?: string, stream?: CharStream): T | null {
@@ -156,10 +164,20 @@ export default class Builder extends ComposeParserListener {
     }
 
     exitAttribute_type = (ctx: Attribute_typeContext) => {
+        const id = this.getNodeValue<Identifier>(ctx.attribute_ref());
+        this.setNodeValue(ctx, new AttributeType(id));
+    }
+
+    exitAttribute_ref = (ctx: Attribute_refContext) => {
         this.setNodeValue(ctx, new Identifier(ctx.IDENTIFIER().getText()));
     }
 
     exitClass_type = (ctx: Class_typeContext) => {
+        const id = this.getNodeValue<Identifier>(ctx.class_ref());
+        this.setNodeValue(ctx, new ClassType(id));
+    }
+
+    exitClass_ref = (ctx: Class_refContext) => {
         this.setNodeValue(ctx, new Identifier(ctx.IDENTIFIER().getText()));
     }
 
@@ -179,6 +197,19 @@ export default class Builder extends ComposeParserListener {
         this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
     }
 
+    exitReturn_types = (ctx: Return_typesContext) => {
+        const types = ctx.void_type() ? [ VoidType.instance ] :
+            ctx.type__list().map(child => this.getNodeValue<IType>(child), this);
+        this.setNodeValue(ctx, types);
+    }
+
+    exitMethod_type = (ctx: Method_typeContext) => {
+        const parameters = ctx.parameter_list()
+            .map(child => this.getNodeValue<IParameter>(child), this);
+        const returnTypes = this.getNodeValue<TypeList>(ctx.return_types());
+        this.setNodeValue(ctx, new MethodType(parameters, returnTypes));
+    }
+
     exitType = (ctx: TypeContext) => {
         this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
     }
@@ -191,9 +222,9 @@ export default class Builder extends ComposeParserListener {
 
     exitClass_declaration = (ctx: Class_declarationContext) => {
         const id = this.getNodeValue<Identifier>(ctx._id);
-        const attributes = ctx.attribute_type_list()
+        const attributes = ctx.attribute_ref_list()
             .map(child => this.getNodeValue<Identifier>(child), this);
-        const parents = ctx.class_type_list()
+        const parents = ctx.class_ref_list()
             .slice(1) // skip id which is also a class_type
             .map(child => this.getNodeValue<Identifier>(child), this);
         const methods = ctx.method_declaration_list()
@@ -202,21 +233,26 @@ export default class Builder extends ComposeParserListener {
     }
 
     exitAttributeParameter = (ctx: AttributeParameterContext) => {
-        const id = this.getNodeValue<Identifier>(ctx.attribute_type());
-        this.setNodeValue(ctx, new AttributeParameter(new AttributeType(id)));
+        const type = this.getNodeValue<AttributeType>(ctx.attribute_type());
+        this.setNodeValue(ctx, new AttributeParameter(type));
+    }
+
+    exitTypedParameter = (ctx: TypedParameterContext) => {
+        const id = this.getNodeValue<Identifier>(ctx.identifier());
+        const type = this.getNodeValue<IDataType>(ctx.data_type());
+        this.setNodeValue(ctx, new TypedParameter(id, type));
     }
 
     exitMethod_prototype = (ctx: Method_prototypeContext) => {
         const id = this.getNodeValue<Identifier>(ctx.identifier());
         const params = ctx.parameter_list()
             .map(child => this.getNodeValue<IParameter>(child), this);
-        const returns = ctx.type__list()
-            .map(child => this.getNodeValue<IType>(child), this);
-        this.setNodeValue(ctx, new MethodPrototype(id, params, returns));
+        const returnTypes = this.getNodeValue<TypeList>(ctx.return_types());
+        this.setNodeValue(ctx, new Prototype(id, params, returnTypes));
     }
 
     exitAbstract_method_declaration = (ctx: Abstract_method_declarationContext) => {
-        const proto = this.getNodeValue<MethodPrototype>(ctx.method_prototype());
+        const proto = this.getNodeValue<Prototype>(ctx.method_prototype());
         this.setNodeValue(ctx, new AbstractMethodDeclaration(proto));
     }
 

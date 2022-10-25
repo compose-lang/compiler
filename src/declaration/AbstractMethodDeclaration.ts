@@ -1,9 +1,9 @@
 import MethodDeclarationBase from "./MethodDeclarationBase";
-import MethodPrototype from "./MethodPrototype";
+import Prototype from "./Prototype";
 
 export default class AbstractMethodDeclaration extends MethodDeclarationBase {
 
-    constructor(proto: MethodPrototype) {
+    constructor(proto: Prototype) {
         super(proto);
     }
 }

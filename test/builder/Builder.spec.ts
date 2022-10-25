@@ -49,3 +49,43 @@ it('parses an abstract method declaration with attribute param and single return
     assert.equal("name", unit.declarations[0].parameters[0].name);
     assert.deepEqual(["string"], unit.declarations[0].returnTypes.map(t => t.typeName));
 });
+
+it('parses an abstract method declaration with typed param and single return type',  () => {
+    const unit = Builder.parse_unit("abstract fn Thing(name: string): string");
+    assert.equal(unit.declarations.length, 1);
+    assert.ok(unit.declarations[0] instanceof AbstractMethodDeclaration);
+    assert.equal("Thing", unit.declarations[0].name);
+    assert.equal(1, unit.declarations[0].parameters.length);
+    assert.equal("name", unit.declarations[0].parameters[0].name);
+    assert.equal("string", unit.declarations[0].parameters[0].type.typeName);
+    assert.deepEqual(["string"], unit.declarations[0].returnTypes.map(t => t.typeName));
+});
+
+it('parses prototype: () => void',  () => {
+    const type = Builder.parse_method_type("() => void");
+    assert.equal(type.parameters.length, 0);
+    assert.deepEqual(["void"], type.returnTypes.map(t => t.typeName));
+});
+
+it('parses prototype: (name: string) => void',  () => {
+    const type = Builder.parse_method_type("(name: string) => void");
+    assert.equal(type.parameters.length, 1);
+    assert.equal("name", type.parameters[0].name);
+    assert.equal("string", type.parameters[0].type.typeName);
+    assert.deepEqual(["void"], type.returnTypes.map(t => t.typeName));
+});
+
+it('parses prototype: (thing, name: string) => void',  () => {
+    const type = Builder.parse_method_type("(thing, name: string) => void");
+    assert.equal(type.parameters.length, 2);
+    assert.equal("thing", type.parameters[0].name);
+    assert.equal("name", type.parameters[1].name);
+    assert.equal("string", type.parameters[1].type.typeName);
+    assert.deepEqual(["void"], type.returnTypes.map(t => t.typeName));
+});
+
+it('parses prototype: () => name',  () => {
+    const type = Builder.parse_method_type("() => name");
+    assert.equal(type.parameters.length, 0);
+    assert.deepEqual(["name"], type.returnTypes.map(t => t.typeName));
+});
