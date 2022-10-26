@@ -3,6 +3,7 @@ import * as assert from "assert";
 import AttributeDeclaration from "../../src/declaration/AttributeDeclaration";
 import ClassDeclaration from "../../src/declaration/ClassDeclaration";
 import AbstractMethodDeclaration from "../../src/declaration/AbstractMethodDeclaration";
+import MethodType from "../../src/type/MethodType";
 
 it('parses an attribute declaration ',  () => {
     const unit = Builder.parse_unit("attr text: string");
@@ -88,4 +89,62 @@ it('parses prototype: () => name',  () => {
     const type = Builder.parse_method_type("() => name");
     assert.equal(type.parameters.length, 0);
     assert.deepEqual(["name"], type.returnTypes.map(t => t.typeName));
+});
+
+it('parses prototype: a => b',  () => {
+    const type = Builder.parse_method_type("a => b");
+    assert.equal(type.parameters.length, 1);
+    assert.equal("a", type.parameters[0].name);
+    assert.deepEqual(["b"], type.returnTypes.map(t => t.typeName));
+});
+
+it('parses prototype: (a => b) => void',  () => {
+    const type = Builder.parse_method_type("(x: a => b) => void");
+    assert.equal(type.parameters.length, 1);
+    assert.equal("x", type.parameters[0].name);
+    const type2 = type.parameters[0].type as MethodType;
+    assert.equal(type2.parameters.length, 1);
+    assert.equal("a", type2.parameters[0].name);
+    assert.deepEqual(["b"], type2.returnTypes.map(t => t.typeName));
+    assert.deepEqual(["void"], type.returnTypes.map(t => t.typeName));
+});
+
+it('parses prototype: () => (a => b)',  () => {
+    const type = Builder.parse_method_type("() => (a => b)");
+    assert.equal(type.parameters.length, 0);
+    const type2 = type.returnTypes[0];
+    assert.ok(type2 instanceof MethodType);
+    assert.equal(type2.parameters.length, 1);
+    assert.equal("a", type2.parameters[0].name);
+    assert.deepEqual(["b"], type2.returnTypes.map(t => t.typeName));
+});
+
+it('parses prototype: () => string, (a => b)',  () => {
+    const type = Builder.parse_method_type("() => string, (a => b)");
+    assert.equal(type.parameters.length, 0);
+    const type2 = type.returnTypes[1];
+    assert.ok(type2 instanceof MethodType);
+    assert.equal(type2.parameters.length, 1);
+    assert.equal("a", type2.parameters[0].name);
+    assert.deepEqual(["b"], type2.returnTypes.map(t => t.typeName));
+});
+
+it('parses prototype: () => string, a => b',  () => {
+    const type = Builder.parse_method_type("() => string, a => b");
+    assert.equal(type.parameters.length, 0);
+    const type2 = type.returnTypes[1];
+    assert.ok(type2 instanceof MethodType);
+    assert.equal(type2.parameters.length, 1);
+    assert.equal("a", type2.parameters[0].name);
+    assert.deepEqual(["b"], type2.returnTypes.map(t => t.typeName));
+});
+
+it('parses prototype: (x: a => b) => void',  () => {
+    const type = Builder.parse_method_type("(x: a => b) => void");
+    assert.equal(type.parameters.length, 1);
+    const type2 = type.parameters[0].type;
+    assert.ok(type2 instanceof MethodType);
+    assert.equal(type2.parameters.length, 1);
+    assert.equal("a", type2.parameters[0].name);
+    assert.deepEqual(["b"], type2.returnTypes.map(t => t.typeName));
 });

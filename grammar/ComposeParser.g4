@@ -25,12 +25,6 @@ identifier:
     IDENTIFIER
     ;
 
-type:
-    data_type
-    | attribute_type
-    | method_type
-    ;
-
 data_type:
     native_type
     | class_type
@@ -117,9 +111,16 @@ method_type:
     ARROW return_types
     ;
 
+return_type[boolean requireParenthesis]:
+    data_type
+    | attribute_type
+    | { !$requireParenthesis }? method_type
+    | LPAR method_type RPAR
+    ;
+
 return_types:
     void_type
-    | type ( COMMA type )*
+    | return_type[true] ( COMMA return_type[false] )*
     ;
 
 parameter:

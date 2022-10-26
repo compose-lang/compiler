@@ -7,7 +7,6 @@ import { UnitContext } from "./ComposeParser";
 import { DeclarationContext } from "./ComposeParser";
 import { Attribute_declarationContext } from "./ComposeParser";
 import { IdentifierContext } from "./ComposeParser";
-import { TypeContext } from "./ComposeParser";
 import { Data_typeContext } from "./ComposeParser";
 import { Native_typeContext } from "./ComposeParser";
 import { Boolean_typeContext } from "./ComposeParser";
@@ -27,6 +26,7 @@ import { Attribute_refContext } from "./ComposeParser";
 import { Class_typeContext } from "./ComposeParser";
 import { Class_refContext } from "./ComposeParser";
 import { Method_typeContext } from "./ComposeParser";
+import { Return_typeContext } from "./ComposeParser";
 import { Return_typesContext } from "./ComposeParser";
 import { AttributeParameterContext } from "./ComposeParser";
 import { TypedParameterContext } from "./ComposeParser";
@@ -91,16 +91,6 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitIdentifier?: (ctx: IdentifierContext) => void;
-	/**
-	 * Enter a parse tree produced by `ComposeParser.type`.
-	 * @param ctx the parse tree
-	 */
-	enterType?: (ctx: TypeContext) => void;
-	/**
-	 * Exit a parse tree produced by `ComposeParser.type`.
-	 * @param ctx the parse tree
-	 */
-	exitType?: (ctx: TypeContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.data_type`.
 	 * @param ctx the parse tree
@@ -291,6 +281,16 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitMethod_type?: (ctx: Method_typeContext) => void;
+	/**
+	 * Enter a parse tree produced by `ComposeParser.return_type`.
+	 * @param ctx the parse tree
+	 */
+	enterReturn_type?: (ctx: Return_typeContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.return_type`.
+	 * @param ctx the parse tree
+	 */
+	exitReturn_type?: (ctx: Return_typeContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.return_types`.
 	 * @param ctx the parse tree
