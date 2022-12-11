@@ -15,5 +15,4 @@ export default class MapLiteral extends LiteralBase<Map<any, any>> {
         return entries;
     }
 
-
 }
