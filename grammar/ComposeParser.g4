@@ -160,11 +160,11 @@ concrete_method_declaration:
     ;
 
 statement:
-    assign_statement
+    assign_local_statement
     | return_statement
     ;
 
-assign_statement:
+assign_local_statement:
     (LET | CONST)? identifier (COLON data_type | method_type) ASSIGN expression SEMI
     ;
 

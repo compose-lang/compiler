@@ -11,7 +11,7 @@ export default abstract class MethodDeclarationBase extends DeclarationBase impl
     protected constructor(proto: Prototype) {
         super(proto.id);
         this.parameters = proto.parameters;
-        this.returnTypes = proto.returnTypes;
+        this.returnTypes = proto.returnTypes || [];
     }
 
 }

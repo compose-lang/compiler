@@ -16,7 +16,7 @@ import ComposeParser, {
     CharLiteralContext,
     Class_declarationContext,
     Class_refContext,
-    Class_typeContext, Compilation_unitContext,
+    Class_typeContext, Compilation_unitContext, Concrete_method_declarationContext,
     Data_typeContext,
     DecimalLiteralContext,
     DeclarationContext,
@@ -77,6 +77,7 @@ import MapLiteral from "../literal/MapLiteral";
 import InstanceExpression from "../expression/InstanceExpression";
 import IStatement from "../statement/IStatement";
 import ReturnStatement from "../statement/ReturnStatement";
+import ConcreteMethodDeclaration from "../declaration/ConcreteMethodDeclaration";
 
 interface IndexedNode {
     __id?: number;
@@ -303,6 +304,12 @@ export default class Builder extends ComposeParserListener {
     exitAbstract_method_declaration = (ctx: Abstract_method_declarationContext) => {
         const proto = this.getNodeValue<Prototype>(ctx.method_prototype());
         this.setNodeValue(ctx, new AbstractMethodDeclaration(proto));
+    }
+
+    exitConcrete_method_declaration = (ctx: Concrete_method_declarationContext) => {
+        const proto = this.getNodeValue<Prototype>(ctx.method_prototype());
+        const stmts = ctx.statement_list().map(s => this.getNodeValue<IStatement>(s));
+        this.setNodeValue(ctx, new ConcreteMethodDeclaration(proto, stmts));
     }
 
     exitMethod_declaration = (ctx: Method_declarationContext) => {
