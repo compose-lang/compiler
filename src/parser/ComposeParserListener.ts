@@ -1,4 +1,4 @@
-// Generated from ComposeParser.g4 by ANTLR 4.11.1
+// Generated from ComposeParser.g4 by ANTLR 4.11.2-SNAPSHOT
 
 import {ParseTreeListener} from "antlr4";
 

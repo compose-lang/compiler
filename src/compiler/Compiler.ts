@@ -1,18 +1,12 @@
-import Builder from "../builder/Builder";
 import CompilationUnit from "./CompilationUnit";
+import ITarget from "./ITarget";
 
 export default class Compiler {
 
-    static compile(args: string[]) {
-        const unit = Builder.parse_unit(args[1]);
-        const compiler = new Compiler(args[2]);
-        compiler.compile(unit);
-    }
+    target: ITarget;
 
-    targetPath: string;
-
-    constructor(targetPath: string) {
-        this.targetPath = targetPath;
+    constructor(target: ITarget) {
+        this.target = target;
     }
 
     compile(unit: CompilationUnit) {

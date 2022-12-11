@@ -11,11 +11,11 @@ STRING: 'string';
 BOOLEAN: 'boolean';
 VOID: 'void';
 
-ATTR: 'attr';
+ATTRIBUTE: 'attribute';
 ABSTRACT: 'abstract';
 CLASS: 'class';
 EXTENDS: 'extends';
-FN: 'fn';
+FUNCTION: 'function';
 
 IF: 'if';
 ELSE: 'else';

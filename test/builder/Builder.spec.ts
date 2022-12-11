@@ -6,7 +6,7 @@ import AbstractMethodDeclaration from "../../src/declaration/AbstractMethodDecla
 import MethodType from "../../src/type/MethodType";
 
 it('parses an attribute declaration ',  () => {
-    const unit = Builder.parse_unit("attr text: string");
+    const unit = Builder.parse_unit("attribute text: string");
     assert.equal(unit.declarations.length, 1);
     assert.ok(unit.declarations[0] instanceof AttributeDeclaration);
     assert.equal("text", unit.declarations[0].name);
@@ -24,7 +24,7 @@ it('parses a class declaration ',  () => {
 });
 
 it('parses an abstract method declaration without param and single return type',  () => {
-    const unit = Builder.parse_unit("abstract fn Thing(): string");
+    const unit = Builder.parse_unit("abstract function Thing(): string");
     assert.equal(unit.declarations.length, 1);
     assert.ok(unit.declarations[0] instanceof AbstractMethodDeclaration);
     assert.equal("Thing", unit.declarations[0].name);
@@ -33,7 +33,7 @@ it('parses an abstract method declaration without param and single return type',
 });
 
 it('parses an abstract method declaration without param and multiple return types',  () => {
-    const unit = Builder.parse_unit("abstract fn Thing(): string, boolean");
+    const unit = Builder.parse_unit("abstract function Thing(): string, boolean");
     assert.equal(unit.declarations.length, 1);
     assert.ok(unit.declarations[0] instanceof AbstractMethodDeclaration);
     assert.equal("Thing", unit.declarations[0].name);
@@ -42,7 +42,7 @@ it('parses an abstract method declaration without param and multiple return type
 });
 
 it('parses an abstract method declaration with attribute param and single return type',  () => {
-    const unit = Builder.parse_unit("abstract fn Thing(name): string");
+    const unit = Builder.parse_unit("abstract function Thing(name): string");
     assert.equal(unit.declarations.length, 1);
     assert.ok(unit.declarations[0] instanceof AbstractMethodDeclaration);
     assert.equal("Thing", unit.declarations[0].name);
@@ -52,7 +52,7 @@ it('parses an abstract method declaration with attribute param and single return
 });
 
 it('parses an abstract method declaration with typed param and single return type',  () => {
-    const unit = Builder.parse_unit("abstract fn Thing(name: string): string");
+    const unit = Builder.parse_unit("abstract function Thing(name: string): string");
     assert.equal(unit.declarations.length, 1);
     assert.ok(unit.declarations[0] instanceof AbstractMethodDeclaration);
     assert.equal("Thing", unit.declarations[0].name);

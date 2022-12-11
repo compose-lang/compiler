@@ -18,7 +18,7 @@ declaration:
 
 
 attribute_declaration:
-    ATTR identifier COLON data_type
+    ATTRIBUTE identifier COLON data_type
     ;
 
 identifier:
@@ -147,7 +147,7 @@ abstract_method_declaration:
     ;
 
 method_prototype[boolean mandatory_return]:
-    FN identifier LPAR ( parameter ( COMMA parameter )* )? RPAR
+    FUNCTION identifier LPAR ( parameter ( COMMA parameter )* )? RPAR
         (
             { $mandatory_return }? COLON return_types
             | { !$mandatory_return }? (COLON return_types) ?

@@ -1,4 +1,4 @@
-// Generated from ComposeParser.g4 by ANTLR 4.11.1
+// Generated from ComposeParser.g4 by ANTLR 4.11.2-SNAPSHOT
 // noinspection ES6UnusedImports,JSUnusedGlobalSymbols,JSUnusedLocalSymbols
 
 import {
@@ -29,11 +29,11 @@ export default class ComposeParser extends BaseParser {
 	public static readonly STRING = 8;
 	public static readonly BOOLEAN = 9;
 	public static readonly VOID = 10;
-	public static readonly ATTR = 11;
+	public static readonly ATTRIBUTE = 11;
 	public static readonly ABSTRACT = 12;
 	public static readonly CLASS = 13;
 	public static readonly EXTENDS = 14;
-	public static readonly FN = 15;
+	public static readonly FUNCTION = 15;
 	public static readonly IF = 16;
 	public static readonly ELSE = 17;
 	public static readonly FOR = 18;
@@ -140,40 +140,40 @@ export default class ComposeParser extends BaseParser {
                                                    "'u32'", "'u64'", "'f32'", 
                                                    "'f64'", "'v128'", "'string'", 
                                                    "'boolean'", "'void'", 
-                                                   "'attr'", "'abstract'", 
+                                                   "'attribute'", "'abstract'", 
                                                    "'class'", "'extends'", 
-                                                   "'fn'", "'if'", "'else'", 
-                                                   "'for'", "'do'", "'while'", 
-                                                   "'break'", "'try'", "'when'", 
-                                                   "'('", "')'", "'['", 
-                                                   "']'", "'{'", "'}'", 
-                                                   "'=>'", "'>'", "'<'", 
-                                                   "'<='", "'>='", "'=='", 
-                                                   "'!='", "'!'", "'&&'", 
-                                                   "'||'", "'?'", "':'", 
-                                                   "','", "'.'", "'@'", 
-                                                   "'++'", "'--'", "'+'", 
-                                                   "'-'", "'*'", "'/'", 
-                                                   "'\\'", "'^'", "'%'", 
-                                                   "'&'", "'|'", "'='", 
-                                                   "'+='", "'-='", "'*='", 
-                                                   "'/='", "'&='", "'|='", 
-                                                   "'^='", "'%='", "'<<='", 
-                                                   "'>>='", "'>>>='", null, 
-                                                   null, null, null, null, 
-                                                   "'null'" ];
+                                                   "'function'", "'if'", 
+                                                   "'else'", "'for'", "'do'", 
+                                                   "'while'", "'break'", 
+                                                   "'try'", "'when'", "'('", 
+                                                   "')'", "'['", "']'", 
+                                                   "'{'", "'}'", "'=>'", 
+                                                   "'>'", "'<'", "'<='", 
+                                                   "'>='", "'=='", "'!='", 
+                                                   "'!'", "'&&'", "'||'", 
+                                                   "'?'", "':'", "','", 
+                                                   "'.'", "'@'", "'++'", 
+                                                   "'--'", "'+'", "'-'", 
+                                                   "'*'", "'/'", "'\\'", 
+                                                   "'^'", "'%'", "'&'", 
+                                                   "'|'", "'='", "'+='", 
+                                                   "'-='", "'*='", "'/='", 
+                                                   "'&='", "'|='", "'^='", 
+                                                   "'%='", "'<<='", "'>>='", 
+                                                   "'>>>='", null, null, 
+                                                   null, null, null, "'null'" ];
 	public static readonly symbolicNames: string[] = [ null, "I32", "I64", 
                                                     "U32", "U64", "F32", 
                                                     "F64", "V128", "STRING", 
-                                                    "BOOLEAN", "VOID", "ATTR", 
+                                                    "BOOLEAN", "VOID", "ATTRIBUTE", 
                                                     "ABSTRACT", "CLASS", 
-                                                    "EXTENDS", "FN", "IF", 
-                                                    "ELSE", "FOR", "DO", 
-                                                    "WHILE", "BREAK", "TRY", 
-                                                    "WHEN", "LPAR", "RPAR", 
-                                                    "LBRAK", "RBRAK", "LCURL", 
-                                                    "RCURL", "ARROW", "GT", 
-                                                    "LT", "LTE", "GTE", 
+                                                    "EXTENDS", "FUNCTION", 
+                                                    "IF", "ELSE", "FOR", 
+                                                    "DO", "WHILE", "BREAK", 
+                                                    "TRY", "WHEN", "LPAR", 
+                                                    "RPAR", "LBRAK", "RBRAK", 
+                                                    "LCURL", "RCURL", "ARROW", 
+                                                    "GT", "LT", "LTE", "GTE", 
                                                     "EQUAL", "NOTEQUAL", 
                                                     "BANG", "AND", "OR", 
                                                     "QUESTION", "COLON", 
@@ -309,7 +309,7 @@ export default class ComposeParser extends BaseParser {
 			this.enterOuterAlt(localctx, 1);
 			{
 			this.state = 89;
-			this.match(ComposeParser.ATTR);
+			this.match(ComposeParser.ATTRIBUTE);
 			this.state = 90;
 			this.identifier();
 			this.state = 91;
@@ -1365,7 +1365,7 @@ export default class ComposeParser extends BaseParser {
 			this.enterOuterAlt(localctx, 1);
 			{
 			this.state = 246;
-			this.match(ComposeParser.FN);
+			this.match(ComposeParser.FUNCTION);
 			this.state = 247;
 			this.identifier();
 			this.state = 248;
@@ -2104,8 +2104,8 @@ export class Attribute_declarationContext extends ParserRuleContext {
 		super(parent, invokingState);
     	this.parser = parser;
 	}
-	public ATTR(): TerminalNode {
-		return this.getToken(ComposeParser.ATTR, 0);
+	public ATTRIBUTE(): TerminalNode {
+		return this.getToken(ComposeParser.ATTRIBUTE, 0);
 	}
 	public identifier(): IdentifierContext {
 		return this.getTypedRuleContext(IdentifierContext, 0) as IdentifierContext;
@@ -2945,8 +2945,8 @@ export class Method_prototypeContext extends ParserRuleContext {
     	this.parser = parser;
         this.mandatory_return = mandatory_return;
 	}
-	public FN(): TerminalNode {
-		return this.getToken(ComposeParser.FN, 0);
+	public FUNCTION(): TerminalNode {
+		return this.getToken(ComposeParser.FUNCTION, 0);
 	}
 	public identifier(): IdentifierContext {
 		return this.getTypedRuleContext(IdentifierContext, 0) as IdentifierContext;
