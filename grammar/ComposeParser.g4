@@ -169,7 +169,7 @@ assign_statement:
     ;
 
 return_statement:
-    RETURN expression SEMI
+    RETURN expression? SEMI
     ;
 
 expression:

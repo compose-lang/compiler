@@ -24,17 +24,17 @@ import ComposeParser, {
     IdentifierContext, IdentifierExpressionContext,
     IntegerLiteralContext,
     List_literalContext,
-    ListLiteralContext, Map_entryContext, Map_literalContext, MapLiteralContext,
+    ListLiteralContext, LiteralExpressionContext, Map_entryContext, Map_literalContext, MapLiteralContext,
     Method_declarationContext,
     Method_prototypeContext,
     Method_typeContext,
     MethodParameterContext,
     Native_typeContext,
-    NullLiteralContext,
+    NullLiteralContext, Return_statementContext,
     Return_typeContext,
     Return_typesContext,
     Set_literalContext,
-    SetLiteralContext,
+    SetLiteralContext, StatementContext,
     String_typeContext,
     StringLiteralContext,
     TypedParameterContext
@@ -75,6 +75,8 @@ import SetLiteral from "../literal/SetLiteral";
 import KeyValuePair from "../utils/KeyValuePair";
 import MapLiteral from "../literal/MapLiteral";
 import InstanceExpression from "../expression/InstanceExpression";
+import IStatement from "../statement/IStatement";
+import ReturnStatement from "../statement/ReturnStatement";
 
 interface IndexedNode {
     __id?: number;
@@ -92,6 +94,10 @@ export default class Builder extends ComposeParserListener {
 
     static parse_expression(data: string): IExpression | null {
         return Builder.doParse<IExpression>((parser: ComposeParser) => parser.expression(), data);
+    }
+
+    static parse_statement(data: string): IStatement | null {
+        return Builder.doParse<IExpression>((parser: ComposeParser) => parser.statement(), data);
     }
 
     static doParse<T>(rule: (parser: ComposeParser) => ParseTree, data?: string, stream?: CharStream): T | null {
@@ -377,6 +383,19 @@ export default class Builder extends ComposeParserListener {
     exitIdentifierExpression = (ctx: IdentifierExpressionContext) => {
         const id = this.getNodeValue<Identifier>(ctx.identifier());
         this.setNodeValue(ctx, new InstanceExpression(id));
+    }
+
+    exitLiteralExpression = (ctx: LiteralExpressionContext) => {
+        this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
+    }
+
+    exitStatement = (ctx: StatementContext) => {
+        this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
+    }
+
+    exitReturn_statement = (ctx: Return_statementContext) => {
+        const exp = this.getNodeValue<IExpression>(ctx.expression());
+        this.setNodeValue(ctx, new ReturnStatement(exp));
     }
 
 }
