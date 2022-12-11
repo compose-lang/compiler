@@ -39,7 +39,15 @@ import { Concrete_method_declarationContext } from "./ComposeParser";
 import { StatementContext } from "./ComposeParser";
 import { Assign_statementContext } from "./ComposeParser";
 import { ExpressionContext } from "./ComposeParser";
-import { Literal_expressionContext } from "./ComposeParser";
+import { NullLiteralContext } from "./ComposeParser";
+import { BooleanLiteralContext } from "./ComposeParser";
+import { IntegerLiteralContext } from "./ComposeParser";
+import { DecimalLiteralContext } from "./ComposeParser";
+import { CharLiteralContext } from "./ComposeParser";
+import { StringLiteralContext } from "./ComposeParser";
+import { ListLiteralContext } from "./ComposeParser";
+import { SetLiteralContext } from "./ComposeParser";
+import { MapLiteralContext } from "./ComposeParser";
 import { List_literalContext } from "./ComposeParser";
 import { Set_literalContext } from "./ComposeParser";
 import { Map_literalContext } from "./ComposeParser";
@@ -418,15 +426,113 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 */
 	exitExpression?: (ctx: ExpressionContext) => void;
 	/**
-	 * Enter a parse tree produced by `ComposeParser.literal_expression`.
+	 * Enter a parse tree produced by the `NullLiteral`
+	 * labeled alternative in `ComposeParser.literal_expression`.
 	 * @param ctx the parse tree
 	 */
-	enterLiteral_expression?: (ctx: Literal_expressionContext) => void;
+	enterNullLiteral?: (ctx: NullLiteralContext) => void;
 	/**
-	 * Exit a parse tree produced by `ComposeParser.literal_expression`.
+	 * Exit a parse tree produced by the `NullLiteral`
+	 * labeled alternative in `ComposeParser.literal_expression`.
 	 * @param ctx the parse tree
 	 */
-	exitLiteral_expression?: (ctx: Literal_expressionContext) => void;
+	exitNullLiteral?: (ctx: NullLiteralContext) => void;
+	/**
+	 * Enter a parse tree produced by the `BooleanLiteral`
+	 * labeled alternative in `ComposeParser.literal_expression`.
+	 * @param ctx the parse tree
+	 */
+	enterBooleanLiteral?: (ctx: BooleanLiteralContext) => void;
+	/**
+	 * Exit a parse tree produced by the `BooleanLiteral`
+	 * labeled alternative in `ComposeParser.literal_expression`.
+	 * @param ctx the parse tree
+	 */
+	exitBooleanLiteral?: (ctx: BooleanLiteralContext) => void;
+	/**
+	 * Enter a parse tree produced by the `IntegerLiteral`
+	 * labeled alternative in `ComposeParser.literal_expression`.
+	 * @param ctx the parse tree
+	 */
+	enterIntegerLiteral?: (ctx: IntegerLiteralContext) => void;
+	/**
+	 * Exit a parse tree produced by the `IntegerLiteral`
+	 * labeled alternative in `ComposeParser.literal_expression`.
+	 * @param ctx the parse tree
+	 */
+	exitIntegerLiteral?: (ctx: IntegerLiteralContext) => void;
+	/**
+	 * Enter a parse tree produced by the `DecimalLiteral`
+	 * labeled alternative in `ComposeParser.literal_expression`.
+	 * @param ctx the parse tree
+	 */
+	enterDecimalLiteral?: (ctx: DecimalLiteralContext) => void;
+	/**
+	 * Exit a parse tree produced by the `DecimalLiteral`
+	 * labeled alternative in `ComposeParser.literal_expression`.
+	 * @param ctx the parse tree
+	 */
+	exitDecimalLiteral?: (ctx: DecimalLiteralContext) => void;
+	/**
+	 * Enter a parse tree produced by the `CharLiteral`
+	 * labeled alternative in `ComposeParser.literal_expression`.
+	 * @param ctx the parse tree
+	 */
+	enterCharLiteral?: (ctx: CharLiteralContext) => void;
+	/**
+	 * Exit a parse tree produced by the `CharLiteral`
+	 * labeled alternative in `ComposeParser.literal_expression`.
+	 * @param ctx the parse tree
+	 */
+	exitCharLiteral?: (ctx: CharLiteralContext) => void;
+	/**
+	 * Enter a parse tree produced by the `StringLiteral`
+	 * labeled alternative in `ComposeParser.literal_expression`.
+	 * @param ctx the parse tree
+	 */
+	enterStringLiteral?: (ctx: StringLiteralContext) => void;
+	/**
+	 * Exit a parse tree produced by the `StringLiteral`
+	 * labeled alternative in `ComposeParser.literal_expression`.
+	 * @param ctx the parse tree
+	 */
+	exitStringLiteral?: (ctx: StringLiteralContext) => void;
+	/**
+	 * Enter a parse tree produced by the `ListLiteral`
+	 * labeled alternative in `ComposeParser.literal_expression`.
+	 * @param ctx the parse tree
+	 */
+	enterListLiteral?: (ctx: ListLiteralContext) => void;
+	/**
+	 * Exit a parse tree produced by the `ListLiteral`
+	 * labeled alternative in `ComposeParser.literal_expression`.
+	 * @param ctx the parse tree
+	 */
+	exitListLiteral?: (ctx: ListLiteralContext) => void;
+	/**
+	 * Enter a parse tree produced by the `SetLiteral`
+	 * labeled alternative in `ComposeParser.literal_expression`.
+	 * @param ctx the parse tree
+	 */
+	enterSetLiteral?: (ctx: SetLiteralContext) => void;
+	/**
+	 * Exit a parse tree produced by the `SetLiteral`
+	 * labeled alternative in `ComposeParser.literal_expression`.
+	 * @param ctx the parse tree
+	 */
+	exitSetLiteral?: (ctx: SetLiteralContext) => void;
+	/**
+	 * Enter a parse tree produced by the `MapLiteral`
+	 * labeled alternative in `ComposeParser.literal_expression`.
+	 * @param ctx the parse tree
+	 */
+	enterMapLiteral?: (ctx: MapLiteralContext) => void;
+	/**
+	 * Exit a parse tree produced by the `MapLiteral`
+	 * labeled alternative in `ComposeParser.literal_expression`.
+	 * @param ctx the parse tree
+	 */
+	exitMapLiteral?: (ctx: MapLiteralContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.list_literal`.
 	 * @param ctx the parse tree

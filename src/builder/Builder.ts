@@ -7,18 +7,36 @@ import {
 import {fileExists} from "../utils/FileUtils";
 import ComposeParser, {
     Abstract_method_declarationContext,
-    Attribute_declarationContext, Attribute_refContext,
-    Attribute_typeContext, AttributeParameterContext,
+    Attribute_declarationContext,
+    Attribute_refContext,
+    Attribute_typeContext,
+    AttributeParameterContext,
     Boolean_typeContext,
-    Class_declarationContext, Class_refContext,
+    BooleanLiteralContext,
+    CharLiteralContext,
+    Class_declarationContext,
+    Class_refContext,
     Class_typeContext,
     Data_typeContext,
+    DecimalLiteralContext,
     DeclarationContext,
+    ExpressionContext,
     IdentifierContext,
+    IntegerLiteralContext,
+    List_literalContext,
+    ListLiteralContext, Map_entryContext, Map_literalContext, MapLiteralContext,
     Method_declarationContext,
-    Method_prototypeContext, Method_typeContext, MethodParameterContext,
-    Native_typeContext, Return_typeContext, Return_typesContext,
+    Method_prototypeContext,
+    Method_typeContext,
+    MethodParameterContext,
+    Native_typeContext,
+    NullLiteralContext,
+    Return_typeContext,
+    Return_typesContext,
+    Set_literalContext,
+    SetLiteralContext,
     String_typeContext,
+    StringLiteralContext,
     TypedParameterContext,
     UnitContext
 } from "../parser/ComposeParser";
@@ -46,6 +64,17 @@ import MethodType from "../type/MethodType";
 import TypeList from "../type/TypeList";
 import VoidType from "../type/VoidType";
 import MethodParameter from "../parameter/MethodParameter";
+import IExpression from "../expression/IExpression";
+import NullLiteral from "../expression/NullLiteral";
+import BooleanLiteral from "../expression/BooleanLiteral";
+import IntegerLiteral from "../expression/IntegerLiteral";
+import DecimalLiteral from "../expression/DecimalLiteral";
+import CharLiteral from "../expression/CharLiteral";
+import StringLiteral from "../expression/StringLiteral";
+import ListLiteral from "../expression/ListLiteral";
+import SetLiteral from "../expression/SetLiteral";
+import KeyValuePair from "../utils/KeyValuePair";
+import MapLiteral from "../expression/MapLiteral";
 
 interface IndexedNode {
     __id?: number;
@@ -59,6 +88,10 @@ export default class Builder extends ComposeParserListener {
 
     static parse_method_type(data: string): MethodType | null {
         return Builder.doParse<MethodType>((parser: ComposeParser) => parser.method_type(), data)
+    }
+
+    static parse_expression(data: string): IExpression | null {
+        return Builder.doParse<IExpression>((parser: ComposeParser) => parser.expression(), data)
     }
 
     static doParse<T>(rule: (parser: ComposeParser) => ParseTree, data?: string, stream?: CharStream): T | null {
@@ -278,6 +311,67 @@ export default class Builder extends ComposeParserListener {
         const declarations = ctx.declaration_list()
             .map(child => this.getNodeValue<IDeclaration>(child), this);
         this.setNodeValue(ctx, new CompilationUnit(declarations));
+    }
+
+    exitExpression = (ctx: ExpressionContext) => {
+        this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
+    }
+
+    exitNullLiteral = (ctx: NullLiteralContext) => {
+        this.setNodeValue(ctx, new NullLiteral(ctx.getText()));
+    }
+
+    exitBooleanLiteral = (ctx: BooleanLiteralContext) => {
+        this.setNodeValue(ctx, new BooleanLiteral(ctx.getText()));
+    }
+
+    exitIntegerLiteral = (ctx: IntegerLiteralContext) => {
+        this.setNodeValue(ctx, new IntegerLiteral(ctx.getText()));
+    }
+
+    exitDecimalLiteral = (ctx: DecimalLiteralContext) => {
+        this.setNodeValue(ctx, new DecimalLiteral(ctx.getText()));
+    }
+
+    exitCharLiteral = (ctx: CharLiteralContext) => {
+        this.setNodeValue(ctx, new CharLiteral(ctx.getText()));
+    }
+
+    exitStringLiteral = (ctx: StringLiteralContext) => {
+        this.setNodeValue(ctx, new StringLiteral(ctx.getText()));
+    }
+
+    exitListLiteral = (ctx: ListLiteralContext) => {
+        this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
+    }
+
+    exitList_literal = (ctx: List_literalContext) => {
+        const items = ctx.expression_list().map(exp => this.getNodeValue(exp), this);
+        this.setNodeValue(ctx, new ListLiteral(ctx.getText(), items));
+    }
+
+    exitSetLiteral = (ctx: SetLiteralContext) => {
+        this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
+    }
+
+    exitSet_literal = (ctx: Set_literalContext) => {
+        const items = ctx.expression_list().map(exp => this.getNodeValue(exp), this);
+        this.setNodeValue(ctx, new SetLiteral(ctx.getText(), items));
+    }
+
+    exitMapLiteral = (ctx: MapLiteralContext) => {
+        this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
+    }
+
+    exitMap_literal = (ctx: Map_literalContext) => {
+        const items = ctx.map_entry_list().map(entry => this.getNodeValue<KeyValuePair<Identifier, IExpression>>(entry), this);
+        this.setNodeValue(ctx, new MapLiteral(ctx.getText(), items));
+    }
+
+    exitMap_entry = (ctx: Map_entryContext) => {
+        const key = this.getNodeValue<Identifier>(ctx.identifier());
+        const value = this.getNodeValue<IExpression>(ctx.expression());
+        this.setNodeValue(ctx, new KeyValuePair(key, value));
     }
 
 }

@@ -172,29 +172,29 @@ expression:
     ;
 
 literal_expression:
-    NULL_LITERAL
-    | BOOLEAN_LITERAL
-    | INTEGER_LITERAL
-    | DECIMAL_LITERAL
-    | CHAR_LITERAL
-    | STRING_LITERAL
-    | list_literal
-    | set_literal
-    | map_literal
+    NULL_LITERAL        # NullLiteral
+    | BOOLEAN_LITERAL   # BooleanLiteral
+    | INTEGER_LITERAL   # IntegerLiteral
+    | DECIMAL_LITERAL   # DecimalLiteral
+    | CHAR_LITERAL      # CharLiteral
+    | STRING_LITERAL    # StringLiteral
+    | list_literal      # ListLiteral
+    | set_literal       # SetLiteral
+    | map_literal       # MapLiteral
     ;
 
 list_literal:
-    LBRAK ( expression (COMMA expression)* )? RBRAK
+    LBRAK ( exp = expression (COMMA exp = expression)* )? RBRAK
     ;
 
 set_literal:
-    LT ( expression (COMMA expression)* )? GT
+    LT ( exp = expression (COMMA exp = expression)* )? GT
     ;
 
 map_literal:
-    LCURL ( map_entry  (COMMA map_entry)* )? RCURL
+    LCURL ( entry = map_entry  (COMMA entry = map_entry)* )? RCURL
     ;
 
 map_entry:
-    IDENTIFIER COLON expression
+    identifier COLON expression
     ;

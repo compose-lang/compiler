@@ -1600,6 +1600,7 @@ export default class ComposeParser extends BaseParser {
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case 73:
+				localctx = new NullLiteralContext(this, localctx);
 				this.enterOuterAlt(localctx, 1);
 				{
 				this.state = 293;
@@ -1607,6 +1608,7 @@ export default class ComposeParser extends BaseParser {
 				}
 				break;
 			case 70:
+				localctx = new BooleanLiteralContext(this, localctx);
 				this.enterOuterAlt(localctx, 2);
 				{
 				this.state = 294;
@@ -1614,6 +1616,7 @@ export default class ComposeParser extends BaseParser {
 				}
 				break;
 			case 68:
+				localctx = new IntegerLiteralContext(this, localctx);
 				this.enterOuterAlt(localctx, 3);
 				{
 				this.state = 295;
@@ -1621,6 +1624,7 @@ export default class ComposeParser extends BaseParser {
 				}
 				break;
 			case 69:
+				localctx = new DecimalLiteralContext(this, localctx);
 				this.enterOuterAlt(localctx, 4);
 				{
 				this.state = 296;
@@ -1628,6 +1632,7 @@ export default class ComposeParser extends BaseParser {
 				}
 				break;
 			case 71:
+				localctx = new CharLiteralContext(this, localctx);
 				this.enterOuterAlt(localctx, 5);
 				{
 				this.state = 297;
@@ -1635,6 +1640,7 @@ export default class ComposeParser extends BaseParser {
 				}
 				break;
 			case 72:
+				localctx = new StringLiteralContext(this, localctx);
 				this.enterOuterAlt(localctx, 6);
 				{
 				this.state = 298;
@@ -1642,6 +1648,7 @@ export default class ComposeParser extends BaseParser {
 				}
 				break;
 			case 26:
+				localctx = new ListLiteralContext(this, localctx);
 				this.enterOuterAlt(localctx, 7);
 				{
 				this.state = 299;
@@ -1649,6 +1656,7 @@ export default class ComposeParser extends BaseParser {
 				}
 				break;
 			case 32:
+				localctx = new SetLiteralContext(this, localctx);
 				this.enterOuterAlt(localctx, 8);
 				{
 				this.state = 300;
@@ -1656,6 +1664,7 @@ export default class ComposeParser extends BaseParser {
 				}
 				break;
 			case 28:
+				localctx = new MapLiteralContext(this, localctx);
 				this.enterOuterAlt(localctx, 9);
 				{
 				this.state = 301;
@@ -1696,7 +1705,7 @@ export default class ComposeParser extends BaseParser {
 			if (((((_la - 26)) & ~0x1F) === 0 && ((1 << (_la - 26)) & 69) !== 0) || ((((_la - 68)) & ~0x1F) === 0 && ((1 << (_la - 68)) & 63) !== 0)) {
 				{
 				this.state = 305;
-				this.expression();
+				localctx._exp = this.expression();
 				this.state = 310;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
@@ -1706,7 +1715,7 @@ export default class ComposeParser extends BaseParser {
 					this.state = 306;
 					this.match(ComposeParser.COMMA);
 					this.state = 307;
-					this.expression();
+					localctx._exp = this.expression();
 					}
 					}
 					this.state = 312;
@@ -1750,7 +1759,7 @@ export default class ComposeParser extends BaseParser {
 			if (((((_la - 26)) & ~0x1F) === 0 && ((1 << (_la - 26)) & 69) !== 0) || ((((_la - 68)) & ~0x1F) === 0 && ((1 << (_la - 68)) & 63) !== 0)) {
 				{
 				this.state = 318;
-				this.expression();
+				localctx._exp = this.expression();
 				this.state = 323;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
@@ -1760,7 +1769,7 @@ export default class ComposeParser extends BaseParser {
 					this.state = 319;
 					this.match(ComposeParser.COMMA);
 					this.state = 320;
-					this.expression();
+					localctx._exp = this.expression();
 					}
 					}
 					this.state = 325;
@@ -1804,7 +1813,7 @@ export default class ComposeParser extends BaseParser {
 			if (_la===74) {
 				{
 				this.state = 331;
-				this.map_entry();
+				localctx._entry = this.map_entry();
 				this.state = 336;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
@@ -1814,7 +1823,7 @@ export default class ComposeParser extends BaseParser {
 					this.state = 332;
 					this.match(ComposeParser.COMMA);
 					this.state = 333;
-					this.map_entry();
+					localctx._entry = this.map_entry();
 					}
 					}
 					this.state = 338;
@@ -1850,7 +1859,7 @@ export default class ComposeParser extends BaseParser {
 			this.enterOuterAlt(localctx, 1);
 			{
 			this.state = 343;
-			this.match(ComposeParser.IDENTIFIER);
+			this.identifier();
 			this.state = 344;
 			this.match(ComposeParser.COLON);
 			this.state = 345;
@@ -2023,10 +2032,10 @@ export default class ComposeParser extends BaseParser {
 	339,5,28,0,0,331,336,3,76,38,0,332,333,5,42,0,0,333,335,3,76,38,0,334,332,
 	1,0,0,0,335,338,1,0,0,0,336,334,1,0,0,0,336,337,1,0,0,0,337,340,1,0,0,0,
 	338,336,1,0,0,0,339,331,1,0,0,0,339,340,1,0,0,0,340,341,1,0,0,0,341,342,
-	5,29,0,0,342,75,1,0,0,0,343,344,5,74,0,0,344,345,5,41,0,0,345,346,3,66,
-	33,0,346,77,1,0,0,0,35,81,87,98,103,109,115,119,154,157,160,173,181,184,
-	195,198,208,213,221,224,232,235,241,254,257,266,268,275,286,302,310,313,
-	323,326,336,339];
+	5,29,0,0,342,75,1,0,0,0,343,344,3,6,3,0,344,345,5,41,0,0,345,346,3,66,33,
+	0,346,77,1,0,0,0,35,81,87,98,103,109,115,119,154,157,160,173,181,184,195,
+	198,208,213,221,224,232,235,241,254,257,266,268,275,286,302,310,313,323,
+	326,336,339];
 
 	private static __ATN: ATN;
 	public static get _ATN(): ATN {
@@ -3119,50 +3128,188 @@ export class Literal_expressionContext extends ParserRuleContext {
 		super(parent, invokingState);
     	this.parser = parser;
 	}
-	public NULL_LITERAL(): TerminalNode {
-		return this.getToken(ComposeParser.NULL_LITERAL, 0);
+    public get ruleIndex(): number {
+    	return ComposeParser.RULE_literal_expression;
 	}
-	public BOOLEAN_LITERAL(): TerminalNode {
-		return this.getToken(ComposeParser.BOOLEAN_LITERAL, 0);
+	public copyFrom(ctx: Literal_expressionContext): void {
+		super.copyFrom(ctx);
 	}
-	public INTEGER_LITERAL(): TerminalNode {
-		return this.getToken(ComposeParser.INTEGER_LITERAL, 0);
-	}
-	public DECIMAL_LITERAL(): TerminalNode {
-		return this.getToken(ComposeParser.DECIMAL_LITERAL, 0);
-	}
-	public CHAR_LITERAL(): TerminalNode {
-		return this.getToken(ComposeParser.CHAR_LITERAL, 0);
-	}
-	public STRING_LITERAL(): TerminalNode {
-		return this.getToken(ComposeParser.STRING_LITERAL, 0);
+}
+export class ListLiteralContext extends Literal_expressionContext {
+	constructor(parser: ComposeParser, ctx: Literal_expressionContext) {
+		super(parser, ctx.parentCtx, ctx.invokingState);
+		super.copyFrom(ctx);
 	}
 	public list_literal(): List_literalContext {
 		return this.getTypedRuleContext(List_literalContext, 0) as List_literalContext;
 	}
-	public set_literal(): Set_literalContext {
-		return this.getTypedRuleContext(Set_literalContext, 0) as Set_literalContext;
+	public enterRule(listener: ComposeParserListener): void {
+	    if(listener.enterListLiteral) {
+	 		listener.enterListLiteral(this);
+		}
+	}
+	public exitRule(listener: ComposeParserListener): void {
+	    if(listener.exitListLiteral) {
+	 		listener.exitListLiteral(this);
+		}
+	}
+}
+export class MapLiteralContext extends Literal_expressionContext {
+	constructor(parser: ComposeParser, ctx: Literal_expressionContext) {
+		super(parser, ctx.parentCtx, ctx.invokingState);
+		super.copyFrom(ctx);
 	}
 	public map_literal(): Map_literalContext {
 		return this.getTypedRuleContext(Map_literalContext, 0) as Map_literalContext;
 	}
-    public get ruleIndex(): number {
-    	return ComposeParser.RULE_literal_expression;
-	}
 	public enterRule(listener: ComposeParserListener): void {
-	    if(listener.enterLiteral_expression) {
-	 		listener.enterLiteral_expression(this);
+	    if(listener.enterMapLiteral) {
+	 		listener.enterMapLiteral(this);
 		}
 	}
 	public exitRule(listener: ComposeParserListener): void {
-	    if(listener.exitLiteral_expression) {
-	 		listener.exitLiteral_expression(this);
+	    if(listener.exitMapLiteral) {
+	 		listener.exitMapLiteral(this);
+		}
+	}
+}
+export class CharLiteralContext extends Literal_expressionContext {
+	constructor(parser: ComposeParser, ctx: Literal_expressionContext) {
+		super(parser, ctx.parentCtx, ctx.invokingState);
+		super.copyFrom(ctx);
+	}
+	public CHAR_LITERAL(): TerminalNode {
+		return this.getToken(ComposeParser.CHAR_LITERAL, 0);
+	}
+	public enterRule(listener: ComposeParserListener): void {
+	    if(listener.enterCharLiteral) {
+	 		listener.enterCharLiteral(this);
+		}
+	}
+	public exitRule(listener: ComposeParserListener): void {
+	    if(listener.exitCharLiteral) {
+	 		listener.exitCharLiteral(this);
+		}
+	}
+}
+export class StringLiteralContext extends Literal_expressionContext {
+	constructor(parser: ComposeParser, ctx: Literal_expressionContext) {
+		super(parser, ctx.parentCtx, ctx.invokingState);
+		super.copyFrom(ctx);
+	}
+	public STRING_LITERAL(): TerminalNode {
+		return this.getToken(ComposeParser.STRING_LITERAL, 0);
+	}
+	public enterRule(listener: ComposeParserListener): void {
+	    if(listener.enterStringLiteral) {
+	 		listener.enterStringLiteral(this);
+		}
+	}
+	public exitRule(listener: ComposeParserListener): void {
+	    if(listener.exitStringLiteral) {
+	 		listener.exitStringLiteral(this);
+		}
+	}
+}
+export class BooleanLiteralContext extends Literal_expressionContext {
+	constructor(parser: ComposeParser, ctx: Literal_expressionContext) {
+		super(parser, ctx.parentCtx, ctx.invokingState);
+		super.copyFrom(ctx);
+	}
+	public BOOLEAN_LITERAL(): TerminalNode {
+		return this.getToken(ComposeParser.BOOLEAN_LITERAL, 0);
+	}
+	public enterRule(listener: ComposeParserListener): void {
+	    if(listener.enterBooleanLiteral) {
+	 		listener.enterBooleanLiteral(this);
+		}
+	}
+	public exitRule(listener: ComposeParserListener): void {
+	    if(listener.exitBooleanLiteral) {
+	 		listener.exitBooleanLiteral(this);
+		}
+	}
+}
+export class DecimalLiteralContext extends Literal_expressionContext {
+	constructor(parser: ComposeParser, ctx: Literal_expressionContext) {
+		super(parser, ctx.parentCtx, ctx.invokingState);
+		super.copyFrom(ctx);
+	}
+	public DECIMAL_LITERAL(): TerminalNode {
+		return this.getToken(ComposeParser.DECIMAL_LITERAL, 0);
+	}
+	public enterRule(listener: ComposeParserListener): void {
+	    if(listener.enterDecimalLiteral) {
+	 		listener.enterDecimalLiteral(this);
+		}
+	}
+	public exitRule(listener: ComposeParserListener): void {
+	    if(listener.exitDecimalLiteral) {
+	 		listener.exitDecimalLiteral(this);
+		}
+	}
+}
+export class NullLiteralContext extends Literal_expressionContext {
+	constructor(parser: ComposeParser, ctx: Literal_expressionContext) {
+		super(parser, ctx.parentCtx, ctx.invokingState);
+		super.copyFrom(ctx);
+	}
+	public NULL_LITERAL(): TerminalNode {
+		return this.getToken(ComposeParser.NULL_LITERAL, 0);
+	}
+	public enterRule(listener: ComposeParserListener): void {
+	    if(listener.enterNullLiteral) {
+	 		listener.enterNullLiteral(this);
+		}
+	}
+	public exitRule(listener: ComposeParserListener): void {
+	    if(listener.exitNullLiteral) {
+	 		listener.exitNullLiteral(this);
+		}
+	}
+}
+export class SetLiteralContext extends Literal_expressionContext {
+	constructor(parser: ComposeParser, ctx: Literal_expressionContext) {
+		super(parser, ctx.parentCtx, ctx.invokingState);
+		super.copyFrom(ctx);
+	}
+	public set_literal(): Set_literalContext {
+		return this.getTypedRuleContext(Set_literalContext, 0) as Set_literalContext;
+	}
+	public enterRule(listener: ComposeParserListener): void {
+	    if(listener.enterSetLiteral) {
+	 		listener.enterSetLiteral(this);
+		}
+	}
+	public exitRule(listener: ComposeParserListener): void {
+	    if(listener.exitSetLiteral) {
+	 		listener.exitSetLiteral(this);
+		}
+	}
+}
+export class IntegerLiteralContext extends Literal_expressionContext {
+	constructor(parser: ComposeParser, ctx: Literal_expressionContext) {
+		super(parser, ctx.parentCtx, ctx.invokingState);
+		super.copyFrom(ctx);
+	}
+	public INTEGER_LITERAL(): TerminalNode {
+		return this.getToken(ComposeParser.INTEGER_LITERAL, 0);
+	}
+	public enterRule(listener: ComposeParserListener): void {
+	    if(listener.enterIntegerLiteral) {
+	 		listener.enterIntegerLiteral(this);
+		}
+	}
+	public exitRule(listener: ComposeParserListener): void {
+	    if(listener.exitIntegerLiteral) {
+	 		listener.exitIntegerLiteral(this);
 		}
 	}
 }
 
 
 export class List_literalContext extends ParserRuleContext {
+	public _exp!: ExpressionContext;
 	constructor(parser?: ComposeParser, parent?: ParserRuleContext, invokingState?: number) {
 		super(parent, invokingState);
     	this.parser = parser;
@@ -3202,6 +3349,7 @@ export class List_literalContext extends ParserRuleContext {
 
 
 export class Set_literalContext extends ParserRuleContext {
+	public _exp!: ExpressionContext;
 	constructor(parser?: ComposeParser, parent?: ParserRuleContext, invokingState?: number) {
 		super(parent, invokingState);
     	this.parser = parser;
@@ -3241,6 +3389,7 @@ export class Set_literalContext extends ParserRuleContext {
 
 
 export class Map_literalContext extends ParserRuleContext {
+	public _entry!: Map_entryContext;
 	constructor(parser?: ComposeParser, parent?: ParserRuleContext, invokingState?: number) {
 		super(parent, invokingState);
     	this.parser = parser;
@@ -3284,8 +3433,8 @@ export class Map_entryContext extends ParserRuleContext {
 		super(parent, invokingState);
     	this.parser = parser;
 	}
-	public IDENTIFIER(): TerminalNode {
-		return this.getToken(ComposeParser.IDENTIFIER, 0);
+	public identifier(): IdentifierContext {
+		return this.getTypedRuleContext(IdentifierContext, 0) as IdentifierContext;
 	}
 	public COLON(): TerminalNode {
 		return this.getToken(ComposeParser.COLON, 0);
