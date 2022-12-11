@@ -19,6 +19,7 @@ STATIC: 'static';
 FUNCTION: 'function';
 
 LET: 'let';
+NEW: 'new';
 CONST: 'const';
 RETURN: 'return';
 
@@ -34,6 +35,14 @@ TRY: 'try';
 CATCH: 'catch';
 FINALLY: 'finally';
 
+THIS: 'this';
+SUPER: 'super';
+TYPE_OF: 'typeof';
+INSTANCE_OF: 'instanceof';
+
+IN: 'in';
+AS: 'as';
+
 LPAR: '(';
 RPAR: ')';
 LBRAK: '[';
@@ -46,8 +55,8 @@ GT : '>';
 LT : '<';
 LTE : '<=';
 GTE : '>=';
-EQUAL : '==';
-NOT_EQUAL : '!=';
+EQUALS : '==';
+NOT_EQUALS : '!=';
 
 NOT : '!';
 AND : '&&';
@@ -68,11 +77,15 @@ MINUS: '-';
 STAR: '*';
 SLASH: '/';
 BSLASH: '\\';
-CARET: '^';
 PERCENT: '%';
 
+CARET: '^';
+TILDE: '~';
 AMP : '&';
 PIPE : '|';
+LSHIFT : '<<';
+RSHIFT : '>>';
+URSHIFT : '>>>';
 
 ASSIGN : '=';
 ADD_ASSIGN : '+=';

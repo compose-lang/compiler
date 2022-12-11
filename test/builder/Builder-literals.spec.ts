@@ -1,14 +1,14 @@
 import Builder from "../../src/builder/Builder";
 import * as assert from "assert";
-import NullLiteral from "../../src/expression/NullLiteral";
-import BooleanLiteral from "../../src/expression/BooleanLiteral";
-import IntegerLiteral from "../../src/expression/IntegerLiteral";
-import DecimalLiteral from "../../src/expression/DecimalLiteral";
-import CharLiteral from "../../src/expression/CharLiteral";
-import StringLiteral from "../../src/expression/StringLiteral";
-import ListLiteral from "../../src/expression/ListLiteral";
-import SetLiteral from "../../src/expression/SetLiteral";
-import MapLiteral from "../../src/expression/MapLiteral";
+import NullLiteral from "../../src/literal/NullLiteral";
+import BooleanLiteral from "../../src/literal/BooleanLiteral";
+import IntegerLiteral from "../../src/literal/IntegerLiteral";
+import DecimalLiteral from "../../src/literal/DecimalLiteral";
+import CharLiteral from "../../src/literal/CharLiteral";
+import StringLiteral from "../../src/literal/StringLiteral";
+import ListLiteral from "../../src/literal/ListLiteral";
+import SetLiteral from "../../src/literal/SetLiteral";
+import MapLiteral from "../../src/literal/MapLiteral";
 
 it('parses a null literal',  () => {
     const exp = Builder.parse_expression("null");

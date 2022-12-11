@@ -1,5 +1,5 @@
 import LiteralBase from "./LiteralBase";
-import IExpression from "./IExpression";
+import IExpression from "../expression/IExpression";
 
 export default class SetLiteral extends LiteralBase<Set<any>> {
 

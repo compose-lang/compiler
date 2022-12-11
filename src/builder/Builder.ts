@@ -16,12 +16,12 @@ import ComposeParser, {
     CharLiteralContext,
     Class_declarationContext,
     Class_refContext,
-    Class_typeContext,
+    Class_typeContext, Compilation_unitContext,
     Data_typeContext,
     DecimalLiteralContext,
     DeclarationContext,
     ExpressionContext,
-    IdentifierContext,
+    IdentifierContext, IdentifierExpressionContext,
     IntegerLiteralContext,
     List_literalContext,
     ListLiteralContext, Map_entryContext, Map_literalContext, MapLiteralContext,
@@ -37,8 +37,7 @@ import ComposeParser, {
     SetLiteralContext,
     String_typeContext,
     StringLiteralContext,
-    TypedParameterContext,
-    UnitContext
+    TypedParameterContext
 } from "../parser/ComposeParser";
 import ComposeLexer from "../parser/ComposeLexer";
 import ComposeParserListener from "../parser/ComposeParserListener";
@@ -65,16 +64,17 @@ import TypeList from "../type/TypeList";
 import VoidType from "../type/VoidType";
 import MethodParameter from "../parameter/MethodParameter";
 import IExpression from "../expression/IExpression";
-import NullLiteral from "../expression/NullLiteral";
-import BooleanLiteral from "../expression/BooleanLiteral";
-import IntegerLiteral from "../expression/IntegerLiteral";
-import DecimalLiteral from "../expression/DecimalLiteral";
-import CharLiteral from "../expression/CharLiteral";
-import StringLiteral from "../expression/StringLiteral";
-import ListLiteral from "../expression/ListLiteral";
-import SetLiteral from "../expression/SetLiteral";
+import NullLiteral from "../literal/NullLiteral";
+import BooleanLiteral from "../literal/BooleanLiteral";
+import IntegerLiteral from "../literal/IntegerLiteral";
+import DecimalLiteral from "../literal/DecimalLiteral";
+import CharLiteral from "../literal/CharLiteral";
+import StringLiteral from "../literal/StringLiteral";
+import ListLiteral from "../literal/ListLiteral";
+import SetLiteral from "../literal/SetLiteral";
 import KeyValuePair from "../utils/KeyValuePair";
-import MapLiteral from "../expression/MapLiteral";
+import MapLiteral from "../literal/MapLiteral";
+import InstanceExpression from "../expression/InstanceExpression";
 
 interface IndexedNode {
     __id?: number;
@@ -83,15 +83,15 @@ interface IndexedNode {
 export default class Builder extends ComposeParserListener {
 
     static parse_unit(data: string): CompilationUnit | null {
-        return Builder.doParse<CompilationUnit>((parser: ComposeParser) => parser.unit(), data)
+        return Builder.doParse<CompilationUnit>((parser: ComposeParser) => parser.compilation_unit(), data);
     }
 
     static parse_method_type(data: string): MethodType | null {
-        return Builder.doParse<MethodType>((parser: ComposeParser) => parser.method_type(), data)
+        return Builder.doParse<MethodType>((parser: ComposeParser) => parser.method_type(), data);
     }
 
     static parse_expression(data: string): IExpression | null {
-        return Builder.doParse<IExpression>((parser: ComposeParser) => parser.expression(), data)
+        return Builder.doParse<IExpression>((parser: ComposeParser) => parser.expression(), data);
     }
 
     static doParse<T>(rule: (parser: ComposeParser) => ParseTree, data?: string, stream?: CharStream): T | null {
@@ -307,7 +307,7 @@ export default class Builder extends ComposeParserListener {
         this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
     }
 
-    exitUnit = (ctx: UnitContext) => {
+    exitCompilation_unit = (ctx: Compilation_unitContext) => {
         const declarations = ctx.declaration_list()
             .map(child => this.getNodeValue<IDeclaration>(child), this);
         this.setNodeValue(ctx, new CompilationUnit(declarations));
@@ -372,6 +372,11 @@ export default class Builder extends ComposeParserListener {
         const key = this.getNodeValue<Identifier>(ctx.identifier());
         const value = this.getNodeValue<IExpression>(ctx.expression());
         this.setNodeValue(ctx, new KeyValuePair(key, value));
+    }
+
+    exitIdentifierExpression = (ctx: IdentifierExpressionContext) => {
+        const id = this.getNodeValue<Identifier>(ctx.identifier());
+        this.setNodeValue(ctx, new InstanceExpression(id));
     }
 
 }

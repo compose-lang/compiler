@@ -1,4 +1,5 @@
-import {Parser} from 'antlr4';
+import { Parser } from 'antlr4';
+import ComposeLexer from "./ComposeLexer";
 
 export default class BaseParser extends Parser {
 
@@ -12,4 +13,18 @@ export default class BaseParser extends Parser {
         return !this.willBeUppercase();
     }
 
+    willContainLineTerminator() {
+        let idx = 1;
+        for(;;) {
+            const token = this.getTokenStream().LT(idx++);
+            if (token.type !== ComposeLexer.WS)
+                return false;
+            if (token.text.indexOf("\n") < 0)
+                return true;
+        }
+    }
+
+    willNotContainLineTerminator() {
+        return !this.willContainLineTerminator();
+    }
 }

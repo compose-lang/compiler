@@ -1,5 +1,5 @@
 import LiteralBase from "./LiteralBase";
-import IExpression from "./IExpression";
+import IExpression from "../expression/IExpression";
 import Identifier from "../builder/Identifier";
 import KeyValuePair from "../utils/KeyValuePair";
 

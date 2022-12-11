@@ -1,4 +1,4 @@
-import ExpressionBase from "./ExpressionBase";
+import ExpressionBase from "../expression/ExpressionBase";
 
 export default abstract class LiteralBase<T> extends ExpressionBase {
 
