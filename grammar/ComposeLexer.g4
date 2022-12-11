@@ -15,16 +15,24 @@ ATTRIBUTE: 'attribute';
 ABSTRACT: 'abstract';
 CLASS: 'class';
 EXTENDS: 'extends';
+STATIC: 'static';
 FUNCTION: 'function';
+
+LET: 'let';
+CONST: 'const';
+RETURN: 'return';
 
 IF: 'if';
 ELSE: 'else';
+SWITCH: 'switch';
+CASE: 'case';
 FOR: 'for';
 DO: 'do';
 WHILE: 'while';
 BREAK: 'break';
 TRY: 'try';
-WHEN: 'when';
+CATCH: 'catch';
+FINALLY: 'finally';
 
 LPAR: '(';
 RPAR: ')';
@@ -39,13 +47,14 @@ LT : '<';
 LTE : '<=';
 GTE : '>=';
 EQUAL : '==';
-NOTEQUAL : '!=';
+NOT_EQUAL : '!=';
 
-BANG : '!';
+NOT : '!';
 AND : '&&';
 OR : '||';
 
 QUESTION : '?';
+SEMI : ';';
 COLON : ':';
 COMMA : ',';
 DOT : '.';

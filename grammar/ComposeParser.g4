@@ -161,10 +161,15 @@ concrete_method_declaration:
 
 statement:
     assign_statement
+    | return_statement
     ;
 
 assign_statement:
-    identifier (COLON data_type | method_type) ASSIGN expression
+    (LET | CONST)? identifier (COLON data_type | method_type) ASSIGN expression SEMI
+    ;
+
+return_statement:
+    RETURN expression SEMI
     ;
 
 expression:

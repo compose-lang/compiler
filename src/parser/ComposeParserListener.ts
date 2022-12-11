@@ -38,6 +38,7 @@ import { Method_prototypeContext } from "./ComposeParser";
 import { Concrete_method_declarationContext } from "./ComposeParser";
 import { StatementContext } from "./ComposeParser";
 import { Assign_statementContext } from "./ComposeParser";
+import { Return_statementContext } from "./ComposeParser";
 import { ExpressionContext } from "./ComposeParser";
 import { NullLiteralContext } from "./ComposeParser";
 import { BooleanLiteralContext } from "./ComposeParser";
@@ -415,6 +416,16 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitAssign_statement?: (ctx: Assign_statementContext) => void;
+	/**
+	 * Enter a parse tree produced by `ComposeParser.return_statement`.
+	 * @param ctx the parse tree
+	 */
+	enterReturn_statement?: (ctx: Return_statementContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.return_statement`.
+	 * @param ctx the parse tree
+	 */
+	exitReturn_statement?: (ctx: Return_statementContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.expression`.
 	 * @param ctx the parse tree
