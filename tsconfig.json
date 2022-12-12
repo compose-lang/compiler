@@ -3,10 +3,11 @@
     "noImplicitAny": true,
     "target": "ES6",
     "module": "ES2020",
-    "moduleResolution": "Node",
+    "moduleResolution": "node",
     "declaration": true,
     "declarationDir": "dist",
-    "sourceMap": true
+    "sourceMap": true,
+    "esModuleInterop": true
   },
   "ts-node": {
     "esm": true,

@@ -6,4 +6,3 @@ const _fileExists: (path: string) => boolean = fs ? fs.existsSync : (path: strin
 export function fileExists(path: string) {
     return _fileExists(path);
 }
-
