@@ -1,15 +1,12 @@
 import CompilationUnit from "./CompilationUnit";
-import ITarget from "./ITarget";
+import IWasmTarget from "./IWasmTarget";
+import WasmModule from "../module/WasmModule";
 
 export default class Compiler {
 
-    target: ITarget;
+    module = new WasmModule();
 
-    constructor(target: ITarget) {
-        this.target = target;
-    }
-
-    compile(unit: CompilationUnit) {
-        console.log("Compiling " + unit.toString());
+    compile(unit: CompilationUnit, target: IWasmTarget) {
+        this.module.writeTo(target);
     }
 }

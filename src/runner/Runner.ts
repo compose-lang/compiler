@@ -2,7 +2,7 @@ import IWasmSource from "./IWasmSource";
 
 export default class Runner {
 
-    static of(source: IWasmSource, imports: any): Runner {
+    static of(source: IWasmSource, imports?: any): Runner {
         const module = source.compile();
         const instance = new WebAssembly.Instance(module, imports);
         return new Runner(module, instance);
