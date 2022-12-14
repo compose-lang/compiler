@@ -8,4 +8,5 @@ export default class NullLiteral extends LiteralBase<any> {
     toNative(): any {
         return null;
     }
+
 }

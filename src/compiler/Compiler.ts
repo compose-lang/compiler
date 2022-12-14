@@ -21,7 +21,8 @@ export default class Compiler {
         unit.declarations.forEach(decl => decl.register(this.globals));
         unit.declarations.forEach(decl => decl.check(this.globals));
         unit.declarations.forEach(decl => decl.declare(this.globals, this.module));
-        unit.declarations.forEach(decl => decl.compile(this.globals, this.module));
+        // compile functions using the same sequence as functions section
+        this.module.functions.forEach(decl => decl.compile(this.globals, this.module));
     }
 
     build(target: IWasmTarget) {

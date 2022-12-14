@@ -119,7 +119,7 @@ export default class Builder extends ComposeParserListener {
     }
 
     static parse_statement(data: string): IStatement | null {
-        return Builder.doParse<IExpression>((parser: ComposeParser) => parser.statement(), data);
+        return Builder.doParse<IStatement>((parser: ComposeParser) => parser.statement(), data);
     }
 
     static doParse<T>(rule: (parser: ComposeParser) => ParseTree, data?: string, stream?: CharStream): T | null {
@@ -380,7 +380,7 @@ export default class Builder extends ComposeParserListener {
     }
 
     exitList_literal = (ctx: List_literalContext) => {
-        const items = ctx.expression_list().map(exp => this.getNodeValue(exp), this);
+        const items = ctx.expression_list().map(exp => this.getNodeValue<IExpression>(exp), this);
         this.setNodeValue(ctx, new ListLiteral(ctx.getText(), items));
     }
 
@@ -389,7 +389,7 @@ export default class Builder extends ComposeParserListener {
     }
 
     exitSet_literal = (ctx: Set_literalContext) => {
-        const items = ctx.expression_list().map(exp => this.getNodeValue(exp), this);
+        const items = ctx.expression_list().map(exp => this.getNodeValue<IExpression>(exp), this);
         this.setNodeValue(ctx, new SetLiteral(ctx.getText(), items));
     }
 

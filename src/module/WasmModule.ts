@@ -5,10 +5,12 @@ import TypesSection from "./TypesSection";
 import Prototype from "../declaration/Prototype";
 import FunctionsSection from "./FunctionsSection";
 import ExportsSection from "./ExportsSection";
+import IFunctionDeclaration from "../declaration/IFunctionDeclaration";
 
 export default class WasmModule {
 
     sections = new Map<SectionType, ISection>();
+    functions: IFunctionDeclaration[] = [];
 
     writeTo(target: IWasmTarget) {
         WasmModule.writeMagicBytes(target);
@@ -28,10 +30,14 @@ export default class WasmModule {
         target.writeBytes(1, 0, 0, 0);
     }
 
-    exportMethod(prototype: Prototype) {
-        const typeIndex = this.getTypesSection().addMethodType(prototype);
-        // const functionIndex = this.getFunctionsSection().addFunction(prototype, typeIndex);
-        // TODO this.getExportsSection().addFunction(prototype, functionIndex);
+    declareFunction(function_: IFunctionDeclaration, exported = false) {
+        // TODO check unique
+        const typeIndex = this.getTypesSection().addFunctionType(function_.type());
+        const functionIndex = this.getFunctionsSection().addFunction(typeIndex);
+        this.functions[functionIndex] = function_;
+        if(exported) {
+            // TODO this.getExportsSection().addFunction(function_, functionIndex);
+        }
     }
 
     getTypesSection(): TypesSection {

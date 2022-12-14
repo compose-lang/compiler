@@ -3,7 +3,7 @@ export default abstract class LEB128 {
 
     static emitUnsigned(uint: number, emitter: (byte: number) => void): void {
         do {
-            let byte = uint & 0xEF;
+            let byte = uint & 0x7F;
             uint >>= 7;
             if (uint != 0)
                 byte |= 0x80

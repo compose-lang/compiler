@@ -23,8 +23,8 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
     }
 
     declare(context: Context, module: WasmModule): void {
-        module.exportMethod(this.prototype());
-        // this.statements.forEach(stmt => stmt.declare(context, module));
+        module.declareFunction(this, true);
+        this.statements.forEach(stmt => stmt.declare(context, module));
     }
 
     compile(context: Context, module: WasmModule): void {

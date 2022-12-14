@@ -23,8 +23,7 @@ export default class TypesSection extends SectionBase {
         this.types.forEach(type => type.writeTo(target));
     }
 
-    addMethodType(type: FunctionType): number {
-        // TODO check unique
+    addFunctionType(type: FunctionType): number {
         this.types.push(type);
         return this.types.length - 1; // index is 0-based
     }

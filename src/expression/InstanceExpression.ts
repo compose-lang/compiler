@@ -1,5 +1,7 @@
 import ExpressionBase from "./ExpressionBase";
 import Identifier from "../builder/Identifier";
+import WasmModule from "../module/WasmModule";
+import Context from "../context/Context";
 
 export default class InstanceExpression extends ExpressionBase {
 
@@ -12,6 +14,10 @@ export default class InstanceExpression extends ExpressionBase {
 
     get name(): string {
         return this.id.value;
+    }
+
+    declare(context: Context, module: WasmModule): void {
+        // TODO
     }
 
 }

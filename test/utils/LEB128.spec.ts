@@ -8,11 +8,25 @@ it("properly encodes uint 0",  () => {
     assert.equal(bytes[0], 0);
 });
 
-it("properly encodes uint 7",  () => {
+it("properly encodes uint 1",  () => {
     const bytes: number[] = [];
-    LEB128.emitUnsigned(7, byte => bytes.push(byte));
+    LEB128.emitUnsigned(1, byte => bytes.push(byte));
     assert.equal(bytes.length, 1);
-    assert.equal(bytes[0], 7);
+    assert.equal(bytes[0], 1);
+});
+
+it("properly encodes uint 2",  () => {
+    const bytes: number[] = [];
+    LEB128.emitUnsigned(2, byte => bytes.push(byte));
+    assert.equal(bytes.length, 1);
+    assert.equal(bytes[0], 2);
+});
+
+it("properly encodes uint 7F",  () => {
+    const bytes: number[] = [];
+    LEB128.emitUnsigned(0x7F, byte => bytes.push(byte));
+    assert.equal(bytes.length, 1);
+    assert.equal(bytes[0], 0x7F);
 });
 
 it("properly encodes uint 624485",  () => {

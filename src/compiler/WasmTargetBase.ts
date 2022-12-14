@@ -1,5 +1,6 @@
 import IWasmTarget from "./IWasmTarget";
 import IWasmSource from "../runner/IWasmSource";
+import LEB128 from "../utils/LEB128";
 
 export default abstract class WasmTargetBase implements IWasmTarget {
 
@@ -8,17 +9,12 @@ export default abstract class WasmTargetBase implements IWasmTarget {
     abstract writeUint8Array(bytes: Uint8Array): void;
 
     writeUInts(...uints: number[]): void {
+        this.writeUIntsArray(uints);
+    }
+
+    writeUIntsArray(uints: number[]): void {
         const bytes: number[] = [];
-        uints.forEach(uint => {
-            let _7bits = uint & 0x7F;
-            uint >>= 7;
-            while (uint != 0) {
-                bytes.push(_7bits | 0x80);
-                _7bits = uint & 0x7F;
-                uint >>= 7;
-            }
-            bytes.push(_7bits);
-        })
+        uints.forEach(uint => LEB128.emitUnsigned(uint, byte => bytes.push(byte)));
         this.writeBytesArray(bytes);
     }
 
