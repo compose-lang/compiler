@@ -6,7 +6,7 @@ import {
 } from "antlr4";
 import {fileExists} from "../utils/FileUtils";
 import ComposeParser, {
-    Abstract_method_declarationContext,
+    Abstract_function_declarationContext,
     Attribute_declarationContext,
     Attribute_refContext,
     Attribute_typeContext,
@@ -16,28 +16,43 @@ import ComposeParser, {
     CharLiteralContext,
     Class_declarationContext,
     Class_refContext,
-    Class_typeContext, Compilation_unitContext, Concrete_method_declarationContext,
-    Data_typeContext, Decimal_typeContext,
+    Class_typeContext,
+    Compilation_unitContext, Concrete_function_declarationContext,
+    Data_typeContext,
+    Decimal_typeContext,
     DecimalLiteralContext,
     DeclarationContext,
-    ExpressionContext, F32_typeContext, F64_typeContext, I32_typeContext, I64_typeContext,
-    IdentifierContext, IdentifierExpressionContext, Integer_typeContext,
+    ExpressionContext,
+    F32_typeContext,
+    F64_typeContext, Function_declarationContext, Function_prototypeContext,
+    Function_typeContext,
+    FunctionParameterContext,
+    I32_typeContext,
+    I64_typeContext,
+    IdentifierContext,
+    IdentifierExpressionContext,
+    Integer_typeContext,
     IntegerLiteralContext,
     List_literalContext,
-    ListLiteralContext, LiteralExpressionContext, Map_entryContext, Map_literalContext, MapLiteralContext,
-    Method_declarationContext,
-    Method_prototypeContext,
-    Method_typeContext,
-    MethodParameterContext,
+    ListLiteralContext,
+    LiteralExpressionContext,
+    Map_entryContext,
+    Map_literalContext,
+    MapLiteralContext,
     Native_typeContext,
-    NullLiteralContext, Number_typeContext, Return_statementContext,
+    NullLiteralContext,
+    Number_typeContext,
+    Return_statementContext,
     Return_typeContext,
     Return_typesContext,
     Set_literalContext,
-    SetLiteralContext, StatementContext,
+    SetLiteralContext,
+    StatementContext,
     String_typeContext,
     StringLiteralContext,
-    TypedParameterContext, U32_typeContext, U64_typeContext
+    TypedParameterContext,
+    U32_typeContext,
+    U64_typeContext
 } from "../parser/ComposeParser";
 import ComposeLexer from "../parser/ComposeLexer";
 import ComposeParserListener from "../parser/ComposeParserListener";
@@ -49,20 +64,20 @@ import IDataType from "../type/IDataType";
 import AttributeDeclaration from "../declaration/AttributeDeclaration";
 import IDeclaration from "../declaration/IDeclaration";
 import ClassDeclaration from "../declaration/ClassDeclaration";
-import MethodDeclarationBase from "../declaration/MethodDeclarationBase";
+import FunctionDeclarationBase from "../declaration/FunctionDeclarationBase";
 import AttributeType from "../type/AttributeType";
 import ClassType from "../type/ClassType";
 import IParameter from "../parameter/IParameter";
 import IType from "../type/IType";
 import Prototype from "../declaration/Prototype";
-import AbstractMethodDeclaration from "../declaration/AbstractMethodDeclaration";
+import AbstractFunctionDeclaration from "../declaration/AbstractFunctionDeclaration";
 import BooleanType from "../type/BooleanType";
 import AttributeParameter from "../parameter/AttributeParameter";
 import TypedParameter from "../parameter/TypedParameter";
-import MethodType from "../type/MethodType";
+import FunctionType from "../type/FunctionType";
 import TypeList from "../type/TypeList";
 import VoidType from "../type/VoidType";
-import MethodParameter from "../parameter/MethodParameter";
+import FunctionParameter from "../parameter/FunctionParameter";
 import IExpression from "../expression/IExpression";
 import NullLiteral from "../literal/NullLiteral";
 import BooleanLiteral from "../literal/BooleanLiteral";
@@ -77,7 +92,7 @@ import MapLiteral from "../literal/MapLiteral";
 import InstanceExpression from "../expression/InstanceExpression";
 import IStatement from "../statement/IStatement";
 import ReturnStatement from "../statement/ReturnStatement";
-import ConcreteMethodDeclaration from "../declaration/ConcreteMethodDeclaration";
+import ConcreteFunctionDeclaration from "../declaration/ConcreteFunctionDeclaration";
 import Int32Type from "../type/Int32Type";
 import Float32Type from "../type/Float32Type";
 import Float64Type from "../type/Float64Type";
@@ -95,8 +110,8 @@ export default class Builder extends ComposeParserListener {
         return Builder.doParse<CompilationUnit>((parser: ComposeParser) => parser.compilation_unit(), data);
     }
 
-    static parse_method_type(data: string): MethodType | null {
-        return Builder.doParse<MethodType>((parser: ComposeParser) => parser.method_type(), data);
+    static parse_function_type(data: string): FunctionType | null {
+        return Builder.doParse<FunctionType>((parser: ComposeParser) => parser.function_type(), data);
     }
 
     static parse_expression(data: string): IExpression | null {
@@ -244,17 +259,17 @@ export default class Builder extends ComposeParserListener {
         this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
     }
 
-    exitMethod_type = (ctx: Method_typeContext) => {
+    exitFunction_type = (ctx: Function_typeContext) => {
         const attr = ctx.attribute_type();
         const parameters = attr
                 ? [ new AttributeParameter(this.getNodeValue<AttributeType>(attr)) ]
                 : ctx.parameter_list().map(child => this.getNodeValue<IParameter>(child), this);
         const returnTypes = this.getNodeValue<TypeList>(ctx.return_types());
-        this.setNodeValue(ctx, new MethodType(parameters, returnTypes));
+        this.setNodeValue(ctx, new FunctionType(parameters, returnTypes));
     }
 
     exitReturn_type = (ctx: Return_typeContext) => {
-        const child = ctx.data_type() || ctx.attribute_type() || ctx.method_type();
+        const child = ctx.data_type() || ctx.attribute_type() || ctx.function_type();
         this.setNodeValue(ctx, this.getNodeValue(child));
     }
 
@@ -277,9 +292,9 @@ export default class Builder extends ComposeParserListener {
         const parents = ctx.class_ref_list()
             .slice(1) // skip id which is also a class_type
             .map(child => this.getNodeValue<Identifier>(child), this);
-        const methods = ctx.method_declaration_list()
-            .map(child => this.getNodeValue<MethodDeclarationBase>(child), this);
-        this.setNodeValue(ctx, new ClassDeclaration(id, attributes, parents, methods, ctx.ABSTRACT() != null));
+        const functions = ctx.function_declaration_list()
+            .map(child => this.getNodeValue<FunctionDeclarationBase>(child), this);
+        this.setNodeValue(ctx, new ClassDeclaration(id, attributes, parents, functions, ctx.ABSTRACT() != null));
     }
 
     exitAttributeParameter = (ctx: AttributeParameterContext) => {
@@ -293,13 +308,13 @@ export default class Builder extends ComposeParserListener {
         this.setNodeValue(ctx, new TypedParameter(id, type));
     }
 
-    exitMethodParameter = (ctx: MethodParameterContext) => {
+    exitFunctionParameter = (ctx: FunctionParameterContext) => {
         const id = this.getNodeValue<Identifier>(ctx.identifier());
-        const type = this.getNodeValue<MethodType>(ctx.method_type());
-        this.setNodeValue(ctx, new MethodParameter(id, type));
+        const type = this.getNodeValue<FunctionType>(ctx.function_type());
+        this.setNodeValue(ctx, new FunctionParameter(id, type));
     }
 
-    exitMethod_prototype = (ctx: Method_prototypeContext) => {
+    exitFunction_prototype = (ctx: Function_prototypeContext) => {
         const id = this.getNodeValue<Identifier>(ctx.identifier());
         const params = ctx.parameter_list()
             .map(child => this.getNodeValue<IParameter>(child), this);
@@ -307,18 +322,18 @@ export default class Builder extends ComposeParserListener {
         this.setNodeValue(ctx, new Prototype(id, params, returnTypes));
     }
 
-    exitAbstract_method_declaration = (ctx: Abstract_method_declarationContext) => {
-        const proto = this.getNodeValue<Prototype>(ctx.method_prototype());
-        this.setNodeValue(ctx, new AbstractMethodDeclaration(proto));
+    exitAbstract_function_declaration = (ctx: Abstract_function_declarationContext) => {
+        const proto = this.getNodeValue<Prototype>(ctx.function_prototype());
+        this.setNodeValue(ctx, new AbstractFunctionDeclaration(proto));
     }
 
-    exitConcrete_method_declaration = (ctx: Concrete_method_declarationContext) => {
-        const proto = this.getNodeValue<Prototype>(ctx.method_prototype());
+    exitConcrete_function_declaration = (ctx: Concrete_function_declarationContext) => {
+        const proto = this.getNodeValue<Prototype>(ctx.function_prototype());
         const stmts = ctx.statement_list().map(s => this.getNodeValue<IStatement>(s));
-        this.setNodeValue(ctx, new ConcreteMethodDeclaration(proto, stmts));
+        this.setNodeValue(ctx, new ConcreteFunctionDeclaration(proto, stmts));
     }
 
-    exitMethod_declaration = (ctx: Method_declarationContext) => {
+    exitFunction_declaration = (ctx: Function_declarationContext) => {
         this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
     }
 

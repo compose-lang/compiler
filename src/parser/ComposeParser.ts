@@ -138,20 +138,20 @@ export default class ComposeParser extends BaseParser {
 	public static readonly RULE_attribute_ref = 19;
 	public static readonly RULE_class_type = 20;
 	public static readonly RULE_class_ref = 21;
-	public static readonly RULE_method_type = 22;
+	public static readonly RULE_function_type = 22;
 	public static readonly RULE_return_type = 23;
 	public static readonly RULE_return_types = 24;
 	public static readonly RULE_parameter = 25;
 	public static readonly RULE_class_declaration = 26;
-	public static readonly RULE_method_declaration = 27;
-	public static readonly RULE_abstract_method_declaration = 28;
-	public static readonly RULE_method_prototype = 29;
-	public static readonly RULE_concrete_method_declaration = 30;
+	public static readonly RULE_function_declaration = 27;
+	public static readonly RULE_abstract_function_declaration = 28;
+	public static readonly RULE_function_prototype = 29;
+	public static readonly RULE_concrete_function_declaration = 30;
 	public static readonly RULE_statement = 31;
-	public static readonly RULE_assign_statement = 32;
+	public static readonly RULE_assign_local_statement = 32;
 	public static readonly RULE_return_statement = 33;
 	public static readonly RULE_expression = 34;
-	public static readonly RULE_method_call_expression = 35;
+	public static readonly RULE_function_call_expression = 35;
 	public static readonly RULE_literal_expression = 36;
 	public static readonly RULE_list_literal = 37;
 	public static readonly RULE_set_literal = 38;
@@ -234,10 +234,10 @@ export default class ComposeParser extends BaseParser {
 		"data_type", "native_type", "boolean_type", "number_type", "integer_type", 
 		"decimal_type", "i32_type", "i64_type", "u32_type", "u64_type", "f32_type", 
 		"f64_type", "string_type", "void_type", "attribute_type", "attribute_ref", 
-		"class_type", "class_ref", "method_type", "return_type", "return_types", 
-		"parameter", "class_declaration", "method_declaration", "abstract_method_declaration", 
-		"method_prototype", "concrete_method_declaration", "statement", "assign_statement", 
-		"return_statement", "expression", "method_call_expression", "literal_expression", 
+		"class_type", "class_ref", "function_type", "return_type", "return_types", 
+		"parameter", "class_declaration", "function_declaration", "abstract_function_declaration", 
+		"function_prototype", "concrete_function_declaration", "statement", "assign_local_statement", 
+		"return_statement", "expression", "function_call_expression", "literal_expression", 
 		"list_literal", "set_literal", "map_literal", "map_entry",
 	];
 	public get grammarFileName(): string { return "ComposeParser.g4"; }
@@ -318,7 +318,7 @@ export default class ComposeParser extends BaseParser {
 				this.enterOuterAlt(localctx, 3);
 				{
 				this.state = 90;
-				this.method_declaration();
+				this.function_declaration();
 				}
 				break;
 			}
@@ -955,9 +955,9 @@ export default class ComposeParser extends BaseParser {
 		return localctx;
 	}
 	// @RuleVersion(0)
-	public method_type(): Method_typeContext {
-		let localctx: Method_typeContext = new Method_typeContext(this, this._ctx, this.state);
-		this.enterRule(localctx, 44, ComposeParser.RULE_method_type);
+	public function_type(): Function_typeContext {
+		let localctx: Function_typeContext = new Function_typeContext(this, this._ctx, this.state);
+		this.enterRule(localctx, 44, ComposeParser.RULE_function_type);
 		let _la: number;
 		try {
 			this.enterOuterAlt(localctx, 1);
@@ -1056,7 +1056,7 @@ export default class ComposeParser extends BaseParser {
 					throw this.createFailedPredicateException(" !$requireParenthesis ");
 				}
 				this.state = 172;
-				this.method_type();
+				this.function_type();
 				}
 				break;
 			case 4:
@@ -1065,7 +1065,7 @@ export default class ComposeParser extends BaseParser {
 				this.state = 173;
 				this.match(ComposeParser.LPAR);
 				this.state = 174;
-				this.method_type();
+				this.function_type();
 				this.state = 175;
 				this.match(ComposeParser.RPAR);
 				}
@@ -1172,7 +1172,7 @@ export default class ComposeParser extends BaseParser {
 				}
 				break;
 			case 3:
-				localctx = new MethodParameterContext(this, localctx);
+				localctx = new FunctionParameterContext(this, localctx);
 				this.enterOuterAlt(localctx, 3);
 				{
 				this.state = 195;
@@ -1180,7 +1180,7 @@ export default class ComposeParser extends BaseParser {
 				this.state = 196;
 				this.match(ComposeParser.COLON);
 				this.state = 197;
-				this.method_type();
+				this.function_type();
 				}
 				break;
 			}
@@ -1287,7 +1287,7 @@ export default class ComposeParser extends BaseParser {
 			if (_la===12 || _la===16) {
 				{
 				this.state = 231;
-				this.method_declaration();
+				this.function_declaration();
 				this.state = 236;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
@@ -1297,7 +1297,7 @@ export default class ComposeParser extends BaseParser {
 					this.state = 232;
 					this.match(ComposeParser.COMMA);
 					this.state = 233;
-					this.method_declaration();
+					this.function_declaration();
 					}
 					}
 					this.state = 238;
@@ -1326,9 +1326,9 @@ export default class ComposeParser extends BaseParser {
 		return localctx;
 	}
 	// @RuleVersion(0)
-	public method_declaration(): Method_declarationContext {
-		let localctx: Method_declarationContext = new Method_declarationContext(this, this._ctx, this.state);
-		this.enterRule(localctx, 54, ComposeParser.RULE_method_declaration);
+	public function_declaration(): Function_declarationContext {
+		let localctx: Function_declarationContext = new Function_declarationContext(this, this._ctx, this.state);
+		this.enterRule(localctx, 54, ComposeParser.RULE_function_declaration);
 		try {
 			this.state = 245;
 			this._errHandler.sync(this);
@@ -1337,14 +1337,14 @@ export default class ComposeParser extends BaseParser {
 				this.enterOuterAlt(localctx, 1);
 				{
 				this.state = 243;
-				this.abstract_method_declaration();
+				this.abstract_function_declaration();
 				}
 				break;
 			case 16:
 				this.enterOuterAlt(localctx, 2);
 				{
 				this.state = 244;
-				this.concrete_method_declaration();
+				this.concrete_function_declaration();
 				}
 				break;
 			default:
@@ -1366,16 +1366,16 @@ export default class ComposeParser extends BaseParser {
 		return localctx;
 	}
 	// @RuleVersion(0)
-	public abstract_method_declaration(): Abstract_method_declarationContext {
-		let localctx: Abstract_method_declarationContext = new Abstract_method_declarationContext(this, this._ctx, this.state);
-		this.enterRule(localctx, 56, ComposeParser.RULE_abstract_method_declaration);
+	public abstract_function_declaration(): Abstract_function_declarationContext {
+		let localctx: Abstract_function_declarationContext = new Abstract_function_declarationContext(this, this._ctx, this.state);
+		this.enterRule(localctx, 56, ComposeParser.RULE_abstract_function_declaration);
 		try {
 			this.enterOuterAlt(localctx, 1);
 			{
 			this.state = 247;
 			this.match(ComposeParser.ABSTRACT);
 			this.state = 248;
-			this.method_prototype(true);
+			this.function_prototype(true);
 			}
 		}
 		catch (re) {
@@ -1393,9 +1393,9 @@ export default class ComposeParser extends BaseParser {
 		return localctx;
 	}
 	// @RuleVersion(0)
-	public method_prototype(mandatory_return: boolean): Method_prototypeContext {
-		let localctx: Method_prototypeContext = new Method_prototypeContext(this, this._ctx, this.state, mandatory_return);
-		this.enterRule(localctx, 58, ComposeParser.RULE_method_prototype);
+	public function_prototype(mandatory_return: boolean): Function_prototypeContext {
+		let localctx: Function_prototypeContext = new Function_prototypeContext(this, this._ctx, this.state, mandatory_return);
+		this.enterRule(localctx, 58, ComposeParser.RULE_function_prototype);
 		let _la: number;
 		try {
 			this.enterOuterAlt(localctx, 1);
@@ -1487,15 +1487,15 @@ export default class ComposeParser extends BaseParser {
 		return localctx;
 	}
 	// @RuleVersion(0)
-	public concrete_method_declaration(): Concrete_method_declarationContext {
-		let localctx: Concrete_method_declarationContext = new Concrete_method_declarationContext(this, this._ctx, this.state);
-		this.enterRule(localctx, 60, ComposeParser.RULE_concrete_method_declaration);
+	public concrete_function_declaration(): Concrete_function_declarationContext {
+		let localctx: Concrete_function_declarationContext = new Concrete_function_declarationContext(this, this._ctx, this.state);
+		this.enterRule(localctx, 60, ComposeParser.RULE_concrete_function_declaration);
 		let _la: number;
 		try {
 			this.enterOuterAlt(localctx, 1);
 			{
 			this.state = 274;
-			this.method_prototype(false);
+			this.function_prototype(false);
 			this.state = 275;
 			this.match(ComposeParser.LCURL);
 			this.state = 279;
@@ -1544,7 +1544,7 @@ export default class ComposeParser extends BaseParser {
 				this.enterOuterAlt(localctx, 1);
 				{
 				this.state = 284;
-				this.assign_statement();
+				this.assign_local_statement();
 				}
 				break;
 			case 20:
@@ -1573,9 +1573,9 @@ export default class ComposeParser extends BaseParser {
 		return localctx;
 	}
 	// @RuleVersion(0)
-	public assign_statement(): Assign_statementContext {
-		let localctx: Assign_statementContext = new Assign_statementContext(this, this._ctx, this.state);
-		this.enterRule(localctx, 64, ComposeParser.RULE_assign_statement);
+	public assign_local_statement(): Assign_local_statementContext {
+		let localctx: Assign_local_statementContext = new Assign_local_statementContext(this, this._ctx, this.state);
+		this.enterRule(localctx, 64, ComposeParser.RULE_assign_local_statement);
 		let _la: number;
 		try {
 			this.enterOuterAlt(localctx, 1);
@@ -1613,7 +1613,7 @@ export default class ComposeParser extends BaseParser {
 			case 2:
 				{
 				this.state = 294;
-				this.method_type();
+				this.function_type();
 				}
 				break;
 			}
@@ -1643,14 +1643,23 @@ export default class ComposeParser extends BaseParser {
 	public return_statement(): Return_statementContext {
 		let localctx: Return_statementContext = new Return_statementContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 66, ComposeParser.RULE_return_statement);
+		let _la: number;
 		try {
 			this.enterOuterAlt(localctx, 1);
 			{
 			this.state = 301;
 			this.match(ComposeParser.RETURN);
-			this.state = 302;
-			this.expression(0);
 			this.state = 303;
+			this._errHandler.sync(this);
+			_la = this._input.LA(1);
+			if (_la===18 || ((((_la - 32)) & ~0x1F) === 0 && ((1 << (_la - 32)) & 4027073863) !== 0) || ((((_la - 69)) & ~0x1F) === 0 && ((1 << (_la - 69)) & 33292289) !== 0)) {
+				{
+				this.state = 302;
+				this.expression(0);
+				}
+			}
+
+			this.state = 305;
 			this.match(ComposeParser.SEMI);
 			}
 		}
@@ -1688,28 +1697,28 @@ export default class ComposeParser extends BaseParser {
 			let _alt: number;
 			this.enterOuterAlt(localctx, 1);
 			{
-			this.state = 343;
+			this.state = 345;
 			this._errHandler.sync(this);
-			switch ( this._interp.adaptivePredict(this._input, 32, this._ctx) ) {
+			switch ( this._interp.adaptivePredict(this._input, 33, this._ctx) ) {
 			case 1:
 				{
 				localctx = new NewExpressionContext(this, localctx);
 				this._ctx = localctx;
 				_prevctx = localctx;
 
-				this.state = 306;
+				this.state = 308;
 				this.match(ComposeParser.NEW);
-				this.state = 307;
-				this.method_call_expression();
+				this.state = 309;
+				this.function_call_expression();
 				}
 				break;
 			case 2:
 				{
-				localctx = new MethodCallExpressionContext(this, localctx);
+				localctx = new FunctionCallExpressionContext(this, localctx);
 				this._ctx = localctx;
 				_prevctx = localctx;
-				this.state = 308;
-				this.method_call_expression();
+				this.state = 310;
+				this.function_call_expression();
 				}
 				break;
 			case 3:
@@ -1717,28 +1726,28 @@ export default class ComposeParser extends BaseParser {
 				localctx = new TypeofExpressionContext(this, localctx);
 				this._ctx = localctx;
 				_prevctx = localctx;
-				this.state = 309;
+				this.state = 311;
 				this.match(ComposeParser.TYPE_OF);
-				this.state = 316;
+				this.state = 318;
 				this._errHandler.sync(this);
 				switch (this._input.LA(1)) {
 				case 38:
 					{
 					{
-					this.state = 310;
-					this.match(ComposeParser.LPAR);
-					this.state = 311;
-					this.expression(0);
 					this.state = 312;
+					this.match(ComposeParser.LPAR);
+					this.state = 313;
+					this.expression(0);
+					this.state = 314;
 					this.match(ComposeParser.RPAR);
 					}
 					}
 					break;
 				case 34:
 					{
-					this.state = 314;
+					this.state = 316;
 					this.match(ComposeParser.TYPE_OF);
-					this.state = 315;
+					this.state = 317;
 					this.expression(0);
 					}
 					break;
@@ -1752,9 +1761,9 @@ export default class ComposeParser extends BaseParser {
 				localctx = new UnaryPreIncrementExpressionContext(this, localctx);
 				this._ctx = localctx;
 				_prevctx = localctx;
-				this.state = 318;
+				this.state = 320;
 				this.match(ComposeParser.INC);
-				this.state = 319;
+				this.state = 321;
 				this.expression(25);
 				}
 				break;
@@ -1763,9 +1772,9 @@ export default class ComposeParser extends BaseParser {
 				localctx = new UnaryPreDecrementExpressionContext(this, localctx);
 				this._ctx = localctx;
 				_prevctx = localctx;
-				this.state = 320;
+				this.state = 322;
 				this.match(ComposeParser.DEC);
-				this.state = 321;
+				this.state = 323;
 				this.expression(24);
 				}
 				break;
@@ -1774,9 +1783,9 @@ export default class ComposeParser extends BaseParser {
 				localctx = new UnaryPlusExpressionContext(this, localctx);
 				this._ctx = localctx;
 				_prevctx = localctx;
-				this.state = 322;
+				this.state = 324;
 				this.match(ComposeParser.PLUS);
-				this.state = 323;
+				this.state = 325;
 				this.expression(23);
 				}
 				break;
@@ -1785,9 +1794,9 @@ export default class ComposeParser extends BaseParser {
 				localctx = new UnaryMinusExpressionContext(this, localctx);
 				this._ctx = localctx;
 				_prevctx = localctx;
-				this.state = 324;
+				this.state = 326;
 				this.match(ComposeParser.MINUS);
-				this.state = 325;
+				this.state = 327;
 				this.expression(22);
 				}
 				break;
@@ -1796,9 +1805,9 @@ export default class ComposeParser extends BaseParser {
 				localctx = new UnaryBitNotExpressionContext(this, localctx);
 				this._ctx = localctx;
 				_prevctx = localctx;
-				this.state = 326;
+				this.state = 328;
 				this.match(ComposeParser.TILDE);
-				this.state = 327;
+				this.state = 329;
 				this.expression(21);
 				}
 				break;
@@ -1807,9 +1816,9 @@ export default class ComposeParser extends BaseParser {
 				localctx = new UnaryNotExpressionContext(this, localctx);
 				this._ctx = localctx;
 				_prevctx = localctx;
-				this.state = 328;
+				this.state = 330;
 				this.match(ComposeParser.NOT);
-				this.state = 329;
+				this.state = 331;
 				this.expression(20);
 				}
 				break;
@@ -1818,7 +1827,7 @@ export default class ComposeParser extends BaseParser {
 				localctx = new ThisExpressionContext(this, localctx);
 				this._ctx = localctx;
 				_prevctx = localctx;
-				this.state = 330;
+				this.state = 332;
 				this.match(ComposeParser.THIS);
 				}
 				break;
@@ -1827,7 +1836,7 @@ export default class ComposeParser extends BaseParser {
 				localctx = new IdentifierExpressionContext(this, localctx);
 				this._ctx = localctx;
 				_prevctx = localctx;
-				this.state = 331;
+				this.state = 333;
 				this.identifier();
 				}
 				break;
@@ -1836,18 +1845,18 @@ export default class ComposeParser extends BaseParser {
 				localctx = new SuperExpressionContext(this, localctx);
 				this._ctx = localctx;
 				_prevctx = localctx;
-				this.state = 332;
+				this.state = 334;
 				this.match(ComposeParser.SUPER);
-				this.state = 336;
+				this.state = 338;
 				this._errHandler.sync(this);
-				switch ( this._interp.adaptivePredict(this._input, 31, this._ctx) ) {
+				switch ( this._interp.adaptivePredict(this._input, 32, this._ctx) ) {
 				case 1:
 					{
-					this.state = 333;
-					this.match(ComposeParser.LT);
-					this.state = 334;
-					this.match(ComposeParser.IDENTIFIER);
 					this.state = 335;
+					this.match(ComposeParser.LT);
+					this.state = 336;
+					this.match(ComposeParser.IDENTIFIER);
+					this.state = 337;
 					this.match(ComposeParser.GT);
 					}
 					break;
@@ -1859,7 +1868,7 @@ export default class ComposeParser extends BaseParser {
 				localctx = new LiteralExpressionContext(this, localctx);
 				this._ctx = localctx;
 				_prevctx = localctx;
-				this.state = 338;
+				this.state = 340;
 				this.literal_expression();
 				}
 				break;
@@ -1868,19 +1877,19 @@ export default class ComposeParser extends BaseParser {
 				localctx = new ParenthesisExpressionContext(this, localctx);
 				this._ctx = localctx;
 				_prevctx = localctx;
-				this.state = 339;
-				this.match(ComposeParser.LPAR);
-				this.state = 340;
-				this.expression(0);
 				this.state = 341;
+				this.match(ComposeParser.LPAR);
+				this.state = 342;
+				this.expression(0);
+				this.state = 343;
 				this.match(ComposeParser.RPAR);
 				}
 				break;
 			}
 			this._ctx.stop = this._input.LT(-1);
-			this.state = 406;
+			this.state = 408;
 			this._errHandler.sync(this);
-			_alt = this._interp.adaptivePredict(this._input, 34, this._ctx);
+			_alt = this._interp.adaptivePredict(this._input, 35, this._ctx);
 			while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER) {
 				if (_alt === 1) {
 					if (this._parseListeners != null) {
@@ -1888,21 +1897,21 @@ export default class ComposeParser extends BaseParser {
 					}
 					_prevctx = localctx;
 					{
-					this.state = 404;
+					this.state = 406;
 					this._errHandler.sync(this);
-					switch ( this._interp.adaptivePredict(this._input, 33, this._ctx) ) {
+					switch ( this._interp.adaptivePredict(this._input, 34, this._ctx) ) {
 					case 1:
 						{
 						localctx = new MemberExpressionContext(this, new ExpressionContext(this, _parentctx, _parentState));
 						(localctx as MemberExpressionContext)._parent = _prevctx;
 						this.pushNewRecursionContext(localctx, _startState, ComposeParser.RULE_expression);
-						this.state = 345;
+						this.state = 347;
 						if (!(this.precpred(this._ctx, 31))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 31)");
 						}
-						this.state = 346;
+						this.state = 348;
 						this.match(ComposeParser.DOT);
-						this.state = 347;
+						this.state = 349;
 						(localctx as MemberExpressionContext)._member = this.expression(32);
 						}
 						break;
@@ -1911,11 +1920,11 @@ export default class ComposeParser extends BaseParser {
 						localctx = new MultiplyExpressionContext(this, new ExpressionContext(this, _parentctx, _parentState));
 						(localctx as MultiplyExpressionContext)._left = _prevctx;
 						this.pushNewRecursionContext(localctx, _startState, ComposeParser.RULE_expression);
-						this.state = 348;
+						this.state = 350;
 						if (!(this.precpred(this._ctx, 19))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 19)");
 						}
-						this.state = 349;
+						this.state = 351;
 						_la = this._input.LA(1);
 						if(!(((((_la - 64)) & ~0x1F) === 0 && ((1 << (_la - 64)) & 11) !== 0))) {
 						this._errHandler.recoverInline(this);
@@ -1924,7 +1933,7 @@ export default class ComposeParser extends BaseParser {
 							this._errHandler.reportMatch(this);
 						    this.consume();
 						}
-						this.state = 350;
+						this.state = 352;
 						(localctx as MultiplyExpressionContext)._right = this.expression(20);
 						}
 						break;
@@ -1933,11 +1942,11 @@ export default class ComposeParser extends BaseParser {
 						localctx = new AddExpressionContext(this, new ExpressionContext(this, _parentctx, _parentState));
 						(localctx as AddExpressionContext)._left = _prevctx;
 						this.pushNewRecursionContext(localctx, _startState, ComposeParser.RULE_expression);
-						this.state = 351;
+						this.state = 353;
 						if (!(this.precpred(this._ctx, 18))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 18)");
 						}
-						this.state = 352;
+						this.state = 354;
 						_la = this._input.LA(1);
 						if(!(_la===62 || _la===63)) {
 						this._errHandler.recoverInline(this);
@@ -1946,7 +1955,7 @@ export default class ComposeParser extends BaseParser {
 							this._errHandler.reportMatch(this);
 						    this.consume();
 						}
-						this.state = 353;
+						this.state = 355;
 						(localctx as AddExpressionContext)._right = this.expression(19);
 						}
 						break;
@@ -1955,11 +1964,11 @@ export default class ComposeParser extends BaseParser {
 						localctx = new BitShiftExpressionContext(this, new ExpressionContext(this, _parentctx, _parentState));
 						(localctx as BitShiftExpressionContext)._left = _prevctx;
 						this.pushNewRecursionContext(localctx, _startState, ComposeParser.RULE_expression);
-						this.state = 354;
+						this.state = 356;
 						if (!(this.precpred(this._ctx, 17))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 17)");
 						}
-						this.state = 355;
+						this.state = 357;
 						_la = this._input.LA(1);
 						if(!(((((_la - 72)) & ~0x1F) === 0 && ((1 << (_la - 72)) & 7) !== 0))) {
 						this._errHandler.recoverInline(this);
@@ -1968,7 +1977,7 @@ export default class ComposeParser extends BaseParser {
 							this._errHandler.reportMatch(this);
 						    this.consume();
 						}
-						this.state = 356;
+						this.state = 358;
 						(localctx as BitShiftExpressionContext)._right = this.expression(18);
 						}
 						break;
@@ -1977,11 +1986,11 @@ export default class ComposeParser extends BaseParser {
 						localctx = new CompareExpressionContext(this, new ExpressionContext(this, _parentctx, _parentState));
 						(localctx as CompareExpressionContext)._left = _prevctx;
 						this.pushNewRecursionContext(localctx, _startState, ComposeParser.RULE_expression);
-						this.state = 357;
+						this.state = 359;
 						if (!(this.precpred(this._ctx, 16))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 16)");
 						}
-						this.state = 358;
+						this.state = 360;
 						_la = this._input.LA(1);
 						if(!(((((_la - 45)) & ~0x1F) === 0 && ((1 << (_la - 45)) & 15) !== 0))) {
 						this._errHandler.recoverInline(this);
@@ -1990,7 +1999,7 @@ export default class ComposeParser extends BaseParser {
 							this._errHandler.reportMatch(this);
 						    this.consume();
 						}
-						this.state = 359;
+						this.state = 361;
 						(localctx as CompareExpressionContext)._right = this.expression(17);
 						}
 						break;
@@ -1999,13 +2008,13 @@ export default class ComposeParser extends BaseParser {
 						localctx = new InstanceofExpressionContext(this, new ExpressionContext(this, _parentctx, _parentState));
 						(localctx as InstanceofExpressionContext)._left = _prevctx;
 						this.pushNewRecursionContext(localctx, _startState, ComposeParser.RULE_expression);
-						this.state = 360;
+						this.state = 362;
 						if (!(this.precpred(this._ctx, 15))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 15)");
 						}
-						this.state = 361;
+						this.state = 363;
 						this.match(ComposeParser.INSTANCE_OF);
-						this.state = 362;
+						this.state = 364;
 						(localctx as InstanceofExpressionContext)._right = this.expression(16);
 						}
 						break;
@@ -2014,13 +2023,13 @@ export default class ComposeParser extends BaseParser {
 						localctx = new InExpressionContext(this, new ExpressionContext(this, _parentctx, _parentState));
 						(localctx as InExpressionContext)._left = _prevctx;
 						this.pushNewRecursionContext(localctx, _startState, ComposeParser.RULE_expression);
-						this.state = 363;
+						this.state = 365;
 						if (!(this.precpred(this._ctx, 14))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 14)");
 						}
-						this.state = 364;
+						this.state = 366;
 						this.match(ComposeParser.IN);
-						this.state = 365;
+						this.state = 367;
 						(localctx as InExpressionContext)._right = this.expression(15);
 						}
 						break;
@@ -2029,11 +2038,11 @@ export default class ComposeParser extends BaseParser {
 						localctx = new EqualsExpressionContext(this, new ExpressionContext(this, _parentctx, _parentState));
 						(localctx as EqualsExpressionContext)._left = _prevctx;
 						this.pushNewRecursionContext(localctx, _startState, ComposeParser.RULE_expression);
-						this.state = 366;
+						this.state = 368;
 						if (!(this.precpred(this._ctx, 13))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 13)");
 						}
-						this.state = 367;
+						this.state = 369;
 						_la = this._input.LA(1);
 						if(!(_la===49 || _la===50)) {
 						this._errHandler.recoverInline(this);
@@ -2042,7 +2051,7 @@ export default class ComposeParser extends BaseParser {
 							this._errHandler.reportMatch(this);
 						    this.consume();
 						}
-						this.state = 368;
+						this.state = 370;
 						(localctx as EqualsExpressionContext)._right = this.expression(14);
 						}
 						break;
@@ -2051,13 +2060,13 @@ export default class ComposeParser extends BaseParser {
 						localctx = new BitAndExpressionContext(this, new ExpressionContext(this, _parentctx, _parentState));
 						(localctx as BitAndExpressionContext)._left = _prevctx;
 						this.pushNewRecursionContext(localctx, _startState, ComposeParser.RULE_expression);
-						this.state = 369;
+						this.state = 371;
 						if (!(this.precpred(this._ctx, 12))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 12)");
 						}
-						this.state = 370;
+						this.state = 372;
 						this.match(ComposeParser.AMP);
-						this.state = 371;
+						this.state = 373;
 						(localctx as BitAndExpressionContext)._right = this.expression(13);
 						}
 						break;
@@ -2066,13 +2075,13 @@ export default class ComposeParser extends BaseParser {
 						localctx = new BitXorExpressionContext(this, new ExpressionContext(this, _parentctx, _parentState));
 						(localctx as BitXorExpressionContext)._left = _prevctx;
 						this.pushNewRecursionContext(localctx, _startState, ComposeParser.RULE_expression);
-						this.state = 372;
+						this.state = 374;
 						if (!(this.precpred(this._ctx, 11))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 11)");
 						}
-						this.state = 373;
+						this.state = 375;
 						this.match(ComposeParser.CARET);
-						this.state = 374;
+						this.state = 376;
 						(localctx as BitXorExpressionContext)._right = this.expression(12);
 						}
 						break;
@@ -2081,13 +2090,13 @@ export default class ComposeParser extends BaseParser {
 						localctx = new BitOrExpressionContext(this, new ExpressionContext(this, _parentctx, _parentState));
 						(localctx as BitOrExpressionContext)._left = _prevctx;
 						this.pushNewRecursionContext(localctx, _startState, ComposeParser.RULE_expression);
-						this.state = 375;
+						this.state = 377;
 						if (!(this.precpred(this._ctx, 10))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 10)");
 						}
-						this.state = 376;
+						this.state = 378;
 						this.match(ComposeParser.PIPE);
-						this.state = 377;
+						this.state = 379;
 						(localctx as BitOrExpressionContext)._right = this.expression(11);
 						}
 						break;
@@ -2096,13 +2105,13 @@ export default class ComposeParser extends BaseParser {
 						localctx = new AndExpressionContext(this, new ExpressionContext(this, _parentctx, _parentState));
 						(localctx as AndExpressionContext)._left = _prevctx;
 						this.pushNewRecursionContext(localctx, _startState, ComposeParser.RULE_expression);
-						this.state = 378;
+						this.state = 380;
 						if (!(this.precpred(this._ctx, 9))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 9)");
 						}
-						this.state = 379;
+						this.state = 381;
 						this.match(ComposeParser.AND);
-						this.state = 380;
+						this.state = 382;
 						(localctx as AndExpressionContext)._right = this.expression(10);
 						}
 						break;
@@ -2111,13 +2120,13 @@ export default class ComposeParser extends BaseParser {
 						localctx = new OrExpressionContext(this, new ExpressionContext(this, _parentctx, _parentState));
 						(localctx as OrExpressionContext)._left = _prevctx;
 						this.pushNewRecursionContext(localctx, _startState, ComposeParser.RULE_expression);
-						this.state = 381;
+						this.state = 383;
 						if (!(this.precpred(this._ctx, 8))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 8)");
 						}
-						this.state = 382;
+						this.state = 384;
 						this.match(ComposeParser.OR);
-						this.state = 383;
+						this.state = 385;
 						(localctx as OrExpressionContext)._right = this.expression(9);
 						}
 						break;
@@ -2126,17 +2135,17 @@ export default class ComposeParser extends BaseParser {
 						localctx = new TernaryExpressionContext(this, new ExpressionContext(this, _parentctx, _parentState));
 						(localctx as TernaryExpressionContext)._condition = _prevctx;
 						this.pushNewRecursionContext(localctx, _startState, ComposeParser.RULE_expression);
-						this.state = 384;
+						this.state = 386;
 						if (!(this.precpred(this._ctx, 7))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 7)");
 						}
-						this.state = 385;
-						this.match(ComposeParser.QUESTION);
-						this.state = 386;
-						(localctx as TernaryExpressionContext)._if_true = this.expression(0);
 						this.state = 387;
-						this.match(ComposeParser.COLON);
+						this.match(ComposeParser.QUESTION);
 						this.state = 388;
+						(localctx as TernaryExpressionContext)._if_true = this.expression(0);
+						this.state = 389;
+						this.match(ComposeParser.COLON);
+						this.state = 390;
 						(localctx as TernaryExpressionContext)._if_false = this.expression(8);
 						}
 						break;
@@ -2145,15 +2154,15 @@ export default class ComposeParser extends BaseParser {
 						localctx = new ItemExpressionContext(this, new ExpressionContext(this, _parentctx, _parentState));
 						(localctx as ItemExpressionContext)._parent = _prevctx;
 						this.pushNewRecursionContext(localctx, _startState, ComposeParser.RULE_expression);
-						this.state = 390;
+						this.state = 392;
 						if (!(this.precpred(this._ctx, 32))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 32)");
 						}
-						this.state = 391;
-						this.match(ComposeParser.LBRAK);
-						this.state = 392;
-						(localctx as ItemExpressionContext)._item = this.expression(0);
 						this.state = 393;
+						this.match(ComposeParser.LBRAK);
+						this.state = 394;
+						(localctx as ItemExpressionContext)._item = this.expression(0);
+						this.state = 395;
 						this.match(ComposeParser.RBRAK);
 						}
 						break;
@@ -2161,12 +2170,12 @@ export default class ComposeParser extends BaseParser {
 						{
 						localctx = new PostIncrementExpressionContext(this, new ExpressionContext(this, _parentctx, _parentState));
 						this.pushNewRecursionContext(localctx, _startState, ComposeParser.RULE_expression);
-						this.state = 395;
+						this.state = 397;
 						if (!(this.precpred(this._ctx, 28))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 28)");
 						}
 						 this.willNotContainLineTerminator()
-						this.state = 397;
+						this.state = 399;
 						this.match(ComposeParser.INC);
 						}
 						break;
@@ -2174,12 +2183,12 @@ export default class ComposeParser extends BaseParser {
 						{
 						localctx = new PostDecrementExpressionContext(this, new ExpressionContext(this, _parentctx, _parentState));
 						this.pushNewRecursionContext(localctx, _startState, ComposeParser.RULE_expression);
-						this.state = 398;
+						this.state = 400;
 						if (!(this.precpred(this._ctx, 27))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 27)");
 						}
 						 this.willNotContainLineTerminator()
-						this.state = 400;
+						this.state = 402;
 						this.match(ComposeParser.DEC);
 						}
 						break;
@@ -2188,22 +2197,22 @@ export default class ComposeParser extends BaseParser {
 						localctx = new CastExpressionContext(this, new ExpressionContext(this, _parentctx, _parentState));
 						(localctx as CastExpressionContext)._exp = _prevctx;
 						this.pushNewRecursionContext(localctx, _startState, ComposeParser.RULE_expression);
-						this.state = 401;
+						this.state = 403;
 						if (!(this.precpred(this._ctx, 1))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 1)");
 						}
-						this.state = 402;
+						this.state = 404;
 						this.match(ComposeParser.AS);
-						this.state = 403;
+						this.state = 405;
 						this.match(ComposeParser.IDENTIFIER);
 						}
 						break;
 					}
 					}
 				}
-				this.state = 408;
+				this.state = 410;
 				this._errHandler.sync(this);
-				_alt = this._interp.adaptivePredict(this._input, 34, this._ctx);
+				_alt = this._interp.adaptivePredict(this._input, 35, this._ctx);
 			}
 			}
 		}
@@ -2222,44 +2231,44 @@ export default class ComposeParser extends BaseParser {
 		return localctx;
 	}
 	// @RuleVersion(0)
-	public method_call_expression(): Method_call_expressionContext {
-		let localctx: Method_call_expressionContext = new Method_call_expressionContext(this, this._ctx, this.state);
-		this.enterRule(localctx, 70, ComposeParser.RULE_method_call_expression);
+	public function_call_expression(): Function_call_expressionContext {
+		let localctx: Function_call_expressionContext = new Function_call_expressionContext(this, this._ctx, this.state);
+		this.enterRule(localctx, 70, ComposeParser.RULE_function_call_expression);
 		let _la: number;
 		try {
 			this.enterOuterAlt(localctx, 1);
 			{
-			this.state = 409;
+			this.state = 411;
 			this.identifier();
-			this.state = 410;
+			this.state = 412;
 			this.match(ComposeParser.LPAR);
-			this.state = 419;
+			this.state = 421;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===18 || ((((_la - 32)) & ~0x1F) === 0 && ((1 << (_la - 32)) & 4027073863) !== 0) || ((((_la - 69)) & ~0x1F) === 0 && ((1 << (_la - 69)) & 33292289) !== 0)) {
 				{
-				this.state = 411;
+				this.state = 413;
 				localctx._arg = this.expression(0);
-				this.state = 416;
+				this.state = 418;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 				while (_la===57) {
 					{
 					{
-					this.state = 412;
+					this.state = 414;
 					this.match(ComposeParser.COMMA);
-					this.state = 413;
+					this.state = 415;
 					localctx._arg = this.expression(0);
 					}
 					}
-					this.state = 418;
+					this.state = 420;
 					this._errHandler.sync(this);
 					_la = this._input.LA(1);
 				}
 				}
 			}
 
-			this.state = 421;
+			this.state = 423;
 			this.match(ComposeParser.RPAR);
 			}
 		}
@@ -2282,14 +2291,14 @@ export default class ComposeParser extends BaseParser {
 		let localctx: Literal_expressionContext = new Literal_expressionContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 72, ComposeParser.RULE_literal_expression);
 		try {
-			this.state = 432;
+			this.state = 434;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case 92:
 				localctx = new NullLiteralContext(this, localctx);
 				this.enterOuterAlt(localctx, 1);
 				{
-				this.state = 423;
+				this.state = 425;
 				this.match(ComposeParser.NULL_LITERAL);
 				}
 				break;
@@ -2297,7 +2306,7 @@ export default class ComposeParser extends BaseParser {
 				localctx = new BooleanLiteralContext(this, localctx);
 				this.enterOuterAlt(localctx, 2);
 				{
-				this.state = 424;
+				this.state = 426;
 				this.match(ComposeParser.BOOLEAN_LITERAL);
 				}
 				break;
@@ -2305,7 +2314,7 @@ export default class ComposeParser extends BaseParser {
 				localctx = new IntegerLiteralContext(this, localctx);
 				this.enterOuterAlt(localctx, 3);
 				{
-				this.state = 425;
+				this.state = 427;
 				this.match(ComposeParser.INTEGER_LITERAL);
 				}
 				break;
@@ -2313,7 +2322,7 @@ export default class ComposeParser extends BaseParser {
 				localctx = new DecimalLiteralContext(this, localctx);
 				this.enterOuterAlt(localctx, 4);
 				{
-				this.state = 426;
+				this.state = 428;
 				this.match(ComposeParser.DECIMAL_LITERAL);
 				}
 				break;
@@ -2321,7 +2330,7 @@ export default class ComposeParser extends BaseParser {
 				localctx = new CharLiteralContext(this, localctx);
 				this.enterOuterAlt(localctx, 5);
 				{
-				this.state = 427;
+				this.state = 429;
 				this.match(ComposeParser.CHAR_LITERAL);
 				}
 				break;
@@ -2329,7 +2338,7 @@ export default class ComposeParser extends BaseParser {
 				localctx = new StringLiteralContext(this, localctx);
 				this.enterOuterAlt(localctx, 6);
 				{
-				this.state = 428;
+				this.state = 430;
 				this.match(ComposeParser.STRING_LITERAL);
 				}
 				break;
@@ -2337,7 +2346,7 @@ export default class ComposeParser extends BaseParser {
 				localctx = new ListLiteralContext(this, localctx);
 				this.enterOuterAlt(localctx, 7);
 				{
-				this.state = 429;
+				this.state = 431;
 				this.list_literal();
 				}
 				break;
@@ -2345,7 +2354,7 @@ export default class ComposeParser extends BaseParser {
 				localctx = new SetLiteralContext(this, localctx);
 				this.enterOuterAlt(localctx, 8);
 				{
-				this.state = 430;
+				this.state = 432;
 				this.set_literal();
 				}
 				break;
@@ -2353,7 +2362,7 @@ export default class ComposeParser extends BaseParser {
 				localctx = new MapLiteralContext(this, localctx);
 				this.enterOuterAlt(localctx, 9);
 				{
-				this.state = 431;
+				this.state = 433;
 				this.map_literal();
 				}
 				break;
@@ -2383,35 +2392,35 @@ export default class ComposeParser extends BaseParser {
 		try {
 			this.enterOuterAlt(localctx, 1);
 			{
-			this.state = 434;
+			this.state = 436;
 			this.match(ComposeParser.LBRAK);
-			this.state = 443;
+			this.state = 445;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===18 || ((((_la - 32)) & ~0x1F) === 0 && ((1 << (_la - 32)) & 4027073863) !== 0) || ((((_la - 69)) & ~0x1F) === 0 && ((1 << (_la - 69)) & 33292289) !== 0)) {
 				{
-				this.state = 435;
+				this.state = 437;
 				localctx._exp = this.expression(0);
-				this.state = 440;
+				this.state = 442;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 				while (_la===57) {
 					{
 					{
-					this.state = 436;
+					this.state = 438;
 					this.match(ComposeParser.COMMA);
-					this.state = 437;
+					this.state = 439;
 					localctx._exp = this.expression(0);
 					}
 					}
-					this.state = 442;
+					this.state = 444;
 					this._errHandler.sync(this);
 					_la = this._input.LA(1);
 				}
 				}
 			}
 
-			this.state = 445;
+			this.state = 447;
 			this.match(ComposeParser.RBRAK);
 			}
 		}
@@ -2437,35 +2446,35 @@ export default class ComposeParser extends BaseParser {
 		try {
 			this.enterOuterAlt(localctx, 1);
 			{
-			this.state = 447;
+			this.state = 449;
 			this.match(ComposeParser.LT);
-			this.state = 456;
+			this.state = 458;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===18 || ((((_la - 32)) & ~0x1F) === 0 && ((1 << (_la - 32)) & 4027073863) !== 0) || ((((_la - 69)) & ~0x1F) === 0 && ((1 << (_la - 69)) & 33292289) !== 0)) {
 				{
-				this.state = 448;
+				this.state = 450;
 				localctx._exp = this.expression(0);
-				this.state = 453;
+				this.state = 455;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 				while (_la===57) {
 					{
 					{
-					this.state = 449;
+					this.state = 451;
 					this.match(ComposeParser.COMMA);
-					this.state = 450;
+					this.state = 452;
 					localctx._exp = this.expression(0);
 					}
 					}
-					this.state = 455;
+					this.state = 457;
 					this._errHandler.sync(this);
 					_la = this._input.LA(1);
 				}
 				}
 			}
 
-			this.state = 458;
+			this.state = 460;
 			this.match(ComposeParser.GT);
 			}
 		}
@@ -2491,35 +2500,35 @@ export default class ComposeParser extends BaseParser {
 		try {
 			this.enterOuterAlt(localctx, 1);
 			{
-			this.state = 460;
+			this.state = 462;
 			this.match(ComposeParser.LCURL);
-			this.state = 469;
+			this.state = 471;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la===93) {
 				{
-				this.state = 461;
+				this.state = 463;
 				localctx._entry = this.map_entry();
-				this.state = 466;
+				this.state = 468;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 				while (_la===57) {
 					{
 					{
-					this.state = 462;
+					this.state = 464;
 					this.match(ComposeParser.COMMA);
-					this.state = 463;
+					this.state = 465;
 					localctx._entry = this.map_entry();
 					}
 					}
-					this.state = 468;
+					this.state = 470;
 					this._errHandler.sync(this);
 					_la = this._input.LA(1);
 				}
 				}
 			}
 
-			this.state = 471;
+			this.state = 473;
 			this.match(ComposeParser.RCURL);
 			}
 		}
@@ -2544,11 +2553,11 @@ export default class ComposeParser extends BaseParser {
 		try {
 			this.enterOuterAlt(localctx, 1);
 			{
-			this.state = 473;
-			this.identifier();
-			this.state = 474;
-			this.match(ComposeParser.COLON);
 			this.state = 475;
+			this.identifier();
+			this.state = 476;
+			this.match(ComposeParser.COLON);
+			this.state = 477;
 			this.expression(0);
 			}
 		}
@@ -2576,7 +2585,7 @@ export default class ComposeParser extends BaseParser {
 		case 23:
 			return this.return_type_sempred(localctx as Return_typeContext, predIndex);
 		case 29:
-			return this.method_prototype_sempred(localctx as Method_prototypeContext, predIndex);
+			return this.function_prototype_sempred(localctx as Function_prototypeContext, predIndex);
 		case 34:
 			return this.expression_sempred(localctx as ExpressionContext, predIndex);
 		}
@@ -2603,7 +2612,7 @@ export default class ComposeParser extends BaseParser {
 		}
 		return true;
 	}
-	private method_prototype_sempred(localctx: Method_prototypeContext, predIndex: number): boolean {
+	private function_prototype_sempred(localctx: Function_prototypeContext, predIndex: number): boolean {
 		switch (predIndex) {
 		case 3:
 			return  localctx.mandatory_return ;
@@ -2654,7 +2663,7 @@ export default class ComposeParser extends BaseParser {
 		return true;
 	}
 
-	public static readonly _serializedATN: number[] = [4,1,96,478,2,0,7,0,2,
+	public static readonly _serializedATN: number[] = [4,1,96,480,2,0,7,0,2,
 	1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,7,7,2,8,7,8,2,9,7,9,2,
 	10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,2,14,7,14,2,15,7,15,2,16,7,16,2,17,
 	7,17,2,18,7,18,2,19,7,19,2,20,7,20,2,21,7,21,2,22,7,22,2,23,7,23,2,24,7,
@@ -2677,144 +2686,145 @@ export default class ComposeParser extends BaseParser {
 	8,29,1,29,1,29,1,29,1,29,1,29,1,29,1,29,3,29,271,8,29,3,29,273,8,29,1,30,
 	1,30,1,30,5,30,278,8,30,10,30,12,30,281,9,30,1,30,1,30,1,31,1,31,3,31,287,
 	8,31,1,32,3,32,290,8,32,1,32,1,32,1,32,1,32,3,32,296,8,32,1,32,1,32,1,32,
-	1,32,1,33,1,33,1,33,1,33,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,
-	34,1,34,3,34,317,8,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,
-	1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,3,34,337,8,34,1,34,1,34,1,34,1,
-	34,1,34,3,34,344,8,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,
+	1,32,1,33,1,33,3,33,304,8,33,1,33,1,33,1,34,1,34,1,34,1,34,1,34,1,34,1,
+	34,1,34,1,34,1,34,1,34,3,34,319,8,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,
+	1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,3,34,339,8,34,1,
+	34,1,34,1,34,1,34,1,34,3,34,346,8,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,
 	1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,
 	34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,
 	1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,
-	34,1,34,1,34,1,34,1,34,1,34,5,34,405,8,34,10,34,12,34,408,9,34,1,35,1,35,
-	1,35,1,35,1,35,5,35,415,8,35,10,35,12,35,418,9,35,3,35,420,8,35,1,35,1,
-	35,1,36,1,36,1,36,1,36,1,36,1,36,1,36,1,36,1,36,3,36,433,8,36,1,37,1,37,
-	1,37,1,37,5,37,439,8,37,10,37,12,37,442,9,37,3,37,444,8,37,1,37,1,37,1,
-	38,1,38,1,38,1,38,5,38,452,8,38,10,38,12,38,455,9,38,3,38,457,8,38,1,38,
-	1,38,1,39,1,39,1,39,1,39,5,39,465,8,39,10,39,12,39,468,9,39,3,39,470,8,
-	39,1,39,1,39,1,40,1,40,1,40,1,40,1,40,0,1,68,41,0,2,4,6,8,10,12,14,16,18,
-	20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,
-	68,70,72,74,76,78,80,0,6,2,0,17,17,19,19,2,0,64,65,67,67,1,0,62,63,1,0,
-	72,74,1,0,45,48,1,0,49,50,522,0,85,1,0,0,0,2,91,1,0,0,0,4,93,1,0,0,0,6,
-	98,1,0,0,0,8,102,1,0,0,0,10,107,1,0,0,0,12,109,1,0,0,0,14,113,1,0,0,0,16,
-	119,1,0,0,0,18,123,1,0,0,0,20,125,1,0,0,0,22,127,1,0,0,0,24,129,1,0,0,0,
-	26,131,1,0,0,0,28,133,1,0,0,0,30,135,1,0,0,0,32,137,1,0,0,0,34,139,1,0,
-	0,0,36,141,1,0,0,0,38,143,1,0,0,0,40,146,1,0,0,0,42,148,1,0,0,0,44,164,
-	1,0,0,0,46,177,1,0,0,0,48,188,1,0,0,0,50,199,1,0,0,0,52,202,1,0,0,0,54,
-	245,1,0,0,0,56,247,1,0,0,0,58,250,1,0,0,0,60,274,1,0,0,0,62,286,1,0,0,0,
-	64,289,1,0,0,0,66,301,1,0,0,0,68,343,1,0,0,0,70,409,1,0,0,0,72,432,1,0,
-	0,0,74,434,1,0,0,0,76,447,1,0,0,0,78,460,1,0,0,0,80,473,1,0,0,0,82,84,3,
-	2,1,0,83,82,1,0,0,0,84,87,1,0,0,0,85,83,1,0,0,0,85,86,1,0,0,0,86,1,1,0,
-	0,0,87,85,1,0,0,0,88,92,3,4,2,0,89,92,3,52,26,0,90,92,3,54,27,0,91,88,1,
-	0,0,0,91,89,1,0,0,0,91,90,1,0,0,0,92,3,1,0,0,0,93,94,5,11,0,0,94,95,3,6,
-	3,0,95,96,5,56,0,0,96,97,3,8,4,0,97,5,1,0,0,0,98,99,5,93,0,0,99,7,1,0,0,
-	0,100,103,3,10,5,0,101,103,3,40,20,0,102,100,1,0,0,0,102,101,1,0,0,0,103,
-	9,1,0,0,0,104,108,3,12,6,0,105,108,3,14,7,0,106,108,3,32,16,0,107,104,1,
-	0,0,0,107,105,1,0,0,0,107,106,1,0,0,0,108,11,1,0,0,0,109,110,5,9,0,0,110,
-	13,1,0,0,0,111,114,3,16,8,0,112,114,3,18,9,0,113,111,1,0,0,0,113,112,1,
-	0,0,0,114,15,1,0,0,0,115,120,3,20,10,0,116,120,3,24,12,0,117,120,3,22,11,
-	0,118,120,3,26,13,0,119,115,1,0,0,0,119,116,1,0,0,0,119,117,1,0,0,0,119,
-	118,1,0,0,0,120,17,1,0,0,0,121,124,3,28,14,0,122,124,3,30,15,0,123,121,
-	1,0,0,0,123,122,1,0,0,0,124,19,1,0,0,0,125,126,5,1,0,0,126,21,1,0,0,0,127,
-	128,5,2,0,0,128,23,1,0,0,0,129,130,5,3,0,0,130,25,1,0,0,0,131,132,5,4,0,
-	0,132,27,1,0,0,0,133,134,5,5,0,0,134,29,1,0,0,0,135,136,5,6,0,0,136,31,
-	1,0,0,0,137,138,5,8,0,0,138,33,1,0,0,0,139,140,5,10,0,0,140,35,1,0,0,0,
-	141,142,3,38,19,0,142,37,1,0,0,0,143,144,4,19,0,0,144,145,5,93,0,0,145,
-	39,1,0,0,0,146,147,3,42,21,0,147,41,1,0,0,0,148,149,4,21,1,0,149,150,5,
-	93,0,0,150,43,1,0,0,0,151,165,3,36,18,0,152,161,5,38,0,0,153,158,3,50,25,
-	0,154,155,5,57,0,0,155,157,3,50,25,0,156,154,1,0,0,0,157,160,1,0,0,0,158,
-	156,1,0,0,0,158,159,1,0,0,0,159,162,1,0,0,0,160,158,1,0,0,0,161,153,1,0,
-	0,0,161,162,1,0,0,0,162,163,1,0,0,0,163,165,5,39,0,0,164,151,1,0,0,0,164,
-	152,1,0,0,0,165,166,1,0,0,0,166,167,5,44,0,0,167,168,3,48,24,0,168,45,1,
-	0,0,0,169,178,3,8,4,0,170,178,3,36,18,0,171,172,4,23,2,1,172,178,3,44,22,
-	0,173,174,5,38,0,0,174,175,3,44,22,0,175,176,5,39,0,0,176,178,1,0,0,0,177,
-	169,1,0,0,0,177,170,1,0,0,0,177,171,1,0,0,0,177,173,1,0,0,0,178,47,1,0,
-	0,0,179,189,3,34,17,0,180,185,3,46,23,0,181,182,5,57,0,0,182,184,3,46,23,
-	0,183,181,1,0,0,0,184,187,1,0,0,0,185,183,1,0,0,0,185,186,1,0,0,0,186,189,
-	1,0,0,0,187,185,1,0,0,0,188,179,1,0,0,0,188,180,1,0,0,0,189,49,1,0,0,0,
-	190,200,3,36,18,0,191,192,3,6,3,0,192,193,5,56,0,0,193,194,3,8,4,0,194,
-	200,1,0,0,0,195,196,3,6,3,0,196,197,5,56,0,0,197,198,3,44,22,0,198,200,
-	1,0,0,0,199,190,1,0,0,0,199,191,1,0,0,0,199,195,1,0,0,0,200,51,1,0,0,0,
-	201,203,5,12,0,0,202,201,1,0,0,0,202,203,1,0,0,0,203,204,1,0,0,0,204,205,
-	5,13,0,0,205,217,3,42,21,0,206,207,5,38,0,0,207,212,3,38,19,0,208,209,5,
-	57,0,0,209,211,3,38,19,0,210,208,1,0,0,0,211,214,1,0,0,0,212,210,1,0,0,
-	0,212,213,1,0,0,0,213,215,1,0,0,0,214,212,1,0,0,0,215,216,5,39,0,0,216,
-	218,1,0,0,0,217,206,1,0,0,0,217,218,1,0,0,0,218,228,1,0,0,0,219,220,5,14,
-	0,0,220,225,3,42,21,0,221,222,5,57,0,0,222,224,3,42,21,0,223,221,1,0,0,
-	0,224,227,1,0,0,0,225,223,1,0,0,0,225,226,1,0,0,0,226,229,1,0,0,0,227,225,
-	1,0,0,0,228,219,1,0,0,0,228,229,1,0,0,0,229,230,1,0,0,0,230,239,5,42,0,
-	0,231,236,3,54,27,0,232,233,5,57,0,0,233,235,3,54,27,0,234,232,1,0,0,0,
-	235,238,1,0,0,0,236,234,1,0,0,0,236,237,1,0,0,0,237,240,1,0,0,0,238,236,
-	1,0,0,0,239,231,1,0,0,0,239,240,1,0,0,0,240,241,1,0,0,0,241,242,5,43,0,
-	0,242,53,1,0,0,0,243,246,3,56,28,0,244,246,3,60,30,0,245,243,1,0,0,0,245,
-	244,1,0,0,0,246,55,1,0,0,0,247,248,5,12,0,0,248,249,3,58,29,0,249,57,1,
-	0,0,0,250,251,5,16,0,0,251,252,3,6,3,0,252,261,5,38,0,0,253,258,3,50,25,
-	0,254,255,5,57,0,0,255,257,3,50,25,0,256,254,1,0,0,0,257,260,1,0,0,0,258,
-	256,1,0,0,0,258,259,1,0,0,0,259,262,1,0,0,0,260,258,1,0,0,0,261,253,1,0,
-	0,0,261,262,1,0,0,0,262,263,1,0,0,0,263,272,5,39,0,0,264,265,4,29,3,1,265,
-	266,5,56,0,0,266,273,3,48,24,0,267,270,4,29,4,1,268,269,5,56,0,0,269,271,
-	3,48,24,0,270,268,1,0,0,0,270,271,1,0,0,0,271,273,1,0,0,0,272,264,1,0,0,
-	0,272,267,1,0,0,0,273,59,1,0,0,0,274,275,3,58,29,0,275,279,5,42,0,0,276,
-	278,3,62,31,0,277,276,1,0,0,0,278,281,1,0,0,0,279,277,1,0,0,0,279,280,1,
-	0,0,0,280,282,1,0,0,0,281,279,1,0,0,0,282,283,5,43,0,0,283,61,1,0,0,0,284,
-	287,3,64,32,0,285,287,3,66,33,0,286,284,1,0,0,0,286,285,1,0,0,0,287,63,
-	1,0,0,0,288,290,7,0,0,0,289,288,1,0,0,0,289,290,1,0,0,0,290,291,1,0,0,0,
-	291,295,3,6,3,0,292,293,5,56,0,0,293,296,3,8,4,0,294,296,3,44,22,0,295,
-	292,1,0,0,0,295,294,1,0,0,0,296,297,1,0,0,0,297,298,5,75,0,0,298,299,3,
-	68,34,0,299,300,5,55,0,0,300,65,1,0,0,0,301,302,5,20,0,0,302,303,3,68,34,
-	0,303,304,5,55,0,0,304,67,1,0,0,0,305,306,6,34,-1,0,306,307,5,18,0,0,307,
-	344,3,70,35,0,308,344,3,70,35,0,309,316,5,34,0,0,310,311,5,38,0,0,311,312,
-	3,68,34,0,312,313,5,39,0,0,313,317,1,0,0,0,314,315,5,34,0,0,315,317,3,68,
-	34,0,316,310,1,0,0,0,316,314,1,0,0,0,317,344,1,0,0,0,318,319,5,60,0,0,319,
-	344,3,68,34,25,320,321,5,61,0,0,321,344,3,68,34,24,322,323,5,62,0,0,323,
-	344,3,68,34,23,324,325,5,63,0,0,325,344,3,68,34,22,326,327,5,69,0,0,327,
-	344,3,68,34,21,328,329,5,51,0,0,329,344,3,68,34,20,330,344,5,32,0,0,331,
-	344,3,6,3,0,332,336,5,33,0,0,333,334,5,46,0,0,334,335,5,93,0,0,335,337,
-	5,45,0,0,336,333,1,0,0,0,336,337,1,0,0,0,337,344,1,0,0,0,338,344,3,72,36,
-	0,339,340,5,38,0,0,340,341,3,68,34,0,341,342,5,39,0,0,342,344,1,0,0,0,343,
-	305,1,0,0,0,343,308,1,0,0,0,343,309,1,0,0,0,343,318,1,0,0,0,343,320,1,0,
-	0,0,343,322,1,0,0,0,343,324,1,0,0,0,343,326,1,0,0,0,343,328,1,0,0,0,343,
-	330,1,0,0,0,343,331,1,0,0,0,343,332,1,0,0,0,343,338,1,0,0,0,343,339,1,0,
-	0,0,344,406,1,0,0,0,345,346,10,31,0,0,346,347,5,58,0,0,347,405,3,68,34,
-	32,348,349,10,19,0,0,349,350,7,1,0,0,350,405,3,68,34,20,351,352,10,18,0,
-	0,352,353,7,2,0,0,353,405,3,68,34,19,354,355,10,17,0,0,355,356,7,3,0,0,
-	356,405,3,68,34,18,357,358,10,16,0,0,358,359,7,4,0,0,359,405,3,68,34,17,
-	360,361,10,15,0,0,361,362,5,35,0,0,362,405,3,68,34,16,363,364,10,14,0,0,
-	364,365,5,36,0,0,365,405,3,68,34,15,366,367,10,13,0,0,367,368,7,5,0,0,368,
-	405,3,68,34,14,369,370,10,12,0,0,370,371,5,70,0,0,371,405,3,68,34,13,372,
-	373,10,11,0,0,373,374,5,68,0,0,374,405,3,68,34,12,375,376,10,10,0,0,376,
-	377,5,71,0,0,377,405,3,68,34,11,378,379,10,9,0,0,379,380,5,52,0,0,380,405,
-	3,68,34,10,381,382,10,8,0,0,382,383,5,53,0,0,383,405,3,68,34,9,384,385,
-	10,7,0,0,385,386,5,54,0,0,386,387,3,68,34,0,387,388,5,56,0,0,388,389,3,
-	68,34,8,389,405,1,0,0,0,390,391,10,32,0,0,391,392,5,40,0,0,392,393,3,68,
-	34,0,393,394,5,41,0,0,394,405,1,0,0,0,395,396,10,28,0,0,396,397,6,34,-1,
-	0,397,405,5,60,0,0,398,399,10,27,0,0,399,400,6,34,-1,0,400,405,5,61,0,0,
-	401,402,10,1,0,0,402,403,5,37,0,0,403,405,5,93,0,0,404,345,1,0,0,0,404,
-	348,1,0,0,0,404,351,1,0,0,0,404,354,1,0,0,0,404,357,1,0,0,0,404,360,1,0,
-	0,0,404,363,1,0,0,0,404,366,1,0,0,0,404,369,1,0,0,0,404,372,1,0,0,0,404,
-	375,1,0,0,0,404,378,1,0,0,0,404,381,1,0,0,0,404,384,1,0,0,0,404,390,1,0,
-	0,0,404,395,1,0,0,0,404,398,1,0,0,0,404,401,1,0,0,0,405,408,1,0,0,0,406,
-	404,1,0,0,0,406,407,1,0,0,0,407,69,1,0,0,0,408,406,1,0,0,0,409,410,3,6,
-	3,0,410,419,5,38,0,0,411,416,3,68,34,0,412,413,5,57,0,0,413,415,3,68,34,
-	0,414,412,1,0,0,0,415,418,1,0,0,0,416,414,1,0,0,0,416,417,1,0,0,0,417,420,
-	1,0,0,0,418,416,1,0,0,0,419,411,1,0,0,0,419,420,1,0,0,0,420,421,1,0,0,0,
-	421,422,5,39,0,0,422,71,1,0,0,0,423,433,5,92,0,0,424,433,5,89,0,0,425,433,
-	5,87,0,0,426,433,5,88,0,0,427,433,5,90,0,0,428,433,5,91,0,0,429,433,3,74,
-	37,0,430,433,3,76,38,0,431,433,3,78,39,0,432,423,1,0,0,0,432,424,1,0,0,
-	0,432,425,1,0,0,0,432,426,1,0,0,0,432,427,1,0,0,0,432,428,1,0,0,0,432,429,
-	1,0,0,0,432,430,1,0,0,0,432,431,1,0,0,0,433,73,1,0,0,0,434,443,5,40,0,0,
-	435,440,3,68,34,0,436,437,5,57,0,0,437,439,3,68,34,0,438,436,1,0,0,0,439,
-	442,1,0,0,0,440,438,1,0,0,0,440,441,1,0,0,0,441,444,1,0,0,0,442,440,1,0,
-	0,0,443,435,1,0,0,0,443,444,1,0,0,0,444,445,1,0,0,0,445,446,5,41,0,0,446,
-	75,1,0,0,0,447,456,5,46,0,0,448,453,3,68,34,0,449,450,5,57,0,0,450,452,
-	3,68,34,0,451,449,1,0,0,0,452,455,1,0,0,0,453,451,1,0,0,0,453,454,1,0,0,
-	0,454,457,1,0,0,0,455,453,1,0,0,0,456,448,1,0,0,0,456,457,1,0,0,0,457,458,
-	1,0,0,0,458,459,5,45,0,0,459,77,1,0,0,0,460,469,5,42,0,0,461,466,3,80,40,
-	0,462,463,5,57,0,0,463,465,3,80,40,0,464,462,1,0,0,0,465,468,1,0,0,0,466,
-	464,1,0,0,0,466,467,1,0,0,0,467,470,1,0,0,0,468,466,1,0,0,0,469,461,1,0,
-	0,0,469,470,1,0,0,0,470,471,1,0,0,0,471,472,5,43,0,0,472,79,1,0,0,0,473,
-	474,3,6,3,0,474,475,5,56,0,0,475,476,3,68,34,0,476,81,1,0,0,0,44,85,91,
-	102,107,113,119,123,158,161,164,177,185,188,199,202,212,217,225,228,236,
-	239,245,258,261,270,272,279,286,289,295,316,336,343,404,406,416,419,432,
-	440,443,453,456,466,469];
+	34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,1,34,5,34,407,8,34,10,34,12,34,410,
+	9,34,1,35,1,35,1,35,1,35,1,35,5,35,417,8,35,10,35,12,35,420,9,35,3,35,422,
+	8,35,1,35,1,35,1,36,1,36,1,36,1,36,1,36,1,36,1,36,1,36,1,36,3,36,435,8,
+	36,1,37,1,37,1,37,1,37,5,37,441,8,37,10,37,12,37,444,9,37,3,37,446,8,37,
+	1,37,1,37,1,38,1,38,1,38,1,38,5,38,454,8,38,10,38,12,38,457,9,38,3,38,459,
+	8,38,1,38,1,38,1,39,1,39,1,39,1,39,5,39,467,8,39,10,39,12,39,470,9,39,3,
+	39,472,8,39,1,39,1,39,1,40,1,40,1,40,1,40,1,40,0,1,68,41,0,2,4,6,8,10,12,
+	14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,
+	62,64,66,68,70,72,74,76,78,80,0,6,2,0,17,17,19,19,2,0,64,65,67,67,1,0,62,
+	63,1,0,72,74,1,0,45,48,1,0,49,50,525,0,85,1,0,0,0,2,91,1,0,0,0,4,93,1,0,
+	0,0,6,98,1,0,0,0,8,102,1,0,0,0,10,107,1,0,0,0,12,109,1,0,0,0,14,113,1,0,
+	0,0,16,119,1,0,0,0,18,123,1,0,0,0,20,125,1,0,0,0,22,127,1,0,0,0,24,129,
+	1,0,0,0,26,131,1,0,0,0,28,133,1,0,0,0,30,135,1,0,0,0,32,137,1,0,0,0,34,
+	139,1,0,0,0,36,141,1,0,0,0,38,143,1,0,0,0,40,146,1,0,0,0,42,148,1,0,0,0,
+	44,164,1,0,0,0,46,177,1,0,0,0,48,188,1,0,0,0,50,199,1,0,0,0,52,202,1,0,
+	0,0,54,245,1,0,0,0,56,247,1,0,0,0,58,250,1,0,0,0,60,274,1,0,0,0,62,286,
+	1,0,0,0,64,289,1,0,0,0,66,301,1,0,0,0,68,345,1,0,0,0,70,411,1,0,0,0,72,
+	434,1,0,0,0,74,436,1,0,0,0,76,449,1,0,0,0,78,462,1,0,0,0,80,475,1,0,0,0,
+	82,84,3,2,1,0,83,82,1,0,0,0,84,87,1,0,0,0,85,83,1,0,0,0,85,86,1,0,0,0,86,
+	1,1,0,0,0,87,85,1,0,0,0,88,92,3,4,2,0,89,92,3,52,26,0,90,92,3,54,27,0,91,
+	88,1,0,0,0,91,89,1,0,0,0,91,90,1,0,0,0,92,3,1,0,0,0,93,94,5,11,0,0,94,95,
+	3,6,3,0,95,96,5,56,0,0,96,97,3,8,4,0,97,5,1,0,0,0,98,99,5,93,0,0,99,7,1,
+	0,0,0,100,103,3,10,5,0,101,103,3,40,20,0,102,100,1,0,0,0,102,101,1,0,0,
+	0,103,9,1,0,0,0,104,108,3,12,6,0,105,108,3,14,7,0,106,108,3,32,16,0,107,
+	104,1,0,0,0,107,105,1,0,0,0,107,106,1,0,0,0,108,11,1,0,0,0,109,110,5,9,
+	0,0,110,13,1,0,0,0,111,114,3,16,8,0,112,114,3,18,9,0,113,111,1,0,0,0,113,
+	112,1,0,0,0,114,15,1,0,0,0,115,120,3,20,10,0,116,120,3,24,12,0,117,120,
+	3,22,11,0,118,120,3,26,13,0,119,115,1,0,0,0,119,116,1,0,0,0,119,117,1,0,
+	0,0,119,118,1,0,0,0,120,17,1,0,0,0,121,124,3,28,14,0,122,124,3,30,15,0,
+	123,121,1,0,0,0,123,122,1,0,0,0,124,19,1,0,0,0,125,126,5,1,0,0,126,21,1,
+	0,0,0,127,128,5,2,0,0,128,23,1,0,0,0,129,130,5,3,0,0,130,25,1,0,0,0,131,
+	132,5,4,0,0,132,27,1,0,0,0,133,134,5,5,0,0,134,29,1,0,0,0,135,136,5,6,0,
+	0,136,31,1,0,0,0,137,138,5,8,0,0,138,33,1,0,0,0,139,140,5,10,0,0,140,35,
+	1,0,0,0,141,142,3,38,19,0,142,37,1,0,0,0,143,144,4,19,0,0,144,145,5,93,
+	0,0,145,39,1,0,0,0,146,147,3,42,21,0,147,41,1,0,0,0,148,149,4,21,1,0,149,
+	150,5,93,0,0,150,43,1,0,0,0,151,165,3,36,18,0,152,161,5,38,0,0,153,158,
+	3,50,25,0,154,155,5,57,0,0,155,157,3,50,25,0,156,154,1,0,0,0,157,160,1,
+	0,0,0,158,156,1,0,0,0,158,159,1,0,0,0,159,162,1,0,0,0,160,158,1,0,0,0,161,
+	153,1,0,0,0,161,162,1,0,0,0,162,163,1,0,0,0,163,165,5,39,0,0,164,151,1,
+	0,0,0,164,152,1,0,0,0,165,166,1,0,0,0,166,167,5,44,0,0,167,168,3,48,24,
+	0,168,45,1,0,0,0,169,178,3,8,4,0,170,178,3,36,18,0,171,172,4,23,2,1,172,
+	178,3,44,22,0,173,174,5,38,0,0,174,175,3,44,22,0,175,176,5,39,0,0,176,178,
+	1,0,0,0,177,169,1,0,0,0,177,170,1,0,0,0,177,171,1,0,0,0,177,173,1,0,0,0,
+	178,47,1,0,0,0,179,189,3,34,17,0,180,185,3,46,23,0,181,182,5,57,0,0,182,
+	184,3,46,23,0,183,181,1,0,0,0,184,187,1,0,0,0,185,183,1,0,0,0,185,186,1,
+	0,0,0,186,189,1,0,0,0,187,185,1,0,0,0,188,179,1,0,0,0,188,180,1,0,0,0,189,
+	49,1,0,0,0,190,200,3,36,18,0,191,192,3,6,3,0,192,193,5,56,0,0,193,194,3,
+	8,4,0,194,200,1,0,0,0,195,196,3,6,3,0,196,197,5,56,0,0,197,198,3,44,22,
+	0,198,200,1,0,0,0,199,190,1,0,0,0,199,191,1,0,0,0,199,195,1,0,0,0,200,51,
+	1,0,0,0,201,203,5,12,0,0,202,201,1,0,0,0,202,203,1,0,0,0,203,204,1,0,0,
+	0,204,205,5,13,0,0,205,217,3,42,21,0,206,207,5,38,0,0,207,212,3,38,19,0,
+	208,209,5,57,0,0,209,211,3,38,19,0,210,208,1,0,0,0,211,214,1,0,0,0,212,
+	210,1,0,0,0,212,213,1,0,0,0,213,215,1,0,0,0,214,212,1,0,0,0,215,216,5,39,
+	0,0,216,218,1,0,0,0,217,206,1,0,0,0,217,218,1,0,0,0,218,228,1,0,0,0,219,
+	220,5,14,0,0,220,225,3,42,21,0,221,222,5,57,0,0,222,224,3,42,21,0,223,221,
+	1,0,0,0,224,227,1,0,0,0,225,223,1,0,0,0,225,226,1,0,0,0,226,229,1,0,0,0,
+	227,225,1,0,0,0,228,219,1,0,0,0,228,229,1,0,0,0,229,230,1,0,0,0,230,239,
+	5,42,0,0,231,236,3,54,27,0,232,233,5,57,0,0,233,235,3,54,27,0,234,232,1,
+	0,0,0,235,238,1,0,0,0,236,234,1,0,0,0,236,237,1,0,0,0,237,240,1,0,0,0,238,
+	236,1,0,0,0,239,231,1,0,0,0,239,240,1,0,0,0,240,241,1,0,0,0,241,242,5,43,
+	0,0,242,53,1,0,0,0,243,246,3,56,28,0,244,246,3,60,30,0,245,243,1,0,0,0,
+	245,244,1,0,0,0,246,55,1,0,0,0,247,248,5,12,0,0,248,249,3,58,29,0,249,57,
+	1,0,0,0,250,251,5,16,0,0,251,252,3,6,3,0,252,261,5,38,0,0,253,258,3,50,
+	25,0,254,255,5,57,0,0,255,257,3,50,25,0,256,254,1,0,0,0,257,260,1,0,0,0,
+	258,256,1,0,0,0,258,259,1,0,0,0,259,262,1,0,0,0,260,258,1,0,0,0,261,253,
+	1,0,0,0,261,262,1,0,0,0,262,263,1,0,0,0,263,272,5,39,0,0,264,265,4,29,3,
+	1,265,266,5,56,0,0,266,273,3,48,24,0,267,270,4,29,4,1,268,269,5,56,0,0,
+	269,271,3,48,24,0,270,268,1,0,0,0,270,271,1,0,0,0,271,273,1,0,0,0,272,264,
+	1,0,0,0,272,267,1,0,0,0,273,59,1,0,0,0,274,275,3,58,29,0,275,279,5,42,0,
+	0,276,278,3,62,31,0,277,276,1,0,0,0,278,281,1,0,0,0,279,277,1,0,0,0,279,
+	280,1,0,0,0,280,282,1,0,0,0,281,279,1,0,0,0,282,283,5,43,0,0,283,61,1,0,
+	0,0,284,287,3,64,32,0,285,287,3,66,33,0,286,284,1,0,0,0,286,285,1,0,0,0,
+	287,63,1,0,0,0,288,290,7,0,0,0,289,288,1,0,0,0,289,290,1,0,0,0,290,291,
+	1,0,0,0,291,295,3,6,3,0,292,293,5,56,0,0,293,296,3,8,4,0,294,296,3,44,22,
+	0,295,292,1,0,0,0,295,294,1,0,0,0,296,297,1,0,0,0,297,298,5,75,0,0,298,
+	299,3,68,34,0,299,300,5,55,0,0,300,65,1,0,0,0,301,303,5,20,0,0,302,304,
+	3,68,34,0,303,302,1,0,0,0,303,304,1,0,0,0,304,305,1,0,0,0,305,306,5,55,
+	0,0,306,67,1,0,0,0,307,308,6,34,-1,0,308,309,5,18,0,0,309,346,3,70,35,0,
+	310,346,3,70,35,0,311,318,5,34,0,0,312,313,5,38,0,0,313,314,3,68,34,0,314,
+	315,5,39,0,0,315,319,1,0,0,0,316,317,5,34,0,0,317,319,3,68,34,0,318,312,
+	1,0,0,0,318,316,1,0,0,0,319,346,1,0,0,0,320,321,5,60,0,0,321,346,3,68,34,
+	25,322,323,5,61,0,0,323,346,3,68,34,24,324,325,5,62,0,0,325,346,3,68,34,
+	23,326,327,5,63,0,0,327,346,3,68,34,22,328,329,5,69,0,0,329,346,3,68,34,
+	21,330,331,5,51,0,0,331,346,3,68,34,20,332,346,5,32,0,0,333,346,3,6,3,0,
+	334,338,5,33,0,0,335,336,5,46,0,0,336,337,5,93,0,0,337,339,5,45,0,0,338,
+	335,1,0,0,0,338,339,1,0,0,0,339,346,1,0,0,0,340,346,3,72,36,0,341,342,5,
+	38,0,0,342,343,3,68,34,0,343,344,5,39,0,0,344,346,1,0,0,0,345,307,1,0,0,
+	0,345,310,1,0,0,0,345,311,1,0,0,0,345,320,1,0,0,0,345,322,1,0,0,0,345,324,
+	1,0,0,0,345,326,1,0,0,0,345,328,1,0,0,0,345,330,1,0,0,0,345,332,1,0,0,0,
+	345,333,1,0,0,0,345,334,1,0,0,0,345,340,1,0,0,0,345,341,1,0,0,0,346,408,
+	1,0,0,0,347,348,10,31,0,0,348,349,5,58,0,0,349,407,3,68,34,32,350,351,10,
+	19,0,0,351,352,7,1,0,0,352,407,3,68,34,20,353,354,10,18,0,0,354,355,7,2,
+	0,0,355,407,3,68,34,19,356,357,10,17,0,0,357,358,7,3,0,0,358,407,3,68,34,
+	18,359,360,10,16,0,0,360,361,7,4,0,0,361,407,3,68,34,17,362,363,10,15,0,
+	0,363,364,5,35,0,0,364,407,3,68,34,16,365,366,10,14,0,0,366,367,5,36,0,
+	0,367,407,3,68,34,15,368,369,10,13,0,0,369,370,7,5,0,0,370,407,3,68,34,
+	14,371,372,10,12,0,0,372,373,5,70,0,0,373,407,3,68,34,13,374,375,10,11,
+	0,0,375,376,5,68,0,0,376,407,3,68,34,12,377,378,10,10,0,0,378,379,5,71,
+	0,0,379,407,3,68,34,11,380,381,10,9,0,0,381,382,5,52,0,0,382,407,3,68,34,
+	10,383,384,10,8,0,0,384,385,5,53,0,0,385,407,3,68,34,9,386,387,10,7,0,0,
+	387,388,5,54,0,0,388,389,3,68,34,0,389,390,5,56,0,0,390,391,3,68,34,8,391,
+	407,1,0,0,0,392,393,10,32,0,0,393,394,5,40,0,0,394,395,3,68,34,0,395,396,
+	5,41,0,0,396,407,1,0,0,0,397,398,10,28,0,0,398,399,6,34,-1,0,399,407,5,
+	60,0,0,400,401,10,27,0,0,401,402,6,34,-1,0,402,407,5,61,0,0,403,404,10,
+	1,0,0,404,405,5,37,0,0,405,407,5,93,0,0,406,347,1,0,0,0,406,350,1,0,0,0,
+	406,353,1,0,0,0,406,356,1,0,0,0,406,359,1,0,0,0,406,362,1,0,0,0,406,365,
+	1,0,0,0,406,368,1,0,0,0,406,371,1,0,0,0,406,374,1,0,0,0,406,377,1,0,0,0,
+	406,380,1,0,0,0,406,383,1,0,0,0,406,386,1,0,0,0,406,392,1,0,0,0,406,397,
+	1,0,0,0,406,400,1,0,0,0,406,403,1,0,0,0,407,410,1,0,0,0,408,406,1,0,0,0,
+	408,409,1,0,0,0,409,69,1,0,0,0,410,408,1,0,0,0,411,412,3,6,3,0,412,421,
+	5,38,0,0,413,418,3,68,34,0,414,415,5,57,0,0,415,417,3,68,34,0,416,414,1,
+	0,0,0,417,420,1,0,0,0,418,416,1,0,0,0,418,419,1,0,0,0,419,422,1,0,0,0,420,
+	418,1,0,0,0,421,413,1,0,0,0,421,422,1,0,0,0,422,423,1,0,0,0,423,424,5,39,
+	0,0,424,71,1,0,0,0,425,435,5,92,0,0,426,435,5,89,0,0,427,435,5,87,0,0,428,
+	435,5,88,0,0,429,435,5,90,0,0,430,435,5,91,0,0,431,435,3,74,37,0,432,435,
+	3,76,38,0,433,435,3,78,39,0,434,425,1,0,0,0,434,426,1,0,0,0,434,427,1,0,
+	0,0,434,428,1,0,0,0,434,429,1,0,0,0,434,430,1,0,0,0,434,431,1,0,0,0,434,
+	432,1,0,0,0,434,433,1,0,0,0,435,73,1,0,0,0,436,445,5,40,0,0,437,442,3,68,
+	34,0,438,439,5,57,0,0,439,441,3,68,34,0,440,438,1,0,0,0,441,444,1,0,0,0,
+	442,440,1,0,0,0,442,443,1,0,0,0,443,446,1,0,0,0,444,442,1,0,0,0,445,437,
+	1,0,0,0,445,446,1,0,0,0,446,447,1,0,0,0,447,448,5,41,0,0,448,75,1,0,0,0,
+	449,458,5,46,0,0,450,455,3,68,34,0,451,452,5,57,0,0,452,454,3,68,34,0,453,
+	451,1,0,0,0,454,457,1,0,0,0,455,453,1,0,0,0,455,456,1,0,0,0,456,459,1,0,
+	0,0,457,455,1,0,0,0,458,450,1,0,0,0,458,459,1,0,0,0,459,460,1,0,0,0,460,
+	461,5,45,0,0,461,77,1,0,0,0,462,471,5,42,0,0,463,468,3,80,40,0,464,465,
+	5,57,0,0,465,467,3,80,40,0,466,464,1,0,0,0,467,470,1,0,0,0,468,466,1,0,
+	0,0,468,469,1,0,0,0,469,472,1,0,0,0,470,468,1,0,0,0,471,463,1,0,0,0,471,
+	472,1,0,0,0,472,473,1,0,0,0,473,474,5,43,0,0,474,79,1,0,0,0,475,476,3,6,
+	3,0,476,477,5,56,0,0,477,478,3,68,34,0,478,81,1,0,0,0,45,85,91,102,107,
+	113,119,123,158,161,164,177,185,188,199,202,212,217,225,228,236,239,245,
+	258,261,270,272,279,286,289,295,303,318,338,345,406,408,418,421,434,442,
+	445,455,458,468,471];
 
 	private static __ATN: ATN;
 	public static get _ATN(): ATN {
@@ -2868,8 +2878,8 @@ export class DeclarationContext extends ParserRuleContext {
 	public class_declaration(): Class_declarationContext {
 		return this.getTypedRuleContext(Class_declarationContext, 0) as Class_declarationContext;
 	}
-	public method_declaration(): Method_declarationContext {
-		return this.getTypedRuleContext(Method_declarationContext, 0) as Method_declarationContext;
+	public function_declaration(): Function_declarationContext {
+		return this.getTypedRuleContext(Function_declarationContext, 0) as Function_declarationContext;
 	}
     public get ruleIndex(): number {
     	return ComposeParser.RULE_declaration;
@@ -3400,7 +3410,7 @@ export class Class_refContext extends ParserRuleContext {
 }
 
 
-export class Method_typeContext extends ParserRuleContext {
+export class Function_typeContext extends ParserRuleContext {
 	constructor(parser?: ComposeParser, parent?: ParserRuleContext, invokingState?: number) {
 		super(parent, invokingState);
     	this.parser = parser;
@@ -3433,16 +3443,16 @@ export class Method_typeContext extends ParserRuleContext {
 		return this.getToken(ComposeParser.COMMA, i);
 	}
     public get ruleIndex(): number {
-    	return ComposeParser.RULE_method_type;
+    	return ComposeParser.RULE_function_type;
 	}
 	public enterRule(listener: ComposeParserListener): void {
-	    if(listener.enterMethod_type) {
-	 		listener.enterMethod_type(this);
+	    if(listener.enterFunction_type) {
+	 		listener.enterFunction_type(this);
 		}
 	}
 	public exitRule(listener: ComposeParserListener): void {
-	    if(listener.exitMethod_type) {
-	 		listener.exitMethod_type(this);
+	    if(listener.exitFunction_type) {
+	 		listener.exitFunction_type(this);
 		}
 	}
 }
@@ -3461,8 +3471,8 @@ export class Return_typeContext extends ParserRuleContext {
 	public attribute_type(): Attribute_typeContext {
 		return this.getTypedRuleContext(Attribute_typeContext, 0) as Attribute_typeContext;
 	}
-	public method_type(): Method_typeContext {
-		return this.getTypedRuleContext(Method_typeContext, 0) as Method_typeContext;
+	public function_type(): Function_typeContext {
+		return this.getTypedRuleContext(Function_typeContext, 0) as Function_typeContext;
 	}
 	public LPAR(): TerminalNode {
 		return this.getToken(ComposeParser.LPAR, 0);
@@ -3578,7 +3588,7 @@ export class TypedParameterContext extends ParameterContext {
 		}
 	}
 }
-export class MethodParameterContext extends ParameterContext {
+export class FunctionParameterContext extends ParameterContext {
 	constructor(parser: ComposeParser, ctx: ParameterContext) {
 		super(parser, ctx.parentCtx, ctx.invokingState);
 		super.copyFrom(ctx);
@@ -3589,17 +3599,17 @@ export class MethodParameterContext extends ParameterContext {
 	public COLON(): TerminalNode {
 		return this.getToken(ComposeParser.COLON, 0);
 	}
-	public method_type(): Method_typeContext {
-		return this.getTypedRuleContext(Method_typeContext, 0) as Method_typeContext;
+	public function_type(): Function_typeContext {
+		return this.getTypedRuleContext(Function_typeContext, 0) as Function_typeContext;
 	}
 	public enterRule(listener: ComposeParserListener): void {
-	    if(listener.enterMethodParameter) {
-	 		listener.enterMethodParameter(this);
+	    if(listener.enterFunctionParameter) {
+	 		listener.enterFunctionParameter(this);
 		}
 	}
 	public exitRule(listener: ComposeParserListener): void {
-	    if(listener.exitMethodParameter) {
-	 		listener.exitMethodParameter(this);
+	    if(listener.exitFunctionParameter) {
+	 		listener.exitFunctionParameter(this);
 		}
 	}
 }
@@ -3644,11 +3654,11 @@ export class Class_declarationContext extends ParserRuleContext {
 	public EXTENDS(): TerminalNode {
 		return this.getToken(ComposeParser.EXTENDS, 0);
 	}
-	public method_declaration_list(): Method_declarationContext[] {
-		return this.getTypedRuleContexts(Method_declarationContext) as Method_declarationContext[];
+	public function_declaration_list(): Function_declarationContext[] {
+		return this.getTypedRuleContexts(Function_declarationContext) as Function_declarationContext[];
 	}
-	public method_declaration(i: number): Method_declarationContext {
-		return this.getTypedRuleContext(Method_declarationContext, i) as Method_declarationContext;
+	public function_declaration(i: number): Function_declarationContext {
+		return this.getTypedRuleContext(Function_declarationContext, i) as Function_declarationContext;
 	}
 	public COMMA_list(): TerminalNode[] {
 	    	return this.getTokens(ComposeParser.COMMA);
@@ -3672,34 +3682,34 @@ export class Class_declarationContext extends ParserRuleContext {
 }
 
 
-export class Method_declarationContext extends ParserRuleContext {
+export class Function_declarationContext extends ParserRuleContext {
 	constructor(parser?: ComposeParser, parent?: ParserRuleContext, invokingState?: number) {
 		super(parent, invokingState);
     	this.parser = parser;
 	}
-	public abstract_method_declaration(): Abstract_method_declarationContext {
-		return this.getTypedRuleContext(Abstract_method_declarationContext, 0) as Abstract_method_declarationContext;
+	public abstract_function_declaration(): Abstract_function_declarationContext {
+		return this.getTypedRuleContext(Abstract_function_declarationContext, 0) as Abstract_function_declarationContext;
 	}
-	public concrete_method_declaration(): Concrete_method_declarationContext {
-		return this.getTypedRuleContext(Concrete_method_declarationContext, 0) as Concrete_method_declarationContext;
+	public concrete_function_declaration(): Concrete_function_declarationContext {
+		return this.getTypedRuleContext(Concrete_function_declarationContext, 0) as Concrete_function_declarationContext;
 	}
     public get ruleIndex(): number {
-    	return ComposeParser.RULE_method_declaration;
+    	return ComposeParser.RULE_function_declaration;
 	}
 	public enterRule(listener: ComposeParserListener): void {
-	    if(listener.enterMethod_declaration) {
-	 		listener.enterMethod_declaration(this);
+	    if(listener.enterFunction_declaration) {
+	 		listener.enterFunction_declaration(this);
 		}
 	}
 	public exitRule(listener: ComposeParserListener): void {
-	    if(listener.exitMethod_declaration) {
-	 		listener.exitMethod_declaration(this);
+	    if(listener.exitFunction_declaration) {
+	 		listener.exitFunction_declaration(this);
 		}
 	}
 }
 
 
-export class Abstract_method_declarationContext extends ParserRuleContext {
+export class Abstract_function_declarationContext extends ParserRuleContext {
 	constructor(parser?: ComposeParser, parent?: ParserRuleContext, invokingState?: number) {
 		super(parent, invokingState);
     	this.parser = parser;
@@ -3707,26 +3717,26 @@ export class Abstract_method_declarationContext extends ParserRuleContext {
 	public ABSTRACT(): TerminalNode {
 		return this.getToken(ComposeParser.ABSTRACT, 0);
 	}
-	public method_prototype(): Method_prototypeContext {
-		return this.getTypedRuleContext(Method_prototypeContext, 0) as Method_prototypeContext;
+	public function_prototype(): Function_prototypeContext {
+		return this.getTypedRuleContext(Function_prototypeContext, 0) as Function_prototypeContext;
 	}
     public get ruleIndex(): number {
-    	return ComposeParser.RULE_abstract_method_declaration;
+    	return ComposeParser.RULE_abstract_function_declaration;
 	}
 	public enterRule(listener: ComposeParserListener): void {
-	    if(listener.enterAbstract_method_declaration) {
-	 		listener.enterAbstract_method_declaration(this);
+	    if(listener.enterAbstract_function_declaration) {
+	 		listener.enterAbstract_function_declaration(this);
 		}
 	}
 	public exitRule(listener: ComposeParserListener): void {
-	    if(listener.exitAbstract_method_declaration) {
-	 		listener.exitAbstract_method_declaration(this);
+	    if(listener.exitAbstract_function_declaration) {
+	 		listener.exitAbstract_function_declaration(this);
 		}
 	}
 }
 
 
-export class Method_prototypeContext extends ParserRuleContext {
+export class Function_prototypeContext extends ParserRuleContext {
 	public mandatory_return: boolean;
 	constructor(parser: ComposeParser, parent: ParserRuleContext, invokingState: number, mandatory_return: boolean) {
 		super(parent, invokingState);
@@ -3764,28 +3774,28 @@ export class Method_prototypeContext extends ParserRuleContext {
 		return this.getToken(ComposeParser.COMMA, i);
 	}
     public get ruleIndex(): number {
-    	return ComposeParser.RULE_method_prototype;
+    	return ComposeParser.RULE_function_prototype;
 	}
 	public enterRule(listener: ComposeParserListener): void {
-	    if(listener.enterMethod_prototype) {
-	 		listener.enterMethod_prototype(this);
+	    if(listener.enterFunction_prototype) {
+	 		listener.enterFunction_prototype(this);
 		}
 	}
 	public exitRule(listener: ComposeParserListener): void {
-	    if(listener.exitMethod_prototype) {
-	 		listener.exitMethod_prototype(this);
+	    if(listener.exitFunction_prototype) {
+	 		listener.exitFunction_prototype(this);
 		}
 	}
 }
 
 
-export class Concrete_method_declarationContext extends ParserRuleContext {
+export class Concrete_function_declarationContext extends ParserRuleContext {
 	constructor(parser?: ComposeParser, parent?: ParserRuleContext, invokingState?: number) {
 		super(parent, invokingState);
     	this.parser = parser;
 	}
-	public method_prototype(): Method_prototypeContext {
-		return this.getTypedRuleContext(Method_prototypeContext, 0) as Method_prototypeContext;
+	public function_prototype(): Function_prototypeContext {
+		return this.getTypedRuleContext(Function_prototypeContext, 0) as Function_prototypeContext;
 	}
 	public LCURL(): TerminalNode {
 		return this.getToken(ComposeParser.LCURL, 0);
@@ -3800,16 +3810,16 @@ export class Concrete_method_declarationContext extends ParserRuleContext {
 		return this.getTypedRuleContext(StatementContext, i) as StatementContext;
 	}
     public get ruleIndex(): number {
-    	return ComposeParser.RULE_concrete_method_declaration;
+    	return ComposeParser.RULE_concrete_function_declaration;
 	}
 	public enterRule(listener: ComposeParserListener): void {
-	    if(listener.enterConcrete_method_declaration) {
-	 		listener.enterConcrete_method_declaration(this);
+	    if(listener.enterConcrete_function_declaration) {
+	 		listener.enterConcrete_function_declaration(this);
 		}
 	}
 	public exitRule(listener: ComposeParserListener): void {
-	    if(listener.exitConcrete_method_declaration) {
-	 		listener.exitConcrete_method_declaration(this);
+	    if(listener.exitConcrete_function_declaration) {
+	 		listener.exitConcrete_function_declaration(this);
 		}
 	}
 }
@@ -3820,8 +3830,8 @@ export class StatementContext extends ParserRuleContext {
 		super(parent, invokingState);
     	this.parser = parser;
 	}
-	public assign_statement(): Assign_statementContext {
-		return this.getTypedRuleContext(Assign_statementContext, 0) as Assign_statementContext;
+	public assign_local_statement(): Assign_local_statementContext {
+		return this.getTypedRuleContext(Assign_local_statementContext, 0) as Assign_local_statementContext;
 	}
 	public return_statement(): Return_statementContext {
 		return this.getTypedRuleContext(Return_statementContext, 0) as Return_statementContext;
@@ -3842,7 +3852,7 @@ export class StatementContext extends ParserRuleContext {
 }
 
 
-export class Assign_statementContext extends ParserRuleContext {
+export class Assign_local_statementContext extends ParserRuleContext {
 	constructor(parser?: ComposeParser, parent?: ParserRuleContext, invokingState?: number) {
 		super(parent, invokingState);
     	this.parser = parser;
@@ -3865,8 +3875,8 @@ export class Assign_statementContext extends ParserRuleContext {
 	public data_type(): Data_typeContext {
 		return this.getTypedRuleContext(Data_typeContext, 0) as Data_typeContext;
 	}
-	public method_type(): Method_typeContext {
-		return this.getTypedRuleContext(Method_typeContext, 0) as Method_typeContext;
+	public function_type(): Function_typeContext {
+		return this.getTypedRuleContext(Function_typeContext, 0) as Function_typeContext;
 	}
 	public LET(): TerminalNode {
 		return this.getToken(ComposeParser.LET, 0);
@@ -3875,16 +3885,16 @@ export class Assign_statementContext extends ParserRuleContext {
 		return this.getToken(ComposeParser.CONST, 0);
 	}
     public get ruleIndex(): number {
-    	return ComposeParser.RULE_assign_statement;
+    	return ComposeParser.RULE_assign_local_statement;
 	}
 	public enterRule(listener: ComposeParserListener): void {
-	    if(listener.enterAssign_statement) {
-	 		listener.enterAssign_statement(this);
+	    if(listener.enterAssign_local_statement) {
+	 		listener.enterAssign_local_statement(this);
 		}
 	}
 	public exitRule(listener: ComposeParserListener): void {
-	    if(listener.exitAssign_statement) {
-	 		listener.exitAssign_statement(this);
+	    if(listener.exitAssign_local_statement) {
+	 		listener.exitAssign_local_statement(this);
 		}
 	}
 }
@@ -3898,11 +3908,11 @@ export class Return_statementContext extends ParserRuleContext {
 	public RETURN(): TerminalNode {
 		return this.getToken(ComposeParser.RETURN, 0);
 	}
-	public expression(): ExpressionContext {
-		return this.getTypedRuleContext(ExpressionContext, 0) as ExpressionContext;
-	}
 	public SEMI(): TerminalNode {
 		return this.getToken(ComposeParser.SEMI, 0);
+	}
+	public expression(): ExpressionContext {
+		return this.getTypedRuleContext(ExpressionContext, 0) as ExpressionContext;
 	}
     public get ruleIndex(): number {
     	return ComposeParser.RULE_return_statement;
@@ -4083,6 +4093,25 @@ export class OrExpressionContext extends ExpressionContext {
 		}
 	}
 }
+export class FunctionCallExpressionContext extends ExpressionContext {
+	constructor(parser: ComposeParser, ctx: ExpressionContext) {
+		super(parser, ctx.parentCtx, ctx.invokingState);
+		super.copyFrom(ctx);
+	}
+	public function_call_expression(): Function_call_expressionContext {
+		return this.getTypedRuleContext(Function_call_expressionContext, 0) as Function_call_expressionContext;
+	}
+	public enterRule(listener: ComposeParserListener): void {
+	    if(listener.enterFunctionCallExpression) {
+	 		listener.enterFunctionCallExpression(this);
+		}
+	}
+	public exitRule(listener: ComposeParserListener): void {
+	    if(listener.exitFunctionCallExpression) {
+	 		listener.exitFunctionCallExpression(this);
+		}
+	}
+}
 export class ThisExpressionContext extends ExpressionContext {
 	constructor(parser: ComposeParser, ctx: ExpressionContext) {
 		super(parser, ctx.parentCtx, ctx.invokingState);
@@ -4126,25 +4155,6 @@ export class AndExpressionContext extends ExpressionContext {
 	public exitRule(listener: ComposeParserListener): void {
 	    if(listener.exitAndExpression) {
 	 		listener.exitAndExpression(this);
-		}
-	}
-}
-export class MethodCallExpressionContext extends ExpressionContext {
-	constructor(parser: ComposeParser, ctx: ExpressionContext) {
-		super(parser, ctx.parentCtx, ctx.invokingState);
-		super.copyFrom(ctx);
-	}
-	public method_call_expression(): Method_call_expressionContext {
-		return this.getTypedRuleContext(Method_call_expressionContext, 0) as Method_call_expressionContext;
-	}
-	public enterRule(listener: ComposeParserListener): void {
-	    if(listener.enterMethodCallExpression) {
-	 		listener.enterMethodCallExpression(this);
-		}
-	}
-	public exitRule(listener: ComposeParserListener): void {
-	    if(listener.exitMethodCallExpression) {
-	 		listener.exitMethodCallExpression(this);
 		}
 	}
 }
@@ -4385,8 +4395,8 @@ export class NewExpressionContext extends ExpressionContext {
 	public NEW(): TerminalNode {
 		return this.getToken(ComposeParser.NEW, 0);
 	}
-	public method_call_expression(): Method_call_expressionContext {
-		return this.getTypedRuleContext(Method_call_expressionContext, 0) as Method_call_expressionContext;
+	public function_call_expression(): Function_call_expressionContext {
+		return this.getTypedRuleContext(Function_call_expressionContext, 0) as Function_call_expressionContext;
 	}
 	public enterRule(listener: ComposeParserListener): void {
 	    if(listener.enterNewExpression) {
@@ -4757,7 +4767,7 @@ export class EqualsExpressionContext extends ExpressionContext {
 }
 
 
-export class Method_call_expressionContext extends ParserRuleContext {
+export class Function_call_expressionContext extends ParserRuleContext {
 	public _arg!: ExpressionContext;
 	constructor(parser?: ComposeParser, parent?: ParserRuleContext, invokingState?: number) {
 		super(parent, invokingState);
@@ -4785,16 +4795,16 @@ export class Method_call_expressionContext extends ParserRuleContext {
 		return this.getToken(ComposeParser.COMMA, i);
 	}
     public get ruleIndex(): number {
-    	return ComposeParser.RULE_method_call_expression;
+    	return ComposeParser.RULE_function_call_expression;
 	}
 	public enterRule(listener: ComposeParserListener): void {
-	    if(listener.enterMethod_call_expression) {
-	 		listener.enterMethod_call_expression(this);
+	    if(listener.enterFunction_call_expression) {
+	 		listener.enterFunction_call_expression(this);
 		}
 	}
 	public exitRule(listener: ComposeParserListener): void {
-	    if(listener.exitMethod_call_expression) {
-	 		listener.exitMethod_call_expression(this);
+	    if(listener.exitFunction_call_expression) {
+	 		listener.exitFunction_call_expression(this);
 		}
 	}
 }

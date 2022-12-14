@@ -5,7 +5,7 @@ import IType from "./IType";
 import LEB128 from "../utils/LEB128";
 import IWasmTarget from "../compiler/IWasmTarget";
 
-export default class MethodType extends CodeSection implements IType {
+export default class FunctionType extends CodeSection implements IType {
 
     parameters: ParameterList;
     returnTypes: TypeList;
@@ -42,7 +42,7 @@ export default class MethodType extends CodeSection implements IType {
     toString(): string {
         const params = this.parameters.map(param => param.toString());
         const returns = this.returnTypes.map(type => type.toString());
-        return MethodType.flatten(params) + " => " + MethodType.flatten(returns);
+        return FunctionType.flatten(params) + " => " + FunctionType.flatten(returns);
     }
 
     private static flatten(values: string[]): string {

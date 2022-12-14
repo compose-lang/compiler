@@ -1,6 +1,6 @@
 import AttributeDeclaration from "../declaration/AttributeDeclaration";
 import ClassDeclaration from "../declaration/ClassDeclaration";
-import IMethodDeclaration from "../declaration/IMethodDeclaration";
+import IFunctionDeclaration from "../declaration/IFunctionDeclaration";
 import * as assert from "assert";
 
 export default class Context {
@@ -19,15 +19,15 @@ export default class Context {
     attributes = new Map<string, AttributeDeclaration>();
     classes = new Map<string, ClassDeclaration>();
     // enums = new Map<string, EnumDeclaration>();
-    methods = new Map<string, Map<string, IMethodDeclaration>>();
+    methods = new Map<string, Map<string, IFunctionDeclaration>>();
 
     private constructor(globals?: Context) {
         this.globals = globals || this;
     }
 
-    registerMethod(method: IMethodDeclaration) {
+    registerMethod(method: IFunctionDeclaration) {
         if(!this.methods.has(method.name))
-            this.methods.set(method.name, new Map<string, IMethodDeclaration>());
+            this.methods.set(method.name, new Map<string, IFunctionDeclaration>());
         const protos = this.methods.get(method.name);
         const proto = method.type().toString();
         assert.ok(!protos.has(proto));

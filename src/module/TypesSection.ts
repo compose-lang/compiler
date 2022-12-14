@@ -1,6 +1,5 @@
-import ISection from "./ISection";
 import SectionType from "./SectionType";
-import MethodType from "../type/MethodType";
+import FunctionType from "../type/FunctionType";
 import IType from "../type/IType";
 import LEB128 from "../utils/LEB128";
 import SectionBase from "./SectionBase";
@@ -24,7 +23,7 @@ export default class TypesSection extends SectionBase {
         this.types.forEach(type => type.writeTo(target));
     }
 
-    addMethodType(type: MethodType): number {
+    addMethodType(type: FunctionType): number {
         // TODO check unique
         this.types.push(type);
         return this.types.length - 1; // index is 0-based

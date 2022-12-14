@@ -1,14 +1,14 @@
 import CodeSection from "../builder/CodeSection";
 import IParameter from "./IParameter";
 import Identifier from "../builder/Identifier";
-import MethodType from "../type/MethodType";
+import FunctionType from "../type/FunctionType";
 
-export default class MethodParameter extends CodeSection implements IParameter {
+export default class FunctionParameter extends CodeSection implements IParameter {
 
     id: Identifier;
-    type: MethodType;
+    type: FunctionType;
 
-    constructor(id: Identifier, type: MethodType) {
+    constructor(id: Identifier, type: FunctionType) {
         super();
         this.id = id;
         this.type = type;

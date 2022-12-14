@@ -1,10 +1,10 @@
-import MethodDeclarationBase from "./MethodDeclarationBase";
+import FunctionDeclarationBase from "./FunctionDeclarationBase";
 import Prototype from "./Prototype";
 import IStatement from "../statement/IStatement";
 import Context from "../context/Context";
 import WasmModule from "../module/WasmModule";
 
-export default class ConcreteMethodDeclaration extends MethodDeclarationBase {
+export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase {
 
     statements: IStatement[];
 

@@ -25,28 +25,28 @@ import { Attribute_typeContext } from "./ComposeParser";
 import { Attribute_refContext } from "./ComposeParser";
 import { Class_typeContext } from "./ComposeParser";
 import { Class_refContext } from "./ComposeParser";
-import { Method_typeContext } from "./ComposeParser";
+import { Function_typeContext } from "./ComposeParser";
 import { Return_typeContext } from "./ComposeParser";
 import { Return_typesContext } from "./ComposeParser";
 import { AttributeParameterContext } from "./ComposeParser";
 import { TypedParameterContext } from "./ComposeParser";
-import { MethodParameterContext } from "./ComposeParser";
+import { FunctionParameterContext } from "./ComposeParser";
 import { Class_declarationContext } from "./ComposeParser";
-import { Method_declarationContext } from "./ComposeParser";
-import { Abstract_method_declarationContext } from "./ComposeParser";
-import { Method_prototypeContext } from "./ComposeParser";
-import { Concrete_method_declarationContext } from "./ComposeParser";
+import { Function_declarationContext } from "./ComposeParser";
+import { Abstract_function_declarationContext } from "./ComposeParser";
+import { Function_prototypeContext } from "./ComposeParser";
+import { Concrete_function_declarationContext } from "./ComposeParser";
 import { StatementContext } from "./ComposeParser";
-import { Assign_statementContext } from "./ComposeParser";
+import { Assign_local_statementContext } from "./ComposeParser";
 import { Return_statementContext } from "./ComposeParser";
 import { TernaryExpressionContext } from "./ComposeParser";
 import { InExpressionContext } from "./ComposeParser";
 import { ItemExpressionContext } from "./ComposeParser";
 import { CompareExpressionContext } from "./ComposeParser";
 import { OrExpressionContext } from "./ComposeParser";
+import { FunctionCallExpressionContext } from "./ComposeParser";
 import { ThisExpressionContext } from "./ComposeParser";
 import { AndExpressionContext } from "./ComposeParser";
-import { MethodCallExpressionContext } from "./ComposeParser";
 import { UnaryMinusExpressionContext } from "./ComposeParser";
 import { TypeofExpressionContext } from "./ComposeParser";
 import { InstanceofExpressionContext } from "./ComposeParser";
@@ -71,7 +71,7 @@ import { BitOrExpressionContext } from "./ComposeParser";
 import { CastExpressionContext } from "./ComposeParser";
 import { UnaryPreDecrementExpressionContext } from "./ComposeParser";
 import { EqualsExpressionContext } from "./ComposeParser";
-import { Method_call_expressionContext } from "./ComposeParser";
+import { Function_call_expressionContext } from "./ComposeParser";
 import { NullLiteralContext } from "./ComposeParser";
 import { BooleanLiteralContext } from "./ComposeParser";
 import { IntegerLiteralContext } from "./ComposeParser";
@@ -313,15 +313,15 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 */
 	exitClass_ref?: (ctx: Class_refContext) => void;
 	/**
-	 * Enter a parse tree produced by `ComposeParser.method_type`.
+	 * Enter a parse tree produced by `ComposeParser.function_type`.
 	 * @param ctx the parse tree
 	 */
-	enterMethod_type?: (ctx: Method_typeContext) => void;
+	enterFunction_type?: (ctx: Function_typeContext) => void;
 	/**
-	 * Exit a parse tree produced by `ComposeParser.method_type`.
+	 * Exit a parse tree produced by `ComposeParser.function_type`.
 	 * @param ctx the parse tree
 	 */
-	exitMethod_type?: (ctx: Method_typeContext) => void;
+	exitFunction_type?: (ctx: Function_typeContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.return_type`.
 	 * @param ctx the parse tree
@@ -367,17 +367,17 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 */
 	exitTypedParameter?: (ctx: TypedParameterContext) => void;
 	/**
-	 * Enter a parse tree produced by the `MethodParameter`
+	 * Enter a parse tree produced by the `FunctionParameter`
 	 * labeled alternative in `ComposeParser.parameter`.
 	 * @param ctx the parse tree
 	 */
-	enterMethodParameter?: (ctx: MethodParameterContext) => void;
+	enterFunctionParameter?: (ctx: FunctionParameterContext) => void;
 	/**
-	 * Exit a parse tree produced by the `MethodParameter`
+	 * Exit a parse tree produced by the `FunctionParameter`
 	 * labeled alternative in `ComposeParser.parameter`.
 	 * @param ctx the parse tree
 	 */
-	exitMethodParameter?: (ctx: MethodParameterContext) => void;
+	exitFunctionParameter?: (ctx: FunctionParameterContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.class_declaration`.
 	 * @param ctx the parse tree
@@ -389,45 +389,45 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 */
 	exitClass_declaration?: (ctx: Class_declarationContext) => void;
 	/**
-	 * Enter a parse tree produced by `ComposeParser.method_declaration`.
+	 * Enter a parse tree produced by `ComposeParser.function_declaration`.
 	 * @param ctx the parse tree
 	 */
-	enterMethod_declaration?: (ctx: Method_declarationContext) => void;
+	enterFunction_declaration?: (ctx: Function_declarationContext) => void;
 	/**
-	 * Exit a parse tree produced by `ComposeParser.method_declaration`.
+	 * Exit a parse tree produced by `ComposeParser.function_declaration`.
 	 * @param ctx the parse tree
 	 */
-	exitMethod_declaration?: (ctx: Method_declarationContext) => void;
+	exitFunction_declaration?: (ctx: Function_declarationContext) => void;
 	/**
-	 * Enter a parse tree produced by `ComposeParser.abstract_method_declaration`.
+	 * Enter a parse tree produced by `ComposeParser.abstract_function_declaration`.
 	 * @param ctx the parse tree
 	 */
-	enterAbstract_method_declaration?: (ctx: Abstract_method_declarationContext) => void;
+	enterAbstract_function_declaration?: (ctx: Abstract_function_declarationContext) => void;
 	/**
-	 * Exit a parse tree produced by `ComposeParser.abstract_method_declaration`.
+	 * Exit a parse tree produced by `ComposeParser.abstract_function_declaration`.
 	 * @param ctx the parse tree
 	 */
-	exitAbstract_method_declaration?: (ctx: Abstract_method_declarationContext) => void;
+	exitAbstract_function_declaration?: (ctx: Abstract_function_declarationContext) => void;
 	/**
-	 * Enter a parse tree produced by `ComposeParser.method_prototype`.
+	 * Enter a parse tree produced by `ComposeParser.function_prototype`.
 	 * @param ctx the parse tree
 	 */
-	enterMethod_prototype?: (ctx: Method_prototypeContext) => void;
+	enterFunction_prototype?: (ctx: Function_prototypeContext) => void;
 	/**
-	 * Exit a parse tree produced by `ComposeParser.method_prototype`.
+	 * Exit a parse tree produced by `ComposeParser.function_prototype`.
 	 * @param ctx the parse tree
 	 */
-	exitMethod_prototype?: (ctx: Method_prototypeContext) => void;
+	exitFunction_prototype?: (ctx: Function_prototypeContext) => void;
 	/**
-	 * Enter a parse tree produced by `ComposeParser.concrete_method_declaration`.
+	 * Enter a parse tree produced by `ComposeParser.concrete_function_declaration`.
 	 * @param ctx the parse tree
 	 */
-	enterConcrete_method_declaration?: (ctx: Concrete_method_declarationContext) => void;
+	enterConcrete_function_declaration?: (ctx: Concrete_function_declarationContext) => void;
 	/**
-	 * Exit a parse tree produced by `ComposeParser.concrete_method_declaration`.
+	 * Exit a parse tree produced by `ComposeParser.concrete_function_declaration`.
 	 * @param ctx the parse tree
 	 */
-	exitConcrete_method_declaration?: (ctx: Concrete_method_declarationContext) => void;
+	exitConcrete_function_declaration?: (ctx: Concrete_function_declarationContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.statement`.
 	 * @param ctx the parse tree
@@ -439,15 +439,15 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 */
 	exitStatement?: (ctx: StatementContext) => void;
 	/**
-	 * Enter a parse tree produced by `ComposeParser.assign_statement`.
+	 * Enter a parse tree produced by `ComposeParser.assign_local_statement`.
 	 * @param ctx the parse tree
 	 */
-	enterAssign_statement?: (ctx: Assign_statementContext) => void;
+	enterAssign_local_statement?: (ctx: Assign_local_statementContext) => void;
 	/**
-	 * Exit a parse tree produced by `ComposeParser.assign_statement`.
+	 * Exit a parse tree produced by `ComposeParser.assign_local_statement`.
 	 * @param ctx the parse tree
 	 */
-	exitAssign_statement?: (ctx: Assign_statementContext) => void;
+	exitAssign_local_statement?: (ctx: Assign_local_statementContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.return_statement`.
 	 * @param ctx the parse tree
@@ -519,6 +519,18 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 */
 	exitOrExpression?: (ctx: OrExpressionContext) => void;
 	/**
+	 * Enter a parse tree produced by the `FunctionCallExpression`
+	 * labeled alternative in `ComposeParser.expression`.
+	 * @param ctx the parse tree
+	 */
+	enterFunctionCallExpression?: (ctx: FunctionCallExpressionContext) => void;
+	/**
+	 * Exit a parse tree produced by the `FunctionCallExpression`
+	 * labeled alternative in `ComposeParser.expression`.
+	 * @param ctx the parse tree
+	 */
+	exitFunctionCallExpression?: (ctx: FunctionCallExpressionContext) => void;
+	/**
 	 * Enter a parse tree produced by the `ThisExpression`
 	 * labeled alternative in `ComposeParser.expression`.
 	 * @param ctx the parse tree
@@ -542,18 +554,6 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitAndExpression?: (ctx: AndExpressionContext) => void;
-	/**
-	 * Enter a parse tree produced by the `MethodCallExpression`
-	 * labeled alternative in `ComposeParser.expression`.
-	 * @param ctx the parse tree
-	 */
-	enterMethodCallExpression?: (ctx: MethodCallExpressionContext) => void;
-	/**
-	 * Exit a parse tree produced by the `MethodCallExpression`
-	 * labeled alternative in `ComposeParser.expression`.
-	 * @param ctx the parse tree
-	 */
-	exitMethodCallExpression?: (ctx: MethodCallExpressionContext) => void;
 	/**
 	 * Enter a parse tree produced by the `UnaryMinusExpression`
 	 * labeled alternative in `ComposeParser.expression`.
@@ -843,15 +843,15 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 */
 	exitEqualsExpression?: (ctx: EqualsExpressionContext) => void;
 	/**
-	 * Enter a parse tree produced by `ComposeParser.method_call_expression`.
+	 * Enter a parse tree produced by `ComposeParser.function_call_expression`.
 	 * @param ctx the parse tree
 	 */
-	enterMethod_call_expression?: (ctx: Method_call_expressionContext) => void;
+	enterFunction_call_expression?: (ctx: Function_call_expressionContext) => void;
 	/**
-	 * Exit a parse tree produced by `ComposeParser.method_call_expression`.
+	 * Exit a parse tree produced by `ComposeParser.function_call_expression`.
 	 * @param ctx the parse tree
 	 */
-	exitMethod_call_expression?: (ctx: Method_call_expressionContext) => void;
+	exitFunction_call_expression?: (ctx: Function_call_expressionContext) => void;
 	/**
 	 * Enter a parse tree produced by the `NullLiteral`
 	 * labeled alternative in `ComposeParser.literal_expression`.

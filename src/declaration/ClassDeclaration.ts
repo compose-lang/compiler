@@ -1,8 +1,7 @@
 import IDeclaration from "./IDeclaration";
 import Identifier from "../builder/Identifier";
 import IdentifierList from "../builder/IdentifierList";
-import CodeSection from "../builder/CodeSection";
-import MethodList from "../builder/MethodList";
+import FunctionList from "../builder/FunctionList";
 import DeclarationBase from "./DeclarationBase";
 import Context from "../context/Context";
 import WasmModule from "../module/WasmModule";
@@ -11,14 +10,14 @@ export default class ClassDeclaration extends DeclarationBase implements IDeclar
 
     attributes: IdentifierList;
     parents: IdentifierList;
-    methods: MethodList;
+    functions: FunctionList;
     abstract: boolean;
 
-    constructor(id: Identifier, attributes: IdentifierList, parents: IdentifierList, methods: MethodList, abstract: boolean) {
+    constructor(id: Identifier, attributes: IdentifierList, parents: IdentifierList, functions: FunctionList, abstract: boolean) {
         super(id);
         this.attributes = attributes;
         this.parents = parents;
-        this.methods = methods;
+        this.functions = functions;
         this.abstract = abstract;
     }
 

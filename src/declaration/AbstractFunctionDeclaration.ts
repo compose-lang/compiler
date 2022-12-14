@@ -1,9 +1,9 @@
-import MethodDeclarationBase from "./MethodDeclarationBase";
+import FunctionDeclarationBase from "./FunctionDeclarationBase";
 import Prototype from "./Prototype";
 import Context from "../context/Context";
 import WasmModule from "../module/WasmModule";
 
-export default class AbstractMethodDeclaration extends MethodDeclarationBase {
+export default class AbstractFunctionDeclaration extends FunctionDeclarationBase {
 
     constructor(proto: Prototype) {
         super(proto);

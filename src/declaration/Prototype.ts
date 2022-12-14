@@ -1,9 +1,9 @@
 import ParameterList from "../parameter/ParameterList";
 import Identifier from "../builder/Identifier";
 import TypeList from "../type/TypeList";
-import MethodType from "../type/MethodType";
+import FunctionType from "../type/FunctionType";
 
-export default class Prototype extends MethodType {
+export default class Prototype extends FunctionType {
 
     id: Identifier;
 

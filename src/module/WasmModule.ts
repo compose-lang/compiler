@@ -30,7 +30,7 @@ export default class WasmModule {
 
     exportMethod(prototype: Prototype) {
         const typeIndex = this.getTypesSection().addMethodType(prototype);
-        // TODO const functionIndex = this.getFunctionsSection().addFunction(prototype, typeIndex);
+        // const functionIndex = this.getFunctionsSection().addFunction(prototype, typeIndex);
         // TODO this.getExportsSection().addFunction(prototype, functionIndex);
     }
 

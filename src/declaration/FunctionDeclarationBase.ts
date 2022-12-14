@@ -1,11 +1,11 @@
-import IMethodDeclaration from "./IMethodDeclaration";
+import IFunctionDeclaration from "./IFunctionDeclaration";
 import DeclarationBase from "./DeclarationBase";
 import ParameterList from "../parameter/ParameterList";
 import TypeList from "../type/TypeList";
 import Prototype from "./Prototype";
-import MethodType from "../type/MethodType";
+import FunctionType from "../type/FunctionType";
 
-export default abstract class MethodDeclarationBase extends DeclarationBase implements IMethodDeclaration {
+export default abstract class FunctionDeclarationBase extends DeclarationBase implements IFunctionDeclaration {
 
     parameters: ParameterList;
     returnTypes: TypeList;
@@ -16,8 +16,8 @@ export default abstract class MethodDeclarationBase extends DeclarationBase impl
         this.returnTypes = proto.returnTypes || [];
     }
 
-    type(): MethodType {
-        return new MethodType(this.parameters, this.returnTypes);
+    type(): FunctionType {
+        return new FunctionType(this.parameters, this.returnTypes);
     }
 
     prototype(): Prototype {

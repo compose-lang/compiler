@@ -12,7 +12,7 @@ compilation_unit:
 declaration:
     attribute_declaration
     | class_declaration
-    | method_declaration
+    | function_declaration
 //    | enum_declaration
     ;
 
@@ -105,7 +105,7 @@ class_ref:
     { this.willBeUppercase() }? IDENTIFIER
     ;
 
-method_type:
+function_type:
     ( attribute_type
         | LPAR (parameter (COMMA parameter)*)? RPAR )
     ARROW return_types
@@ -114,8 +114,8 @@ method_type:
 return_type[boolean requireParenthesis]:
     data_type
     | attribute_type
-    | { !$requireParenthesis }? method_type
-    | LPAR method_type RPAR
+    | { !$requireParenthesis }? function_type
+    | LPAR function_type RPAR
     ;
 
 return_types:
@@ -126,27 +126,27 @@ return_types:
 parameter:
     attribute_type                  # AttributeParameter
     | identifier COLON data_type    # TypedParameter
-    | identifier COLON method_type  # MethodParameter
+    | identifier COLON function_type  # FunctionParameter
     ;
 
 class_declaration:
     ABSTRACT? CLASS id = class_ref ( LPAR attribute_ref (COMMA attribute_ref)* RPAR )?
             ( EXTENDS class_ref (COMMA class_ref)* )?
         LCURL
-            (method_declaration (COMMA method_declaration)*)?
+            (function_declaration (COMMA function_declaration)*)?
         RCURL
     ;
 
-method_declaration:
-    abstract_method_declaration
-    | concrete_method_declaration
+function_declaration:
+    abstract_function_declaration
+    | concrete_function_declaration
     ;
 
-abstract_method_declaration:
-    ABSTRACT method_prototype[true]
+abstract_function_declaration:
+    ABSTRACT function_prototype[true]
     ;
 
-method_prototype[boolean mandatory_return]:
+function_prototype[boolean mandatory_return]:
     FUNCTION identifier LPAR ( parameter ( COMMA parameter )* )? RPAR
         (
             { $mandatory_return }? COLON return_types
@@ -154,8 +154,8 @@ method_prototype[boolean mandatory_return]:
         )
     ;
 
-concrete_method_declaration:
-    method_prototype[false]
+concrete_function_declaration:
+    function_prototype[false]
         LCURL statement* RCURL
     ;
 
@@ -165,7 +165,7 @@ statement:
     ;
 
 assign_local_statement:
-    (LET | CONST)? identifier (COLON data_type | method_type) ASSIGN expression SEMI
+    (LET | CONST)? identifier (COLON data_type | function_type) ASSIGN expression SEMI
     ;
 
 return_statement:
@@ -177,8 +177,8 @@ expression:
         LBRAK item = expression RBRAK   # ItemExpression
     | parent = expression
         DOT member = expression         # MemberExpression
-    | NEW method_call_expression        # NewExpression
-    | method_call_expression            # MethodCallExpression
+    | NEW function_call_expression        # NewExpression
+    | function_call_expression            # FunctionCallExpression
     | expression { $parser.willNotContainLineTerminator()}
         INC                             # PostIncrementExpression
     | expression { $parser.willNotContainLineTerminator()}
@@ -226,7 +226,7 @@ expression:
     | exp = expression AS IDENTIFIER    # CastExpression
     ;
 
-method_call_expression:
+function_call_expression:
     identifier LPAR ( arg = expression ( COMMA arg = expression)* )? RPAR
     ;
 
