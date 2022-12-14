@@ -17,4 +17,9 @@ export default class MethodParameter extends CodeSection implements IParameter {
     get name(): string {
         return this.id.value;
     }
+
+    toString() {
+        return this.id.value + ": " + this.type.toString();
+    }
+
 }

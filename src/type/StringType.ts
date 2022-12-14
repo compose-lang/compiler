@@ -1,4 +1,5 @@
 import NativeType from "./NativeType";
+import IWasmTarget from "../compiler/IWasmTarget";
 
 export default class StringType extends NativeType {
 
@@ -6,5 +7,13 @@ export default class StringType extends NativeType {
 
     private constructor() {
         super("string")
+    }
+
+    byteLength(): number {
+        return 0; // TODO
+    }
+
+    writeTo(target: IWasmTarget) {
+
     }
 }

@@ -15,8 +15,12 @@ export default class WasmBufferTarget extends WasmTargetBase {
         this.buffers.push(new Uint8Array(bytes));
     }
 
+    writeUint8Array(bytes: Uint8Array): void {
+        this.buffers.push(bytes);
+    }
+
     private asBuffer(): Uint8Array {
-        const length = this.buffers.map(b => b.length).reduce((p,v) => p + v);
+        const length = this.buffers.map(b => b.length).reduce((p,v) => p + v, 0);
         const buffer = new Uint8Array(length);
         let offset = 0;
         this.buffers.forEach(b => {
@@ -25,4 +29,5 @@ export default class WasmBufferTarget extends WasmTargetBase {
         });
         return buffer;
     }
+
 }

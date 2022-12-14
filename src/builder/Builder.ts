@@ -17,11 +17,11 @@ import ComposeParser, {
     Class_declarationContext,
     Class_refContext,
     Class_typeContext, Compilation_unitContext, Concrete_method_declarationContext,
-    Data_typeContext,
+    Data_typeContext, Decimal_typeContext,
     DecimalLiteralContext,
     DeclarationContext,
-    ExpressionContext,
-    IdentifierContext, IdentifierExpressionContext,
+    ExpressionContext, F32_typeContext, F64_typeContext, I32_typeContext, I64_typeContext,
+    IdentifierContext, IdentifierExpressionContext, Integer_typeContext,
     IntegerLiteralContext,
     List_literalContext,
     ListLiteralContext, LiteralExpressionContext, Map_entryContext, Map_literalContext, MapLiteralContext,
@@ -30,14 +30,14 @@ import ComposeParser, {
     Method_typeContext,
     MethodParameterContext,
     Native_typeContext,
-    NullLiteralContext, Return_statementContext,
+    NullLiteralContext, Number_typeContext, Return_statementContext,
     Return_typeContext,
     Return_typesContext,
     Set_literalContext,
     SetLiteralContext, StatementContext,
     String_typeContext,
     StringLiteralContext,
-    TypedParameterContext
+    TypedParameterContext, U32_typeContext, U64_typeContext
 } from "../parser/ComposeParser";
 import ComposeLexer from "../parser/ComposeLexer";
 import ComposeParserListener from "../parser/ComposeParserListener";
@@ -78,6 +78,12 @@ import InstanceExpression from "../expression/InstanceExpression";
 import IStatement from "../statement/IStatement";
 import ReturnStatement from "../statement/ReturnStatement";
 import ConcreteMethodDeclaration from "../declaration/ConcreteMethodDeclaration";
+import Int32Type from "../type/Int32Type";
+import Float32Type from "../type/Float32Type";
+import Float64Type from "../type/Float64Type";
+import Int64Type from "../type/Int64Type";
+import UInt64Type from "../type/UInt64Type";
+import UInt32Type from "../type/UInt32Type";
 
 interface IndexedNode {
     __id?: number;
@@ -405,4 +411,39 @@ export default class Builder extends ComposeParserListener {
         this.setNodeValue(ctx, new ReturnStatement(exp));
     }
 
+    exitI32_type = (ctx: I32_typeContext) => {
+        this.setNodeValue(ctx, Int32Type.instance);
+    }
+
+    exitI64_type = (ctx: I64_typeContext) => {
+        this.setNodeValue(ctx, Int64Type.instance);
+    }
+
+    exitU32_type = (ctx: U32_typeContext) => {
+        this.setNodeValue(ctx, UInt32Type.instance);
+    }
+
+    exitU64_type = (ctx: U64_typeContext) => {
+        this.setNodeValue(ctx, UInt64Type.instance);
+    }
+
+    exitInteger_type = (ctx: Integer_typeContext) => {
+        this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
+    }
+
+    exitF32_type = (ctx: F32_typeContext) => {
+        this.setNodeValue(ctx, Float32Type.instance);
+    }
+
+    exitF64_type = (ctx: F64_typeContext) => {
+        this.setNodeValue(ctx, Float64Type.instance);
+    }
+
+    exitDecimal_type = (ctx: Decimal_typeContext) => {
+        this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
+    }
+
+    exitNumber_type = (ctx: Number_typeContext) => {
+        this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
+    }
 }

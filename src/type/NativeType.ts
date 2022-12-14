@@ -1,7 +1,8 @@
 import CodeSection from "../builder/CodeSection";
 import IDataType from "./IDataType";
+import IWasmTarget from "../compiler/IWasmTarget";
 
-export default class NativeType extends CodeSection implements IDataType {
+export default abstract class NativeType extends CodeSection implements IDataType {
 
     typeName: string;
 
@@ -9,5 +10,15 @@ export default class NativeType extends CodeSection implements IDataType {
         super();
         this.typeName = typeName;
     }
+
+    toString() {
+        return this.typeName;
+    }
+
+    byteLength(): number {
+        return 1;
+    }
+
+    abstract writeTo(target: IWasmTarget): void;
 
 }

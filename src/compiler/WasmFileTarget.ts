@@ -17,4 +17,7 @@ export default class WasmFileTarget extends WasmTargetBase {
     writeBytesArray(bytes: number[]): void {
     }
 
+    writeUint8Array(bytes: Uint8Array): void {
+    }
+
 };

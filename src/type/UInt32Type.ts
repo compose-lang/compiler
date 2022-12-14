@@ -1,12 +1,13 @@
 import NativeType from "./NativeType";
+import IIntegerType from "./IIntegerType";
 import IWasmTarget from "../compiler/IWasmTarget";
 
-export default class BooleanType extends NativeType {
+export default class UInt32Type extends NativeType implements IIntegerType {
 
-    static instance = new BooleanType()
+    static instance = new UInt32Type();
 
     private constructor() {
-        super("boolean")
+        super("u32");
     }
 
     writeTo(target: IWasmTarget): void {

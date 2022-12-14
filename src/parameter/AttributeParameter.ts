@@ -14,4 +14,8 @@ export default class AttributeParameter extends CodeSection implements IParamete
     get name(): string {
         return this.type.typeName;
     }
+
+    toString() {
+        return this.type.typeName;
+    }
 }
