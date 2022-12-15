@@ -2,15 +2,16 @@ import IWasmTarget from "../compiler/IWasmTarget";
 import ISection from "./ISection";
 import SectionType from "./SectionType";
 import TypesSection from "./TypesSection";
-import Prototype from "../declaration/Prototype";
 import FunctionsSection from "./FunctionsSection";
 import ExportsSection from "./ExportsSection";
+import CodeSection from "./CodeSection";
 import IFunctionDeclaration from "../declaration/IFunctionDeclaration";
+import ICompilable from "../compiler/ICompilable";
 
 export default class WasmModule {
 
     sections = new Map<SectionType, ISection>();
-    functions: IFunctionDeclaration[] = [];
+    functions: ICompilable[] = [];
 
     writeTo(target: IWasmTarget) {
         WasmModule.writeMagicBytes(target);
@@ -34,7 +35,7 @@ export default class WasmModule {
         // TODO check unique
         const typeIndex = this.getTypesSection().addFunctionType(function_.type());
         const functionIndex = this.getFunctionsSection().addFunction(typeIndex);
-        this.functions[functionIndex] = function_;
+        this.functions[functionIndex] = function_ as unknown as ICompilable;
         if(exported) {
             // TODO this.getExportsSection().addFunction(function_, functionIndex);
         }
@@ -50,6 +51,10 @@ export default class WasmModule {
 
     getExportsSection(): ExportsSection {
         return this.getOrCreateSection(ExportsSection, SectionType.EXPORTS);
+    }
+
+    getCodeSection(): CodeSection {
+        return this.getOrCreateSection(CodeSection, SectionType.CODE);
     }
 
     private getOrCreateSection<T extends ISection>(section: { new(): T; }, type: SectionType): T {

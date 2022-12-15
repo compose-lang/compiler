@@ -1,14 +1,12 @@
-import ICodeSection from "../builder/ICodeSection";
+import ICodeFragment from "../builder/ICodeFragment";
 import Context from "../context/Context";
-import WasmModule from "../module/WasmModule";
+import ICompilableFunction from "../compiler/ICompilableFunction";
 
-export default interface IDeclaration extends ICodeSection {
+export default interface IDeclaration extends ICodeFragment {
 
     name: string;
 
     register(context: Context): void;
     check(context: Context): void;
-    declare(globals: Context, module: WasmModule): void;
-    compile(context: Context, module: WasmModule): void;
-
+    getCompilables(context: Context): ICompilableFunction[];
 }

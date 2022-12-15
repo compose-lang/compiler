@@ -1,11 +1,11 @@
 import ParameterList from "../parameter/ParameterList";
 import TypeList from "./TypeList";
-import CodeSection from "../builder/CodeSection";
+import CodeFragment from "../builder/CodeFragment";
 import IType from "./IType";
 import LEB128 from "../utils/LEB128";
 import IWasmTarget from "../compiler/IWasmTarget";
 
-export default class FunctionType extends CodeSection implements IType {
+export default class FunctionType extends CodeFragment implements IType {
 
     parameters: ParameterList;
     returnTypes: TypeList;

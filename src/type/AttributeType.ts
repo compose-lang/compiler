@@ -1,9 +1,9 @@
-import CodeSection from "../builder/CodeSection";
+import CodeFragment from "../builder/CodeFragment";
 import IType from "./IType";
 import Identifier from "../builder/Identifier";
 import IWasmTarget from "../compiler/IWasmTarget";
 
-export default class AttributeType extends CodeSection implements IType {
+export default class AttributeType extends CodeFragment implements IType {
 
     id: Identifier;
 

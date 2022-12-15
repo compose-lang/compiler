@@ -57,8 +57,8 @@ import ComposeParser, {
 import ComposeLexer from "../parser/ComposeLexer";
 import ComposeParserListener from "../parser/ComposeParserListener";
 import Identifier from "./Identifier";
-import Section from "./Section";
-import CodeSection from "./CodeSection";
+import Fragment from "./Fragment";
+import CodeFragment from "./CodeFragment";
 import StringType from "../type/StringType";
 import IDataType from "../type/IDataType";
 import AttributeDeclaration from "../declaration/AttributeDeclaration";
@@ -171,16 +171,16 @@ export default class Builder extends ComposeParserListener {
             indexedNode.__id = id;
         }
         this.nodeValues.set(id, value);
-        if (value instanceof CodeSection) {
+        if (value instanceof CodeFragment) {
             this.buildSection(node, value);
         }
     }
 
-    buildSection(node: ParserRuleContext, codeSection: CodeSection) {
-        if(!codeSection.section) {
+    buildSection(node: ParserRuleContext, codeSection: CodeFragment) {
+        if(!codeSection.fragment) {
             const first = this.findFirstValidToken(node.start.tokenIndex);
             const last = this.findLastValidToken(node.stop!.tokenIndex);
-            codeSection.section = Section.fromTokens(this.path, first!, last!);
+            codeSection.fragment = Fragment.fromTokens(this.path, first!, last!);
         }
     }
 

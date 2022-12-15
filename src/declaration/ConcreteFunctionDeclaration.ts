@@ -3,8 +3,10 @@ import Prototype from "./Prototype";
 import IStatement from "../statement/IStatement";
 import Context from "../context/Context";
 import WasmModule from "../module/WasmModule";
+import ICompilable from "../compiler/ICompilable";
+import OpCode from "../compiler/OpCode";
 
-export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase {
+export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase implements ICompilable {
 
     statements: IStatement[];
 
@@ -22,13 +24,22 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
         // TODO
     }
 
+    getCompilables(context: Context): ICompilable[] {
+        return [this];
+    }
+
+
     declare(context: Context, module: WasmModule): void {
         module.declareFunction(this, true);
         this.statements.forEach(stmt => stmt.declare(context, module));
     }
 
     compile(context: Context, module: WasmModule): void {
-        // TODO
+        const section = module.getCodeSection();
+        const body = section.createFunctionCode();
+        this.statements.forEach(stmt => stmt.rehearse(context, module, body));
+        this.statements.forEach(stmt => stmt.compile(context, module, body));
+        body.addOpCode(OpCode.END);
     }
 
 }

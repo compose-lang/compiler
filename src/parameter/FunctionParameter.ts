@@ -1,9 +1,9 @@
-import CodeSection from "../builder/CodeSection";
+import CodeFragment from "../builder/CodeFragment";
 import IParameter from "./IParameter";
 import Identifier from "../builder/Identifier";
 import FunctionType from "../type/FunctionType";
 
-export default class FunctionParameter extends CodeSection implements IParameter {
+export default class FunctionParameter extends CodeFragment implements IParameter {
 
     id: Identifier;
     type: FunctionType;

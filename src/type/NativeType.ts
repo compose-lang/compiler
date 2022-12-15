@@ -1,8 +1,8 @@
-import CodeSection from "../builder/CodeSection";
+import CodeFragment from "../builder/CodeFragment";
 import IDataType from "./IDataType";
 import IWasmTarget from "../compiler/IWasmTarget";
 
-export default abstract class NativeType extends CodeSection implements IDataType {
+export default abstract class NativeType extends CodeFragment implements IDataType {
 
     typeName: string;
 

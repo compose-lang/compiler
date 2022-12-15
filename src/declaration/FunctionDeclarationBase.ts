@@ -4,6 +4,7 @@ import ParameterList from "../parameter/ParameterList";
 import TypeList from "../type/TypeList";
 import Prototype from "./Prototype";
 import FunctionType from "../type/FunctionType";
+import Context from "../context/Context";
 
 export default abstract class FunctionDeclarationBase extends DeclarationBase implements IFunctionDeclaration {
 

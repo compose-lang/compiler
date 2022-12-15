@@ -1,6 +1,6 @@
-import CodeSection from "./CodeSection";
+import CodeFragment from "./CodeFragment";
 
-export default class Identifier extends CodeSection {
+export default class Identifier extends CodeFragment {
 
     value: string;
 

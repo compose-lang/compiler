@@ -1,10 +1,10 @@
-import CodeSection from "../builder/CodeSection";
+import CodeFragment from "../builder/CodeFragment";
 import IDeclaration from "./IDeclaration";
 import Identifier from "../builder/Identifier";
 import Context from "../context/Context";
-import WasmModule from "../module/WasmModule";
+import ICompilable from "../compiler/ICompilable";
 
-export default abstract class DeclarationBase extends CodeSection implements IDeclaration {
+export default abstract class DeclarationBase extends CodeFragment implements IDeclaration {
 
     id: Identifier;
 
@@ -17,10 +17,11 @@ export default abstract class DeclarationBase extends CodeSection implements IDe
         return this.id.value;
     }
 
+    getCompilables(context: Context): ICompilable[] {
+        return [];
+    }
 
     abstract register(context: Context): void;
     abstract check(context: Context): void;
-    abstract declare(context: Context, module: WasmModule): void;
-    abstract compile(context: Context, module: WasmModule): void;
 
 }

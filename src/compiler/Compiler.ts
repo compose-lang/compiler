@@ -20,8 +20,9 @@ export default class Compiler {
     compileUnit(unit: CompilationUnit) {
         unit.declarations.forEach(decl => decl.register(this.globals));
         unit.declarations.forEach(decl => decl.check(this.globals));
-        unit.declarations.forEach(decl => decl.declare(this.globals, this.module));
-        // compile functions using the same sequence as functions section
+        const compilables = unit.declarations.map(decl => decl.getCompilables(this.globals)).reduce((p, v) => p.concat(v), []);
+        compilables.forEach(decl => decl.declare(this.globals, this.module));
+        // compile functions in the order of their registration in the functions section
         this.module.functions.forEach(decl => decl.compile(this.globals, this.module));
     }
 

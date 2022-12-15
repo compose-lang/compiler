@@ -4,7 +4,6 @@ import IdentifierList from "../builder/IdentifierList";
 import FunctionList from "../builder/FunctionList";
 import DeclarationBase from "./DeclarationBase";
 import Context from "../context/Context";
-import WasmModule from "../module/WasmModule";
 
 export default class ClassDeclaration extends DeclarationBase implements IDeclaration {
 
@@ -30,14 +29,6 @@ export default class ClassDeclaration extends DeclarationBase implements IDeclar
     }
 
     check(context: Context): void {
-        // TODO
-    }
-
-    declare(context: Context, module: WasmModule): void {
-        // TODO
-    }
-
-    compile(context: Context, module: WasmModule): void {
         // TODO
     }
 

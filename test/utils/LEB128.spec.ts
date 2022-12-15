@@ -37,3 +37,12 @@ it("properly encodes uint 624485",  () => {
     assert.equal(bytes[1], 0x8E);
     assert.equal(bytes[2], 0x26);
 });
+
+it("properly encodes int -123456",  () => {
+    const bytes: number[] = [];
+    LEB128.emitSigned(-123456, byte => bytes.push(byte));
+    assert.equal(bytes.length, 3);
+    assert.equal(bytes[0], 0xC0);
+    assert.equal(bytes[1], 0xBB);
+    assert.equal(bytes[2], 0x78);
+});

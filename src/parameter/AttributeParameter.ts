@@ -1,8 +1,8 @@
 import IParameter from "./IParameter";
-import CodeSection from "../builder/CodeSection";
+import CodeFragment from "../builder/CodeFragment";
 import AttributeType from "../type/AttributeType";
 
-export default class AttributeParameter extends CodeSection implements IParameter {
+export default class AttributeParameter extends CodeFragment implements IParameter {
 
     type: AttributeType;
 
