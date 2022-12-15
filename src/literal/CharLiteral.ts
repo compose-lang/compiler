@@ -1,4 +1,7 @@
 import LiteralBase from "./LiteralBase";
+import CharType from "../type/CharType";
+import IType from "../type/IType";
+import Context from "../context/Context";
 
 export default class CharLiteral extends LiteralBase<string> {
 
@@ -9,6 +12,10 @@ export default class CharLiteral extends LiteralBase<string> {
 
     toNative(): string {
         return this.value;
+    }
+
+    check(context: Context): IType {
+        return CharType.instance;
     }
 
 }

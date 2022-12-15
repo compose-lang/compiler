@@ -15,7 +15,8 @@ export default class ReturnStatement extends StatementBase {
     }
 
     declare(context: Context, module: WasmModule): void {
-        this.expression.declare(context, module);
+        if(this.expression)
+            this.expression.declare(context, module);
     }
 
     rehearse(context: Context, module: WasmModule, body: FunctionCode): void {

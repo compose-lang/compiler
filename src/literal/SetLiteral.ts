@@ -1,5 +1,7 @@
 import LiteralBase from "./LiteralBase";
 import IExpression from "../expression/IExpression";
+import Context from "../context/Context";
+import IType from "../type/IType";
 
 export default class SetLiteral extends LiteralBase<Set<any>> {
 
@@ -12,5 +14,8 @@ export default class SetLiteral extends LiteralBase<Set<any>> {
         return new Set<any>(values);
     }
 
+    check(context: Context): IType {
+        return undefined; // TODO
+    }
 
 }

@@ -1,4 +1,6 @@
 import LiteralBase from "./LiteralBase";
+import IType from "../type/IType";
+import Context from "../context/Context";
 
 export default class DecimalLiteral extends LiteralBase<number> {
 
@@ -13,6 +15,10 @@ export default class DecimalLiteral extends LiteralBase<number> {
 
     toNative(): number {
         return this.value;
+    }
+
+    check(context: Context): IType {
+        return undefined; // TODO
     }
 
 }

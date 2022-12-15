@@ -4,6 +4,9 @@ import WasmModule from "../module/WasmModule";
 import FunctionCode from "../module/FunctionCode";
 import OpCode from "../compiler/OpCode";
 import LEB128 from "../utils/LEB128";
+import IType from "../type/IType";
+import Int32Type from "../type/Int32Type";
+import Int64Type from "../type/Int64Type";
 
 export default class IntegerLiteral extends LiteralBase<number> {
 
@@ -40,6 +43,13 @@ export default class IntegerLiteral extends LiteralBase<number> {
             body.addOpCode(OpCode.CONST_I32, bytes);
         else
             body.addOpCode(OpCode.CONST_I64, bytes);
+    }
+
+    check(context: Context): IType {
+        if(this.value >= -2147483648 && this.value <= 2147483647)
+            return Int32Type.instance;
+        else
+            return Int64Type.instance;
     }
 
 

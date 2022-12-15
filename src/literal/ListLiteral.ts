@@ -1,5 +1,7 @@
 import LiteralBase from "./LiteralBase";
 import IExpression from "../expression/IExpression";
+import Context from "../context/Context";
+import IType from "../type/IType";
 
 export default class ListLiteral extends LiteralBase<any[]> {
 
@@ -11,5 +13,8 @@ export default class ListLiteral extends LiteralBase<any[]> {
         return this.value.map(v => v instanceof LiteralBase ? v.toNative() : v.toString());
     }
 
+    check(context: Context): IType {
+        return undefined; // TODO
+    }
 
 }

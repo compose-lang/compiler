@@ -2,6 +2,8 @@ import AttributeDeclaration from "../declaration/AttributeDeclaration";
 import ClassDeclaration from "../declaration/ClassDeclaration";
 import IFunctionDeclaration from "../declaration/IFunctionDeclaration";
 import * as assert from "assert";
+import Variable from "./Variable";
+import Identifier from "../builder/Identifier";
 
 export default class Context {
 
@@ -20,9 +22,26 @@ export default class Context {
     classes = new Map<string, ClassDeclaration>();
     // enums = new Map<string, EnumDeclaration>();
     methods = new Map<string, Map<string, IFunctionDeclaration>>();
+    locals = new Map<string, Variable>();
 
     private constructor(globals?: Context) {
         this.globals = globals || this;
+    }
+
+    newLocalContext() {
+        const context = new Context();
+        context.globals = this.globals;
+        context.calling = this;
+        context.parent = null;
+        return context;
+    }
+
+    newChildContext() {
+        const context = new Context();
+        context.globals = this.globals;
+        context.calling = this.calling;
+        context.parent = this;
+        return context;
     }
 
     registerMethod(method: IFunctionDeclaration) {
@@ -33,4 +52,14 @@ export default class Context {
         assert.ok(!protos.has(proto));
         protos.set(proto, method);
     }
+
+    registerLocal(local: Variable) {
+        assert.ok(!this.locals.has(local.name));
+        this.locals.set(local.name, local);
+    }
+
+    getRegisteredLocal(id: Identifier) {
+        return this.locals.get(id.value) || null;
+    }
+
 }

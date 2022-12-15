@@ -1,4 +1,7 @@
 import LiteralBase from "./LiteralBase";
+import BooleanType from "../type/BooleanType";
+import IType from "../type/IType";
+import Context from "../context/Context";
 
 export default class BooleanLiteral extends LiteralBase<boolean> {
 
@@ -8,5 +11,9 @@ export default class BooleanLiteral extends LiteralBase<boolean> {
 
     toNative(): boolean {
         return this.value;
+    }
+
+    check(context: Context): IType {
+        return BooleanType.instance;
     }
 }

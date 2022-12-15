@@ -37,8 +37,10 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
     compile(context: Context, module: WasmModule): void {
         const section = module.getCodeSection();
         const body = section.createFunctionCode();
-        this.statements.forEach(stmt => stmt.rehearse(context, module, body));
-        this.statements.forEach(stmt => stmt.compile(context, module, body));
+        context = context.newLocalContext();
+        // TODO register parameters
+        this.statements.forEach(stmt => stmt.rehearse(context.newChildContext(), module, body));
+        this.statements.forEach(stmt => stmt.compile(context.newChildContext(), module, body));
         body.addOpCode(OpCode.END);
     }
 

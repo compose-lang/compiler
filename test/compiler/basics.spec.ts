@@ -21,3 +21,13 @@ it('compiles and runs a method returning an i32 literal',  () => {
     const result = runner.run("stuff");
     assert.equal(result, 2);
 });
+
+it('compiles and runs a method assigning an i32 literal and returning it',  () => {
+    const compiler = new Compiler();
+    const target = new WasmBufferTarget();
+    const unit = Builder.parse_unit("function stuff(): i32 { const a: i32 = 12; return a; }");
+    compiler.buildOne(unit, target);
+    const runner = Runner.of(target.asWasmSource());
+    const result = runner.run("stuff");
+    assert.equal(result, 12);
+});
