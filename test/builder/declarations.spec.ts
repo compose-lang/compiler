@@ -2,8 +2,8 @@ import Builder from "../../src/builder/Builder";
 import * as assert from "assert";
 import AttributeDeclaration from "../../src/declaration/AttributeDeclaration";
 import ClassDeclaration from "../../src/declaration/ClassDeclaration";
-import AbstractFunctionDeclaration from "../../src/declaration/AbstractMethodDeclaration";
-import ConcreteFunctionDeclaration from "../../src/declaration/ConcreteMethodDeclaration";
+import AbstractFunctionDeclaration from "../../src/declaration/AbstractFunctionDeclaration";
+import ConcreteFunctionDeclaration from "../../src/declaration/ConcreteFunctionDeclaration";
 import ReturnStatement from "../../src/statement/ReturnStatement";
 import IntegerLiteral from "../../src/literal/IntegerLiteral";
 
