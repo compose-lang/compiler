@@ -23,6 +23,12 @@ export default abstract class WasmTargetBase implements IWasmTarget {
         this.writeBytesArray(bytes);
     }
 
+    writeString(str: string): void {
+        const bytes = Array.from(str).map(c => c.charCodeAt(0));
+        this.writeUInts(bytes.length);
+        this.writeBytesArray(bytes);
+    }
+
     writeBytes(...bytes: number[]): void {
         this.writeBytesArray(bytes);
     }

@@ -37,7 +37,7 @@ export default class WasmModule {
         const functionIndex = this.getFunctionsSection().addFunction(typeIndex);
         this.functions[functionIndex] = function_ as unknown as ICompilable;
         if(exported) {
-            // TODO this.getExportsSection().addFunction(function_, functionIndex);
+            this.getExportsSection().exportFunction(function_, functionIndex);
         }
     }
 
