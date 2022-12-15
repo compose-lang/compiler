@@ -6,7 +6,7 @@ import {
 } from "antlr4";
 import {fileExists} from "../utils/FileUtils";
 import ComposeParser, {
-    Abstract_function_declarationContext,
+    Abstract_function_declarationContext, Assign_local_statementContext,
     Attribute_declarationContext,
     Attribute_refContext,
     Attribute_typeContext,
@@ -99,6 +99,8 @@ import Float64Type from "../type/Float64Type";
 import Int64Type from "../type/Int64Type";
 import UInt64Type from "../type/UInt64Type";
 import UInt32Type from "../type/UInt32Type";
+import AssignLocalStatement from "../statement/AssignLocalStatement";
+import InstanceModifier from "../context/InstanceModifier";
 
 interface IndexedNode {
     __id?: number;
@@ -461,4 +463,14 @@ export default class Builder extends ComposeParserListener {
     exitNumber_type = (ctx: Number_typeContext) => {
         this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
     }
+
+    exitAssign_local_statement = (ctx: Assign_local_statementContext) => {
+        const modifier = ctx.LET() !== null ? InstanceModifier.LET : ctx.CONST() !== null ? InstanceModifier.CONST : null;
+        const type = this.getNodeValue<IType>(ctx.data_type() || ctx.function_type());
+        const id = this.getNodeValue<Identifier>(ctx.identifier());
+        const exp = this.getNodeValue<IExpression>(ctx.expression());
+        this.setNodeValue(ctx, new AssignLocalStatement(modifier, id, type, exp));
+    }
+
+
 }

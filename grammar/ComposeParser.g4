@@ -165,7 +165,7 @@ statement:
     ;
 
 assign_local_statement:
-    (LET | CONST)? identifier (COLON data_type | function_type) ASSIGN expression SEMI
+    (LET | CONST)? identifier (COLON data_type | function_type)? ASSIGN expression SEMI
     ;
 
 return_statement:
