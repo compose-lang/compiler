@@ -1,6 +1,6 @@
 import Builder from "../../src/builder/Builder";
 import * as assert from "assert";
-import FunctionType from "../../src/type/MethodType";
+import FunctionType from "../../src/type/FunctionType";
 
 it('parses prototype: () => void',  () => {
     const type = Builder.parse_function_type("() => void");
