@@ -14,6 +14,7 @@ export default class FunctionCode {
 
     addOpCode(op: OpCode, bytes?: number[]) {
         const instruction = bytes ? [op].concat(bytes) : [op];
+        this.dropRedundantReturn(op);
         this.instructions.push(instruction);
     }
 
@@ -33,5 +34,13 @@ export default class FunctionCode {
 
     private bodyLength() {
         return LEB128.unsignedLength(this.locals.length) + this.localsLength() + this.instructionsLength();
+    }
+
+    private dropRedundantReturn(op: OpCode) {
+        if(op === OpCode.END || op === OpCode.RETURN) {
+            if (this.instructions.length > 0 && this.instructions[this.instructions.length - 1][0] === OpCode.RETURN) {
+                this.instructions.pop();
+            }
+        }
     }
 }
