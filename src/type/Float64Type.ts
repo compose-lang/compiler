@@ -1,8 +1,8 @@
 import NativeType from "./NativeType";
-import IDecimalType from "./IDecimalType";
+import DecimalType from "./DecimalType";
 import IWasmTarget from "../compiler/IWasmTarget";
 
-export default class Float64Type extends NativeType implements IDecimalType {
+export default class Float64Type extends NativeType implements DecimalType {
 
     static instance = new Float64Type();
 

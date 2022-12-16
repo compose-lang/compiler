@@ -20,6 +20,24 @@ export default class FunctionType extends CodeFragment implements IType {
         return "<method>";
     }
 
+    isAssignableFrom(type: IType): boolean {
+        if(!(type instanceof FunctionType))
+            return false;
+        if(this.parameters.length !== type.parameters.length || this.returnTypes.length !== type.returnTypes.length)
+            return false;
+        for(let i=0; i<this.parameters.length; i++) {
+            if(!this.parameters[i].type.isAssignableFrom(type.parameters[i].type))
+                return false;
+        }
+        for(let i=0; i<this.returnTypes.length; i++) {
+            if(!this.returnTypes[i].isAssignableFrom(type.returnTypes[i]))
+                return false;
+        }
+        return true;
+    }
+
+
+
     byteLength(): number {
         const paramLength = this.parameters.map(param => param.type.byteLength()).reduce((p,v) => p + v, 0);
         const returnTypes = this.returnTypes.filter(type => type.byteLength() > 0);

@@ -16,8 +16,13 @@ export default class Runner {
         this.instance = instance;
     }
 
-    run(method: string, ...args: any[]): any {
-        const runnable = this.instance.exports[method] as (...args: any[]) => any;
-        return runnable(args);
+    runFunction<T>(method: string, ...args: any[]): T {
+        const runnable = this.instance.exports[method] as Function;
+        return runnable(args) as T;
+    }
+
+    readGlobal<T>(name: string): T {
+        const global = this.instance.exports[name] as WebAssembly.Global;
+        return global.value as T;
     }
 }

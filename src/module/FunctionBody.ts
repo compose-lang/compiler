@@ -15,7 +15,7 @@ class Local {
 
 }
 
-export default class FunctionCode {
+export default class FunctionBody {
 
     instructions: number[][] = [];
     locals: Local[] = [];
@@ -38,11 +38,15 @@ export default class FunctionCode {
             target.writeUInts(this.locals.length);
             this.locals.forEach(local => local.type.writeTo(target));
         }
-        this.instructions.forEach(inst => target.writeBytesArray(inst));
+        this.writeInstructionsTo(target);
     }
 
-    private instructionsLength() {
+    instructionsLength() {
         return this.instructions.map(inst => inst.length).reduce((p, v) => p + v, 0);
+    }
+
+    writeInstructionsTo(target: IWasmTarget) {
+        this.instructions.forEach(inst => target.writeBytesArray(inst));
     }
 
     private localsLength() {
@@ -75,4 +79,5 @@ export default class FunctionCode {
         else
             return -1;
     }
+
 }

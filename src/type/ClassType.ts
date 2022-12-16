@@ -24,4 +24,8 @@ export default class ClassType extends CodeFragment implements IType {
         // TODO
     }
 
+    isAssignableFrom(type: IType): boolean {
+        return false; // TODO
+    }
+
 }

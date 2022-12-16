@@ -4,6 +4,7 @@ import {ParseTreeListener} from "antlr4";
 
 
 import { Compilation_unitContext } from "./ComposeParser";
+import { Global_statementContext } from "./ComposeParser";
 import { DeclarationContext } from "./ComposeParser";
 import { Attribute_declarationContext } from "./ComposeParser";
 import { IdentifierContext } from "./ComposeParser";
@@ -37,7 +38,7 @@ import { Abstract_function_declarationContext } from "./ComposeParser";
 import { Function_prototypeContext } from "./ComposeParser";
 import { Concrete_function_declarationContext } from "./ComposeParser";
 import { StatementContext } from "./ComposeParser";
-import { Assign_local_statementContext } from "./ComposeParser";
+import { Assign_instance_statementContext } from "./ComposeParser";
 import { Return_statementContext } from "./ComposeParser";
 import { TernaryExpressionContext } from "./ComposeParser";
 import { InExpressionContext } from "./ComposeParser";
@@ -102,6 +103,16 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitCompilation_unit?: (ctx: Compilation_unitContext) => void;
+	/**
+	 * Enter a parse tree produced by `ComposeParser.global_statement`.
+	 * @param ctx the parse tree
+	 */
+	enterGlobal_statement?: (ctx: Global_statementContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.global_statement`.
+	 * @param ctx the parse tree
+	 */
+	exitGlobal_statement?: (ctx: Global_statementContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.declaration`.
 	 * @param ctx the parse tree
@@ -439,15 +450,15 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 */
 	exitStatement?: (ctx: StatementContext) => void;
 	/**
-	 * Enter a parse tree produced by `ComposeParser.assign_local_statement`.
+	 * Enter a parse tree produced by `ComposeParser.assign_instance_statement`.
 	 * @param ctx the parse tree
 	 */
-	enterAssign_local_statement?: (ctx: Assign_local_statementContext) => void;
+	enterAssign_instance_statement?: (ctx: Assign_instance_statementContext) => void;
 	/**
-	 * Exit a parse tree produced by `ComposeParser.assign_local_statement`.
+	 * Exit a parse tree produced by `ComposeParser.assign_instance_statement`.
 	 * @param ctx the parse tree
 	 */
-	exitAssign_local_statement?: (ctx: Assign_local_statementContext) => void;
+	exitAssign_instance_statement?: (ctx: Assign_instance_statementContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.return_statement`.
 	 * @param ctx the parse tree

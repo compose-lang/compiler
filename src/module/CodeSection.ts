@@ -1,12 +1,12 @@
 import SectionType from "./SectionType";
 import SectionBase from "./SectionBase";
 import IWasmTarget from "../compiler/IWasmTarget";
-import FunctionCode from "./FunctionCode";
+import FunctionBody from "./FunctionBody";
 import LEB128 from "../utils/LEB128";
 
 export default class CodeSection extends SectionBase {
 
-    functionCodes: FunctionCode[] = [];
+    functionCodes: FunctionBody[] = [];
 
     get type(): SectionType {
         return SectionType.CODE;
@@ -22,8 +22,8 @@ export default class CodeSection extends SectionBase {
         this.functionCodes.forEach(code => code.writeContentsTo(target));
     }
 
-    createFunctionCode(): FunctionCode {
-        const code = new FunctionCode();
+    createFunctionCode(): FunctionBody {
+        const code = new FunctionBody();
         this.functionCodes.push(code);
         return code;
     }

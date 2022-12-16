@@ -6,7 +6,12 @@ options {
 }
 
 compilation_unit:
+    global_statement*
     declaration*
+    ;
+
+global_statement:
+    assign_instance_statement[true]
     ;
 
 declaration:
@@ -160,12 +165,14 @@ concrete_function_declaration:
     ;
 
 statement:
-    assign_local_statement
+    assign_instance_statement[false]
     | return_statement
     ;
 
-assign_local_statement:
-    (LET | CONST)? identifier (COLON data_type | function_type)? ASSIGN expression SEMI
+assign_instance_statement[boolean requireModifier]:
+    ({ $requireModifier }? (LET | CONST)
+     | { !$requireModifier } (LET | CONST)?)
+        identifier (COLON data_type | function_type)? ASSIGN expression SEMI
     ;
 
 return_statement:

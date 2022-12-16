@@ -1,6 +1,7 @@
 import CodeFragment from "../builder/CodeFragment";
 import IDataType from "./IDataType";
 import IWasmTarget from "../compiler/IWasmTarget";
+import IType from "./IType";
 
 export default abstract class NativeType extends CodeFragment implements IDataType {
 
@@ -20,5 +21,9 @@ export default abstract class NativeType extends CodeFragment implements IDataTy
     }
 
     abstract writeTo(target: IWasmTarget): void;
+
+    isAssignableFrom(type: IType): boolean {
+        return type === this;
+    }
 
 }

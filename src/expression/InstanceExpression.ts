@@ -4,7 +4,7 @@ import WasmModule from "../module/WasmModule";
 import Context from "../context/Context";
 import IType from "../type/IType";
 import * as assert from "assert";
-import FunctionCode from "../module/FunctionCode";
+import FunctionBody from "../module/FunctionBody";
 import OpCode from "../compiler/OpCode";
 
 export default class InstanceExpression extends ExpressionBase {
@@ -30,7 +30,7 @@ export default class InstanceExpression extends ExpressionBase {
         // TODO
     }
 
-    compile(context: Context, module: WasmModule, body: FunctionCode) {
+    compile(context: Context, module: WasmModule, body: FunctionBody) {
         const index = body.getRegisteredLocalIndex(this.id.value);
         body.addOpCode(OpCode.LOCAL_GET, [index]); // TODO encode if index > 0x7F
     }

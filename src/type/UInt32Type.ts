@@ -1,8 +1,7 @@
-import NativeType from "./NativeType";
-import IIntegerType from "./IIntegerType";
+import IntegerType from "./IntegerType";
 import IWasmTarget from "../compiler/IWasmTarget";
 
-export default class UInt32Type extends NativeType implements IIntegerType {
+export default class UInt32Type extends IntegerType {
 
     static instance = new UInt32Type();
 

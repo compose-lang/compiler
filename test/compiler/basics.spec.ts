@@ -12,22 +12,32 @@ it('compiles and runs an empty compilation unit',  () => {
     Runner.of(target.asWasmSource());
 });
 
-it('compiles and runs a method returning an i32 literal',  () => {
+it('compiles and runs a function returning an i32 literal',  () => {
     const compiler = new Compiler();
     const target = new WasmBufferTarget();
     const unit = Builder.parse_unit("function stuff(): i32 { return 2; }");
     compiler.buildOne(unit, target);
     const runner = Runner.of(target.asWasmSource());
-    const result = runner.run("stuff");
+    const result = runner.runFunction<number>("stuff");
     assert.equal(result, 2);
 });
 
-it('compiles and runs a method assigning an i32 literal and returning it',  () => {
+it('compiles and runs a function assigning an i32 literal and returning it',  () => {
     const compiler = new Compiler();
     const target = new WasmBufferTarget();
     const unit = Builder.parse_unit("function stuff(): i32 { const a: i32 = 12; return a; }");
     compiler.buildOne(unit, target);
     const runner = Runner.of(target.asWasmSource());
-    const result = runner.run("stuff");
+    const result = runner.runFunction<number>("stuff");
     assert.equal(result, 12);
+});
+
+it('compiles and reads a global i32 literal',  () => {
+    const compiler = new Compiler();
+    const target = new WasmBufferTarget();
+    const unit = Builder.parse_unit("const SL_BITS: u32 = 4;");
+    compiler.buildOne(unit, target);
+    const runner = Runner.of(target.asWasmSource());
+    const result = runner.readGlobal<number>("SL_BITS");
+    assert.equal(result, 4);
 });

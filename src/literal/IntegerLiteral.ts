@@ -1,7 +1,7 @@
 import LiteralBase from "./LiteralBase";
 import Context from "../context/Context";
 import WasmModule from "../module/WasmModule";
-import FunctionCode from "../module/FunctionCode";
+import FunctionBody from "../module/FunctionBody";
 import OpCode from "../compiler/OpCode";
 import LEB128 from "../utils/LEB128";
 import IType from "../type/IType";
@@ -36,7 +36,7 @@ export default class IntegerLiteral extends LiteralBase<number> {
         return this.value;
     }
 
-    compile(context: Context, module: WasmModule, body: FunctionCode): void {
+    compile(context: Context, module: WasmModule, body: FunctionBody): void {
         const bytes: number[] = [];
         LEB128.emitSigned(this.value, byte => bytes.push(byte));
         if(this.value >= -2147483648 && this.value <= 2147483647)

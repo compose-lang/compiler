@@ -3,13 +3,14 @@ import Identifier from "../builder/Identifier";
 import IType from "../type/IType";
 import IExpression from "../expression/IExpression";
 import WasmModule from "../module/WasmModule";
-import FunctionCode from "../module/FunctionCode";
+import FunctionBody from "../module/FunctionBody";
 import Context from "../context/Context";
 import OpCode from "../compiler/OpCode";
 import Variable from "../context/Variable";
 import InstanceModifier from "../context/InstanceModifier";
+import * as assert from "assert";
 
-export default class AssignLocalStatement extends StatementBase {
+export default class AssignInstanceStatement extends StatementBase {
 
     modifier: InstanceModifier;
     id: Identifier;
@@ -28,28 +29,44 @@ export default class AssignLocalStatement extends StatementBase {
         return this.id.value;
     }
 
+    check(context: Context): IType {
+        let type = this.expression.check(context);
+        if(this.type) {
+            assert.ok(this.type.isAssignableFrom(type));
+            type = this.type;
+        }
+        if(this.modifier !== null)
+            context.registerLocal(this.asVariable(context, type));
+        return type;
+    }
+
     declare(context: Context, module: WasmModule): void {
-        // const type = this.type || this.expression.check(context);
-        // type.declare(context, module);
+        if(this.modifier !== null && context.isGlobal()) {
+            const variable = context.getRegisteredLocal(this.id);
+            assert.ok(variable !== null);
+            module.declareGlobal(variable, this.expression, true);
+        }
         this.expression.declare(context, module);
     }
 
-    rehearse(context: Context, module: WasmModule, body: FunctionCode): void {
+    rehearse(context: Context, module: WasmModule, body: FunctionBody): void {
         this.expression.rehearse(context, module, body);
-        const type = this.type || this.expression.check(context);
         if(this.modifier !== null) {
-            context.registerLocal(new Variable(this.modifier, this.id, type));
-            body.registerLocal(this.name, type);
+            const type = this.check(context);
+            const variable = this.asVariable(context, type);
+            body.registerLocal(this.name, variable.type);
         }
     }
 
-    compile(context: Context, module: WasmModule, body: FunctionCode): void {
+    compile(context: Context, module: WasmModule, body: FunctionBody): void {
         this.expression.compile(context, module, body);
-        const type = this.type || this.expression.check(context);
         if(this.modifier !== null)
-            context.registerLocal(new Variable(this.modifier, this.id, type));
+            this.check(context); // registers the local variable
         const index = body.getRegisteredLocalIndex(this.name);
         body.addOpCode(OpCode.LOCAL_SET, [index]); // TODO encode if index > 0x7F
     }
 
+    private asVariable(context: Context, type: IType) {
+        return new Variable(this.modifier, this.id, type);
+    }
 }

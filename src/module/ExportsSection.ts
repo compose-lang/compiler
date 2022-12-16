@@ -3,6 +3,7 @@ import SectionBase from "./SectionBase";
 import IWasmTarget from "../compiler/IWasmTarget";
 import IFunctionDeclaration from "../declaration/IFunctionDeclaration";
 import LEB128 from "../utils/LEB128";
+import Variable from "../context/Variable";
 
 enum ExportType {
     FUNCTION,
@@ -62,6 +63,27 @@ class FunctionExport extends ExportBase {
     }
 }
 
+class GlobalExport extends ExportBase {
+
+    index: number
+
+    constructor(name: string, index: number) {
+        super(name);
+    }
+
+    get type(): ExportType {
+        return ExportType.GLOBAL;
+    }
+
+    get contentLength(): number {
+        return LEB128.unsignedLength(this.index);
+    }
+
+    writeContentTo(target: IWasmTarget): void {
+        target.writeUInts(this.index);
+    }
+}
+
 
 export default class ExportsSection extends SectionBase {
 
@@ -83,5 +105,9 @@ export default class ExportsSection extends SectionBase {
 
     exportFunction(function_: IFunctionDeclaration, functionIndex: number) {
         this.exports.push(new FunctionExport(function_.name, functionIndex));
+    }
+
+    exportGlobal(variable: Variable, globalIndex: number) {
+        this.exports.push(new GlobalExport(variable.name, globalIndex));
     }
 }

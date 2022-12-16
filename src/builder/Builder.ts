@@ -6,7 +6,7 @@ import {
 } from "antlr4";
 import {fileExists} from "../utils/FileUtils";
 import ComposeParser, {
-    Abstract_function_declarationContext, Assign_local_statementContext,
+    Abstract_function_declarationContext, Assign_instance_statementContext,
     Attribute_declarationContext,
     Attribute_refContext,
     Attribute_typeContext,
@@ -22,11 +22,10 @@ import ComposeParser, {
     Decimal_typeContext,
     DecimalLiteralContext,
     DeclarationContext,
-    ExpressionContext,
     F32_typeContext,
     F64_typeContext, Function_declarationContext, Function_prototypeContext,
     Function_typeContext,
-    FunctionParameterContext,
+    FunctionParameterContext, Global_statementContext,
     I32_typeContext,
     I64_typeContext,
     IdentifierContext,
@@ -99,7 +98,7 @@ import Float64Type from "../type/Float64Type";
 import Int64Type from "../type/Int64Type";
 import UInt64Type from "../type/UInt64Type";
 import UInt32Type from "../type/UInt32Type";
-import AssignLocalStatement from "../statement/AssignLocalStatement";
+import AssignInstanceStatement from "../statement/AssignInstanceStatement";
 import InstanceModifier from "../context/InstanceModifier";
 
 interface IndexedNode {
@@ -344,12 +343,14 @@ export default class Builder extends ComposeParserListener {
     }
 
     exitCompilation_unit = (ctx: Compilation_unitContext) => {
+        const globals = ctx.global_statement_list()
+            .map(child => this.getNodeValue<IStatement>(child), this);
         const declarations = ctx.declaration_list()
             .map(child => this.getNodeValue<IDeclaration>(child), this);
-        this.setNodeValue(ctx, new CompilationUnit(declarations));
+        this.setNodeValue(ctx, new CompilationUnit(globals, declarations));
     }
 
-    exitExpression = (ctx: ExpressionContext) => {
+    exitGlobal_statement = (ctx: Global_statementContext) => {
         this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
     }
 
@@ -464,12 +465,12 @@ export default class Builder extends ComposeParserListener {
         this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
     }
 
-    exitAssign_local_statement = (ctx: Assign_local_statementContext) => {
+    exitAssign_instance_statement = (ctx: Assign_instance_statementContext) => {
         const modifier = ctx.LET() !== null ? InstanceModifier.LET : ctx.CONST() !== null ? InstanceModifier.CONST : null;
         const type = this.getNodeValue<IType>(ctx.data_type() || ctx.function_type());
         const id = this.getNodeValue<Identifier>(ctx.identifier());
         const exp = this.getNodeValue<IExpression>(ctx.expression());
-        this.setNodeValue(ctx, new AssignLocalStatement(modifier, id, type, exp));
+        this.setNodeValue(ctx, new AssignInstanceStatement(modifier, id, type, exp));
     }
 
 

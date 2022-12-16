@@ -28,6 +28,10 @@ export default class Context {
         this.globals = globals || this;
     }
 
+    isGlobal() {
+        return this === this.globals;
+    }
+
     newLocalContext() {
         const context = new Context();
         context.globals = this.globals;

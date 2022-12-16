@@ -20,6 +20,6 @@ it("runs a wasm file",  () => {
         }
     };
     const runner = Runner.of(source, importObject);
-    runner.run("exported_func");
+    runner.runFunction<void>("exported_func");
     assert.equal(result, 42);
 });
