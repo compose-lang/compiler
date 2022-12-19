@@ -44,7 +44,7 @@ export default class AssignInstanceStatement extends StatementBase {
         if(this.modifier !== null && context.isGlobal()) {
             const variable = context.getRegisteredLocal(this.id);
             assert.ok(variable !== null);
-            module.declareGlobal(variable, this.expression, true);
+            module.declareGlobal(variable, this.expression, this.isExported());
         }
         this.expression.declare(context, module);
     }

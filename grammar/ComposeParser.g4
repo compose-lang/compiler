@@ -11,13 +11,15 @@ compilation_unit:
     ;
 
 global_statement:
+    annotation*
     assign_instance_statement[true]
     ;
 
 declaration:
-    attribute_declaration
+    annotation*
+    ( attribute_declaration
     | class_declaration
-    | function_declaration
+    | function_declaration )
 //    | enum_declaration
     ;
 
@@ -28,6 +30,10 @@ attribute_declaration:
 
 identifier:
     IDENTIFIER
+    ;
+
+annotation:
+    ANNOTATION ( LPAR literal_expression RPAR )?
     ;
 
 data_type:
@@ -165,8 +171,9 @@ concrete_function_declaration:
     ;
 
 statement:
-    assign_instance_statement[false]
-    | return_statement
+    annotation*
+    (assign_instance_statement[false]
+    | return_statement)
     ;
 
 assign_instance_statement[boolean requireModifier]:
@@ -264,3 +271,4 @@ map_literal:
 map_entry:
     identifier COLON expression
     ;
+

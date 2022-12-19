@@ -396,6 +396,12 @@ LetterOrDigit
 	:	[a-zA-Z0-9$_] // these are the "letters or digits" below 0x7F
 	;
 
+// Annotation
+
+ANNOTATION
+    : '@' IDENTIFIER
+    ;
+
 //
 // Whitespace and comments
 //

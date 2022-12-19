@@ -5,6 +5,7 @@ import Context from "../context/Context";
 import WasmModule from "../module/WasmModule";
 import ICompilable from "../compiler/ICompilable";
 import OpCode from "../compiler/OpCode";
+import IDeclarable from "../compiler/IDeclarable";
 
 export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase implements ICompilable {
 
@@ -24,13 +25,13 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
         // TODO
     }
 
-    getCompilables(context: Context): ICompilable[] {
+    getDeclarables(context: Context): IDeclarable[] {
         return [this];
     }
 
 
     declare(context: Context, module: WasmModule): void {
-        module.declareFunction(this, true);
+        module.declareFunction(this, this.isExported());
         const local = context.newLocalContext();
         this.statements.forEach(stmt => stmt.declare(local.newChildContext(), module));
     }

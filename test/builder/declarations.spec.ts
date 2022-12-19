@@ -25,6 +25,14 @@ it('parses a class declaration ',  () => {
 
 });
 
+it('parses a class declaration with annotations',  () => {
+    const unit = Builder.parse_unit("@Export @Inline class Thing(a, b) extends C, D {}");
+    const decl = unit.declarations[0];
+    assert.equal(decl.annotations.length, 2);
+    assert.equal(decl.annotations[0].name, "@Export");
+    assert.equal(decl.annotations[1].name, "@Inline");
+});
+
 it('parses an abstract method declaration without param and single return type',  () => {
     const unit = Builder.parse_unit("abstract function Thing(): string");
     assert.equal(unit.declarations.length, 1);

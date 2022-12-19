@@ -2,10 +2,12 @@ import CodeFragment from "../builder/CodeFragment";
 import IDeclaration from "./IDeclaration";
 import Identifier from "../builder/Identifier";
 import Context from "../context/Context";
-import ICompilable from "../compiler/ICompilable";
+import Annotation from "../builder/Annotation";
+import IDeclarable from "../compiler/IDeclarable";
 
 export default abstract class DeclarationBase extends CodeFragment implements IDeclaration {
 
+    annotations: Annotation[];
     id: Identifier;
 
     protected constructor(id: Identifier) {
@@ -17,8 +19,12 @@ export default abstract class DeclarationBase extends CodeFragment implements ID
         return this.id.value;
     }
 
-    getCompilables(context: Context): ICompilable[] {
+    getDeclarables(context: Context): IDeclarable[] {
         return [];
+    }
+
+    isExported() {
+        return this.annotations && this.annotations.some(a => a.name === "@Export");
     }
 
     abstract register(context: Context): void;

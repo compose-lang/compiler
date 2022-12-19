@@ -8,6 +8,7 @@ import { Global_statementContext } from "./ComposeParser";
 import { DeclarationContext } from "./ComposeParser";
 import { Attribute_declarationContext } from "./ComposeParser";
 import { IdentifierContext } from "./ComposeParser";
+import { AnnotationContext } from "./ComposeParser";
 import { Data_typeContext } from "./ComposeParser";
 import { Native_typeContext } from "./ComposeParser";
 import { Boolean_typeContext } from "./ComposeParser";
@@ -143,6 +144,16 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitIdentifier?: (ctx: IdentifierContext) => void;
+	/**
+	 * Enter a parse tree produced by `ComposeParser.annotation`.
+	 * @param ctx the parse tree
+	 */
+	enterAnnotation?: (ctx: AnnotationContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.annotation`.
+	 * @param ctx the parse tree
+	 */
+	exitAnnotation?: (ctx: AnnotationContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.data_type`.
 	 * @param ctx the parse tree

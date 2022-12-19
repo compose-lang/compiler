@@ -6,7 +6,7 @@ import {
 } from "antlr4";
 import {fileExists} from "../utils/FileUtils";
 import ComposeParser, {
-    Abstract_function_declarationContext, Assign_instance_statementContext,
+    Abstract_function_declarationContext, AnnotationContext, Assign_instance_statementContext,
     Attribute_declarationContext,
     Attribute_refContext,
     Attribute_typeContext,
@@ -100,6 +100,7 @@ import UInt64Type from "../type/UInt64Type";
 import UInt32Type from "../type/UInt32Type";
 import AssignInstanceStatement from "../statement/AssignInstanceStatement";
 import InstanceModifier from "../context/InstanceModifier";
+import Annotation from "./Annotation";
 
 interface IndexedNode {
     __id?: number;
@@ -338,8 +339,17 @@ export default class Builder extends ComposeParserListener {
         this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
     }
 
+    exitAnnotation = (ctx: AnnotationContext) => {
+        const id = new Identifier(ctx.ANNOTATION().getText());
+        this.buildSection(ctx, id);
+        this.setNodeValue(ctx, new Annotation(id));
+    }
+
     exitDeclaration = (ctx: DeclarationContext) => {
-        this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
+        const annotations = ctx.annotation_list().map(child => this.getNodeValue<Annotation>(child), this);
+        const decl = this.getNodeValue<IDeclaration>(ctx.getChild(annotations.length));
+        decl.annotations = annotations;
+        this.setNodeValue(ctx, decl);
     }
 
     exitCompilation_unit = (ctx: Compilation_unitContext) => {
@@ -351,7 +361,10 @@ export default class Builder extends ComposeParserListener {
     }
 
     exitGlobal_statement = (ctx: Global_statementContext) => {
-        this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
+        const annotations = ctx.annotation_list().map(child => this.getNodeValue<Annotation>(child), this);
+        const stmt = this.getNodeValue<IStatement>(ctx.getChild(annotations.length));
+        stmt.annotations = annotations;
+        this.setNodeValue(ctx, stmt);
     }
 
     exitNullLiteral = (ctx: NullLiteralContext) => {
@@ -421,7 +434,10 @@ export default class Builder extends ComposeParserListener {
     }
 
     exitStatement = (ctx: StatementContext) => {
-        this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
+        const annotations = ctx.annotation_list().map(child => this.getNodeValue<Annotation>(child), this);
+        const stmt = this.getNodeValue<IStatement>(ctx.getChild(annotations.length));
+        stmt.annotations = annotations;
+        this.setNodeValue(ctx, stmt);
     }
 
     exitReturn_statement = (ctx: Return_statementContext) => {
