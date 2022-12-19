@@ -6,8 +6,8 @@ let path: typeof import("path") | null = null;
 let fs: typeof import("fs") | null = null;
 
 if(isNodeJs()) {
-    import(/* webpackMode: "weak" */"fs").then(module => fs = module, reason => console.log(reason));
-    import(/* webpackMode: "weak" */"path").then(module => path = module, reason => console.log(reason));
+    await import(/* webpackMode: "weak" */"fs").then(module => fs = module, reason => console.log(reason));
+    await import(/* webpackMode: "weak" */"path").then(module => path = module, reason => console.log(reason));
 }
 
 export function importPathIfNode(): typeof import("path") | null {

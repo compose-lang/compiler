@@ -188,60 +188,61 @@ return_statement:
 
 expression:
     parent = expression
-        LBRAK item = expression RBRAK   # ItemExpression
+        LBRAK item = expression RBRAK               # ItemExpression
     | parent = expression
-        DOT member = expression         # MemberExpression
-    | NEW function_call_expression        # NewExpression
-    | function_call_expression            # FunctionCallExpression
+        DOT member = identifier                     # MemberExpression
+    | NEW function_call_expression                  # NewExpression
+    | function_call_expression                      # SimpleCallExpression
+    | expression DOT function_call_expression       # ChildCallExpression
     | expression { $parser.willNotContainLineTerminator()}
-        INC                             # PostIncrementExpression
+        INC                                         # PostIncrementExpression
     | expression { $parser.willNotContainLineTerminator()}
-        DEC                             # PostDecrementExpression
+        DEC                                         # PostDecrementExpression
     | TYPE_OF ((LPAR expression RPAR)
-          | TYPE_OF expression)          # TypeofExpression
-    | INC expression                    # UnaryPreIncrementExpression
-    | DEC expression                    # UnaryPreDecrementExpression
-    | PLUS expression                   # UnaryPlusExpression
-    | MINUS expression                  # UnaryMinusExpression
-    | TILDE expression                  # UnaryBitNotExpression
-    | NOT expression                    # UnaryNotExpression
+          | TYPE_OF expression)                     # TypeofExpression
+    | INC expression                                # UnaryPreIncrementExpression
+    | DEC expression                                # UnaryPreDecrementExpression
+    | PLUS expression                               # UnaryPlusExpression
+    | MINUS expression                              # UnaryMinusExpression
+    | TILDE expression                              # UnaryBitNotExpression
+    | NOT expression                                # UnaryNotExpression
     | left = expression ( STAR | SLASH | PERCENT )
-        right = expression              # MultiplyExpression
+        right = expression                          # MultiplyExpression
     | left = expression ( PLUS | MINUS )
-        right = expression              # AddExpression
+        right = expression                          # AddExpression
     | left = expression ( LSHIFT | RSHIFT | URSHIFT )
         right = expression # BitShiftExpression
     | left = expression ( GT | LT | GTE | LTE )
-        right = expression              # CompareExpression
+        right = expression                          # CompareExpression
     | left = expression INSTANCE_OF
-        right = expression              # InstanceofExpression
+        right = expression                          # InstanceofExpression
     | left = expression IN
-        right = expression              # InExpression
+        right = expression                          # InExpression
     | left = expression (EQUALS | NOT_EQUALS)
-        right = expression              # EqualsExpression
+        right = expression                          # EqualsExpression
     | left = expression
-        AMP right = expression          # BitAndExpression
+        AMP right = expression                      # BitAndExpression
     | left = expression
-        CARET right = expression        # BitXorExpression
+        CARET right = expression                    # BitXorExpression
     | left = expression
-        PIPE right = expression         # BitOrExpression
+        PIPE right = expression                     # BitOrExpression
     | left = expression
-        AND right = expression          # AndExpression
+        AND right = expression                      # AndExpression
     | left = expression
-        OR right = expression           # OrExpression
+        OR right = expression                       # OrExpression
     | condition = expression QUESTION
         if_true = expression COLON
-        if_false = expression           # TernaryExpression
-    | THIS                              # ThisExpression
-    | identifier                        # IdentifierExpression
-    | SUPER ( LT IDENTIFIER GT )?       # SuperExpression
-    | literal_expression                # LiteralExpression
-    | LPAR expression RPAR              # ParenthesisExpression
-    | exp = expression AS IDENTIFIER    # CastExpression
+        if_false = expression                       # TernaryExpression
+    | THIS                                          # ThisExpression
+    | identifier                                    # IdentifierExpression
+    | SUPER ( LT IDENTIFIER GT )?                   # SuperExpression
+    | literal_expression                            # LiteralExpression
+    | LPAR expression RPAR                          # ParenthesisExpression
+    | exp = expression AS IDENTIFIER                # CastExpression
     ;
 
 function_call_expression:
-    identifier LPAR ( arg = expression ( COMMA arg = expression)* )? RPAR
+    name = identifier ( LT type = identifier (COMMA type = identifier)* GT )? LPAR ( arg = expression ( COMMA arg = expression)* )? RPAR
     ;
 
 literal_expression:

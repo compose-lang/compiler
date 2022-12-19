@@ -41,12 +41,13 @@ import { Concrete_function_declarationContext } from "./ComposeParser";
 import { StatementContext } from "./ComposeParser";
 import { Assign_instance_statementContext } from "./ComposeParser";
 import { Return_statementContext } from "./ComposeParser";
+import { ChildCallExpressionContext } from "./ComposeParser";
 import { TernaryExpressionContext } from "./ComposeParser";
+import { SimpleCallExpressionContext } from "./ComposeParser";
 import { InExpressionContext } from "./ComposeParser";
 import { ItemExpressionContext } from "./ComposeParser";
 import { CompareExpressionContext } from "./ComposeParser";
 import { OrExpressionContext } from "./ComposeParser";
-import { FunctionCallExpressionContext } from "./ComposeParser";
 import { ThisExpressionContext } from "./ComposeParser";
 import { AndExpressionContext } from "./ComposeParser";
 import { UnaryMinusExpressionContext } from "./ComposeParser";
@@ -481,6 +482,18 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 */
 	exitReturn_statement?: (ctx: Return_statementContext) => void;
 	/**
+	 * Enter a parse tree produced by the `ChildCallExpression`
+	 * labeled alternative in `ComposeParser.expression`.
+	 * @param ctx the parse tree
+	 */
+	enterChildCallExpression?: (ctx: ChildCallExpressionContext) => void;
+	/**
+	 * Exit a parse tree produced by the `ChildCallExpression`
+	 * labeled alternative in `ComposeParser.expression`.
+	 * @param ctx the parse tree
+	 */
+	exitChildCallExpression?: (ctx: ChildCallExpressionContext) => void;
+	/**
 	 * Enter a parse tree produced by the `TernaryExpression`
 	 * labeled alternative in `ComposeParser.expression`.
 	 * @param ctx the parse tree
@@ -492,6 +505,18 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitTernaryExpression?: (ctx: TernaryExpressionContext) => void;
+	/**
+	 * Enter a parse tree produced by the `SimpleCallExpression`
+	 * labeled alternative in `ComposeParser.expression`.
+	 * @param ctx the parse tree
+	 */
+	enterSimpleCallExpression?: (ctx: SimpleCallExpressionContext) => void;
+	/**
+	 * Exit a parse tree produced by the `SimpleCallExpression`
+	 * labeled alternative in `ComposeParser.expression`.
+	 * @param ctx the parse tree
+	 */
+	exitSimpleCallExpression?: (ctx: SimpleCallExpressionContext) => void;
 	/**
 	 * Enter a parse tree produced by the `InExpression`
 	 * labeled alternative in `ComposeParser.expression`.
@@ -540,18 +565,6 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitOrExpression?: (ctx: OrExpressionContext) => void;
-	/**
-	 * Enter a parse tree produced by the `FunctionCallExpression`
-	 * labeled alternative in `ComposeParser.expression`.
-	 * @param ctx the parse tree
-	 */
-	enterFunctionCallExpression?: (ctx: FunctionCallExpressionContext) => void;
-	/**
-	 * Exit a parse tree produced by the `FunctionCallExpression`
-	 * labeled alternative in `ComposeParser.expression`.
-	 * @param ctx the parse tree
-	 */
-	exitFunctionCallExpression?: (ctx: FunctionCallExpressionContext) => void;
 	/**
 	 * Enter a parse tree produced by the `ThisExpression`
 	 * labeled alternative in `ComposeParser.expression`.

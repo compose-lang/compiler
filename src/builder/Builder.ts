@@ -13,7 +13,7 @@ import ComposeParser, {
     AttributeParameterContext,
     Boolean_typeContext,
     BooleanLiteralContext,
-    CharLiteralContext,
+    CharLiteralContext, ChildCallExpressionContext,
     Class_declarationContext,
     Class_refContext,
     Class_typeContext,
@@ -23,7 +23,7 @@ import ComposeParser, {
     DecimalLiteralContext,
     DeclarationContext,
     F32_typeContext,
-    F64_typeContext, Function_declarationContext, Function_prototypeContext,
+    F64_typeContext, Function_call_expressionContext, Function_declarationContext, Function_prototypeContext,
     Function_typeContext,
     FunctionParameterContext, Global_statementContext,
     I32_typeContext,
@@ -45,7 +45,7 @@ import ComposeParser, {
     Return_typeContext,
     Return_typesContext,
     Set_literalContext,
-    SetLiteralContext,
+    SetLiteralContext, SimpleCallExpressionContext,
     StatementContext,
     String_typeContext,
     StringLiteralContext,
@@ -101,6 +101,7 @@ import UInt32Type from "../type/UInt32Type";
 import AssignInstanceStatement from "../statement/AssignInstanceStatement";
 import InstanceModifier from "../context/InstanceModifier";
 import Annotation from "./Annotation";
+import FunctionCall from "../expression/FunctionCall";
 
 interface IndexedNode {
     __id?: number;
@@ -489,5 +490,18 @@ export default class Builder extends ComposeParserListener {
         this.setNodeValue(ctx, new AssignInstanceStatement(modifier, id, type, exp));
     }
 
+    exitFunction_call_expression = (ctx: Function_call_expressionContext) => {
+        const id = this.getNodeValue<Identifier>(ctx._name);
+        this.setNodeValue(ctx, new FunctionCall(id));
+    }
 
+    exitSimpleCallExpression = (ctx: SimpleCallExpressionContext) => {
+        this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
+    }
+
+    exitChildCallExpression = (ctx: ChildCallExpressionContext) => {
+        const call = this.getNodeValue<FunctionCall>(ctx.function_call_expression());
+        call.parent = this.getNodeValue<IExpression>(ctx.expression());
+        this.setNodeValue(ctx, call);
+    }
 }
