@@ -8,6 +8,6 @@ it('parses mem.cots',  () => {
     const __dirname = dirname(dirname(dirname(__filename)));
     const path = __dirname + "/src/runtime/mem.cots";
     const unit = Builder.parse_unit(path);
-    assert.equal(unit.declarations.length, 1);
-    assert.equal(unit.statements.length, 1);
+    assert.equal(unit.declarations.length, 27);
+    assert.equal(unit.statements.length, 15);
  });

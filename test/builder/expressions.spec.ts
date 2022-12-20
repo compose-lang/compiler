@@ -23,7 +23,7 @@ it('parses a child function call',  () => {
 
 
 it('parses a parameterized function call',  () => {
-    const exp = Builder.parse_expression("my_func<x, y>()");
+    const exp = Builder.parse_expression("my_func<X, Y>()");
     assert.ok(exp instanceof FunctionCall);
     assert.equal("my_func", exp.name);
 });

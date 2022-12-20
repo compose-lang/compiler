@@ -5,6 +5,7 @@ import IWasmTarget from "../compiler/IWasmTarget";
 
 export default class AttributeType extends CodeFragment implements IType {
 
+    nullable = false;
     id: Identifier;
 
     constructor(id: Identifier) {

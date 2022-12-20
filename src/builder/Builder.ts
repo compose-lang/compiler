@@ -6,32 +6,46 @@ import {
 } from "antlr4";
 import {fileExists} from "../utils/FileUtils";
 import ComposeParser, {
-    Abstract_function_declarationContext, AnnotationContext, Assign_instance_statementContext,
+    Abstract_function_declarationContext,
+    AnnotationContext,
+    Assign_instance_statementContext,
     Attribute_declarationContext,
     Attribute_refContext,
+    Attribute_type_or_nullContext,
     Attribute_typeContext,
     AttributeParameterContext,
     Boolean_typeContext,
     BooleanLiteralContext,
-    CharLiteralContext, ChildCallExpressionContext,
+    CharLiteralContext,
+    ChildCallExpressionContext,
     Class_declarationContext,
     Class_refContext,
-    Class_typeContext,
-    Compilation_unitContext, Concrete_function_declarationContext,
+    Class_typeContext, Compilation_atomContext,
+    Compilation_unitContext,
+    Concrete_function_declarationContext,
+    Data_type_or_nullContext,
     Data_typeContext,
     Decimal_typeContext,
     DecimalLiteralContext,
     DeclarationContext,
+    Declare_instances_statementContext,
+    Declare_oneContext,
     F32_typeContext,
-    F64_typeContext, Function_call_expressionContext, Function_declarationContext, Function_prototypeContext,
+    F64_typeContext,
+    Function_callContext,
+    Function_declarationContext,
+    Function_prototypeContext,
+    Function_type_or_nullContext,
     Function_typeContext,
-    FunctionParameterContext, Global_statementContext,
+    FunctionParameterContext,
+    Global_statementContext,
     I32_typeContext,
     I64_typeContext,
     IdentifierContext,
     IdentifierExpressionContext,
     Integer_typeContext,
     IntegerLiteralContext,
+    Isize_typeContext,
     List_literalContext,
     ListLiteralContext,
     LiteralExpressionContext,
@@ -45,13 +59,15 @@ import ComposeParser, {
     Return_typeContext,
     Return_typesContext,
     Set_literalContext,
-    SetLiteralContext, SimpleCallExpressionContext,
+    SetLiteralContext,
+    SimpleCallExpressionContext,
     StatementContext,
     String_typeContext,
     StringLiteralContext,
     TypedParameterContext,
     U32_typeContext,
-    U64_typeContext
+    U64_typeContext,
+    Usize_typeContext
 } from "../parser/ComposeParser";
 import ComposeLexer from "../parser/ComposeLexer";
 import ComposeParserListener from "../parser/ComposeParserListener";
@@ -98,10 +114,16 @@ import Float64Type from "../type/Float64Type";
 import Int64Type from "../type/Int64Type";
 import UInt64Type from "../type/UInt64Type";
 import UInt32Type from "../type/UInt32Type";
-import AssignInstanceStatement from "../statement/AssignInstanceStatement";
 import InstanceModifier from "../context/InstanceModifier";
 import Annotation from "./Annotation";
 import FunctionCall from "../expression/FunctionCall";
+import ISizeType from "../type/ISizeType";
+import USizeType from "../type/USizeType";
+import StatementBase from "../statement/StatementBase";
+import DeclarationBase from "../declaration/DeclarationBase";
+import DeclareInstanceStatement from "../statement/DeclareInstanceStatement";
+import AssignOperator from "../statement/AssignOperator";
+import AssignInstanceStatement from "../statement/AssignInstanceStatement";
 
 interface IndexedNode {
     __id?: number;
@@ -233,6 +255,12 @@ export default class Builder extends ComposeParserListener {
         this.setNodeValue(ctx, new AttributeType(id));
     }
 
+    exitAttribute_type_or_null = (ctx: Attribute_type_or_nullContext) => {
+        const type = this.getNodeValue<IType>(ctx.getChild(0));
+        type.nullable = ctx.NULL_LITERAL() != null;
+        this.setNodeValue(ctx, type);
+    }
+
     exitAttribute_ref = (ctx: Attribute_refContext) => {
         this.setNodeValue(ctx, new Identifier(ctx.IDENTIFIER().getText()));
     }
@@ -262,6 +290,12 @@ export default class Builder extends ComposeParserListener {
         this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
     }
 
+    exitData_type_or_null = (ctx: Data_type_or_nullContext) => {
+        const type = this.getNodeValue<IType>(ctx.getChild(0));
+        type.nullable = ctx.NULL_LITERAL() != null;
+        this.setNodeValue(ctx, type);
+    }
+
     exitFunction_type = (ctx: Function_typeContext) => {
         const attr = ctx.attribute_type();
         const parameters = attr
@@ -271,8 +305,14 @@ export default class Builder extends ComposeParserListener {
         this.setNodeValue(ctx, new FunctionType(parameters, returnTypes));
     }
 
+    exitFunction_type_or_null = (ctx: Function_type_or_nullContext) => {
+        const type = this.getNodeValue<IType>(ctx.getChild(0));
+        type.nullable = ctx.NULL_LITERAL() != null;
+        this.setNodeValue(ctx, type);
+    }
+
     exitReturn_type = (ctx: Return_typeContext) => {
-        const child = ctx.data_type() || ctx.attribute_type() || ctx.function_type();
+        const child = ctx.data_type_or_null() || ctx.attribute_type_or_null() || ctx.function_type_or_null();
         this.setNodeValue(ctx, this.getNodeValue(child));
     }
 
@@ -301,19 +341,19 @@ export default class Builder extends ComposeParserListener {
     }
 
     exitAttributeParameter = (ctx: AttributeParameterContext) => {
-        const type = this.getNodeValue<AttributeType>(ctx.attribute_type());
+        const type = this.getNodeValue<AttributeType>(ctx.attribute_type_or_null());
         this.setNodeValue(ctx, new AttributeParameter(type));
     }
 
     exitTypedParameter = (ctx: TypedParameterContext) => {
         const id = this.getNodeValue<Identifier>(ctx.identifier());
-        const type = this.getNodeValue<IDataType>(ctx.data_type());
+        const type = this.getNodeValue<IDataType>(ctx.data_type_or_null());
         this.setNodeValue(ctx, new TypedParameter(id, type));
     }
 
     exitFunctionParameter = (ctx: FunctionParameterContext) => {
         const id = this.getNodeValue<Identifier>(ctx.identifier());
-        const type = this.getNodeValue<FunctionType>(ctx.function_type());
+        const type = this.getNodeValue<FunctionType>(ctx.function_type_or_null());
         this.setNodeValue(ctx, new FunctionParameter(id, type));
     }
 
@@ -332,7 +372,7 @@ export default class Builder extends ComposeParserListener {
 
     exitConcrete_function_declaration = (ctx: Concrete_function_declarationContext) => {
         const proto = this.getNodeValue<Prototype>(ctx.function_prototype());
-        const stmts = ctx.statement_list().map(s => this.getNodeValue<IStatement>(s));
+        const stmts = ctx.statement_list().flatMap(s => this.getNodeValue<IStatement>(s));
         this.setNodeValue(ctx, new ConcreteFunctionDeclaration(proto, stmts));
     }
 
@@ -354,17 +394,23 @@ export default class Builder extends ComposeParserListener {
     }
 
     exitCompilation_unit = (ctx: Compilation_unitContext) => {
-        const globals = ctx.global_statement_list()
-            .map(child => this.getNodeValue<IStatement>(child), this);
-        const declarations = ctx.declaration_list()
-            .map(child => this.getNodeValue<IDeclaration>(child), this);
+        const all = ctx.compilation_atom_list().flatMap(child => this.getNodeValue<any>(child), this);
+        const globals = all.filter(a => a instanceof StatementBase); // can't use reflection on interfaces
+        const declarations = all.filter(a => a instanceof DeclarationBase); // can't use reflection on interfaces
         this.setNodeValue(ctx, new CompilationUnit(globals, declarations));
+    }
+
+    exitCompilation_atom = (ctx: Compilation_atomContext) => {
+        this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
     }
 
     exitGlobal_statement = (ctx: Global_statementContext) => {
         const annotations = ctx.annotation_list().map(child => this.getNodeValue<Annotation>(child), this);
         const stmt = this.getNodeValue<IStatement>(ctx.getChild(annotations.length));
-        stmt.annotations = annotations;
+        if(Array.isArray(stmt))
+            stmt.forEach(s => s.annotations = annotations)
+        else
+            stmt.annotations = annotations;
         this.setNodeValue(ctx, stmt);
     }
 
@@ -437,7 +483,7 @@ export default class Builder extends ComposeParserListener {
     exitStatement = (ctx: StatementContext) => {
         const annotations = ctx.annotation_list().map(child => this.getNodeValue<Annotation>(child), this);
         const stmt = this.getNodeValue<IStatement>(ctx.getChild(annotations.length));
-        stmt.annotations = annotations;
+        if(stmt) stmt.annotations = annotations; // TODO cleanup
         this.setNodeValue(ctx, stmt);
     }
 
@@ -454,12 +500,20 @@ export default class Builder extends ComposeParserListener {
         this.setNodeValue(ctx, Int64Type.instance);
     }
 
+    exitIsize_type = (ctx: Isize_typeContext) => {
+        this.setNodeValue(ctx, ISizeType.instance);
+    }
+
     exitU32_type = (ctx: U32_typeContext) => {
         this.setNodeValue(ctx, UInt32Type.instance);
     }
 
     exitU64_type = (ctx: U64_typeContext) => {
         this.setNodeValue(ctx, UInt64Type.instance);
+    }
+
+    exitUsize_type = (ctx: Usize_typeContext) => {
+        this.setNodeValue(ctx, USizeType.instance);
     }
 
     exitInteger_type = (ctx: Integer_typeContext) => {
@@ -482,15 +536,29 @@ export default class Builder extends ComposeParserListener {
         this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
     }
 
-    exitAssign_instance_statement = (ctx: Assign_instance_statementContext) => {
+    exitDeclare_instances_statement = (ctx: Declare_instances_statementContext) => {
         const modifier = ctx.LET() !== null ? InstanceModifier.LET : ctx.CONST() !== null ? InstanceModifier.CONST : null;
-        const type = this.getNodeValue<IType>(ctx.data_type() || ctx.function_type());
-        const id = this.getNodeValue<Identifier>(ctx.identifier());
-        const exp = this.getNodeValue<IExpression>(ctx.expression());
-        this.setNodeValue(ctx, new AssignInstanceStatement(modifier, id, type, exp));
+        const declare_ones = ctx.declare_one_list().map(child => this.getNodeValue<DeclareInstanceStatement>(child), this);
+        declare_ones.forEach(one => one.modifier = modifier);
+        this.setNodeValue(ctx, declare_ones);
     }
 
-    exitFunction_call_expression = (ctx: Function_call_expressionContext) => {
+    exitDeclare_one = (ctx: Declare_oneContext) => {
+        const type = this.getNodeValue<IType>(ctx.data_type_or_null() || ctx.function_type_or_null());
+        const id = this.getNodeValue<Identifier>(ctx.identifier());
+        const exp = this.getNodeValue<IExpression>(ctx.expression());
+        this.setNodeValue(ctx, new DeclareInstanceStatement(null, id, type, exp));
+    }
+
+    exitAssign_instance_statement = (ctx: Assign_instance_statementContext) => {
+        const parent = this.getNodeValue<IExpression>(ctx._parent);
+        const id = this.getNodeValue<Identifier>(ctx.identifier());
+        const op = this.getNodeValue<AssignOperator>(ctx.assign_op());
+        const exp = this.getNodeValue<IExpression>(ctx._value);
+        this.setNodeValue(ctx, new AssignInstanceStatement(parent, id, op, exp));
+    }
+
+    exitFunction_call = (ctx: Function_callContext) => {
         const id = this.getNodeValue<Identifier>(ctx._name);
         this.setNodeValue(ctx, new FunctionCall(id));
     }
@@ -500,7 +568,7 @@ export default class Builder extends ComposeParserListener {
     }
 
     exitChildCallExpression = (ctx: ChildCallExpressionContext) => {
-        const call = this.getNodeValue<FunctionCall>(ctx.function_call_expression());
+        const call = this.getNodeValue<FunctionCall>(ctx.function_call());
         call.parent = this.getNodeValue<IExpression>(ctx.expression());
         this.setNodeValue(ctx, call);
     }

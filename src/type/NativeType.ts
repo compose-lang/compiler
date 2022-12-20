@@ -5,6 +5,7 @@ import IType from "./IType";
 
 export default abstract class NativeType extends CodeFragment implements IDataType {
 
+    nullable = false;
     typeName: string;
 
     protected constructor(typeName: string) {

@@ -7,6 +7,7 @@ import IWasmTarget from "../compiler/IWasmTarget";
 
 export default class FunctionType extends CodeFragment implements IType {
 
+    nullable = false;
     parameters: ParameterList;
     returnTypes: TypeList;
 

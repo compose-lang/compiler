@@ -2,8 +2,10 @@ lexer grammar ComposeLexer;
 
 I32: 'i32';
 I64: 'i64';
+ISIZE: 'isize'; // 32 or 64 bits depending on the web assembly target
 U32: 'u32';
 U64: 'u64';
+USIZE: 'usize'; // 32 or 64 bits depending on the web assembly target
 F32: 'f32';
 F64: 'f64';
 V128: 'v128';
@@ -33,6 +35,7 @@ WHILE: 'while';
 BREAK: 'break';
 TRY: 'try';
 CATCH: 'catch';
+THROW: 'throw';
 FINALLY: 'finally';
 
 THIS: 'this';
@@ -66,6 +69,7 @@ QUESTION : '?';
 SEMI : ';';
 COLON : ':';
 COMMA : ',';
+ETC: '...';
 DOT : '.';
 AT : '@';
 
