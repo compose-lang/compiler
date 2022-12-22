@@ -17,6 +17,6 @@ export default abstract class StatementBase extends CodeFragment implements ISta
     abstract check(context: Context): IType;
     abstract declare(context: Context, module: WasmModule): void;
     abstract rehearse(context: Context, module: WasmModule, body: FunctionBody): void;
-    abstract compile(context: Context, module: WasmModule, body: FunctionBody): void;
+    abstract compile(context: Context, module: WasmModule, body: FunctionBody): IType;
 
 }

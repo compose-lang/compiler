@@ -2,6 +2,7 @@ import CodeFragment from "../builder/CodeFragment";
 import IType from "./IType";
 import Identifier from "../builder/Identifier";
 import IWasmTarget from "../compiler/IWasmTarget";
+import Context from "../context/Context";
 
 export default class AttributeType extends CodeFragment implements IType {
 
@@ -17,6 +18,10 @@ export default class AttributeType extends CodeFragment implements IType {
         return this.id.value;
     }
 
+    count(): number {
+        return 0; // TODO
+    }
+
     byteLength(): number {
         return 0; // TODO
     }
@@ -25,8 +30,8 @@ export default class AttributeType extends CodeFragment implements IType {
         // TODO
     }
 
-    isAssignableFrom(type: IType): boolean {
-        return false;
+    isAssignableFrom(context: Context, type: IType): boolean {
+        return false; // TODO
     }
 
 }

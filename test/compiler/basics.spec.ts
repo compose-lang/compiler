@@ -52,7 +52,6 @@ it('compiles but does not export a function without @Export',  () => {
     assert.equal(result, null);
 });
 
-
 it('compiles but does not export a global without @Export',  () => {
     const compiler = new Compiler();
     const target = new WasmBufferTarget();
@@ -61,4 +60,14 @@ it('compiles but does not export a global without @Export',  () => {
     const runner = Runner.of(target.asWasmSource());
     const result = runner.readGlobal<number>("SL_BITS");
     assert.equal(result, null);
+});
+
+it('compiles and runs a function calling another function returning an i32 literal',  () => {
+    const compiler = new Compiler();
+    const target = new WasmBufferTarget();
+    const unit = Builder.parse_unit("function inner(): i32 { return 12; } @Export function stuff(): i32 { return inner(); }");
+    compiler.buildOne(unit, target);
+    const runner = Runner.of(target.asWasmSource());
+    const result = runner.runFunction<number>("stuff");
+    assert.equal(result, 12);
 });

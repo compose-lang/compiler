@@ -33,10 +33,11 @@ export default class ReturnStatement extends StatementBase {
             this.expression.rehearse(context, module, body);
     }
 
-    compile(context: Context, module: WasmModule, body: FunctionBody): void {
+    compile(context: Context, module: WasmModule, body: FunctionBody): IType {
         if(this.expression)
             this.expression.compile(context, module, body);
         body.addOpCode(OpCode.RETURN);
+        return null;
     }
 
 

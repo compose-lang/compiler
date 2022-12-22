@@ -33,7 +33,7 @@ export default class AssignInstanceStatement extends StatementBase {
         const registered = context.getRegisteredLocal(this.id);
         assert.ok(registered);
         const actual = this.expression.check(context);
-        assert.ok(registered.type.isAssignableFrom(actual));
+        assert.ok(registered.type.isAssignableFrom(context, actual));
         // TODO check operator
         return VoidType.instance;
     }
@@ -46,11 +46,12 @@ export default class AssignInstanceStatement extends StatementBase {
         this.expression.rehearse(context, module, body);
     }
 
-    compile(context: Context, module: WasmModule, body: FunctionBody): void {
+    compile(context: Context, module: WasmModule, body: FunctionBody): IType {
         this.expression.compile(context, module, body);
         const index = body.getRegisteredLocalIndex(this.name);
         // TODO compile operator
         body.addOpCode(OpCode.LOCAL_SET, [index]); // TODO encode if index > 0x7F
+        return null;
     }
 
 }

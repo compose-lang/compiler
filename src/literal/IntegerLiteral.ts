@@ -36,21 +36,27 @@ export default class IntegerLiteral extends LiteralBase<number> {
         return this.value;
     }
 
-    compile(context: Context, module: WasmModule, body: FunctionBody): void {
+    compile(context: Context, module: WasmModule, body: FunctionBody): IType {
         const bytes: number[] = [];
         LEB128.emitSigned(this.value, byte => bytes.push(byte));
-        if(this.value >= -2147483648 && this.value <= 2147483647)
-            body.addOpCode(OpCode.CONST_I32, bytes);
-        else
+        if(this.isI64()) {
             body.addOpCode(OpCode.CONST_I64, bytes);
+            return Int64Type.instance;
+        } else {
+            body.addOpCode(OpCode.CONST_I32, bytes);
+            return Int32Type.instance
+        }
     }
 
     check(context: Context): IType {
-        if(this.value >= -2147483648 && this.value <= 2147483647)
-            return Int32Type.instance;
-        else
+        if(this.isI64())
             return Int64Type.instance;
+        else
+            return Int32Type.instance;
     }
 
 
+    private isI64() {
+        return this.value < -2147483648 || this.value > 2147483647;
+    }
 }

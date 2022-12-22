@@ -30,8 +30,9 @@ export default class InstanceExpression extends ExpressionBase {
         // TODO
     }
 
-    compile(context: Context, module: WasmModule, body: FunctionBody) {
+    compile(context: Context, module: WasmModule, body: FunctionBody): IType {
         const index = body.getRegisteredLocalIndex(this.id.value);
         body.addOpCode(OpCode.LOCAL_GET, [index]); // TODO encode if index > 0x7F
+        return context.getRegisteredLocal(this.id).type;
     }
 }

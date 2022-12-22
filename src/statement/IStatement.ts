@@ -12,6 +12,5 @@ export default interface IStatement extends IDeclarable {
     check(context: Context): IType;
     declare(context: Context, module: WasmModule): void;
     rehearse(context: Context, module: WasmModule, body: FunctionBody): void;
-    compile(context: Context, module: WasmModule, body: FunctionBody): void;
-
+    compile(context: Context, module: WasmModule, body: FunctionBody): IType;
 }

@@ -46,14 +46,18 @@ export default class WasmModule {
         }
     }
 
-    declareFunction(function_: IFunctionDeclaration, exported = false) {
+    declareFunction(decl: IFunctionDeclaration, exported = false) {
         // TODO check unique
-        const typeIndex = this.getTypesSection().addType(function_.type());
+        const typeIndex = this.getTypesSection().addType(decl.type());
         const functionIndex = this.getFunctionsSection().addFunction(typeIndex);
-        this.functions[functionIndex] = function_ as unknown as ICompilable;
+        this.functions[functionIndex] = decl as unknown as ICompilable;
         if(exported) {
-            this.getExportsSection().exportFunction(function_, functionIndex);
+            this.getExportsSection().exportFunction(decl, functionIndex);
         }
+    }
+
+    getFunctionIndex(decl: IFunctionDeclaration): number {
+        return this.functions.findIndex(d => d == decl as unknown as ICompilable);
     }
 
     getTypesSection(): TypesSection {

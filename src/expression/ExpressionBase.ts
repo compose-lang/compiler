@@ -12,8 +12,9 @@ export default abstract class ExpressionBase extends CodeFragment implements IEx
         // TODO remove, temporary measure to implement expressions 1 b 1
     }
 
-    compile(context: Context, module: WasmModule, body: FunctionBody): void {
+    compile(context: Context, module: WasmModule, body: FunctionBody): IType {
         // TODO remove, temporary measure to implement expressions 1 b 1
+        return null;
     }
 
 };

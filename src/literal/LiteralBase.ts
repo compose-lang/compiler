@@ -1,8 +1,9 @@
 import ExpressionBase from "../expression/ExpressionBase";
 import WasmModule from "../module/WasmModule";
 import Context from "../context/Context";
+import ILiteralExpression from "./ILiteralExpression";
 
-export default abstract class LiteralBase<T> extends ExpressionBase {
+export default abstract class LiteralBase<T> extends ExpressionBase implements ILiteralExpression {
 
     text: string;
     value: T;

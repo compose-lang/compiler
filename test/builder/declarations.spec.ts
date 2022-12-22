@@ -6,6 +6,7 @@ import AbstractFunctionDeclaration from "../../src/declaration/AbstractFunctionD
 import ConcreteFunctionDeclaration from "../../src/declaration/ConcreteFunctionDeclaration";
 import ReturnStatement from "../../src/statement/ReturnStatement";
 import IntegerLiteral from "../../src/literal/IntegerLiteral";
+import MultiType from "../../src/type/MultiType";
 
 it('parses an attribute declaration ',  () => {
     const unit = Builder.parse_unit("attribute text: string");
@@ -39,16 +40,18 @@ it('parses an abstract method declaration without param and single return type',
     assert.ok(unit.declarations[0] instanceof AbstractFunctionDeclaration);
     assert.equal(unit.declarations[0].name, "Thing");
     assert.equal(unit.declarations[0].parameters.length, 0);
-    assert.deepEqual(unit.declarations[0].returnTypes.map(t => t.typeName), ["string"]);
+    assert.equal(unit.declarations[0].returnType.typeName, "string");
 });
 
 it('parses an abstract method declaration without param and multiple return types',  () => {
     const unit = Builder.parse_unit("abstract function Thing(): string, boolean");
     assert.equal(unit.declarations.length, 1);
-    assert.ok(unit.declarations[0] instanceof AbstractFunctionDeclaration);
-    assert.equal(unit.declarations[0].name, "Thing");
-    assert.equal(unit.declarations[0].parameters.length, 0);
-    assert.deepEqual(unit.declarations[0].returnTypes.map(t => t.typeName), ["string", "boolean"]);
+    const declaration = unit.declarations[0];
+    assert.ok(declaration instanceof AbstractFunctionDeclaration);
+    assert.equal(declaration.name, "Thing");
+    assert.equal(declaration.parameters.length, 0);
+    assert.ok(declaration.returnType instanceof MultiType);
+    assert.deepEqual(declaration.returnType.types.map(t => t.typeName), ["string", "boolean"]);
 });
 
 it('parses an abstract method declaration with attribute param and single return type',  () => {
@@ -58,7 +61,7 @@ it('parses an abstract method declaration with attribute param and single return
     assert.equal(unit.declarations[0].name, "Thing");
     assert.equal(unit.declarations[0].parameters.length, 1);
     assert.equal(unit.declarations[0].parameters[0].name, "name");
-    assert.deepEqual(unit.declarations[0].returnTypes.map(t => t.typeName), ["string"]);
+    assert.equal(unit.declarations[0].returnType.typeName, "string");
 });
 
 it('parses an abstract method declaration with typed param and single return type',  () => {
@@ -70,7 +73,7 @@ it('parses an abstract method declaration with typed param and single return typ
     assert.equal(declaration.parameters.length, 1);
     assert.equal(declaration.parameters[0].name, "name");
     assert.equal(declaration.parameters[0].type.typeName, "string");
-    assert.deepEqual(declaration.returnTypes.map(t => t.typeName), ["string"]);
+    assert.equal(declaration.returnType.typeName, "string");
 });
 
 it('parses a concrete method declaration with a return statement',  () => {
@@ -79,7 +82,7 @@ it('parses a concrete method declaration with a return statement',  () => {
     const declaration = unit.declarations[0];
     assert.ok(declaration instanceof ConcreteFunctionDeclaration);
     assert.equal(declaration.name, "Thing");
-    assert.equal(declaration.returnTypes.length, 0);
+    assert.equal(declaration.returnType, null);
     assert.equal(declaration.statements.length, 1);
     const statement = declaration.statements[0];
     assert.ok(statement instanceof ReturnStatement);

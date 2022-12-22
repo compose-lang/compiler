@@ -6,6 +6,8 @@ import WasmModule from "../module/WasmModule";
 import ICompilable from "../compiler/ICompilable";
 import OpCode from "../compiler/OpCode";
 import IDeclarable from "../compiler/IDeclarable";
+import VoidType from "../type/VoidType";
+import IType from "../type/IType";
 
 export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase implements ICompilable {
 
@@ -18,7 +20,7 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
 
 
     register(context: Context): void {
-        context.registerMethod(this);
+        context.registerFunction(this);
     }
 
     check(context: Context): void {
@@ -41,8 +43,13 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
         const body = section.createFunctionCode();
         let local = context.newLocalContext();
         // TODO register parameters
-        this.statements.forEach(stmt => stmt.rehearse(local.newChildContext(), module, body));
-        this.statements.forEach(stmt => stmt.compile(local.newChildContext(), module, body));
+        this.statements.forEach(stmt => stmt.rehearse(local, module, body));
+        local = context.newLocalContext();
+        for(let i=0; i<this.statements.length; i++) {
+            const returnType = this.statements[i].compile(local, module, body);
+            if(returnType!=null && returnType!=VoidType.instance)
+                body.addOpCode(OpCode.DROP);
+        }
         body.addOpCode(OpCode.END);
     }
 

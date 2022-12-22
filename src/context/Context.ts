@@ -21,7 +21,7 @@ export default class Context {
     attributes = new Map<string, AttributeDeclaration>();
     classes = new Map<string, ClassDeclaration>();
     // enums = new Map<string, EnumDeclaration>();
-    methods = new Map<string, Map<string, IFunctionDeclaration>>();
+    functions = new Map<string, Map<string, IFunctionDeclaration>>();
     locals = new Map<string, Variable>();
 
     private constructor(globals?: Context) {
@@ -48,13 +48,13 @@ export default class Context {
         return context;
     }
 
-    registerMethod(method: IFunctionDeclaration) {
-        if(!this.methods.has(method.name))
-            this.methods.set(method.name, new Map<string, IFunctionDeclaration>());
-        const protos = this.methods.get(method.name);
-        const proto = method.type().toString();
+    registerFunction(decl: IFunctionDeclaration) {
+        if(!this.functions.has(decl.name))
+            this.functions.set(decl.name, new Map<string, IFunctionDeclaration>());
+        const protos = this.functions.get(decl.name);
+        const proto = decl.type().toString();
         assert.ok(!protos.has(proto));
-        protos.set(proto, method);
+        protos.set(proto, decl);
     }
 
     registerLocal(local: Variable) {
@@ -66,4 +66,21 @@ export default class Context {
         return this.locals.get(id.value) || null;
     }
 
+    getRegisteredFunctions(id: Identifier): IFunctionDeclaration[] {
+        const map = new Map<string, IFunctionDeclaration>();
+        this.collectFunctions(id, map);
+        return Array.from(map.values());
+    }
+
+    private collectFunctions(id: Identifier, map: Map<string, IFunctionDeclaration>) {
+        // collect parents first, override with locals
+        if(this.parent !== null)
+            this.parent.collectFunctions(id, map);
+        else if(this != this.globals)
+            this.globals.collectFunctions(id, map);
+        if(this.functions.has(id.value)) {
+            const local = this.functions.get(id.value);
+            local.forEach((decl, key) => map.set(key, decl));
+        }
+    }
 }

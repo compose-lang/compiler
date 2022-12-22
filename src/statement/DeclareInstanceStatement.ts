@@ -32,7 +32,7 @@ export default class DeclareInstanceStatement extends StatementBase {
     check(context: Context): IType {
         let type = this.expression.check(context);
         if(this.type) {
-            assert.ok(this.type.isAssignableFrom(type));
+            assert.ok(this.type.isAssignableFrom(context, type));
             type = this.type;
         }
         context.registerLocal(this.asVariable(context, type));
@@ -55,11 +55,12 @@ export default class DeclareInstanceStatement extends StatementBase {
         body.registerLocal(this.name, variable.type);
     }
 
-    compile(context: Context, module: WasmModule, body: FunctionBody): void {
+    compile(context: Context, module: WasmModule, body: FunctionBody): IType {
         this.expression.compile(context, module, body);
         this.check(context); // registers the local variable
         const index = body.getRegisteredLocalIndex(this.name);
         body.addOpCode(OpCode.LOCAL_SET, [index]); // TODO encode if index > 0x7F
+        return null;
     }
 
     private asVariable(context: Context, type: IType) {

@@ -124,6 +124,8 @@ import DeclarationBase from "../declaration/DeclarationBase";
 import DeclareInstanceStatement from "../statement/DeclareInstanceStatement";
 import AssignOperator from "../statement/AssignOperator";
 import AssignInstanceStatement from "../statement/AssignInstanceStatement";
+import * as assert from "assert";
+import MultiType from "../type/MultiType";
 
 interface IndexedNode {
     __id?: number;
@@ -301,8 +303,13 @@ export default class Builder extends ComposeParserListener {
         const parameters = attr
                 ? [ new AttributeParameter(this.getNodeValue<AttributeType>(attr)) ]
                 : ctx.parameter_list().map(child => this.getNodeValue<IParameter>(child), this);
-        const returnTypes = this.getNodeValue<TypeList>(ctx.return_types());
-        this.setNodeValue(ctx, new FunctionType(parameters, returnTypes));
+        const returnTypes = this.getNodeValue<TypeList>(ctx.return_types()) || [];
+        let returnType: IType = null;
+        if(returnTypes.length == 1)
+            returnType = returnTypes[0];
+        else if(returnTypes.length > 1)
+            returnType = new MultiType(returnTypes);
+        this.setNodeValue(ctx, new FunctionType(parameters, returnType));
     }
 
     exitFunction_type_or_null = (ctx: Function_type_or_nullContext) => {
@@ -361,8 +368,13 @@ export default class Builder extends ComposeParserListener {
         const id = this.getNodeValue<Identifier>(ctx.identifier());
         const params = ctx.parameter_list()
             .map(child => this.getNodeValue<IParameter>(child), this);
-        const returnTypes = this.getNodeValue<TypeList>(ctx.return_types());
-        this.setNodeValue(ctx, new Prototype(id, params, returnTypes));
+        const returnTypes = this.getNodeValue<TypeList>(ctx.return_types()) || [];
+        let returnType: IType = null;
+        if(returnTypes.length == 1)
+            returnType = returnTypes[0];
+        else if(returnTypes.length > 1)
+            returnType = new MultiType(returnTypes);
+        this.setNodeValue(ctx, new Prototype(id, params, returnType));
     }
 
     exitAbstract_function_declaration = (ctx: Abstract_function_declarationContext) => {
@@ -560,7 +572,9 @@ export default class Builder extends ComposeParserListener {
 
     exitFunction_call = (ctx: Function_callContext) => {
         const id = this.getNodeValue<Identifier>(ctx._name);
-        this.setNodeValue(ctx, new FunctionCall(id));
+        const types = ctx.data_type_or_null_list().map(t => this.getNodeValue<IType>(t));
+        const args = ctx.expression_list().map(x => this.getNodeValue<IExpression>(x));
+        this.setNodeValue(ctx, new FunctionCall(null, id, types, args));
     }
 
     exitSimpleCallExpression = (ctx: SimpleCallExpressionContext) => {
