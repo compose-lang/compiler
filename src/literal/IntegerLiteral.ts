@@ -36,6 +36,13 @@ export default class IntegerLiteral extends LiteralBase<number> {
         return this.value;
     }
 
+    check(context: Context): IType {
+        if(this.isI64())
+            return Int64Type.instance;
+        else
+            return Int32Type.instance;
+    }
+
     compile(context: Context, module: WasmModule, body: FunctionBody): IType {
         const bytes: number[] = [];
         LEB128.emitSigned(this.value, byte => bytes.push(byte));
@@ -47,14 +54,6 @@ export default class IntegerLiteral extends LiteralBase<number> {
             return Int32Type.instance
         }
     }
-
-    check(context: Context): IType {
-        if(this.isI64())
-            return Int64Type.instance;
-        else
-            return Int32Type.instance;
-    }
-
 
     private isI64() {
         return this.value < -2147483648 || this.value > 2147483647;

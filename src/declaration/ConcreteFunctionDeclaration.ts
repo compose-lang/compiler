@@ -6,8 +6,6 @@ import WasmModule from "../module/WasmModule";
 import ICompilable from "../compiler/ICompilable";
 import OpCode from "../compiler/OpCode";
 import IDeclarable from "../compiler/IDeclarable";
-import VoidType from "../type/VoidType";
-import IType from "../type/IType";
 
 export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase implements ICompilable {
 
@@ -24,7 +22,9 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
     }
 
     check(context: Context): void {
-        // TODO
+        const local = context.newLocalContext();
+        this.parameters.forEach(param => param.register(local));
+        this.statements.forEach(stmt => stmt.check(local));
     }
 
     getDeclarables(context: Context): IDeclarable[] {
@@ -34,18 +34,17 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
     declare(context: Context, module: WasmModule): void {
         module.declareFunction(this, this.isExported());
         const local = context.newLocalContext();
-        // TODO register parameters
+        this.parameters.forEach(param => param.declare(local, module));
         this.statements.forEach(stmt => stmt.declare(local, module));
     }
 
     compile(context: Context, module: WasmModule): void {
         const section = module.getCodeSection();
         const body = section.createFunctionCode();
-        let local = context.newLocalContext();
-        // TODO register parameters
+        const local = context.newLocalContext();
+        this.parameters.forEach(param => param.rehearse(local, module, body));
         this.statements.forEach(stmt => stmt.rehearse(local, module, body));
-        local = context.newLocalContext();
-        // TODO register parameters
+        // parameters are compiled by function call
         this.statements.forEach(stmt => stmt.compile(local, module, body), this);
         body.addOpCode(OpCode.END);
     }

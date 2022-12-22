@@ -7,7 +7,8 @@ enum OpCode {
     LOCAL_SET = 0x21,
     LOCAL_TEE = 0x22,
     CONST_I32 = 0x41,
-    CONST_I64 = 0x42
+    CONST_I64 = 0x42,
+    ADD_I32 = 0x6A,
 }
 
 export default OpCode;

@@ -81,3 +81,25 @@ it('runs a function ignoring the result of another function',  () => {
     const result = runner.runFunction<number>("stuff");
     assert.equal(result, 12);
 });
+
+it('runs a function with parameters',  () => {
+    const compiler = new Compiler();
+    const target = new WasmBufferTarget();
+    const unit = Builder.parse_unit("function inner(x: i32): i32 { return x + 1; } @Export function stuff(): i32 { return inner(12); }");
+    compiler.buildOne(unit, target);
+    const runner = Runner.of(target.asWasmSource());
+    const result = runner.runFunction<number>("stuff");
+    assert.equal(result, 13);
+});
+
+/*
+it('runs a parameterized function',  () => {
+    const compiler = new Compiler();
+    const target = new WasmBufferTarget();
+    const unit = Builder.parse_unit("function inner<T>(x: T): T { return x; } @Export function stuff(): i32 { return inner<i32>(12); }");
+    compiler.buildOne(unit, target);
+    const runner = Runner.of(target.asWasmSource());
+    const result = runner.runFunction<number>("stuff");
+    assert.equal(result, 12);
+});
+*/

@@ -4,17 +4,17 @@ import WasmModule from "../module/WasmModule";
 import Context from "../context/Context";
 import FunctionBody from "../module/FunctionBody";
 import IType from "../type/IType";
+import assert from "assert";
 
 export default abstract class ExpressionBase extends CodeFragment implements IExpression {
+
     abstract check(context: Context): IType;
     abstract declare(context: Context, module: WasmModule): void;
     rehearse(context: Context, module: WasmModule, body: FunctionBody): void {
-        // TODO remove, temporary measure to implement expressions 1 b 1
+        assert.ok(false);
     }
-
     compile(context: Context, module: WasmModule, body: FunctionBody): IType {
-        // TODO remove, temporary measure to implement expressions 1 b 1
-        return null;
+        assert.ok(false);
     }
 
 };

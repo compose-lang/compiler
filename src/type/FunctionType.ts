@@ -1,11 +1,11 @@
 import ParameterList from "../parameter/ParameterList";
-import CodeFragment from "../builder/CodeFragment";
 import IType from "./IType";
 import LEB128 from "../utils/LEB128";
 import IWasmTarget from "../compiler/IWasmTarget";
 import Context from "../context/Context";
+import UserType from "./UserType";
 
-export default class FunctionType extends CodeFragment implements IType {
+export default class FunctionType extends UserType {
 
     nullable = false;
     parameters: ParameterList;

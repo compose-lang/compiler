@@ -3,14 +3,16 @@ import IWasmTarget from "../compiler/IWasmTarget";
 import TypeList from "./TypeList";
 import Context from "../context/Context";
 import FunctionType from "./FunctionType";
+import UserType from "./UserType";
 
-export default class MultiType implements IType {
+export default class MultiType extends UserType {
 
     nullable = false;
     typeName = "Multi";
     types: TypeList;
 
     constructor(types: TypeList) {
+        super();
         this.types = types;
     }
 

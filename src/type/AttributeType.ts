@@ -1,10 +1,10 @@
-import CodeFragment from "../builder/CodeFragment";
 import IType from "./IType";
 import Identifier from "../builder/Identifier";
 import IWasmTarget from "../compiler/IWasmTarget";
 import Context from "../context/Context";
+import UserType from "./UserType";
 
-export default class AttributeType extends CodeFragment implements IType {
+export default class AttributeType extends UserType {
 
     nullable = false;
     id: Identifier;

@@ -3,6 +3,9 @@ import IParameter from "./IParameter";
 import Identifier from "../builder/Identifier";
 import FunctionType from "../type/FunctionType";
 import ILiteralExpression from "../literal/ILiteralExpression";
+import Context from "../context/Context";
+import WasmModule from "../module/WasmModule";
+import FunctionBody from "../module/FunctionBody";
 
 export default class FunctionParameter extends CodeFragment implements IParameter {
 
@@ -23,6 +26,18 @@ export default class FunctionParameter extends CodeFragment implements IParamete
 
     toString() {
         return this.id.value + ": " + this.type.toString();
+    }
+
+    register(context: Context): void {
+        // TODO
+    }
+
+    declare(local: Context, module: WasmModule): void {
+        // TODO
+    }
+
+    rehearse(context: Context, module: WasmModule, body: FunctionBody): void {
+        // TODO
     }
 
 }

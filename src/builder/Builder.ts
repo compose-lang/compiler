@@ -6,7 +6,7 @@ import {
 } from "antlr4";
 import {fileExists} from "../utils/FileUtils";
 import ComposeParser, {
-    Abstract_function_declarationContext,
+    Abstract_function_declarationContext, AddExpressionContext,
     AnnotationContext,
     Assign_instance_statementContext,
     Attribute_declarationContext,
@@ -128,6 +128,8 @@ import * as assert from "assert";
 import MultiType from "../type/MultiType";
 import FunctionCallStatement from "../statement/FunctionCallStatement";
 import GenericParameter from "../declaration/GenericParameter";
+import Operator from "../expression/Operator";
+import BinaryExpression from "../expression/BinaryExpression";
 
 interface IndexedNode {
     __id?: number;
@@ -599,5 +601,12 @@ export default class Builder extends ComposeParserListener {
         const call = this.getNodeValue<FunctionCall>(ctx.function_call());
         call.parent = this.getNodeValue<IExpression>(ctx.expression());
         this.setNodeValue(ctx, call);
+    }
+
+    exitAddExpression = (ctx: AddExpressionContext) => {
+        const left = this.getNodeValue<IExpression>(ctx._left);
+        const right = this.getNodeValue<IExpression>(ctx._right);
+        const op = ctx.PLUS() ? Operator.PLUS : Operator.MINUS;
+        this.setNodeValue(ctx, new BinaryExpression(left, op, right));
     }
 }

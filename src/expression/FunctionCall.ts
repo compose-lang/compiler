@@ -39,6 +39,10 @@ export default class FunctionCall extends ExpressionBase {
         return undefined;
     }
 
+    rehearse(context: Context, module: WasmModule, body: FunctionBody) {
+        this.args.forEach(arg => arg.rehearse(context, module, body));
+    }
+
     compile(context: Context, module: WasmModule, body: FunctionBody): IType {
         const decl = FunctionFinder.findFunction(context, this);
         assert.ok(decl);

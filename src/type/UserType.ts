@@ -1,42 +1,26 @@
 import CodeFragment from "../builder/CodeFragment";
-import IDataType from "./IDataType";
-import IWasmTarget from "../compiler/IWasmTarget";
 import IType from "./IType";
 import Context from "../context/Context";
-import * as assert from "assert";
+import assert from "assert";
+import IWasmTarget from "../compiler/IWasmTarget";
 import WasmModule from "../module/WasmModule";
 import FunctionBody from "../module/FunctionBody";
 
-export default abstract class NativeType extends CodeFragment implements IDataType {
+export default abstract class UserType extends CodeFragment implements IType {
 
-    nullable = false;
-    typeName: string;
+    nullable: boolean;
 
-    protected constructor(typeName: string) {
-        super();
-        this.typeName = typeName;
-    }
-
-    toString() {
-        return this.typeName;
-    }
-
-    count(): number {
-        return 1;
-    }
-
-    byteLength(): number {
-        return 1;
-    }
-
+    abstract get typeName(): string;
+    abstract byteLength(): number;
+    abstract count(): number;
     abstract writeTo(target: IWasmTarget): void;
-
-    isAssignableFrom(context: Context, type: IType): boolean {
-        return type === this;
-    }
+    abstract isAssignableFrom(context: Context, type: IType): boolean;
 
     checkAdd(context: Context, rightType: IType, tryReverse: boolean): IType {
-        assert.ok(false);
+        if(tryReverse)
+            return rightType.checkAdd(context, this, false);
+        else
+            assert.ok(false);
     }
 
     compileAdd(context: Context, rightType: IType, module: WasmModule, body: FunctionBody, tryReverse: boolean): IType {

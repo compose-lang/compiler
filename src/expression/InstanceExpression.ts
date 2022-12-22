@@ -27,7 +27,11 @@ export default class InstanceExpression extends ExpressionBase {
     }
 
     declare(context: Context, module: WasmModule): void {
-        // TODO
+        // nothing to do
+    }
+
+    rehearse(context: Context, module: WasmModule, body: FunctionBody): IType {
+        return context.getRegisteredLocal(this.id).type;
     }
 
     compile(context: Context, module: WasmModule, body: FunctionBody): IType {
