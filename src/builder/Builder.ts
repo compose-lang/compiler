@@ -31,7 +31,7 @@ import ComposeParser, {
     Declare_instances_statementContext,
     Declare_oneContext,
     F32_typeContext,
-    F64_typeContext,
+    F64_typeContext, Function_call_statementContext,
     Function_callContext,
     Function_declarationContext,
     Function_prototypeContext,
@@ -126,6 +126,7 @@ import AssignOperator from "../statement/AssignOperator";
 import AssignInstanceStatement from "../statement/AssignInstanceStatement";
 import * as assert from "assert";
 import MultiType from "../type/MultiType";
+import FunctionCallStatement from "../statement/FunctionCallStatement";
 
 interface IndexedNode {
     __id?: number;
@@ -568,6 +569,12 @@ export default class Builder extends ComposeParserListener {
         const op = this.getNodeValue<AssignOperator>(ctx.assign_op());
         const exp = this.getNodeValue<IExpression>(ctx._value);
         this.setNodeValue(ctx, new AssignInstanceStatement(parent, id, op, exp));
+    }
+
+    exitFunction_call_statement = (ctx: Function_call_statementContext) => {
+        const call = this.getNodeValue<FunctionCall>(ctx.function_call());
+        call.parent = this.getNodeValue<IExpression>(ctx.expression());
+        this.setNodeValue(ctx, new FunctionCallStatement(call));
     }
 
     exitFunction_call = (ctx: Function_callContext) => {

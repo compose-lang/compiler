@@ -9,6 +9,10 @@ export default class VoidType extends NativeType {
         super("void")
     }
 
+    count(): number {
+        return 0;
+    }
+
     byteLength(): number {
         return 0;
     }

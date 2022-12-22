@@ -31,11 +31,11 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
         return [this];
     }
 
-
     declare(context: Context, module: WasmModule): void {
         module.declareFunction(this, this.isExported());
         const local = context.newLocalContext();
-        this.statements.forEach(stmt => stmt.declare(local.newChildContext(), module));
+        // TODO register parameters
+        this.statements.forEach(stmt => stmt.declare(local, module));
     }
 
     compile(context: Context, module: WasmModule): void {
@@ -45,11 +45,8 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
         // TODO register parameters
         this.statements.forEach(stmt => stmt.rehearse(local, module, body));
         local = context.newLocalContext();
-        for(let i=0; i<this.statements.length; i++) {
-            const returnType = this.statements[i].compile(local, module, body);
-            if(returnType!=null && returnType!=VoidType.instance)
-                body.addOpCode(OpCode.DROP);
-        }
+        // TODO register parameters
+        this.statements.forEach(stmt => stmt.compile(local, module, body), this);
         body.addOpCode(OpCode.END);
     }
 

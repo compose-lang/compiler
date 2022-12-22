@@ -34,10 +34,11 @@ export default class ReturnStatement extends StatementBase {
     }
 
     compile(context: Context, module: WasmModule, body: FunctionBody): IType {
+        let type: IType = null;
         if(this.expression)
-            this.expression.compile(context, module, body);
+            type = this.expression.compile(context, module, body);
         body.addOpCode(OpCode.RETURN);
-        return null;
+        return type;
     }
 
 

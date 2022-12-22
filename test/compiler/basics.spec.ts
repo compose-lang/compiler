@@ -71,3 +71,13 @@ it('compiles and runs a function calling another function returning an i32 liter
     const result = runner.runFunction<number>("stuff");
     assert.equal(result, 12);
 });
+
+it('compiles and runs a function ignoring the result of another function',  () => {
+    const compiler = new Compiler();
+    const target = new WasmBufferTarget();
+    const unit = Builder.parse_unit("function inner(): i32 { return 13; } @Export function stuff(): i32 { inner(); return 12; }");
+    compiler.buildOne(unit, target);
+    const runner = Runner.of(target.asWasmSource());
+    const result = runner.runFunction<number>("stuff");
+    assert.equal(result, 12);
+});

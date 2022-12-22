@@ -48,6 +48,7 @@ class FunctionExport extends ExportBase {
 
     constructor(name: string, index: number) {
         super(name);
+        this.index = index;
     }
 
     get type(): ExportType {
@@ -69,6 +70,7 @@ class GlobalExport extends ExportBase {
 
     constructor(name: string, index: number) {
         super(name);
+        this.index = index;
     }
 
     get type(): ExportType {
