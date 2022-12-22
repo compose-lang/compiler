@@ -34,7 +34,7 @@ it('parses a class declaration with annotations',  () => {
     assert.equal(decl.annotations[1].name, "@Inline");
 });
 
-it('parses an abstract method declaration without param and single return type',  () => {
+it('parses an abstract function declaration without param and single return type',  () => {
     const unit = Builder.parse_unit("abstract function Thing(): string");
     assert.equal(unit.declarations.length, 1);
     assert.ok(unit.declarations[0] instanceof AbstractFunctionDeclaration);
@@ -43,7 +43,7 @@ it('parses an abstract method declaration without param and single return type',
     assert.equal(unit.declarations[0].returnType.typeName, "string");
 });
 
-it('parses an abstract method declaration without param and multiple return types',  () => {
+it('parses an abstract function declaration without param and multiple return types',  () => {
     const unit = Builder.parse_unit("abstract function Thing(): string, boolean");
     assert.equal(unit.declarations.length, 1);
     const declaration = unit.declarations[0];
@@ -54,7 +54,7 @@ it('parses an abstract method declaration without param and multiple return type
     assert.deepEqual(declaration.returnType.types.map(t => t.typeName), ["string", "boolean"]);
 });
 
-it('parses an abstract method declaration with attribute param and single return type',  () => {
+it('parses an abstract function declaration with attribute param and single return type',  () => {
     const unit = Builder.parse_unit("abstract function Thing(name): string");
     assert.equal(unit.declarations.length, 1);
     assert.ok(unit.declarations[0] instanceof AbstractFunctionDeclaration);
@@ -64,7 +64,7 @@ it('parses an abstract method declaration with attribute param and single return
     assert.equal(unit.declarations[0].returnType.typeName, "string");
 });
 
-it('parses an abstract method declaration with typed param and single return type',  () => {
+it('parses an abstract function declaration with typed param and single return type',  () => {
     const unit = Builder.parse_unit("abstract function Thing(name: string): string");
     assert.equal(unit.declarations.length, 1);
     const declaration = unit.declarations[0];
@@ -76,7 +76,7 @@ it('parses an abstract method declaration with typed param and single return typ
     assert.equal(declaration.returnType.typeName, "string");
 });
 
-it('parses a concrete method declaration with a return statement',  () => {
+it('parses a concrete function declaration with a return statement',  () => {
     const unit = Builder.parse_unit("function Thing() { return 2; }");
     assert.equal(unit.declarations.length, 1);
     const declaration = unit.declarations[0];
@@ -89,3 +89,16 @@ it('parses a concrete method declaration with a return statement',  () => {
     assert.ok(statement.expression instanceof IntegerLiteral)
     assert.equal(statement.expression.value, 2);
 });
+
+it('parses a parameterized function declaration',  () => {
+    const unit = Builder.parse_unit("function Thing<T>() { return 2; }");
+    assert.equal(unit.declarations.length, 1);
+    const declaration = unit.declarations[0];
+    assert.ok(declaration instanceof ConcreteFunctionDeclaration);
+    assert.equal(declaration.name, "Thing");
+    assert.equal(declaration.generics.length, 1)
+    assert.equal(declaration.generics[0].name, "T");
+    assert.equal(declaration.returnType, null);
+    assert.equal(declaration.statements.length, 1);
+});
+

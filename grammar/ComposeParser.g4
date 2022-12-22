@@ -184,11 +184,15 @@ abstract_function_declaration:
     ;
 
 function_prototype[boolean mandatory_return]:
-    FUNCTION identifier LPAR ( parameter ( COMMA parameter )* )? RPAR
+    FUNCTION identifier ( LT generic_parameter ( COMMA generic_parameter )* GT )? LPAR ( parameter ( COMMA parameter )* )? RPAR
         (
             { $mandatory_return }? COLON return_types
             | { !$mandatory_return }? (COLON return_types) ?
         )
+    ;
+
+generic_parameter:
+    class_ref ( EXTENDS data_type )?
     ;
 
 concrete_function_declaration:

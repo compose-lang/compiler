@@ -43,6 +43,7 @@ import { Class_declarationContext } from "./ComposeParser";
 import { Function_declarationContext } from "./ComposeParser";
 import { Abstract_function_declarationContext } from "./ComposeParser";
 import { Function_prototypeContext } from "./ComposeParser";
+import { Generic_parameterContext } from "./ComposeParser";
 import { Concrete_function_declarationContext } from "./ComposeParser";
 import { StatementContext } from "./ComposeParser";
 import { Throw_statementContext } from "./ComposeParser";
@@ -523,6 +524,16 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitFunction_prototype?: (ctx: Function_prototypeContext) => void;
+	/**
+	 * Enter a parse tree produced by `ComposeParser.generic_parameter`.
+	 * @param ctx the parse tree
+	 */
+	enterGeneric_parameter?: (ctx: Generic_parameterContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.generic_parameter`.
+	 * @param ctx the parse tree
+	 */
+	exitGeneric_parameter?: (ctx: Generic_parameterContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.concrete_function_declaration`.
 	 * @param ctx the parse tree

@@ -37,7 +37,7 @@ import ComposeParser, {
     Function_prototypeContext,
     Function_type_or_nullContext,
     Function_typeContext,
-    FunctionParameterContext,
+    FunctionParameterContext, Generic_parameterContext,
     Global_statementContext,
     I32_typeContext,
     I64_typeContext,
@@ -127,6 +127,7 @@ import AssignInstanceStatement from "../statement/AssignInstanceStatement";
 import * as assert from "assert";
 import MultiType from "../type/MultiType";
 import FunctionCallStatement from "../statement/FunctionCallStatement";
+import GenericParameter from "../declaration/GenericParameter";
 
 interface IndexedNode {
     __id?: number;
@@ -367,15 +368,21 @@ export default class Builder extends ComposeParserListener {
 
     exitFunction_prototype = (ctx: Function_prototypeContext) => {
         const id = this.getNodeValue<Identifier>(ctx.identifier());
-        const params = ctx.parameter_list()
-            .map(child => this.getNodeValue<IParameter>(child), this);
+        const generics = ctx.generic_parameter_list().map(child => this.getNodeValue<GenericParameter>(child), this);
+        const params = ctx.parameter_list().map(child => this.getNodeValue<IParameter>(child), this);
         const returnTypes = this.getNodeValue<TypeList>(ctx.return_types()) || [];
         let returnType: IType = null;
         if(returnTypes.length == 1)
             returnType = returnTypes[0];
         else if(returnTypes.length > 1)
             returnType = new MultiType(returnTypes);
-        this.setNodeValue(ctx, new Prototype(id, params, returnType));
+        this.setNodeValue(ctx, new Prototype(id, generics, params, returnType));
+    }
+
+    exitGeneric_parameter = (ctx: Generic_parameterContext) => {
+        const id = this.getNodeValue<Identifier>(ctx.class_ref());
+        const constraint = this.getNodeValue<IType>(ctx.data_type());
+        this.setNodeValue(ctx, new GenericParameter(id, constraint));
     }
 
     exitAbstract_function_declaration = (ctx: Abstract_function_declarationContext) => {
