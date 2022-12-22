@@ -12,7 +12,7 @@ it('compiles and runs an empty compilation unit',  () => {
     Runner.of(target.asWasmSource());
 });
 
-it('compiles and runs a function returning an i32 literal',  () => {
+it('returns an i32 literal',  () => {
     const compiler = new Compiler();
     const target = new WasmBufferTarget();
     const unit = Builder.parse_unit("@Export function stuff(): i32 { return 2; }");
@@ -22,7 +22,7 @@ it('compiles and runs a function returning an i32 literal',  () => {
     assert.equal(result, 2);
 });
 
-it('compiles and runs a function assigning an i32 literal and returning it',  () => {
+it('return an assigned i32 literal',  () => {
     const compiler = new Compiler();
     const target = new WasmBufferTarget();
     const unit = Builder.parse_unit("@Export function stuff(): i32 { const a: i32 = 12; return a; }");
@@ -32,7 +32,7 @@ it('compiles and runs a function assigning an i32 literal and returning it',  ()
     assert.equal(result, 12);
 });
 
-it('compiles and reads a global i32 literal',  () => {
+it('reads a global i32 literal',  () => {
     const compiler = new Compiler();
     const target = new WasmBufferTarget();
     const unit = Builder.parse_unit("@Export const SL_BITS: u32 = 4;");
@@ -42,7 +42,7 @@ it('compiles and reads a global i32 literal',  () => {
     assert.equal(result, 4);
 });
 
-it('compiles but does not export a function without @Export',  () => {
+it('does not export a function without @Export',  () => {
     const compiler = new Compiler();
     const target = new WasmBufferTarget();
     const unit = Builder.parse_unit("function stuff(): i32 { return 2; }");
@@ -52,7 +52,7 @@ it('compiles but does not export a function without @Export',  () => {
     assert.equal(result, null);
 });
 
-it('compiles but does not export a global without @Export',  () => {
+it('does not export a global without @Export',  () => {
     const compiler = new Compiler();
     const target = new WasmBufferTarget();
     const unit = Builder.parse_unit("const SL_BITS: u32 = 4;");
@@ -62,7 +62,7 @@ it('compiles but does not export a global without @Export',  () => {
     assert.equal(result, null);
 });
 
-it('compiles and runs a function calling another function returning an i32 literal',  () => {
+it('runs a function returning the result of another function returning an i32 literal',  () => {
     const compiler = new Compiler();
     const target = new WasmBufferTarget();
     const unit = Builder.parse_unit("function inner(): i32 { return 12; } @Export function stuff(): i32 { return inner(); }");
@@ -72,7 +72,7 @@ it('compiles and runs a function calling another function returning an i32 liter
     assert.equal(result, 12);
 });
 
-it('compiles and runs a function ignoring the result of another function',  () => {
+it('runs a function ignoring the result of another function',  () => {
     const compiler = new Compiler();
     const target = new WasmBufferTarget();
     const unit = Builder.parse_unit("function inner(): i32 { return 13; } @Export function stuff(): i32 { inner(); return 12; }");
