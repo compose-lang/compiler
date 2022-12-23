@@ -1,8 +1,7 @@
 import ICodeFragment from "../builder/ICodeFragment";
 import Context from "../context/Context";
 import Annotation from "../builder/Annotation";
-import ICompilable from "../compiler/ICompilable";
-import IDeclarable from "../compiler/IDeclarable";
+import WasmModule from "../module/WasmModule";
 
 export default interface IDeclaration extends ICodeFragment {
 
@@ -11,5 +10,5 @@ export default interface IDeclaration extends ICodeFragment {
 
     register(context: Context): void;
     check(context: Context): void;
-    getDeclarables(context: Context): IDeclarable[];
+    declare(context: Context, module: WasmModule): void;
 }

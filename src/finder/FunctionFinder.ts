@@ -16,24 +16,24 @@ export default abstract class FunctionFinder {
 
     static findFunction(context: Context, call: FunctionCall): IFunctionDeclaration {
         const argTypes = call.args.map(x => x.check(context));
-        if(call.types.length)
-            return null; // TODO
-        else if(call.parent)
-            return null; // TODO
-        else
-            return new GlobalFinder(context, call.id, argTypes).find();
+        const finder = FunctionFinder.newFinder(context, call, argTypes);
+        return finder ? finder.find() : null;
     }
 
-}
-
-class GlobalFinder extends FunctionFinder {
+    private static newFinder(context: Context, call: FunctionCall, argTypes: IType[]): FunctionFinder {
+        if(call.parent)
+            return null; // TODO
+        else if(call.isGeneric())
+            return new GlobalGenericsFinder(context, call.id, call.genericTypes, argTypes);
+        else
+            return new GlobalSimpleFinder(context, call.id, argTypes);
+    }
 
     context: Context;
     id: Identifier;
     argTypes: IType[];
 
     constructor(context: Context, id: Identifier, argTypes: IType[]) {
-        super();
         this.context = context;
         this.id = id;
         this.argTypes = argTypes;
@@ -52,7 +52,24 @@ class GlobalFinder extends FunctionFinder {
         }
     }
 
-    private findMostSpecific(candidates: IFunctionDeclaration[]): IFunctionDeclaration {
+    protected filterCompatibles(candidates: IFunctionDeclaration[]) {
+        return candidates.filter(decl => this.isCompatible(decl), this);
+    }
+
+    protected isCompatible(decl: IFunctionDeclaration) {
+        for(let i=0; i < decl.parameters.length; i++) {
+            const param = decl.parameters[i];
+            if(i >= this.argTypes.length && param.defaultValue == null)
+                return false;
+            const argType = this.argTypes[i];
+            const paramType = this.resolveGenericType(decl, param.type);
+            if(!paramType.isAssignableFrom(this.context, argType))
+                return false;
+        }
+        return true;
+    }
+
+    protected findMostSpecific(candidates: IFunctionDeclaration[]): IFunctionDeclaration {
         let candidate: IFunctionDeclaration = null;
         let ambiguous: IFunctionDeclaration[] = [];
         candidates.forEach(decl => {
@@ -74,23 +91,7 @@ class GlobalFinder extends FunctionFinder {
         return candidate;
     }
 
-    private filterCompatibles(candidates: IFunctionDeclaration[]) {
-        return candidates.filter(decl => this.isCompatible(decl.type()), this);
-    }
-
-    private isCompatible(type: FunctionType) {
-        for(let i=0; i < type.parameters.length; i++) {
-            const param = type.parameters[i];
-            if(i >= this.argTypes.length && param.defaultValue == null)
-                return false;
-            const argType = this.argTypes[i];
-            if(!param.type.isAssignableFrom(this.context, argType))
-                return false;
-        }
-        return true;
-    }
-
-    private compareSpecificity(decl1: IFunctionDeclaration, decl2: IFunctionDeclaration): Score {
+    protected compareSpecificity(decl1: IFunctionDeclaration, decl2: IFunctionDeclaration): Score {
         const types1 = decl1.type().parameters.map(param => param.type);
         const types2 = decl2.type().parameters.map(param => param.type);
         for(let i=0; i < this.argTypes.length; i++) {
@@ -105,4 +106,36 @@ class GlobalFinder extends FunctionFinder {
         }
         return Score.SIMILAR;
     }
+
+    protected abstract resolveGenericType(decl: IFunctionDeclaration, type: IType): IType;
+
+}
+
+class GlobalGenericsFinder extends FunctionFinder {
+
+    typeArguments: IType[];
+
+    constructor(context: Context, id: Identifier, typeArguments: IType[], argTypes: IType[]) {
+        super(context, id, argTypes);
+        this.typeArguments = typeArguments;
+    }
+
+    protected resolveGenericType(decl: IFunctionDeclaration, type: IType) {
+        return decl.resolveGenericType(type, this.typeArguments);
+    }
+
+    find(): IFunctionDeclaration {
+        const decl = super.find();
+        return decl ? decl.instantiateGeneric(this.typeArguments) : null;
+    }
+
+}
+
+
+class GlobalSimpleFinder extends FunctionFinder {
+
+    protected resolveGenericType(decl: IFunctionDeclaration, type: IType) {
+        return type;
+    }
+
 }

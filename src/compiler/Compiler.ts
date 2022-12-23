@@ -27,9 +27,8 @@ export default class Compiler {
         unit.statements.forEach(stmt => stmt.check(this.globals)); // may refer to a declaration
         // check declarations
         unit.declarations.forEach(decl => decl.check(this.globals)); // may refer to a global
-        let declarables = unit.declarations.map(decl => decl.getDeclarables(this.globals)).reduce((p, v) => p.concat(v), []);
-        declarables = declarables.concat(unit.statements);
-        declarables.forEach(comp => comp.declare(this.globals, this.module));
+        unit.declarations.forEach(decl => decl.declare(this.globals, this.module), this);
+        unit.statements.forEach(stmt => stmt.declare(this.globals, this.module));
     }
 
     private compileUnit(unit: CompilationUnit) {

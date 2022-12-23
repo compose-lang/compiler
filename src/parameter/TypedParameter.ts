@@ -8,6 +8,8 @@ import Variable from "../context/Variable";
 import InstanceModifier from "../context/InstanceModifier";
 import WasmModule from "../module/WasmModule";
 import FunctionBody from "../module/FunctionBody";
+import IType from "../type/IType";
+import {equalObjects} from "../utils/ObjectUtils";
 
 export default class TypedParameter extends CodeFragment implements IParameter {
 
@@ -22,8 +24,23 @@ export default class TypedParameter extends CodeFragment implements IParameter {
         this.defaultValue = defaultValue;
     }
 
+    equals(other: any): boolean {
+        return this == other || (other instanceof TypedParameter && this.equalsTypedParameter(other));
+    }
+
+    equalsTypedParameter(other: TypedParameter) {
+        return this.id.equals(other.id) && this.type.typeName == other.type.typeName; // TODO check if defaultValue makes sense
+    }
+
     get name(): string {
         return this.id.value;
+    }
+
+    withType(type: IType): IParameter {
+        if(type == this.type)
+            return this;
+        else
+            return new TypedParameter(this.id, type as IDataType, this.defaultValue);
     }
 
     toString() {
@@ -47,4 +64,5 @@ export default class TypedParameter extends CodeFragment implements IParameter {
     private asVariable() {
         return new Variable(InstanceModifier.LET, this.id, this.type);
     }
+
 }

@@ -57,7 +57,6 @@ export default class DeclareInstanceStatement extends StatementBase {
 
     compile(context: Context, module: WasmModule, body: FunctionBody): IType {
         this.expression.compile(context, module, body);
-        this.check(context); // registers the local variable
         const index = body.getRegisteredLocalIndex(this.name);
         body.addOpCode(OpCode.LOCAL_SET, [index]); // TODO encode if index > 0x7F
         return null;

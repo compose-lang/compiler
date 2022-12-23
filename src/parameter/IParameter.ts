@@ -11,6 +11,9 @@ export default interface IParameter extends ICodeFragment {
     type: IType;
     defaultValue: ILiteralExpression
 
+    equals(other: any): boolean;
+    withType(iType: IType): IParameter;
+
     register(context: Context): void;
     declare(local: Context, module: WasmModule): void;
     rehearse(context: Context, module: WasmModule, body: FunctionBody): void;

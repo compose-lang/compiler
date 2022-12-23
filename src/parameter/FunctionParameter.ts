@@ -6,6 +6,7 @@ import ILiteralExpression from "../literal/ILiteralExpression";
 import Context from "../context/Context";
 import WasmModule from "../module/WasmModule";
 import FunctionBody from "../module/FunctionBody";
+import IType from "../type/IType";
 
 export default class FunctionParameter extends CodeFragment implements IParameter {
 
@@ -20,8 +21,23 @@ export default class FunctionParameter extends CodeFragment implements IParamete
         this.defaultValue = defaultValue;
     }
 
+    equals(other: any): boolean {
+        return this == other || (other instanceof FunctionParameter && this.equalsFunctionParameter(other));
+    }
+
+    equalsFunctionParameter(other: FunctionParameter) {
+        return this.id.equals(other.id) && this.type.equals(other.type);
+    }
+
     get name(): string {
         return this.id.value;
+    }
+
+    withType(type: IType): IParameter {
+        if(type == this.type)
+            return this;
+        else
+            return new FunctionParameter(this.id, type as FunctionType, this.defaultValue);
     }
 
     toString() {

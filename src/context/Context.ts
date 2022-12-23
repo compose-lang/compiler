@@ -4,6 +4,7 @@ import IFunctionDeclaration from "../declaration/IFunctionDeclaration";
 import * as assert from "assert";
 import Variable from "./Variable";
 import Identifier from "../builder/Identifier";
+import IType from "../type/IType";
 
 export default class Context {
 
@@ -83,4 +84,9 @@ export default class Context {
             local.forEach((decl, key) => map.set(key, decl));
         }
     }
+
+    withTypeMap(typeMap: Map<string, IType>) {
+        return this;
+    }
+
 }

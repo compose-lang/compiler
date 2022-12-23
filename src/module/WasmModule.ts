@@ -57,7 +57,10 @@ export default class WasmModule {
     }
 
     getFunctionIndex(decl: IFunctionDeclaration): number {
-        return this.functions.findIndex(d => d == decl as unknown as ICompilable);
+        return this.functions.findIndex(d => {
+            const d_ = d as unknown as IFunctionDeclaration;
+            return d_ == decl || d_.prototype().equals(decl.prototype());
+        });
     }
 
     getTypesSection(): TypesSection {

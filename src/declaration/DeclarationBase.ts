@@ -3,7 +3,7 @@ import IDeclaration from "./IDeclaration";
 import Identifier from "../builder/Identifier";
 import Context from "../context/Context";
 import Annotation from "../builder/Annotation";
-import IDeclarable from "../compiler/IDeclarable";
+import WasmModule from "../module/WasmModule";
 
 export default abstract class DeclarationBase extends CodeFragment implements IDeclaration {
 
@@ -19,15 +19,14 @@ export default abstract class DeclarationBase extends CodeFragment implements ID
         return this.id.value;
     }
 
-    getDeclarables(context: Context): IDeclarable[] {
-        return [];
-    }
-
     isExported() {
         return this.annotations && this.annotations.some(a => a.name === "@Export");
     }
 
     abstract register(context: Context): void;
     abstract check(context: Context): void;
+    declare(context: Context, module: WasmModule): void {
+        // nothing to do
+    }
 
 }

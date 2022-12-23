@@ -3,11 +3,11 @@ import CodeFragment from "../builder/CodeFragment";
 import AttributeType from "../type/AttributeType";
 import ILiteralExpression from "../literal/ILiteralExpression";
 import Context from "../context/Context";
-import Variable from "../context/Variable";
-import InstanceModifier from "../context/InstanceModifier";
-import * as assert from "assert";
 import WasmModule from "../module/WasmModule";
 import FunctionBody from "../module/FunctionBody";
+import IType from "../type/IType";
+import IDataType from "../type/IDataType";
+import TypedParameter from "./TypedParameter";
 
 export default class AttributeParameter extends CodeFragment implements IParameter {
 
@@ -22,6 +22,21 @@ export default class AttributeParameter extends CodeFragment implements IParamet
 
     get name(): string {
         return this.type.typeName;
+    }
+
+    equals(other: any): boolean {
+        return this == other || (other instanceof AttributeParameter && this.equalsAttributeParameter(other));
+    }
+
+    equalsAttributeParameter(other: AttributeParameter) {
+        return this.type.id.equals(other.type.id);
+    }
+
+    withType(type: IType): IParameter {
+        if(type == this.type)
+            return this;
+        else
+            return new TypedParameter(this.type.id, type as IDataType, this.defaultValue);
     }
 
     toString() {

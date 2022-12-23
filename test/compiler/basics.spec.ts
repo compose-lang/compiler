@@ -92,7 +92,6 @@ it('runs a function with parameters',  () => {
     assert.equal(result, 13);
 });
 
-/*
 it('runs a parameterized function',  () => {
     const compiler = new Compiler();
     const target = new WasmBufferTarget();
@@ -102,4 +101,4 @@ it('runs a parameterized function',  () => {
     const result = runner.runFunction<number>("stuff");
     assert.equal(result, 12);
 });
-*/
+

@@ -8,4 +8,9 @@ export default class Identifier extends CodeFragment {
         super();
         this.value = value;
     }
+
+    equals(other: any) {
+        return this == other || (other instanceof Identifier && this.value == other.value);
+    }
+
 }

@@ -4,6 +4,7 @@ import LEB128 from "../utils/LEB128";
 import IWasmTarget from "../compiler/IWasmTarget";
 import Context from "../context/Context";
 import UserType from "./UserType";
+import {equalArrays, equalObjects} from "../utils/ObjectUtils";
 
 export default class FunctionType extends UserType {
 
@@ -15,6 +16,14 @@ export default class FunctionType extends UserType {
         super();
         this.parameters = parameters;
         this.returnType = returnType;
+    }
+
+    equals(other: any) {
+        return this == other || (other instanceof FunctionType && this.equalsFunctionType(other));
+    }
+
+    equalsFunctionType(other: FunctionType) {
+        return this.nullable == other.nullable && equalArrays(this.parameters, other.parameters, (p1, p2) => p1.equals(p2)) && equalObjects(this.returnType, other.returnType, (t1, t2) => t1.typeName == t2.typeName);
     }
 
     get typeName(): string {
@@ -80,4 +89,5 @@ export default class FunctionType extends UserType {
                 return "(" + values.join(", ") + ")";
         }
     }
+
 }

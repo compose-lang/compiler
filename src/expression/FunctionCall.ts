@@ -13,14 +13,14 @@ export default class FunctionCall extends ExpressionBase {
 
     parent: IExpression;
     id: Identifier;
-    types: IType[];
+    genericTypes: IType[];
     args: IExpression[];
 
-    constructor(parent: IExpression, id: Identifier, types: IType[], args: IExpression[]) {
+    constructor(parent: IExpression, id: Identifier, genericTypes: IType[], args: IExpression[]) {
         super();
         this.parent = parent;
         this.id = id;
-        this.types = types;
+        this.genericTypes = genericTypes;
         this.args = args;
     }
 
@@ -28,15 +28,23 @@ export default class FunctionCall extends ExpressionBase {
         return this.id.value;
     }
 
+    isGeneric() {
+        return this.genericTypes.length > 0;
+    }
+
     check(context: Context): IType {
         this.args.forEach(arg => arg.check(context));
-        const decl = FunctionFinder.findFunction(context, this);
+        const decl = FunctionFinder.findFunction(context, this); // will instantiate generic function if required
         assert.ok(decl);
-        return decl.type().returnType;
+        return decl.returnType;
     }
 
     declare(context: Context, module: WasmModule): void {
-        return undefined;
+        this.args.forEach(arg => arg.declare(context, module));
+        const decl = FunctionFinder.findFunction(context, this);
+        assert.ok(decl);
+        if(this.isGeneric())
+            decl.declare(context, module);
     }
 
     rehearse(context: Context, module: WasmModule, body: FunctionBody) {
