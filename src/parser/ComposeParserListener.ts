@@ -3,6 +3,10 @@
 import {ParseTreeListener} from "antlr4";
 
 
+import { OpcodeContext } from "./ComposeParser";
+import { Plain_opcodeContext } from "./ComposeParser";
+import { Keyword_opcodeContext } from "./ComposeParser";
+import { Composite_opcodeContext } from "./ComposeParser";
 import { Compilation_unitContext } from "./ComposeParser";
 import { Compilation_atomContext } from "./ComposeParser";
 import { Global_statementContext } from "./ComposeParser";
@@ -114,10 +118,6 @@ import { Set_literalContext } from "./ComposeParser";
 import { Map_literalContext } from "./ComposeParser";
 import { Map_entryContext } from "./ComposeParser";
 import { InstructionContext } from "./ComposeParser";
-import { OpcodeContext } from "./ComposeParser";
-import { Plain_opcodeContext } from "./ComposeParser";
-import { Keyword_opcodeContext } from "./ComposeParser";
-import { Composite_opcodeContext } from "./ComposeParser";
 
 
 /**
@@ -125,6 +125,46 @@ import { Composite_opcodeContext } from "./ComposeParser";
  * `ComposeParser`.
  */
 export default class ComposeParserListener extends ParseTreeListener {
+	/**
+	 * Enter a parse tree produced by `ComposeParser.opcode`.
+	 * @param ctx the parse tree
+	 */
+	enterOpcode?: (ctx: OpcodeContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.opcode`.
+	 * @param ctx the parse tree
+	 */
+	exitOpcode?: (ctx: OpcodeContext) => void;
+	/**
+	 * Enter a parse tree produced by `ComposeParser.plain_opcode`.
+	 * @param ctx the parse tree
+	 */
+	enterPlain_opcode?: (ctx: Plain_opcodeContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.plain_opcode`.
+	 * @param ctx the parse tree
+	 */
+	exitPlain_opcode?: (ctx: Plain_opcodeContext) => void;
+	/**
+	 * Enter a parse tree produced by `ComposeParser.keyword_opcode`.
+	 * @param ctx the parse tree
+	 */
+	enterKeyword_opcode?: (ctx: Keyword_opcodeContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.keyword_opcode`.
+	 * @param ctx the parse tree
+	 */
+	exitKeyword_opcode?: (ctx: Keyword_opcodeContext) => void;
+	/**
+	 * Enter a parse tree produced by `ComposeParser.composite_opcode`.
+	 * @param ctx the parse tree
+	 */
+	enterComposite_opcode?: (ctx: Composite_opcodeContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.composite_opcode`.
+	 * @param ctx the parse tree
+	 */
+	exitComposite_opcode?: (ctx: Composite_opcodeContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.compilation_unit`.
 	 * @param ctx the parse tree
@@ -1329,45 +1369,5 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitInstruction?: (ctx: InstructionContext) => void;
-	/**
-	 * Enter a parse tree produced by `ComposeParser.opcode`.
-	 * @param ctx the parse tree
-	 */
-	enterOpcode?: (ctx: OpcodeContext) => void;
-	/**
-	 * Exit a parse tree produced by `ComposeParser.opcode`.
-	 * @param ctx the parse tree
-	 */
-	exitOpcode?: (ctx: OpcodeContext) => void;
-	/**
-	 * Enter a parse tree produced by `ComposeParser.plain_opcode`.
-	 * @param ctx the parse tree
-	 */
-	enterPlain_opcode?: (ctx: Plain_opcodeContext) => void;
-	/**
-	 * Exit a parse tree produced by `ComposeParser.plain_opcode`.
-	 * @param ctx the parse tree
-	 */
-	exitPlain_opcode?: (ctx: Plain_opcodeContext) => void;
-	/**
-	 * Enter a parse tree produced by `ComposeParser.keyword_opcode`.
-	 * @param ctx the parse tree
-	 */
-	enterKeyword_opcode?: (ctx: Keyword_opcodeContext) => void;
-	/**
-	 * Exit a parse tree produced by `ComposeParser.keyword_opcode`.
-	 * @param ctx the parse tree
-	 */
-	exitKeyword_opcode?: (ctx: Keyword_opcodeContext) => void;
-	/**
-	 * Enter a parse tree produced by `ComposeParser.composite_opcode`.
-	 * @param ctx the parse tree
-	 */
-	enterComposite_opcode?: (ctx: Composite_opcodeContext) => void;
-	/**
-	 * Exit a parse tree produced by `ComposeParser.composite_opcode`.
-	 * @param ctx the parse tree
-	 */
-	exitComposite_opcode?: (ctx: Composite_opcodeContext) => void;
 }
 

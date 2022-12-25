@@ -35,7 +35,7 @@ attribute_declaration:
     ;
 
 identifier:
-    IDENTIFIER
+    IDENTIFIER | plain_opcode
     ;
 
 annotation:
@@ -129,7 +129,7 @@ attribute_type_or_null:
     ;
 
 attribute_ref:
-    { this.willBeLowercase() }? IDENTIFIER
+    { this.willBeLowercase() }? IDENTIFIER | plain_opcode
     ;
 
 class_type:
@@ -209,7 +209,7 @@ concrete_function_declaration[boolean as_member]:
 
 native_function_declaration[boolean as_member]:
     {$as_member}? accessibility? STATIC NATIVE function_prototype[false] LCURL instruction* RCURL
-    | {!$as_member}? NATIVE function_prototype[false] LCURL statement* RCURL
+    | {!$as_member}? NATIVE function_prototype[false] LCURL instruction* RCURL
     ;
 
 statement:
