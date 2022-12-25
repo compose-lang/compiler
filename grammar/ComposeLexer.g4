@@ -1,5 +1,7 @@
 lexer grammar ComposeLexer;
 
+import AssemblyLexer;
+
 I32: 'i32';
 I64: 'i64';
 ISIZE: 'isize'; // 32 or 64 bits depending on the web assembly target
@@ -14,28 +16,43 @@ BOOLEAN: 'boolean';
 VOID: 'void';
 
 ATTRIBUTE: 'attribute';
-ABSTRACT: 'abstract';
 CLASS: 'class';
 EXTENDS: 'extends';
-STATIC: 'static';
 FUNCTION: 'function';
 
-LET: 'let';
-NEW: 'new';
-CONST: 'const';
-RETURN: 'return';
+STATIC: 'static';
+ABSTRACT: 'abstract';
+NATIVE: 'native';
+PUBLIC: 'public';
+PROTECTED: 'protected';
+PRIVATE: 'private';
 
+CONST: 'const';
+LET: 'let';
+
+NEW: 'new';
+/* already defined in AssemblyLexer
+RETURN: 'return';
+*/
+GET: 'get';
+SET: 'set';
+
+/* already defined in AssemblyLexer
 IF: 'if';
 ELSE: 'else';
+*/
 SWITCH: 'switch';
 CASE: 'case';
 FOR: 'for';
 DO: 'do';
 WHILE: 'while';
 BREAK: 'break';
+/* already defined in AssemblyLexer
 TRY: 'try';
 CATCH: 'catch';
 THROW: 'throw';
+RETHROW: 'rethrow';
+*/
 FINALLY: 'finally';
 
 THIS: 'this';

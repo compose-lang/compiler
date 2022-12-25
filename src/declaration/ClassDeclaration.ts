@@ -4,16 +4,19 @@ import IdentifierList from "../builder/IdentifierList";
 import FunctionList from "../builder/FunctionList";
 import DeclarationBase from "./DeclarationBase";
 import Context from "../context/Context";
+import Accessibility from "./Accessibility";
 
 export default class ClassDeclaration extends DeclarationBase implements IDeclaration {
 
+    accessibility: Accessibility;
     attributes: IdentifierList;
     parents: IdentifierList;
     functions: FunctionList;
     abstract: boolean;
 
-    constructor(id: Identifier, attributes: IdentifierList, parents: IdentifierList, functions: FunctionList, abstract: boolean) {
+    constructor(accessibility: Accessibility, id: Identifier, attributes: IdentifierList, parents: IdentifierList, functions: FunctionList, abstract: boolean) {
         super(id);
+        this.accessibility = accessibility | Accessibility.PUBLIC;
         this.attributes = attributes;
         this.parents = parents;
         this.functions = functions;

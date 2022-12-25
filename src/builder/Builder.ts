@@ -2,7 +2,7 @@ import CompilationUnit from "../compiler/CompilationUnit";
 import {
     CharStream,
     CommonTokenStream,
-    FileStream, ParserRuleContext, ParseTree, ParseTreeWalker, Token
+    FileStream, ParserRuleContext, ParseTree, ParseTreeWalker, Token, TerminalNode
 } from "antlr4";
 import {fileExists} from "../utils/FileUtils";
 import ComposeParser, {
@@ -42,7 +42,7 @@ import ComposeParser, {
     I32_typeContext,
     I64_typeContext,
     IdentifierContext,
-    IdentifierExpressionContext,
+    IdentifierExpressionContext, InstructionContext,
     Integer_typeContext,
     IntegerLiteralContext,
     Isize_typeContext,
@@ -51,7 +51,7 @@ import ComposeParser, {
     LiteralExpressionContext,
     Map_entryContext,
     Map_literalContext,
-    MapLiteralContext,
+    MapLiteralContext, Native_function_declarationContext,
     Native_typeContext,
     NullLiteralContext,
     Number_typeContext,
@@ -114,7 +114,7 @@ import Float64Type from "../type/Float64Type";
 import Int64Type from "../type/Int64Type";
 import UInt64Type from "../type/UInt64Type";
 import UInt32Type from "../type/UInt32Type";
-import InstanceModifier from "../context/InstanceModifier";
+import InstanceModifier from "../statement/InstanceModifier";
 import Annotation from "./Annotation";
 import FunctionCall from "../expression/FunctionCall";
 import ISizeType from "../type/ISizeType";
@@ -130,6 +130,10 @@ import FunctionCallStatement from "../statement/FunctionCallStatement";
 import GenericParameter from "../declaration/GenericParameter";
 import Operator from "../expression/Operator";
 import BinaryExpression from "../expression/BinaryExpression";
+import Accessibility from "../declaration/Accessibility";
+import OpCode from "../compiler/OpCode";
+import Instruction from "../assembly/Instruction";
+import NativeFunctionDeclaration from "../declaration/NativeMethodDeclaration";
 
 interface IndexedNode {
     __id?: number;
@@ -151,6 +155,32 @@ export default class Builder extends ComposeParserListener {
 
     static parse_statement(data: string): IStatement | null {
         return Builder.doParse<IStatement>((parser: ComposeParser) => parser.statement(), data);
+    }
+
+    static parse_instruction(data: string): Instruction | null {
+        return Builder.doParse<Instruction>((parser: ComposeParser) => parser.instruction(), data);
+    }
+
+    static readAccessibility(ctx: ParserRuleContext) {
+        if(ctx) {
+            switch(ctx.start.type) {
+                case ComposeParser.PUBLIC:
+                    return Accessibility.PUBLIC;
+                case ComposeParser.PROTECTED:
+                    return Accessibility.PROTECTED;
+                case ComposeParser.PRIVATE:
+                    return Accessibility.PRIVATE;
+                default:
+                    assert.ok(false);
+            }
+        }
+        return null;
+    }
+
+    static readOpCode(ctx: ParserRuleContext) {
+        const text = ctx.start.text;
+        const name = text.replace(/\./g,"_").toUpperCase();
+        return OpCode[name as keyof typeof OpCode];
     }
 
     static doParse<T>(rule: (parser: ComposeParser) => ParseTree, data?: string, stream?: CharStream): T | null {
@@ -348,7 +378,8 @@ export default class Builder extends ComposeParserListener {
             .map(child => this.getNodeValue<Identifier>(child), this);
         const functions = ctx.function_declaration_list()
             .map(child => this.getNodeValue<FunctionDeclarationBase>(child), this);
-        this.setNodeValue(ctx, new ClassDeclaration(id, attributes, parents, functions, ctx.ABSTRACT() != null));
+        const accessibility = Builder.readAccessibility(ctx.accessibility());
+        this.setNodeValue(ctx, new ClassDeclaration(accessibility, id, attributes, parents, functions, ctx.ABSTRACT() != null));
     }
 
     exitAttributeParameter = (ctx: AttributeParameterContext) => {
@@ -388,14 +419,24 @@ export default class Builder extends ComposeParserListener {
     }
 
     exitAbstract_function_declaration = (ctx: Abstract_function_declarationContext) => {
+        const accessibility = Builder.readAccessibility(ctx.accessibility());
         const proto = this.getNodeValue<Prototype>(ctx.function_prototype());
-        this.setNodeValue(ctx, new AbstractFunctionDeclaration(proto));
+        this.setNodeValue(ctx, new AbstractFunctionDeclaration(accessibility, proto));
     }
 
     exitConcrete_function_declaration = (ctx: Concrete_function_declarationContext) => {
+        const accessibility = Builder.readAccessibility(ctx.accessibility());
+        const isStatic = ctx.STATIC() != null;
         const proto = this.getNodeValue<Prototype>(ctx.function_prototype());
         const stmts = ctx.statement_list().flatMap(s => this.getNodeValue<IStatement>(s));
-        this.setNodeValue(ctx, new ConcreteFunctionDeclaration(proto, stmts));
+        this.setNodeValue(ctx, new ConcreteFunctionDeclaration(accessibility, isStatic, proto, stmts));
+    }
+
+    exitNative_function_declaration = (ctx: Native_function_declarationContext) => {
+        const accessibility = Builder.readAccessibility(ctx.accessibility());
+        const proto = this.getNodeValue<Prototype>(ctx.function_prototype());
+        const instructions = ctx.instruction_list().flatMap(s => this.getNodeValue<Instruction>(s));
+        this.setNodeValue(ctx, new NativeFunctionDeclaration(accessibility, proto, instructions));
     }
 
     exitFunction_declaration = (ctx: Function_declarationContext) => {
@@ -609,4 +650,11 @@ export default class Builder extends ComposeParserListener {
         const op = ctx.PLUS() ? Operator.PLUS : Operator.MINUS;
         this.setNodeValue(ctx, new BinaryExpression(left, op, right));
     }
+
+    exitInstruction = (ctx: InstructionContext) => {
+        const opcode = Builder.readOpCode(ctx.opcode());
+        const expressions = ctx.expression_list().map(e => this.getNodeValue<IExpression>(e));
+        this.setNodeValue(ctx, new Instruction(opcode, expressions) );
+    }
+
 }

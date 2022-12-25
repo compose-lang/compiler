@@ -1,6 +1,6 @@
 import Identifier from "../builder/Identifier";
 import IType from "../type/IType";
-import InstanceModifier from "./InstanceModifier";
+import InstanceModifier from "../statement/InstanceModifier";
 
 export default class Variable {
 

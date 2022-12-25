@@ -6,7 +6,7 @@ import WasmModule from "./WasmModule";
 import Context from "../context/Context";
 import FunctionBody from "./FunctionBody";
 import OpCode from "../compiler/OpCode";
-import InstanceModifier from "../context/InstanceModifier";
+import InstanceModifier from "../statement/InstanceModifier";
 
 export default class Global implements ICompilable {
 

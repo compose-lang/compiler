@@ -6,6 +6,7 @@ import AssignInstanceStatement from "../../src/statement/AssignInstanceStatement
 import DeclareInstanceStatement from "../../src/statement/DeclareInstanceStatement";
 import Int64Type from "../../src/type/Int64Type";
 import FunctionCallStatement from "../../src/statement/FunctionCallStatement";
+import OpCode from "../../src/compiler/OpCode";
 
 it('parses a declare statement',  () => {
     const stmts = Builder.parse_statement("const a = 2, b: i64 = 3;");
@@ -38,5 +39,11 @@ it('parses a call statement',  () => {
     const stmt = Builder.parse_statement("hello();");
     assert.ok(stmt instanceof FunctionCallStatement);
     assert.equal(stmt.name, "hello");
+});
+
+it('parses an instruction',  () => {
+    const instruction = Builder.parse_instruction("i32.const 12");
+    assert.equal(instruction.opcode, OpCode.I32_CONST);
+    assert.equal(instruction.expressions.length, 1);
 });
 

@@ -47,10 +47,10 @@ export default class IntegerLiteral extends LiteralBase<number> {
         const bytes: number[] = [];
         LEB128.emitSigned(this.value, byte => bytes.push(byte));
         if(this.isI64()) {
-            body.addOpCode(OpCode.CONST_I64, bytes);
+            body.addOpCode(OpCode.I64_CONST, bytes);
             return Int64Type.instance;
         } else {
-            body.addOpCode(OpCode.CONST_I32, bytes);
+            body.addOpCode(OpCode.I32_CONST, bytes);
             return Int32Type.instance
         }
     }

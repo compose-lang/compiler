@@ -1,5 +1,7 @@
 parser grammar ComposeParser;
 
+import AssemblyParser;
+
 options {
   tokenVocab = ComposeLexer;
   superClass = BaseParser;
@@ -23,7 +25,7 @@ declaration:
     annotation*
     ( attribute_declaration
     | class_declaration
-    | function_declaration )
+    | function_declaration[false] )
 //    | enum_declaration
     ;
 
@@ -167,20 +169,25 @@ parameter:
     ;
 
 class_declaration:
-    ABSTRACT? CLASS id = class_ref ( LPAR attribute_ref (COMMA attribute_ref)* RPAR )?
+    accessibility? ABSTRACT? CLASS id = class_ref ( LPAR attribute_ref (COMMA attribute_ref)* RPAR )?
             ( EXTENDS class_ref (COMMA class_ref)* )?
         LCURL
-            (function_declaration (COMMA function_declaration)*)?
+            (function_declaration[true] (COMMA function_declaration[true])*)?
         RCURL
     ;
 
-function_declaration:
+accessibility:
+    PUBLIC | PROTECTED | PRIVATE
+    ;
+
+function_declaration[boolean as_member]:
     abstract_function_declaration
-    | concrete_function_declaration
+    | concrete_function_declaration[$as_member]
+    | native_function_declaration[$as_member]
     ;
 
 abstract_function_declaration:
-    ABSTRACT function_prototype[true]
+    accessibility? ABSTRACT function_prototype[true]
     ;
 
 function_prototype[boolean mandatory_return]:
@@ -195,9 +202,14 @@ generic_parameter:
     class_ref ( EXTENDS data_type )?
     ;
 
-concrete_function_declaration:
-    function_prototype[false]
-        LCURL statement* RCURL
+concrete_function_declaration[boolean as_member]:
+    {$as_member}? accessibility? STATIC? function_prototype[false] LCURL statement* RCURL
+    | {!$as_member}? function_prototype[false] LCURL statement* RCURL
+    ;
+
+native_function_declaration[boolean as_member]:
+    {$as_member}? accessibility? STATIC NATIVE function_prototype[false] LCURL instruction* RCURL
+    | {!$as_member}? NATIVE function_prototype[false] LCURL statement* RCURL
     ;
 
 statement:
@@ -385,5 +397,9 @@ map_literal:
 
 map_entry:
     identifier COLON expression
+    ;
+
+instruction:
+    opcode expression*
     ;
 

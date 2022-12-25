@@ -6,15 +6,18 @@ import FunctionType from "../type/FunctionType";
 import IType from "../type/IType";
 import GenericParameter from "./GenericParameter";
 import * as assert from "assert";
+import Accessibility from "./Accessibility";
 
 export default abstract class FunctionDeclarationBase extends DeclarationBase implements IFunctionDeclaration {
 
+    accessibility: Accessibility;
     generics: GenericParameter[];
     parameters: ParameterList;
     returnType: IType;
 
-    protected constructor(proto: Prototype) {
+    protected constructor(accessibility: Accessibility, proto: Prototype) {
         super(proto.id);
+        this.accessibility = accessibility | Accessibility.PUBLIC;
         this.generics = proto.generics;
         this.parameters = proto.parameters;
         this.returnType = proto.returnType || null;

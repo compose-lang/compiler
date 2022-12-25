@@ -7,7 +7,7 @@ import FunctionBody from "../module/FunctionBody";
 import Context from "../context/Context";
 import OpCode from "../compiler/OpCode";
 import Variable from "../context/Variable";
-import InstanceModifier from "../context/InstanceModifier";
+import InstanceModifier from "./InstanceModifier";
 import * as assert from "assert";
 
 export default class DeclareInstanceStatement extends StatementBase {

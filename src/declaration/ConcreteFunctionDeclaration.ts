@@ -8,15 +8,17 @@ import OpCode from "../compiler/OpCode";
 import IType from "../type/IType";
 import IFunctionDeclaration from "./IFunctionDeclaration";
 import * as assert from "assert";
-import TypedParameter from "../parameter/TypedParameter";
 import Identifier from "../builder/Identifier";
+import Accessibility from "./Accessibility";
 
 export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase implements ICompilable {
 
+    isStatic: boolean;
     statements: IStatement[];
 
-    constructor(proto: Prototype, statements: IStatement[]) {
-        super(proto);
+    constructor(accessibility: Accessibility, isStatic: boolean, proto: Prototype, statements: IStatement[]) {
+        super(accessibility, proto);
+        this.isStatic = isStatic;
         this.statements = statements;
     }
 
@@ -73,7 +75,7 @@ class GenericFunctionInstance extends ConcreteFunctionDeclaration {
     typeMap: Map<string, IType>;
 
     constructor(proto: Prototype, statements: IStatement[], typeMap: Map<string, IType>) {
-        super(proto, statements);
+        super(Accessibility.PUBLIC, false, proto, statements);
         this.typeMap = typeMap;
     }
 

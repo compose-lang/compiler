@@ -7,6 +7,8 @@ import ConcreteFunctionDeclaration from "../../src/declaration/ConcreteFunctionD
 import ReturnStatement from "../../src/statement/ReturnStatement";
 import IntegerLiteral from "../../src/literal/IntegerLiteral";
 import MultiType from "../../src/type/MultiType";
+import NativeFunctionDeclaration from "../../src/declaration/NativeMethodDeclaration";
+import OpCode from "../../src/compiler/OpCode";
 
 it('parses an attribute declaration ',  () => {
     const unit = Builder.parse_unit("attribute text: string");
@@ -100,5 +102,39 @@ it('parses a parameterized function declaration',  () => {
     assert.equal(declaration.generics[0].name, "T");
     assert.equal(declaration.returnType, null);
     assert.equal(declaration.statements.length, 1);
+});
+
+it('parses a static member function declaration',  () => {
+    const unit = Builder.parse_unit("class Thing { static function sm() { return 2; } }");
+    assert.equal(unit.declarations.length, 1);
+    const declaration = unit.declarations[0];
+    assert.ok(declaration instanceof ClassDeclaration);
+    assert.equal(declaration.name, "Thing");
+    assert.equal(declaration.functions.length,  1);
+    const method = declaration.functions[0];
+    assert.equal(method.name, "sm");
+    assert.ok(method.isStatic);
+});
+
+
+it('parses a native function declaration',  () => {
+    const unit = Builder.parse_unit("native function sm(): i32 { i32.const 2 }");
+    assert.equal(unit.declarations.length, 1);
+    const declaration = unit.declarations[0];
+    assert.ok(declaration instanceof NativeFunctionDeclaration);
+    assert.equal(declaration.name, "sm");
+});
+
+it('parses a native member function declaration',  () => {
+    const unit = Builder.parse_unit("class Thing { static native function sm(): i32 { i32.const 2 } }");
+    assert.equal(unit.declarations.length, 1);
+    const declaration = unit.declarations[0];
+    assert.ok(declaration instanceof ClassDeclaration);
+    assert.equal(declaration.name, "Thing");
+    assert.equal(declaration.functions.length,  1);
+    const method = declaration.functions[0];
+    assert.ok(method instanceof NativeFunctionDeclaration);
+    assert.equal(method.name, "sm");
+    assert.ok(method.isStatic);
 });
 

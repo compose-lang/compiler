@@ -28,7 +28,7 @@ export default class Int32Type extends IntegerType {
 
     compileAdd(context: Context, rightType: IType, module: WasmModule, body: FunctionBody, tryReverse: boolean): IType {
         if(rightType == this) {
-            body.addOpCode(OpCode.ADD_I32);
+            body.addOpCode(OpCode.I32_ADD);
             return this;
         } else
             return super.compileAdd(context, rightType, module, body, tryReverse);
