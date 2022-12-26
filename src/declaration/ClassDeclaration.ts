@@ -5,6 +5,8 @@ import FunctionList from "../builder/FunctionList";
 import DeclarationBase from "./DeclarationBase";
 import Context from "../context/Context";
 import Accessibility from "./Accessibility";
+import IType from "../type/IType";
+import VoidType from "../type/VoidType";
 
 export default class ClassDeclaration extends DeclarationBase implements IDeclaration {
 
@@ -31,8 +33,9 @@ export default class ClassDeclaration extends DeclarationBase implements IDeclar
         // TODO
     }
 
-    check(context: Context): void {
+    check(context: Context): IType {
         // TODO
+        return VoidType.instance;
     }
 
 }

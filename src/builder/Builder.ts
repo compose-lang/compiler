@@ -133,7 +133,8 @@ import BinaryExpression from "../expression/BinaryExpression";
 import Accessibility from "../declaration/Accessibility";
 import OpCode from "../compiler/OpCode";
 import Instruction from "../assembly/Instruction";
-import NativeFunctionDeclaration from "../declaration/NativeMethodDeclaration";
+import NativeFunctionDeclaration from "../declaration/NativeFunctionDeclaration";
+import StatementList from "../statement/StatementList";
 
 interface IndexedNode {
     __id?: number;
@@ -429,7 +430,7 @@ export default class Builder extends ComposeParserListener {
         const isStatic = ctx.STATIC() != null;
         const proto = this.getNodeValue<Prototype>(ctx.function_prototype());
         const stmts = ctx.statement_list().flatMap(s => this.getNodeValue<IStatement>(s));
-        this.setNodeValue(ctx, new ConcreteFunctionDeclaration(accessibility, isStatic, proto, stmts));
+        this.setNodeValue(ctx, new ConcreteFunctionDeclaration(accessibility, isStatic, proto, StatementList.from(stmts)));
     }
 
     exitNative_function_declaration = (ctx: Native_function_declarationContext) => {

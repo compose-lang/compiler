@@ -1,6 +1,5 @@
 import FunctionDeclarationBase from "./FunctionDeclarationBase";
 import Prototype from "./Prototype";
-import IStatement from "../statement/IStatement";
 import Context from "../context/Context";
 import WasmModule from "../module/WasmModule";
 import ICompilable from "../compiler/ICompilable";
@@ -10,27 +9,27 @@ import IFunctionDeclaration from "./IFunctionDeclaration";
 import * as assert from "assert";
 import Identifier from "../builder/Identifier";
 import Accessibility from "./Accessibility";
+import StatementList from "../statement/StatementList";
 
 export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase implements ICompilable {
 
     isStatic: boolean;
-    statements: IStatement[];
+    statements: StatementList;
 
-    constructor(accessibility: Accessibility, isStatic: boolean, proto: Prototype, statements: IStatement[]) {
+    constructor(accessibility: Accessibility, isStatic: boolean, proto: Prototype, statements: StatementList) {
         super(accessibility, proto);
         this.isStatic = isStatic;
         this.statements = statements;
     }
 
-
     register(context: Context): void {
         context.registerFunction(this);
     }
 
-    check(context: Context): void {
+    check(context: Context): IType {
         const local = context.newLocalContext();
         this.parameters.forEach(param => param.register(local));
-        this.statements.forEach(stmt => stmt.check(local));
+        return this.statements.check(local, this.returnType);
     }
 
     declare(context: Context, module: WasmModule): void {
@@ -74,7 +73,7 @@ class GenericFunctionInstance extends ConcreteFunctionDeclaration {
 
     typeMap: Map<string, IType>;
 
-    constructor(proto: Prototype, statements: IStatement[], typeMap: Map<string, IType>) {
+    constructor(proto: Prototype, statements: StatementList, typeMap: Map<string, IType>) {
         super(Accessibility.PUBLIC, false, proto, statements);
         this.typeMap = typeMap;
     }
@@ -83,8 +82,8 @@ class GenericFunctionInstance extends ConcreteFunctionDeclaration {
         context.registerFunction(this);
     }
 
-    check(context: Context): void {
-        super.check(context.withTypeMap(this.typeMap));
+    check(context: Context): IType {
+        return super.check(context.withTypeMap(this.typeMap));
     }
 
     declare(context: Context, module: WasmModule): void {

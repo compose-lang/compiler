@@ -27,7 +27,16 @@ export default class FunctionBody {
     }
 
     addOpCode(op: OpCode, bytes?: number[]) {
-        const instruction = bytes ? [op].concat(bytes) : [op];
+        let instruction: number[] = [];
+        if(op & 0xFF000000)
+            instruction.push((op >> 24) & 0xFF);
+        if(op & 0x00FF0000)
+            instruction.push((op >> 16) & 0xFF);
+        if(op & 0x0000FF00)
+            instruction.push((op >> 8) & 0xFF);
+        instruction.push(op & 0xFF);
+        if(bytes)
+            instruction = instruction.concat(bytes);
         this.dropRedundantReturn(op);
         this.instructions.push(instruction);
     }

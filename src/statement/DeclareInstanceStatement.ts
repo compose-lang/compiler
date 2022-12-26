@@ -9,6 +9,7 @@ import OpCode from "../compiler/OpCode";
 import Variable from "../context/Variable";
 import InstanceModifier from "./InstanceModifier";
 import * as assert from "assert";
+import VoidType from "../type/VoidType";
 
 export default class DeclareInstanceStatement extends StatementBase {
 
@@ -36,7 +37,7 @@ export default class DeclareInstanceStatement extends StatementBase {
             type = this.type;
         }
         context.registerLocal(this.asVariable(context, type));
-        return type;
+        return VoidType.instance;
     }
 
     declare(context: Context, module: WasmModule): void {

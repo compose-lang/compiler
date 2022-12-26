@@ -3,6 +3,7 @@ import Identifier from "../builder/Identifier";
 import IDataType from "../type/IDataType";
 import DeclarationBase from "./DeclarationBase";
 import Context from "../context/Context";
+import IType from "../type/IType";
 
 export default class AttributeDeclaration extends DeclarationBase implements IDeclaration {
 
@@ -17,8 +18,10 @@ export default class AttributeDeclaration extends DeclarationBase implements IDe
         // TODO
     }
 
-    check(context: Context): void {
+    check(context: Context): IType {
         // TODO
+        return this.type;
+
     }
 
 }
