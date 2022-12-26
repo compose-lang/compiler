@@ -31,13 +31,18 @@ export default class DeclareInstanceStatement extends StatementBase {
     }
 
     check(context: Context): IType {
+        this._check(context);
+        return VoidType.instance;
+    }
+
+    private _check(context: Context): IType {
         let type = this.expression.check(context);
         if(this.type) {
             assert.ok(this.type.isAssignableFrom(context, type));
             type = this.type;
         }
         context.registerLocal(this.asVariable(context, type));
-        return VoidType.instance;
+        return type;
     }
 
     declare(context: Context, module: WasmModule): void {
@@ -51,7 +56,7 @@ export default class DeclareInstanceStatement extends StatementBase {
 
     rehearse(context: Context, module: WasmModule, body: FunctionBody): void {
         this.expression.rehearse(context, module, body);
-        const type = this.check(context);
+        const type = this._check(context);
         const variable = this.asVariable(context, type);
         body.registerLocal(this.name, variable.type);
     }
@@ -66,4 +71,5 @@ export default class DeclareInstanceStatement extends StatementBase {
     private asVariable(context: Context, type: IType) {
         return new Variable(this.modifier, this.id, type);
     }
+
 }
