@@ -44,6 +44,6 @@ it('parses a call statement',  () => {
 it('parses an instruction',  () => {
     const instruction = Builder.parse_instruction("i32.const 12");
     assert.equal(instruction.opcode, OpCode.I32_CONST);
-    assert.equal(instruction.expressions.length, 1);
+    assert.equal(instruction.variants.length, 1);
 });
 
