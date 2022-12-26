@@ -4,6 +4,7 @@ import Identifier from "../builder/Identifier";
 import Context from "../context/Context";
 import Annotation from "../builder/Annotation";
 import WasmModule from "../module/WasmModule";
+import IType from "../type/IType";
 
 export default abstract class DeclarationBase extends CodeFragment implements IDeclaration {
 
@@ -24,7 +25,7 @@ export default abstract class DeclarationBase extends CodeFragment implements ID
     }
 
     abstract register(context: Context): void;
-    abstract check(context: Context): void;
+    abstract check(context: Context): IType;
     declare(context: Context, module: WasmModule): void {
         // nothing to do
     }

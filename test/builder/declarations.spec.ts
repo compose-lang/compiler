@@ -7,8 +7,7 @@ import ConcreteFunctionDeclaration from "../../src/declaration/ConcreteFunctionD
 import ReturnStatement from "../../src/statement/ReturnStatement";
 import IntegerLiteral from "../../src/literal/IntegerLiteral";
 import MultiType from "../../src/type/MultiType";
-import NativeFunctionDeclaration from "../../src/declaration/NativeMethodDeclaration";
-import OpCode from "../../src/compiler/OpCode";
+import NativeFunctionDeclaration from "../../src/declaration/NativeFunctionDeclaration";
 
 it('parses an attribute declaration ',  () => {
     const unit = Builder.parse_unit("attribute text: string");
