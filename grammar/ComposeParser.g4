@@ -400,6 +400,6 @@ map_entry:
     ;
 
 instruction:
-    opcode expression*
+    expression* opcode INTEGER_LITERAL* SEMI
     ;
 

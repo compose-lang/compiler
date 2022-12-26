@@ -653,9 +653,10 @@ export default class Builder extends ComposeParserListener {
     }
 
     exitInstruction = (ctx: InstructionContext) => {
-        const opcode = Builder.readOpCode(ctx.opcode());
         const expressions = ctx.expression_list().map(e => this.getNodeValue<IExpression>(e));
-        this.setNodeValue(ctx, new Instruction(opcode, expressions) );
+        const opcode = Builder.readOpCode(ctx.opcode());
+        const variants = ctx.INTEGER_LITERAL_list().map(i => IntegerLiteral.parseInteger(i.getText()));
+        this.setNodeValue(ctx, new Instruction(expressions, opcode, variants) );
     }
 
 }

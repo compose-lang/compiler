@@ -6,12 +6,14 @@ import FunctionBody from "../module/FunctionBody";
 
 export default class Instruction {
 
-    opcode: OpCode;
     expressions: IExpression[];
+    opcode: OpCode;
+    variants: number[];
 
-    constructor(opcode: OpCode, expressions: IExpression[]) {
-        this.opcode = opcode;
+    constructor(expressions: IExpression[], opcode: OpCode, variants: number[]) {
         this.expressions = expressions;
+        this.opcode = opcode;
+        this.variants = variants;
     }
 
     check(context: Context): void {
@@ -27,7 +29,7 @@ export default class Instruction {
     }
 
     compile(context: Context, module: WasmModule, body: FunctionBody) {
-        body.addOpCode(this.opcode);
         this.expressions.forEach(e => e.compile(context, module, body), this);
+        body.addOpCode(this.opcode, this.variants);
     }
 }
