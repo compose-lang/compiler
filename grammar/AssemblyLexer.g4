@@ -547,3 +547,21 @@ I64_ATOMIC_RMW8_CMPXCHG_U: 'i64.atomic.rmw8.cmpxchg_u';
 I64_ATOMIC_RMW16_CMPXCHG_U: 'i64.atomic.rmw16.cmpxchg_u';
 I64_ATOMIC_RMW32_CMPXCHG_U: 'i64.atomic.rmw32.cmpxchg_u';
 */
+
+// §3.8 Identifiers (must appear after all keywords in the grammar)
+// moved from ComposeLexer until import sequence is fixed
+
+IDENTIFIER
+	:	Letter LetterOrDigit*
+	;
+
+fragment
+Letter
+	:	[a-zA-Z$_] // these are the "letters" below 0x7F
+	;
+
+fragment
+LetterOrDigit
+	:	[a-zA-Z0-9$_] // these are the "letters or digits" below 0x7F
+	;
+

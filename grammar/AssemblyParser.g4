@@ -2,6 +2,7 @@ parser grammar AssemblyParser;
 
 options {
   tokenVocab = AssemblyLexer;
+  superClass = BaseParser;
 }
 
 opcode:

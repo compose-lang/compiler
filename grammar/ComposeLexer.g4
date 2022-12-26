@@ -402,7 +402,8 @@ NULL_LITERAL
 	;
 
 // §3.8 Identifiers (must appear after all keywords in the grammar)
-
+// moved to AssemblyLexer until import sequence is fixed
+/*
 IDENTIFIER
 	:	Letter LetterOrDigit*
 	;
@@ -416,6 +417,7 @@ fragment
 LetterOrDigit
 	:	[a-zA-Z0-9$_] // these are the "letters or digits" below 0x7F
 	;
+*/
 
 // Annotation
 
