@@ -38,6 +38,10 @@ export default class Compiler {
         this.module.functions.forEach(decl => decl.compile(this.globals, this.module));
     }
 
+    addMemory(minPages: number, maxPages?: number) {
+        this.module.getMemorySection().addMemory(minPages, maxPages);
+    }
+
     build(target: IWasmTarget) {
         this.module.writeTo(target);
     }

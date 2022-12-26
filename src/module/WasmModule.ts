@@ -11,6 +11,7 @@ import IExpression from "../expression/IExpression";
 import GlobalsSection from "./GlobalsSection";
 import Variable from "../context/Variable";
 import Global from "./Global";
+import MemorySection from "./MemorySection";
 
 export default class WasmModule {
 
@@ -81,6 +82,10 @@ export default class WasmModule {
 
     getCodeSection(): CodeSection {
         return this.getOrCreateSection(CodeSection, SectionType.CODE);
+    }
+
+    getMemorySection(): MemorySection {
+        return this.getOrCreateSection(MemorySection, SectionType.MEMORY);
     }
 
     private getOrCreateSection<T extends ISection>(section: { new(): T; }, type: SectionType): T {
