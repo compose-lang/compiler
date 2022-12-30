@@ -17,6 +17,7 @@ VOID: 'void';
 
 ATTRIBUTE: 'attribute';
 CLASS: 'class';
+ENUM: 'enum';
 EXTENDS: 'extends';
 FUNCTION: 'function';
 

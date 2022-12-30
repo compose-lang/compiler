@@ -43,10 +43,17 @@ declaration:
     (EXPORT DEFAULT?)?
     ( attribute_declaration
     | class_declaration
-    | global_function_declaration )
-//    | enum_declaration
+    | function_declaration[false]
+    | enum_declaration )
     ;
 
+enum_declaration:
+    ENUM identifier LCURL enum_item (COMMA enum_item)* RCURL
+    ;
+
+enum_item:
+    identifier ASSIGN expression
+    ;
 
 attribute_declaration:
     ATTRIBUTE identifier COLON data_type_or_null SEMI
@@ -190,7 +197,7 @@ class_declaration:
     accessibility? ABSTRACT? CLASS id = class_ref ( LPAR attribute_ref (COMMA attribute_ref)* RPAR )?
             ( EXTENDS class_ref (COMMA class_ref)* )?
         LCURL
-            member_function_declaration*
+            function_declaration[true]*
         RCURL
     ;
 
@@ -198,19 +205,15 @@ accessibility:
     PUBLIC | PROTECTED | PRIVATE
     ;
 
-member_function_declaration:
-    abstract_function_declaration
-    | concrete_function_declaration[true]
-    | native_function_declaration[true]
+function_declaration[boolean as_member]:
+    abstract_function_declaration[$as_member]
+    | concrete_function_declaration[$as_member]
+    | native_function_declaration[$as_member]
     ;
 
-global_function_declaration:
-    concrete_function_declaration[false]
-    | native_function_declaration[false]
-    ;
-
-abstract_function_declaration:
-    accessibility? ABSTRACT function_prototype[true] SEMI
+abstract_function_declaration[boolean as_member]:
+    {$as_member}? accessibility? ABSTRACT function_prototype[true] SEMI
+    | {!$as_member}? ABSTRACT FUNCTION function_prototype[true] SEMI
     ;
 
 concrete_function_declaration[boolean as_member]:

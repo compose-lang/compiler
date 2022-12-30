@@ -29,14 +29,14 @@ import ComposeParser, {
     DecimalLiteralContext,
     DeclarationContext,
     Declare_instances_statementContext,
-    Declare_oneContext,
+    Declare_oneContext, Enum_declarationContext, Enum_itemContext,
     F32_typeContext,
     F64_typeContext, Function_call_statementContext,
     Function_callContext,
     Function_prototypeContext,
     Function_type_or_nullContext,
     Function_typeContext,
-    FunctionParameterContext, Generic_parameterContext, Global_function_declarationContext,
+    FunctionParameterContext, Generic_parameterContext,
     Global_statementContext,
     I32_typeContext,
     I64_typeContext,
@@ -50,7 +50,7 @@ import ComposeParser, {
     LiteralExpressionContext,
     Map_entryContext,
     Map_literalContext,
-    MapLiteralContext, Member_function_declarationContext, Native_function_declarationContext,
+    MapLiteralContext, Function_declarationContext, Native_function_declarationContext,
     Native_typeContext,
     NullLiteralContext,
     Number_typeContext,
@@ -139,6 +139,7 @@ import AlignofExpression from "../expression/AlignofExpression";
 import ImportStatement from "../module/ImportStatement";
 import ImportSource from "../module/ImportSource";
 import ExportType from "../compiler/ExportType";
+import EnumDeclaration from "../declaration/EnumDeclaration";
 
 interface IndexedNode {
     __id?: number;
@@ -393,10 +394,22 @@ export default class Builder extends ComposeParserListener {
         const parents = ctx.class_ref_list()
             .slice(1) // skip id which is also a class_type
             .map(child => this.getNodeValue<Identifier>(child), this);
-        const functions = ctx.member_function_declaration_list()
+        const functions = ctx.function_declaration_list()
             .map(child => this.getNodeValue<FunctionDeclarationBase>(child), this);
         const accessibility = Builder.readAccessibility(ctx.accessibility());
         this.setNodeValue(ctx, new ClassDeclaration(accessibility, id, attributes, parents, functions, ctx.ABSTRACT() != null));
+    }
+
+    exitEnum_declaration = (ctx: Enum_declarationContext) => {
+        const id = this.getNodeValue<Identifier>(ctx.identifier());
+        const members = ctx.enum_item_list().map(item => this.getNodeValue<KeyValuePair<Identifier, IExpression>>(item), this);
+        this.setNodeValue(ctx, new EnumDeclaration(id, members));
+    }
+
+    exitEnum_item = (ctx: Enum_itemContext) => {
+        const key = this.getNodeValue<Identifier>(ctx.identifier());
+        const value = this.getNodeValue<IExpression>(ctx.expression());
+        this.setNodeValue(ctx, new KeyValuePair(key, value));
     }
 
     exitAttributeParameter = (ctx: AttributeParameterContext) => {
@@ -456,11 +469,7 @@ export default class Builder extends ComposeParserListener {
         this.setNodeValue(ctx, new NativeFunctionDeclaration(accessibility, proto, instructions));
     }
 
-    exitGlobal_function_declaration = (ctx: Global_function_declarationContext) => {
-        this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
-    }
-
-    exitMember_function_declaration = (ctx: Member_function_declarationContext) => {
+    exitFunction_declaration = (ctx: Function_declarationContext) => {
         this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
     }
 

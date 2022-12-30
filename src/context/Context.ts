@@ -6,6 +6,7 @@ import Variable from "./Variable";
 import Identifier from "../builder/Identifier";
 import IType from "../type/IType";
 import ClassType from "../type/ClassType";
+import EnumDeclaration from "../declaration/EnumDeclaration";
 
 export default class Context {
 
@@ -22,7 +23,7 @@ export default class Context {
     parent: Context | null = null;
     attributes = new Map<string, AttributeDeclaration>();
     classes = new Map<string, ClassDeclaration>();
-    // enums = new Map<string, EnumDeclaration>();
+    enums = new Map<string, EnumDeclaration>();
     functions = new Map<string, Map<string, IFunctionDeclaration>>();
     locals = new Map<string, Variable>();
 
@@ -59,8 +60,13 @@ export default class Context {
     }
 
     registerClass(klass: ClassDeclaration) {
-        assert.ok(!this.classes.has(klass.name));
+        assert.ok(!this.classes.has(klass.name) && !this.enums.has(klass.name));
         this.classes.set(klass.name, klass);
+    }
+
+    registerEnum(decl: EnumDeclaration) {
+        assert.ok(!this.classes.has(decl.name) && !this.enums.has(decl.name));
+        this.enums.set(decl.name, decl);
     }
 
     registerFunction(decl: IFunctionDeclaration) {
@@ -111,12 +117,8 @@ export default class Context {
             return null;
     }
 
-    getRegisteredEnum(id: Identifier): any {
-        return null;
-    }
-    /*
     getRegisteredEnum(id: Identifier): EnumDeclaration {
-        const result = this.enum.get(id.value) || null;
+        const result = this.enums.get(id.value) || null;
         if(result)
             return result
         else if(this.parent)
@@ -126,7 +128,6 @@ export default class Context {
         else
             return null;
     }
-     */
 
     getRegisteredClass(id: Identifier): ClassDeclaration {
         const result = this.classes.get(id.value) || null;

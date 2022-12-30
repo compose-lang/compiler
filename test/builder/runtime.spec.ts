@@ -6,7 +6,7 @@ import Builder from "../../src/builder/Builder";
 it('parses common.cots',  (done) => {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = dirname(dirname(dirname(__filename)));
-    const path = __dirname + "/src/runtime/common.cots";
+    const path = __dirname + "/src/runtime/rt/common.cots";
     const unit = Builder.parse_unit(path);
     assert.equal(unit.declarations.length, 7);
     assert.equal(unit.statements.length, 12);
@@ -14,12 +14,42 @@ it('parses common.cots',  (done) => {
 }).timeout(5000);
 
 
-it('parses mem.cots',  (done) => {
+it('parses tlfs.cots',  (done) => {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = dirname(dirname(dirname(__filename)));
-    const path = __dirname + "/src/runtime/mem.cots";
+    const path = __dirname + "/src/runtime/rt/tlfs.cots";
     const unit = Builder.parse_unit(path);
     assert.equal(unit.declarations.length, 30);
     assert.equal(unit.statements.length, 15);
     done();
  }).timeout(5000);
+
+it('parses rtrace.cots',  (done) => {
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = dirname(dirname(dirname(__filename)));
+    const path = __dirname + "/src/runtime/rt/rtrace.cots";
+    const unit = Builder.parse_unit(path);
+    assert.equal(unit.declarations.length, 9);
+    assert.equal(unit.statements.length, 0);
+    done();
+}).timeout(5000);
+
+it('parses typeinfo.cots',  (done) => {
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = dirname(dirname(dirname(__filename)));
+    const path = __dirname + "/src/runtime/shared/typeinfo.cots";
+    const unit = Builder.parse_unit(path);
+    assert.equal(unit.declarations.length, 4);
+    assert.equal(unit.statements.length, 0);
+    done();
+}).timeout(5000);
+
+it('parses error.cots',  (done) => {
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = dirname(dirname(dirname(__filename)));
+    const path = __dirname + "/src/runtime/util/error.cots";
+    const unit = Builder.parse_unit(path);
+    assert.equal(unit.declarations.length, 0);
+    assert.equal(unit.statements.length, 13);
+    done();
+}).timeout(5000);

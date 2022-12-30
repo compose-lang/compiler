@@ -1,0 +1,24 @@
+import { BLOCK } from "./common";
+
+@ModuleImport
+abstract function oninit(heapBase: usize): void;
+
+// Memory Allocator
+@ModuleImport
+abstract function onalloc(block: BLOCK): void;
+@ModuleImport
+abstract function onresize(block: BLOCK, oldSizeInclOverhead: usize): void;
+@ModuleImport
+abstract function onmove(oldBlock: BLOCK, newBlock: BLOCK): void;
+@ModuleImport
+abstract function onfree(block: BLOCK): void;
+
+// Garbage collector
+@ModuleImport
+abstract function onvisit(block: BLOCK): bool;
+@ModuleImport
+abstract function oncollect(total: usize): void;
+@ModuleImport
+abstract function oninterrupt(total: usize): void;
+@ModuleImport
+abstract function onyield(total: usize): void;

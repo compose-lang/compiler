@@ -10,6 +10,8 @@ import { Import_sourceContext } from "./ComposeParser";
 import { Compilation_atomContext } from "./ComposeParser";
 import { Global_statementContext } from "./ComposeParser";
 import { DeclarationContext } from "./ComposeParser";
+import { Enum_declarationContext } from "./ComposeParser";
+import { Enum_itemContext } from "./ComposeParser";
 import { Attribute_declarationContext } from "./ComposeParser";
 import { IdentifierContext } from "./ComposeParser";
 import { AnnotationContext } from "./ComposeParser";
@@ -44,8 +46,7 @@ import { TypedParameterContext } from "./ComposeParser";
 import { FunctionParameterContext } from "./ComposeParser";
 import { Class_declarationContext } from "./ComposeParser";
 import { AccessibilityContext } from "./ComposeParser";
-import { Member_function_declarationContext } from "./ComposeParser";
-import { Global_function_declarationContext } from "./ComposeParser";
+import { Function_declarationContext } from "./ComposeParser";
 import { Abstract_function_declarationContext } from "./ComposeParser";
 import { Concrete_function_declarationContext } from "./ComposeParser";
 import { Native_function_declarationContext } from "./ComposeParser";
@@ -201,6 +202,26 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitDeclaration?: (ctx: DeclarationContext) => void;
+	/**
+	 * Enter a parse tree produced by `ComposeParser.enum_declaration`.
+	 * @param ctx the parse tree
+	 */
+	enterEnum_declaration?: (ctx: Enum_declarationContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.enum_declaration`.
+	 * @param ctx the parse tree
+	 */
+	exitEnum_declaration?: (ctx: Enum_declarationContext) => void;
+	/**
+	 * Enter a parse tree produced by `ComposeParser.enum_item`.
+	 * @param ctx the parse tree
+	 */
+	enterEnum_item?: (ctx: Enum_itemContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.enum_item`.
+	 * @param ctx the parse tree
+	 */
+	exitEnum_item?: (ctx: Enum_itemContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.attribute_declaration`.
 	 * @param ctx the parse tree
@@ -548,25 +569,15 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 */
 	exitAccessibility?: (ctx: AccessibilityContext) => void;
 	/**
-	 * Enter a parse tree produced by `ComposeParser.member_function_declaration`.
+	 * Enter a parse tree produced by `ComposeParser.function_declaration`.
 	 * @param ctx the parse tree
 	 */
-	enterMember_function_declaration?: (ctx: Member_function_declarationContext) => void;
+	enterFunction_declaration?: (ctx: Function_declarationContext) => void;
 	/**
-	 * Exit a parse tree produced by `ComposeParser.member_function_declaration`.
+	 * Exit a parse tree produced by `ComposeParser.function_declaration`.
 	 * @param ctx the parse tree
 	 */
-	exitMember_function_declaration?: (ctx: Member_function_declarationContext) => void;
-	/**
-	 * Enter a parse tree produced by `ComposeParser.global_function_declaration`.
-	 * @param ctx the parse tree
-	 */
-	enterGlobal_function_declaration?: (ctx: Global_function_declarationContext) => void;
-	/**
-	 * Exit a parse tree produced by `ComposeParser.global_function_declaration`.
-	 * @param ctx the parse tree
-	 */
-	exitGlobal_function_declaration?: (ctx: Global_function_declarationContext) => void;
+	exitFunction_declaration?: (ctx: Function_declarationContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.abstract_function_declaration`.
 	 * @param ctx the parse tree
