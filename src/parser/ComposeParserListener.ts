@@ -41,12 +41,13 @@ import { TypedParameterContext } from "./ComposeParser";
 import { FunctionParameterContext } from "./ComposeParser";
 import { Class_declarationContext } from "./ComposeParser";
 import { AccessibilityContext } from "./ComposeParser";
-import { Function_declarationContext } from "./ComposeParser";
+import { Member_function_declarationContext } from "./ComposeParser";
+import { Global_function_declarationContext } from "./ComposeParser";
 import { Abstract_function_declarationContext } from "./ComposeParser";
-import { Function_prototypeContext } from "./ComposeParser";
-import { Generic_parameterContext } from "./ComposeParser";
 import { Concrete_function_declarationContext } from "./ComposeParser";
 import { Native_function_declarationContext } from "./ComposeParser";
+import { Function_prototypeContext } from "./ComposeParser";
+import { Generic_parameterContext } from "./ComposeParser";
 import { StatementContext } from "./ComposeParser";
 import { Throw_statementContext } from "./ComposeParser";
 import { Try_statementContext } from "./ComposeParser";
@@ -512,15 +513,25 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 */
 	exitAccessibility?: (ctx: AccessibilityContext) => void;
 	/**
-	 * Enter a parse tree produced by `ComposeParser.function_declaration`.
+	 * Enter a parse tree produced by `ComposeParser.member_function_declaration`.
 	 * @param ctx the parse tree
 	 */
-	enterFunction_declaration?: (ctx: Function_declarationContext) => void;
+	enterMember_function_declaration?: (ctx: Member_function_declarationContext) => void;
 	/**
-	 * Exit a parse tree produced by `ComposeParser.function_declaration`.
+	 * Exit a parse tree produced by `ComposeParser.member_function_declaration`.
 	 * @param ctx the parse tree
 	 */
-	exitFunction_declaration?: (ctx: Function_declarationContext) => void;
+	exitMember_function_declaration?: (ctx: Member_function_declarationContext) => void;
+	/**
+	 * Enter a parse tree produced by `ComposeParser.global_function_declaration`.
+	 * @param ctx the parse tree
+	 */
+	enterGlobal_function_declaration?: (ctx: Global_function_declarationContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.global_function_declaration`.
+	 * @param ctx the parse tree
+	 */
+	exitGlobal_function_declaration?: (ctx: Global_function_declarationContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.abstract_function_declaration`.
 	 * @param ctx the parse tree
@@ -531,26 +542,6 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitAbstract_function_declaration?: (ctx: Abstract_function_declarationContext) => void;
-	/**
-	 * Enter a parse tree produced by `ComposeParser.function_prototype`.
-	 * @param ctx the parse tree
-	 */
-	enterFunction_prototype?: (ctx: Function_prototypeContext) => void;
-	/**
-	 * Exit a parse tree produced by `ComposeParser.function_prototype`.
-	 * @param ctx the parse tree
-	 */
-	exitFunction_prototype?: (ctx: Function_prototypeContext) => void;
-	/**
-	 * Enter a parse tree produced by `ComposeParser.generic_parameter`.
-	 * @param ctx the parse tree
-	 */
-	enterGeneric_parameter?: (ctx: Generic_parameterContext) => void;
-	/**
-	 * Exit a parse tree produced by `ComposeParser.generic_parameter`.
-	 * @param ctx the parse tree
-	 */
-	exitGeneric_parameter?: (ctx: Generic_parameterContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.concrete_function_declaration`.
 	 * @param ctx the parse tree
@@ -571,6 +562,26 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitNative_function_declaration?: (ctx: Native_function_declarationContext) => void;
+	/**
+	 * Enter a parse tree produced by `ComposeParser.function_prototype`.
+	 * @param ctx the parse tree
+	 */
+	enterFunction_prototype?: (ctx: Function_prototypeContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.function_prototype`.
+	 * @param ctx the parse tree
+	 */
+	exitFunction_prototype?: (ctx: Function_prototypeContext) => void;
+	/**
+	 * Enter a parse tree produced by `ComposeParser.generic_parameter`.
+	 * @param ctx the parse tree
+	 */
+	enterGeneric_parameter?: (ctx: Generic_parameterContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.generic_parameter`.
+	 * @param ctx the parse tree
+	 */
+	exitGeneric_parameter?: (ctx: Generic_parameterContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.statement`.
 	 * @param ctx the parse tree

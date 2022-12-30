@@ -7,9 +7,11 @@ import IType from "../type/IType";
 import GenericParameter from "./GenericParameter";
 import * as assert from "assert";
 import Accessibility from "./Accessibility";
+import ClassDeclaration from "./ClassDeclaration";
 
 export default abstract class FunctionDeclarationBase extends DeclarationBase implements IFunctionDeclaration {
 
+    parentClass: ClassDeclaration;
     accessibility: Accessibility;
     generics: GenericParameter[];
     parameters: ParameterList;
@@ -17,11 +19,14 @@ export default abstract class FunctionDeclarationBase extends DeclarationBase im
 
     protected constructor(accessibility: Accessibility, proto: Prototype) {
         super(proto.id);
+        this.parentClass = null;
         this.accessibility = accessibility | Accessibility.PUBLIC;
         this.generics = proto.generics;
         this.parameters = proto.parameters;
         this.returnType = proto.returnType || null;
     }
+
+    abstract get isStatic(): boolean;
 
     type(): FunctionType {
         return new FunctionType(this.parameters, this.returnType);

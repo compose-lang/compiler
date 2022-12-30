@@ -1,0 +1,36 @@
+import UserType from "./UserType";
+import IWasmTarget from "../compiler/IWasmTarget";
+import IType from "./IType";
+import * as assert from "assert";
+import Context from "../context/Context";
+
+export default class TypeType extends UserType {
+
+    type: IType;
+
+    constructor(type: IType) {
+        super();
+        this.type = type;
+    }
+
+    get typeName(): string {
+        return "typeof(" + this.type.typeName + ")";
+    }
+
+    isAssignableFrom(context: Context, type: IType): boolean {
+        return type instanceof TypeType;
+    }
+
+    count(): number {
+        assert.ok(false); // TODO will we ever need this ?
+    }
+
+    byteLength(): number {
+        assert.ok(false); // TODO will we ever need this ?
+    }
+
+    writeTo(target: IWasmTarget): void {
+        assert.ok(false); // TODO will we ever need this ?
+    }
+
+}

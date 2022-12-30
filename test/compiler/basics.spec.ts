@@ -102,3 +102,13 @@ it('runs a parameterized function',  () => {
     assert.equal(result, 12);
 });
 
+it('runs a static function with parameters',  () => {
+    const compiler = new Compiler();
+    const target = new WasmBufferTarget();
+    const unit = Builder.parse_unit("class Inner { static inner(x: i32): i32 { return x + 1; } } @Export function stuff(): i32 { return Inner.inner(12); }");
+    compiler.buildOne(unit, target);
+    const runner = Runner.of(target.asWasmSource());
+    const result = runner.runFunction<number>("stuff");
+    assert.equal(result, 13);
+});
+

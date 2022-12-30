@@ -10,6 +10,10 @@ export default class AbstractFunctionDeclaration extends FunctionDeclarationBase
         super(accessibility, proto);
     }
 
+    get isStatic(): boolean {
+        return false;
+    }
+
     register(context: Context): void {
         // TODO
     }

@@ -1,13 +1,13 @@
 import Builder from "../../src/builder/Builder";
 import * as assert from "assert";
-import InstanceExpression from "../../src/expression/InstanceExpression";
+import UnresolvedIdentifierExpression from "../../src/expression/UnresolvedIdentifierExpression";
 import FunctionCall from "../../src/expression/FunctionCall";
 import BinaryExpression from "../../src/expression/BinaryExpression";
 import Operator from "../../src/expression/Operator";
 
 it('parses a variable',  () => {
     const exp = Builder.parse_expression("my_var");
-    assert.ok(exp instanceof InstanceExpression);
+    assert.ok(exp instanceof UnresolvedIdentifierExpression);
     assert.equal(exp.name, "my_var");
 });
 

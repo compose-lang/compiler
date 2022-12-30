@@ -3,9 +3,12 @@ import ParameterList from "../parameter/ParameterList";
 import FunctionType from "../type/FunctionType";
 import IType from "../type/IType";
 import Prototype from "./Prototype";
+import ClassDeclaration from "./ClassDeclaration";
 
 export default interface IFunctionDeclaration extends IDeclaration {
 
+    isStatic: boolean;
+    parentClass: ClassDeclaration;
     parameters: ParameterList;
     returnType: IType;
 

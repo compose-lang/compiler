@@ -27,4 +27,7 @@ export default class GlobalsSection extends SectionBase {
         return this.globals.length - 1; // O-based index
     }
 
+    getGlobalIndex(name: string) {
+        return this.globals.findIndex(g => g.variable.name == name);
+    }
 }

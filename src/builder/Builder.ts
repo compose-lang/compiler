@@ -33,11 +33,10 @@ import ComposeParser, {
     F32_typeContext,
     F64_typeContext, Function_call_statementContext,
     Function_callContext,
-    Function_declarationContext,
     Function_prototypeContext,
     Function_type_or_nullContext,
     Function_typeContext,
-    FunctionParameterContext, Generic_parameterContext,
+    FunctionParameterContext, Generic_parameterContext, Global_function_declarationContext,
     Global_statementContext,
     I32_typeContext,
     I64_typeContext,
@@ -51,7 +50,7 @@ import ComposeParser, {
     LiteralExpressionContext,
     Map_entryContext,
     Map_literalContext,
-    MapLiteralContext, Native_function_declarationContext,
+    MapLiteralContext, Member_function_declarationContext, Native_function_declarationContext,
     Native_typeContext,
     NullLiteralContext,
     Number_typeContext,
@@ -104,7 +103,7 @@ import ListLiteral from "../literal/ListLiteral";
 import SetLiteral from "../literal/SetLiteral";
 import KeyValuePair from "../utils/KeyValuePair";
 import MapLiteral from "../literal/MapLiteral";
-import InstanceExpression from "../expression/InstanceExpression";
+import UnresolvedIdentifierExpression from "../expression/UnresolvedIdentifierExpression";
 import IStatement from "../statement/IStatement";
 import ReturnStatement from "../statement/ReturnStatement";
 import ConcreteFunctionDeclaration from "../declaration/ConcreteFunctionDeclaration";
@@ -377,7 +376,7 @@ export default class Builder extends ComposeParserListener {
         const parents = ctx.class_ref_list()
             .slice(1) // skip id which is also a class_type
             .map(child => this.getNodeValue<Identifier>(child), this);
-        const functions = ctx.function_declaration_list()
+        const functions = ctx.member_function_declaration_list()
             .map(child => this.getNodeValue<FunctionDeclarationBase>(child), this);
         const accessibility = Builder.readAccessibility(ctx.accessibility());
         this.setNodeValue(ctx, new ClassDeclaration(accessibility, id, attributes, parents, functions, ctx.ABSTRACT() != null));
@@ -440,7 +439,11 @@ export default class Builder extends ComposeParserListener {
         this.setNodeValue(ctx, new NativeFunctionDeclaration(accessibility, proto, instructions));
     }
 
-    exitFunction_declaration = (ctx: Function_declarationContext) => {
+    exitGlobal_function_declaration = (ctx: Global_function_declarationContext) => {
+        this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
+    }
+
+    exitMember_function_declaration = (ctx: Member_function_declarationContext) => {
         this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
     }
 
@@ -537,7 +540,7 @@ export default class Builder extends ComposeParserListener {
 
     exitIdentifierExpression = (ctx: IdentifierExpressionContext) => {
         const id = this.getNodeValue<Identifier>(ctx.identifier());
-        this.setNodeValue(ctx, new InstanceExpression(id));
+        this.setNodeValue(ctx, new UnresolvedIdentifierExpression(id));
     }
 
     exitLiteralExpression = (ctx: LiteralExpressionContext) => {

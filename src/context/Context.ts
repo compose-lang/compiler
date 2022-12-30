@@ -5,6 +5,7 @@ import * as assert from "assert";
 import Variable from "./Variable";
 import Identifier from "../builder/Identifier";
 import IType from "../type/IType";
+import ClassType from "../type/ClassType";
 
 export default class Context {
 
@@ -25,7 +26,7 @@ export default class Context {
     functions = new Map<string, Map<string, IFunctionDeclaration>>();
     locals = new Map<string, Variable>();
 
-    private constructor(globals?: Context) {
+    protected constructor(globals?: Context) {
         this.globals = globals || this;
     }
 
@@ -33,7 +34,7 @@ export default class Context {
         return this === this.globals;
     }
 
-    newLocalContext() {
+    newLocalContext(): Context {
         const context = new Context();
         context.globals = this.globals;
         context.calling = this;
@@ -41,12 +42,25 @@ export default class Context {
         return context;
     }
 
-    newChildContext() {
+    newChildContext(): Context {
         const context = new Context();
         context.globals = this.globals;
         context.calling = this.calling;
         context.parent = this;
         return context;
+    }
+
+    newStaticContext(type: IType): Context {
+        const context = new StaticContext(type);
+        context.globals = this.globals;
+        context.calling = this.calling;
+        context.parent = this;
+        return context;
+    }
+
+    registerClass(klass: ClassDeclaration) {
+        assert.ok(!this.classes.has(klass.name));
+        this.classes.set(klass.name, klass);
     }
 
     registerFunction(decl: IFunctionDeclaration) {
@@ -63,8 +77,67 @@ export default class Context {
         this.locals.set(local.name, local);
     }
 
-    getRegisteredLocal(id: Identifier) {
-        return this.locals.get(id.value) || null;
+    getRegisteredLocal(id: Identifier): Variable {
+        const result = this.locals.get(id.value) || null;
+        if(result)
+            return result
+        else if(this.parent)
+            return this.parent.getRegisteredLocal(id);
+        else
+            return null;
+    }
+
+    getRegisteredGlobal(id: Identifier): Variable {
+        const result = this.getRegisteredLocal(id);
+        if(result)
+            return result
+        else if(this.parent)
+            return this.parent.getRegisteredGlobal(id);
+        else if(this.globals && this.globals != this)
+            return this.globals.getRegisteredGlobal(id);
+        else
+            return null;
+    }
+
+    getRegisteredAttribute(id: Identifier): AttributeDeclaration {
+        const result = this.attributes.get(id.value) || null;
+        if(result)
+            return result
+        else if(this.parent)
+            return this.parent.getRegisteredAttribute(id);
+        else if(this.globals && this.globals != this)
+            return this.globals.getRegisteredAttribute(id);
+        else
+            return null;
+    }
+
+    getRegisteredEnum(id: Identifier): any {
+        return null;
+    }
+    /*
+    getRegisteredEnum(id: Identifier): EnumDeclaration {
+        const result = this.enum.get(id.value) || null;
+        if(result)
+            return result
+        else if(this.parent)
+            return this.parent.getRegisteredEnum(id);
+        else if(this.globals && this.globals != this)
+            return this.globals.getRegisteredEnum(id);
+        else
+            return null;
+    }
+     */
+
+    getRegisteredClass(id: Identifier): ClassDeclaration {
+        const result = this.classes.get(id.value) || null;
+        if(result)
+            return result
+        else if(this.parent)
+            return this.parent.getRegisteredClass(id);
+        else if(this.globals && this.globals != this)
+            return this.globals.getRegisteredClass(id);
+        else
+            return null;
     }
 
     getRegisteredFunctions(id: Identifier): IFunctionDeclaration[] {
@@ -73,7 +146,7 @@ export default class Context {
         return Array.from(map.values());
     }
 
-    private collectFunctions(id: Identifier, map: Map<string, IFunctionDeclaration>) {
+    protected collectFunctions(id: Identifier, map: Map<string, IFunctionDeclaration>) {
         // collect parents first, override with locals
         if(this.parent !== null)
             this.parent.collectFunctions(id, map);
@@ -89,4 +162,20 @@ export default class Context {
         return this;
     }
 
+}
+
+class StaticContext extends Context {
+
+    type: IType;
+
+    constructor(type: IType) {
+        super();
+        this.type = type;
+    }
+
+    protected collectFunctions(id: Identifier, map: Map<string, IFunctionDeclaration>) {
+        super.collectFunctions(id, map);
+        if(this.type instanceof ClassType)
+            this.type.klass.collectStaticFunctions(id, map);
+    }
 }

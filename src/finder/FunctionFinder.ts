@@ -5,6 +5,11 @@ import IType from "../type/IType";
 import IFunctionDeclaration from "../declaration/IFunctionDeclaration";
 import FunctionType from "../type/FunctionType";
 import * as assert from "assert";
+import IExpression from "../expression/IExpression";
+import VoidType from "../type/VoidType";
+import ClassType from "../type/ClassType";
+import AttributeType from "../type/AttributeType";
+import TypeType from "../type/TypeType";
 
 enum Score {
     WORSE = -1,
@@ -21,9 +26,12 @@ export default abstract class FunctionFinder {
     }
 
     private static newFinder(context: Context, call: FunctionCall, argTypes: IType[]): FunctionFinder {
-        if(call.parent)
-            return null; // TODO
-        else if(call.isGeneric())
+        if(call.parent) {
+            if(call.isGeneric())
+                return null; // TODO
+            else
+                return new MemberSimpleFinder(context, call.parent, call.id, argTypes);
+        } else if(call.isGeneric())
             return new GlobalGenericsFinder(context, call.id, call.genericTypes, argTypes);
         else
             return new GlobalSimpleFinder(context, call.id, argTypes);
@@ -40,6 +48,7 @@ export default abstract class FunctionFinder {
     }
 
     find(): IFunctionDeclaration {
+        this.resolveContext();
         const candidates = this.context.getRegisteredFunctions(this.id);
         const compatibles = this.filterCompatibles(candidates);
         switch(compatibles.length) {
@@ -109,6 +118,9 @@ export default abstract class FunctionFinder {
 
     protected abstract resolveGenericType(decl: IFunctionDeclaration, type: IType): IType;
 
+    protected resolveContext(): void {
+        // nothing to do;
+    }
 }
 
 class GlobalGenericsFinder extends FunctionFinder {
@@ -133,6 +145,31 @@ class GlobalGenericsFinder extends FunctionFinder {
 
 
 class GlobalSimpleFinder extends FunctionFinder {
+
+    protected resolveGenericType(decl: IFunctionDeclaration, type: IType) {
+        return type;
+    }
+
+}
+
+class MemberSimpleFinder extends FunctionFinder {
+
+    parent: IExpression;
+
+    constructor(context: Context, parent: IExpression, id: Identifier, argTypes: IType[]) {
+        super(context, id, argTypes);
+        this.parent = parent;
+    }
+
+    protected resolveContext(): void {
+        const type = this.parent.check(this.context);
+        assert.ok(type);
+        assert.ok(type != VoidType.instance);
+        if(type instanceof TypeType)
+            this.context = this.context.newStaticContext(type.type);
+        else
+            assert.ok(false); // TODO
+    }
 
     protected resolveGenericType(decl: IFunctionDeclaration, type: IType) {
         return type;

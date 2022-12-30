@@ -25,7 +25,7 @@ declaration:
     annotation*
     ( attribute_declaration
     | class_declaration
-    | function_declaration[false] )
+    | global_function_declaration )
 //    | enum_declaration
     ;
 
@@ -172,7 +172,7 @@ class_declaration:
     accessibility? ABSTRACT? CLASS id = class_ref ( LPAR attribute_ref (COMMA attribute_ref)* RPAR )?
             ( EXTENDS class_ref (COMMA class_ref)* )?
         LCURL
-            (function_declaration[true] (COMMA function_declaration[true])*)?
+            member_function_declaration*
         RCURL
     ;
 
@@ -180,18 +180,33 @@ accessibility:
     PUBLIC | PROTECTED | PRIVATE
     ;
 
-function_declaration[boolean as_member]:
+member_function_declaration:
     abstract_function_declaration
-    | concrete_function_declaration[$as_member]
-    | native_function_declaration[$as_member]
+    | concrete_function_declaration[true]
+    | native_function_declaration[true]
+    ;
+
+global_function_declaration:
+    concrete_function_declaration[false]
+    | native_function_declaration[false]
     ;
 
 abstract_function_declaration:
-    accessibility? ABSTRACT function_prototype[true]
+    accessibility? ABSTRACT function_prototype[true] SEMI
+    ;
+
+concrete_function_declaration[boolean as_member]:
+    {$as_member}? accessibility? STATIC? function_prototype[false] LCURL statement* RCURL
+    | {!$as_member}? FUNCTION function_prototype[false] LCURL statement* RCURL
+    ;
+
+native_function_declaration[boolean as_member]:
+    {$as_member}? accessibility? STATIC NATIVE function_prototype[false] LCURL instruction* RCURL
+    | {!$as_member}? NATIVE FUNCTION function_prototype[false] LCURL instruction* RCURL
     ;
 
 function_prototype[boolean mandatory_return]:
-    FUNCTION identifier ( LT generic_parameter ( COMMA generic_parameter )* GT )? LPAR ( parameter ( COMMA parameter )* )? RPAR
+    identifier ( LT generic_parameter ( COMMA generic_parameter )* GT )? LPAR ( parameter ( COMMA parameter )* )? RPAR
         (
             { $mandatory_return }? COLON return_types
             | { !$mandatory_return }? (COLON return_types) ?
@@ -202,15 +217,6 @@ generic_parameter:
     class_ref ( EXTENDS data_type )?
     ;
 
-concrete_function_declaration[boolean as_member]:
-    {$as_member}? accessibility? STATIC? function_prototype[false] LCURL statement* RCURL
-    | {!$as_member}? function_prototype[false] LCURL statement* RCURL
-    ;
-
-native_function_declaration[boolean as_member]:
-    {$as_member}? accessibility? STATIC NATIVE function_prototype[false] LCURL instruction* RCURL
-    | {!$as_member}? NATIVE function_prototype[false] LCURL instruction* RCURL
-    ;
 
 statement:
     annotation*

@@ -4,15 +4,18 @@ import Identifier from "../builder/Identifier";
 import IWasmTarget from "../compiler/IWasmTarget";
 import Context from "../context/Context";
 import UserType from "./UserType";
+import ClassDeclaration from "../declaration/ClassDeclaration";
 
 export default class ClassType extends UserType {
 
     nullable = false;
     id: Identifier;
+    klass: ClassDeclaration;
 
-    constructor(id: Identifier) {
+    constructor(id: Identifier, klass?: ClassDeclaration) {
         super();
         this.id = id;
+        this.klass = klass;
     }
 
     get typeName(): string {
