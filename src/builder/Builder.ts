@@ -2,7 +2,7 @@ import CompilationUnit from "../compiler/CompilationUnit";
 import {
     CharStream,
     CommonTokenStream,
-    FileStream, ParserRuleContext, ParseTree, ParseTreeWalker, Token, TerminalNode
+    FileStream, ParserRuleContext, ParseTree, ParseTreeWalker, TerminalNode, Token
 } from "antlr4";
 import {fileExists} from "../utils/FileUtils";
 import ComposeParser, {
@@ -41,7 +41,7 @@ import ComposeParser, {
     I32_typeContext,
     I64_typeContext,
     IdentifierContext,
-    IdentifierExpressionContext, InstructionContext,
+    IdentifierExpressionContext, Import_sourceContext, Import_statementContext, InstructionContext,
     Integer_typeContext,
     IntegerLiteralContext,
     Isize_typeContext,
@@ -136,6 +136,9 @@ import NativeFunctionDeclaration from "../declaration/NativeFunctionDeclaration"
 import StatementList from "../statement/StatementList";
 import SizeofExpression from "../expression/SizeofExpression";
 import AlignofExpression from "../expression/AlignofExpression";
+import ImportStatement from "../module/ImportStatement";
+import ImportSource from "../module/ImportSource";
+import ExportType from "../compiler/ExportType";
 
 interface IndexedNode {
     __id?: number;
@@ -145,6 +148,10 @@ export default class Builder extends ComposeParserListener {
 
     static parse_unit(data: string): CompilationUnit | null {
         return Builder.doParse<CompilationUnit>((parser: ComposeParser) => parser.compilation_unit(), data);
+    }
+
+    static parse_import(data: string): ImportStatement | null {
+        return Builder.doParse<ImportStatement>((parser: ComposeParser) => parser.import_statement(), data);
     }
 
     static parse_function_type(data: string): FunctionType | null {
@@ -184,6 +191,11 @@ export default class Builder extends ComposeParserListener {
         const name = text.replace(/\./g,"_").toUpperCase();
         return OpCode[name as keyof typeof OpCode];
     }
+
+    private static readExportType(exportNode: TerminalNode, defaultNode: TerminalNode) {
+        return exportNode ? defaultNode ? ExportType.MAIN : ExportType.CHILD : ExportType.NONE;
+    }
+
 
     static doParse<T>(rule: (parser: ComposeParser) => ParseTree, data?: string, stream?: CharStream): T | null {
         try {
@@ -367,7 +379,7 @@ export default class Builder extends ComposeParserListener {
 
     exitAttribute_declaration = (ctx: Attribute_declarationContext) => {
         const id = this.getNodeValue<Identifier>(ctx.identifier());
-        const type = this.getNodeValue<IDataType>(ctx.data_type());
+        const type = this.getNodeValue<IDataType>(ctx.data_type_or_null());
         this.setNodeValue(ctx, new AttributeDeclaration(id, type));
     }
 
@@ -457,29 +469,53 @@ export default class Builder extends ComposeParserListener {
 
     exitDeclaration = (ctx: DeclarationContext) => {
         const annotations = ctx.annotation_list().map(child => this.getNodeValue<Annotation>(child), this);
-        const decl = this.getNodeValue<IDeclaration>(ctx.getChild(annotations.length));
+        const exportType = Builder.readExportType(ctx.EXPORT(), ctx.DEFAULT());
+        const decl = this.getNodeValue<IDeclaration>(ctx.getChild(annotations.length + exportType));
         decl.annotations = annotations;
+        decl.exportType = exportType;
         this.setNodeValue(ctx, decl);
-    }
-
-    exitCompilation_unit = (ctx: Compilation_unitContext) => {
-        const all = ctx.compilation_atom_list().flatMap(child => this.getNodeValue<any>(child), this);
-        const globals = all.filter(a => a instanceof StatementBase); // can't use reflection on interfaces
-        const declarations = all.filter(a => a instanceof DeclarationBase); // can't use reflection on interfaces
-        this.setNodeValue(ctx, new CompilationUnit(globals, declarations));
     }
 
     exitCompilation_atom = (ctx: Compilation_atomContext) => {
         this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
     }
 
+    exitCompilation_unit = (ctx: Compilation_unitContext) => {
+        const imports = ctx.preamble().import_statement_list().map(stmt => this.getNodeValue<ImportStatement>(stmt));
+        const all = ctx.compilation_atom_list().flatMap(child => this.getNodeValue<any>(child), this);
+        const globals = all.filter(a => a instanceof StatementBase); // can't use reflection on interfaces
+        const declarations = all.filter(a => a instanceof DeclarationBase); // can't use reflection on interfaces
+        const mainExports = declarations.filter(decl => decl.exportType == ExportType.MAIN)
+            .concat(globals.filter(stmt => stmt.exportType == ExportType.MAIN));
+        assert.ok(mainExports.length <= 1);
+        const mainExport = mainExports.length > 0 ? mainExports[0] : null;
+        const childExports = declarations.filter(decl => decl.exportType == ExportType.CHILD).concat(globals.filter(stmt => stmt.exportType == ExportType.CHILD));
+        this.setNodeValue(ctx, new CompilationUnit(imports, globals, declarations, mainExport, childExports));
+    }
+
+    exitImport_statement = (ctx: Import_statementContext) => {
+        const main = ctx._main ? this.getNodeValue<Identifier>(ctx._main) : null;
+        const children = ctx.identifier_list().filter(c => c!=ctx._main).map(id => this.getNodeValue<Identifier>(id), this);
+        const source = this.getNodeValue<ImportSource>(ctx.import_source());
+        this.setNodeValue(ctx, new ImportStatement(main, children, source));
+    }
+
+    exitImport_source = (ctx: Import_sourceContext) => {
+        const source = ctx.getText();
+        this.setNodeValue(ctx, new ImportSource(source.substring(1, source.length - 1)));
+    }
+
+
+
     exitGlobal_statement = (ctx: Global_statementContext) => {
         const annotations = ctx.annotation_list().map(child => this.getNodeValue<Annotation>(child), this);
-        const stmt = this.getNodeValue<IStatement>(ctx.getChild(annotations.length));
-        if(Array.isArray(stmt))
-            stmt.forEach(s => s.annotations = annotations)
-        else
-            stmt.annotations = annotations;
+        const exportType = Builder.readExportType(ctx.EXPORT(), ctx.DEFAULT());
+        const stmt = this.getNodeValue<IStatement>(ctx.getChild(annotations.length + exportType));
+        const stmts: IStatement[] = Array.isArray(stmt) ? stmt : [stmt];
+        stmts.forEach(s => {
+            s.annotations = annotations;
+            s.exportType = exportType;
+        });
         this.setNodeValue(ctx, stmt);
     }
 
@@ -645,8 +681,8 @@ export default class Builder extends ComposeParserListener {
 
     exitFunction_call = (ctx: Function_callContext) => {
         const id = this.getNodeValue<Identifier>(ctx._name);
-        const types = ctx.data_type_or_null_list().map(t => this.getNodeValue<IType>(t));
-        const args = ctx.expression_list().map(x => this.getNodeValue<IExpression>(x));
+        const types = ctx.data_type_or_null_list().map(t => this.getNodeValue<IType>(t), this);
+        const args = ctx.expression_list().map(x => this.getNodeValue<IExpression>(x), this);
         this.setNodeValue(ctx, new FunctionCall(null, id, types, args));
     }
 
@@ -668,10 +704,10 @@ export default class Builder extends ComposeParserListener {
     }
 
     exitInstruction = (ctx: InstructionContext) => {
-        const expressions = ctx.expression_list().map(e => this.getNodeValue<IExpression>(e));
+        const expressions = ctx.expression_list().map(e => this.getNodeValue<IExpression>(e), this);
         const opcode = Builder.readOpCode(ctx.opcode());
         const variants = ctx.INTEGER_LITERAL_list().map(i => IntegerLiteral.parseInteger(i.getText()));
         this.setNodeValue(ctx, new Instruction(expressions, opcode, variants) );
     }
 
-}
+ }

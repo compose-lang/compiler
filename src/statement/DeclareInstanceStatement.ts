@@ -49,7 +49,7 @@ export default class DeclareInstanceStatement extends StatementBase {
         if(context.isGlobal()) {
             const variable = context.getRegisteredLocal(this.id);
             assert.ok(variable !== null);
-            module.declareGlobal(variable, this.expression, this.isExported());
+            module.declareGlobal(variable, this.expression, this.isModuleExport());
         }
         this.expression.declare(context, module);
     }

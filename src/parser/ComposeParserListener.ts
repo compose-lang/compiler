@@ -4,6 +4,9 @@ import {ParseTreeListener} from "antlr4";
 
 
 import { Compilation_unitContext } from "./ComposeParser";
+import { PreambleContext } from "./ComposeParser";
+import { Import_statementContext } from "./ComposeParser";
+import { Import_sourceContext } from "./ComposeParser";
 import { Compilation_atomContext } from "./ComposeParser";
 import { Global_statementContext } from "./ComposeParser";
 import { DeclarationContext } from "./ComposeParser";
@@ -138,6 +141,36 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitCompilation_unit?: (ctx: Compilation_unitContext) => void;
+	/**
+	 * Enter a parse tree produced by `ComposeParser.preamble`.
+	 * @param ctx the parse tree
+	 */
+	enterPreamble?: (ctx: PreambleContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.preamble`.
+	 * @param ctx the parse tree
+	 */
+	exitPreamble?: (ctx: PreambleContext) => void;
+	/**
+	 * Enter a parse tree produced by `ComposeParser.import_statement`.
+	 * @param ctx the parse tree
+	 */
+	enterImport_statement?: (ctx: Import_statementContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.import_statement`.
+	 * @param ctx the parse tree
+	 */
+	exitImport_statement?: (ctx: Import_statementContext) => void;
+	/**
+	 * Enter a parse tree produced by `ComposeParser.import_source`.
+	 * @param ctx the parse tree
+	 */
+	enterImport_source?: (ctx: Import_sourceContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.import_source`.
+	 * @param ctx the parse tree
+	 */
+	exitImport_source?: (ctx: Import_sourceContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.compilation_atom`.
 	 * @param ctx the parse tree

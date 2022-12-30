@@ -29,10 +29,10 @@ it('parses a class declaration ',  () => {
 });
 
 it('parses a class declaration with annotations',  () => {
-    const unit = Builder.parse_unit("@Export @Inline class Thing(a, b) extends C, D {}");
+    const unit = Builder.parse_unit("@ModuleExport @Inline class Thing(a, b) extends C, D {}");
     const decl = unit.declarations[0];
     assert.equal(decl.annotations.length, 2);
-    assert.equal(decl.annotations[0].name, "@Export");
+    assert.equal(decl.annotations[0].name, "@ModuleExport");
     assert.equal(decl.annotations[1].name, "@Inline");
 });
 

@@ -34,7 +34,7 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
 
     declare(context: Context, module: WasmModule): void {
         if(!this.isGeneric())
-            module.declareFunction(this, this.isExported());
+            module.declareFunction(this, this.isModuleExport());
         const local = context.newLocalContext();
         this.parameters.forEach(param => param.declare(local, module));
         this.statements.forEach(stmt => stmt.declare(local, module));

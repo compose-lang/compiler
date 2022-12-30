@@ -7,6 +7,7 @@ import DeclareInstanceStatement from "../../src/statement/DeclareInstanceStateme
 import Int64Type from "../../src/type/Int64Type";
 import FunctionCallStatement from "../../src/statement/FunctionCallStatement";
 import OpCode from "../../src/compiler/OpCode";
+import ImportStatement from "../../src/module/ImportStatement";
 
 it('parses a declare statement',  () => {
     const stmts = Builder.parse_statement("const a = 2, b: i64 = 3;");
@@ -45,5 +46,13 @@ it('parses an instruction',  () => {
     const instruction = Builder.parse_instruction("i32.const 12;");
     assert.equal(instruction.opcode, OpCode.I32_CONST);
     assert.equal(instruction.variants.length, 1);
+});
+
+it('parses an import statement',  () => {
+    const stmt = Builder.parse_import('import Stuff, { Stuff1, Stuff2 } from "./Stuff";');
+    assert.ok(stmt instanceof ImportStatement);
+    assert.equal(stmt.mainSymbol.value, "Stuff");
+    assert.deepEqual(stmt.childSymbols.map(id => id.value), [ "Stuff1", "Stuff2" ]);
+    assert.equal(stmt.source.value, "./Stuff");
 });
 

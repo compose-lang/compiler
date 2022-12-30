@@ -5,10 +5,12 @@ import Context from "../context/Context";
 import Annotation from "../builder/Annotation";
 import WasmModule from "../module/WasmModule";
 import IType from "../type/IType";
+import ExportType from "../compiler/ExportType";
 
 export default abstract class DeclarationBase extends CodeFragment implements IDeclaration {
 
     annotations: Annotation[];
+    exportType = ExportType.NONE;
     id: Identifier;
 
     protected constructor(id: Identifier) {
@@ -20,8 +22,8 @@ export default abstract class DeclarationBase extends CodeFragment implements ID
         return this.id.value;
     }
 
-    isExported() {
-        return this.annotations && this.annotations.some(a => a.name === "@Export");
+    isModuleExport() {
+        return this.annotations && this.annotations.some(a => a.name === "@ModuleExport");
     }
 
     abstract register(context: Context): void;

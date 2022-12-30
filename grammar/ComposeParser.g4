@@ -8,7 +8,23 @@ options {
 }
 
 compilation_unit:
+    preamble
     compilation_atom*
+    ;
+
+preamble:
+    import_statement*
+    ;
+
+import_statement:
+    IMPORT
+    ( main=identifier (COMMA LCURL identifier (COMMA identifier)* RCURL)?
+    | LCURL identifier (COMMA identifier)* RCURL )
+    FROM import_source SEMI
+    ;
+
+import_source:
+    STRING_LITERAL
     ;
 
 compilation_atom:
@@ -18,11 +34,13 @@ compilation_atom:
 
 global_statement:
     annotation*
+    (EXPORT DEFAULT?)?
     ( declare_instances_statement )
     ;
 
 declaration:
     annotation*
+    (EXPORT DEFAULT?)?
     ( attribute_declaration
     | class_declaration
     | global_function_declaration )
@@ -31,7 +49,7 @@ declaration:
 
 
 attribute_declaration:
-    ATTRIBUTE identifier COLON data_type
+    ATTRIBUTE identifier COLON data_type_or_null SEMI
     ;
 
 identifier:

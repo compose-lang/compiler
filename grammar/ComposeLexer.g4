@@ -41,6 +41,7 @@ SET: 'set';
 IF: 'if';
 ELSE: 'else';
 */
+FROM: 'from';
 SWITCH: 'switch';
 CASE: 'case';
 FOR: 'for';
@@ -61,6 +62,10 @@ TYPE_OF: 'typeof';
 INSTANCE_OF: 'instanceof';
 SIZE_OF: 'sizeof';
 ALIGN_OF: 'alignof';
+
+EXPORT: 'export';
+IMPORT: 'import';
+DEFAULT: 'default';
 
 IN: 'in';
 AS: 'as';

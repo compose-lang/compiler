@@ -5,13 +5,15 @@ import Context from "../context/Context";
 import FunctionBody from "../module/FunctionBody";
 import IType from "../type/IType";
 import Annotation from "../builder/Annotation";
+import ExportType from "../compiler/ExportType";
 
 export default abstract class StatementBase extends CodeFragment implements IStatement {
 
     annotations: Annotation[];
+    exportType: ExportType;
 
-    isExported() {
-        return this.annotations && this.annotations.some(a => a.name === "@Export");
+    isModuleExport() {
+        return this.annotations && this.annotations.some(a => a.name === "@ModuleExport");
     }
 
     abstract check(context: Context): IType;
