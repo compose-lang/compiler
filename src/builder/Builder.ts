@@ -140,6 +140,7 @@ import ImportStatement from "../module/ImportStatement";
 import ImportSource from "../module/ImportSource";
 import ExportType from "../compiler/ExportType";
 import EnumDeclaration from "../declaration/EnumDeclaration";
+import ILiteralExpression from "../literal/ILiteralExpression";
 
 interface IndexedNode {
     __id?: number;
@@ -476,7 +477,8 @@ export default class Builder extends ComposeParserListener {
     exitAnnotation = (ctx: AnnotationContext) => {
         const id = new Identifier(ctx.ANNOTATION().getText());
         this.buildSection(ctx, id);
-        this.setNodeValue(ctx, new Annotation(id));
+        const value = this.getNodeValue<ILiteralExpression>(ctx.literal_expression());
+        this.setNodeValue(ctx, new Annotation(id, value));
     }
 
     exitDeclaration = (ctx: DeclarationContext) => {
