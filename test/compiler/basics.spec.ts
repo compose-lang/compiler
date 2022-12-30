@@ -22,7 +22,7 @@ it('returns an i32 literal',  () => {
     assert.equal(result, 2);
 });
 
-it('return an assigned i32 literal',  () => {
+it('returns an assigned i32 literal',  () => {
     const compiler = new Compiler();
     const target = new WasmBufferTarget();
     const unit = Builder.parse_unit("@Export function stuff(): i32 { const a: i32 = 12; return a; }");
