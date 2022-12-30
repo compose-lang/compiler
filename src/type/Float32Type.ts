@@ -13,6 +13,10 @@ export default class Float32Type extends NativeType implements DecimalType {
         super("f32");
     }
 
+    sizeof(): number {
+        return 4;
+    }
+
     writeTo(target: IWasmTarget): void {
         target.writeUInts(0x7D);
     }

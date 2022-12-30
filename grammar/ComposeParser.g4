@@ -322,6 +322,7 @@ expression:
     | parent = expression
         DOT member = identifier                     # MemberExpression
     | NEW function_call                             # NewExpression
+    | SIZE_OF LPAR data_type RPAR                   # SizeofExpression
     | function_call                                 # SimpleCallExpression
     | expression DOT function_call                  # ChildCallExpression
     | expression { $parser.willNotContainLineTerminator()}

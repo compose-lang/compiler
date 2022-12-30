@@ -5,8 +5,9 @@ import IWasmTarget from "../compiler/IWasmTarget";
 import Context from "../context/Context";
 import UserType from "./UserType";
 import ClassDeclaration from "../declaration/ClassDeclaration";
+import IDataType from "./IDataType";
 
-export default class ClassType extends UserType {
+export default class ClassType extends UserType implements IDataType {
 
     nullable = false;
     id: Identifier;
@@ -20,6 +21,10 @@ export default class ClassType extends UserType {
 
     get typeName(): string {
         return this.id.value;
+    }
+
+    sizeof(): number {
+        return 0; // TODO
     }
 
     count(): number {

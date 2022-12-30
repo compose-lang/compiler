@@ -11,6 +11,10 @@ export default class UInt32Type extends IntegerType {
         super("u32");
     }
 
+    sizeof(): number {
+        return 4;
+    }
+
     writeTo(target: IWasmTarget): void {
         target.writeUInts(0x7F);
     }

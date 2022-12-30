@@ -12,6 +12,10 @@ export default class UInt64Type extends IntegerType {
         super("u64");
     }
 
+    sizeof(): number {
+        return 8;
+    }
+
     writeTo(target: IWasmTarget): void {
         target.writeUInts(0x7E);
     }

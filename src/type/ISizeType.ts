@@ -9,6 +9,10 @@ export default class ISizeType extends IntegerType {
         super("isize");
     }
 
+    sizeof(): number {
+        return 4;
+    }
+
     writeTo(target: IWasmTarget): void {
         target.writeUInts(0x7F); // i32
     }

@@ -7,7 +7,7 @@ import * as assert from "assert";
 import WasmModule from "../module/WasmModule";
 import FunctionBody from "../module/FunctionBody";
 
-export default abstract class NativeType extends CodeFragment implements IDataType {
+export default abstract class NativeType extends CodeFragment {
 
     nullable = false;
     typeName: string;

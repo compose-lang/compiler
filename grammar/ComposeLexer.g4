@@ -59,6 +59,7 @@ THIS: 'this';
 SUPER: 'super';
 TYPE_OF: 'typeof';
 INSTANCE_OF: 'instanceof';
+SIZE_OF: 'sizeof';
 
 IN: 'in';
 AS: 'as';

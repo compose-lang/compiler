@@ -15,6 +15,10 @@ export default class Int32Type extends IntegerType {
         super("i32");
     }
 
+    sizeof(): number {
+        return 4;
+    }
+
     writeTo(target: IWasmTarget): void {
         target.writeUInts(0x7F);
     }

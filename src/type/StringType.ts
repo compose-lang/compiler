@@ -9,6 +9,10 @@ export default class StringType extends NativeType {
         super("string")
     }
 
+    sizeof(): number {
+        return 0; // TODO
+    }
+
     byteLength(): number {
         return 0; // TODO
     }

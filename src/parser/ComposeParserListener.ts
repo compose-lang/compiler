@@ -73,6 +73,7 @@ import { InExpressionContext } from "./ComposeParser";
 import { ItemExpressionContext } from "./ComposeParser";
 import { CompareExpressionContext } from "./ComposeParser";
 import { OrExpressionContext } from "./ComposeParser";
+import { SizeofExpressionContext } from "./ComposeParser";
 import { ThisExpressionContext } from "./ComposeParser";
 import { PreCastExpressionContext } from "./ComposeParser";
 import { AndExpressionContext } from "./ComposeParser";
@@ -848,6 +849,18 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitOrExpression?: (ctx: OrExpressionContext) => void;
+	/**
+	 * Enter a parse tree produced by the `SizeofExpression`
+	 * labeled alternative in `ComposeParser.expression`.
+	 * @param ctx the parse tree
+	 */
+	enterSizeofExpression?: (ctx: SizeofExpressionContext) => void;
+	/**
+	 * Exit a parse tree produced by the `SizeofExpression`
+	 * labeled alternative in `ComposeParser.expression`.
+	 * @param ctx the parse tree
+	 */
+	exitSizeofExpression?: (ctx: SizeofExpressionContext) => void;
 	/**
 	 * Enter a parse tree produced by the `ThisExpression`
 	 * labeled alternative in `ComposeParser.expression`.

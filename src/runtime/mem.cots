@@ -69,14 +69,14 @@
 // `next` and `back` if free.
 
 
-@inline const BLOCK_MINSIZE: usize = ((3 * sizeof<usize>() + BLOCK_OVERHEAD + AL_MASK) & ~AL_MASK) - BLOCK_OVERHEAD; // prev + next + back
+@inline const BLOCK_MINSIZE: usize = ((3 * sizeof(usize) + BLOCK_OVERHEAD + AL_MASK) & ~AL_MASK) - BLOCK_OVERHEAD; // prev + next + back
 
 // @inline const BLOCK_MAXSIZE: usize = 1 << (FL_BITS + SB_BITS - 1); // exclusive, lives in common.ts
 
 /** Gets the left block of a block. Only valid if the left block is free. */
 
 @inline function GETFREELEFT(block: Block): Block {
-  return load<Block>(changetype<usize>(block) - sizeof<usize>());
+  return load<Block>(changetype<usize>(block) - sizeof(usize));
 }
 
 /** Gets the right block of a block by advancing to the right by its size. */
@@ -114,15 +114,15 @@ class Root(flMap) {
 // Root constants. Where stuff is stored inside of the root structure.
 
 
-@inline const SL_START: usize = sizeof<usize>();
+@inline const SL_START: usize = sizeof(usize);
 
 @inline const SL_END: usize = SL_START + (FL_BITS << alignof<u32>());
 
 @inline const HL_START: usize = (SL_END + AL_MASK) & ~AL_MASK;
 
-@inline const HL_END: usize = HL_START + FL_BITS * SL_SIZE * sizeof<usize>();
+@inline const HL_END: usize = HL_START + FL_BITS * SL_SIZE * sizeof(usize);
 
-@inline const ROOT_SIZE: usize = HL_END + sizeof<usize>();
+@inline const ROOT_SIZE: usize = HL_END + sizeof(usize);
 
 
 @lazy @Export let ROOT: Root;
@@ -222,7 +222,7 @@ function insertBlock(root: Root, block: Block): void {
   if (DEBUG) assert(changetype<usize>(block) + BLOCK_OVERHEAD + size == changetype<usize>(right)); // must match
 
   // set 'back' to itself at the end of block
-  store<Block>(changetype<usize>(right) - sizeof<usize>(), block);
+  store<Block>(changetype<usize>(right) - sizeof(usize), block);
 
   // mapping_insert
   let fl: usize, sl: u32;
@@ -230,7 +230,7 @@ function insertBlock(root: Root, block: Block): void {
     fl = 0;
     sl = <u32>(size >> AL_BITS);
   } else {
-    const inv: usize = sizeof<usize>() * 8 - 1;
+    const inv: usize = sizeof(usize) * 8 - 1;
     let boundedSize = min(size, BLOCK_MAXSIZE);
     fl = inv - clz<usize>(boundedSize);
     sl = <u32>((boundedSize >> (fl - SL_BITS)) ^ (1 << SL_BITS));
@@ -263,7 +263,7 @@ function removeBlock(root: Root, block: Block): void {
     fl = 0;
     sl = <u32>(size >> AL_BITS);
   } else {
-    const inv: usize = sizeof<usize>() * 8 - 1;
+    const inv: usize = sizeof(usize) * 8 - 1;
     let boundedSize = min(size, BLOCK_MAXSIZE);
     fl = inv - clz<usize>(boundedSize);
     sl = <u32>((boundedSize >> (fl - SL_BITS)) ^ (1 << SL_BITS));
@@ -306,7 +306,7 @@ function searchBlock(root: Root, size: usize): Block | null {
     sl = <u32>(size >> AL_BITS);
   } else {
     const halfMaxSize = BLOCK_MAXSIZE >> 1; // don't round last fl
-    const inv: usize = sizeof<usize>() * 8 - 1;
+    const inv: usize = sizeof(usize) * 8 - 1;
     const invRound = inv - SL_BITS;
     let requestSize = size < halfMaxSize
       ? size + (1 << (invRound - clz<usize>(size))) - 1
@@ -417,7 +417,7 @@ function growMemory(root: Root, size: usize): void {
   // Here, both rounding performed in searchBlock ...
   const halfMaxSize = BLOCK_MAXSIZE >> 1;
   if (size < halfMaxSize) { // don't round last fl
-    const invRound = (sizeof<usize>() * 8 - 1) - SL_BITS;
+    const invRound = (sizeof(usize) * 8 - 1) - SL_BITS;
     size += (1 << (invRound - clz<usize>(size))) - 1;
   }
   // and additional BLOCK_OVERHEAD must be taken into account. If we are going

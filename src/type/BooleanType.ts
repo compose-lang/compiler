@@ -9,6 +9,10 @@ export default class BooleanType extends NativeType {
         super("boolean")
     }
 
+    sizeof(): number {
+        return 1;
+    }
+
     writeTo(target: IWasmTarget): void {
         target.writeUInts(0x7F);
     }
