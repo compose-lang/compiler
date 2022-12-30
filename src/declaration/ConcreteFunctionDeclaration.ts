@@ -10,6 +10,7 @@ import * as assert from "assert";
 import Identifier from "../builder/Identifier";
 import Accessibility from "./Accessibility";
 import StatementList from "../statement/StatementList";
+import CompilationUnit from "../compiler/CompilationUnit";
 
 export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase implements ICompilable {
 
@@ -68,13 +69,14 @@ class GenericFunctionInstance extends ConcreteFunctionDeclaration {
         for(let i=0; i<decl.generics.length; i++) {
             typeMap.set(decl.generics[i].name, typeArguments[i]);
         }
-        return new GenericFunctionInstance(proto, decl.statements, typeMap);
+        return new GenericFunctionInstance(decl.unit, proto, decl.statements, typeMap);
     }
 
     typeMap: Map<string, IType>;
 
-    constructor(proto: Prototype, statements: StatementList, typeMap: Map<string, IType>) {
+    constructor(unit: CompilationUnit, proto: Prototype, statements: StatementList, typeMap: Map<string, IType>) {
         super(Accessibility.PUBLIC, false, proto, statements);
+        this.unit = unit;
         this.typeMap = typeMap;
     }
 
