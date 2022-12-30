@@ -4,9 +4,11 @@ import Annotation from "../builder/Annotation";
 import WasmModule from "../module/WasmModule";
 import IType from "../type/IType";
 import ExportType from "../compiler/ExportType";
+import CompilationUnit from "../compiler/CompilationUnit";
 
 export default interface IDeclaration extends ICodeFragment {
 
+    unit: CompilationUnit;
     annotations: Annotation[];
     exportType: ExportType;
     name: string;

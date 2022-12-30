@@ -1,0 +1,5 @@
+import SOME_DEFAULT, { SOME_CHILD } from "./exporting";
+
+@ModuleExport function useImports(): i32 {
+    return SOME_DEFAULT + SOME_CHILD;
+}

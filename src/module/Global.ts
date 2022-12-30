@@ -7,14 +7,17 @@ import Context from "../context/Context";
 import FunctionBody from "./FunctionBody";
 import OpCode from "../compiler/OpCode";
 import InstanceModifier from "../statement/InstanceModifier";
+import CompilationUnit from "../compiler/CompilationUnit";
 
 export default class Global implements ICompilable {
 
+    unit: CompilationUnit;
     variable: Variable;
     value: IExpression;
     body: FunctionBody = new FunctionBody();
 
-    constructor(variable: Variable, value: IExpression) {
+    constructor(unit: CompilationUnit, variable: Variable, value: IExpression) {
+        this.unit = unit;
         this.variable = variable;
         this.value = value;
     }

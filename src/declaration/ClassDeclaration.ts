@@ -9,6 +9,7 @@ import IType from "../type/IType";
 import ClassType from "../type/ClassType";
 import IFunctionDeclaration from "./IFunctionDeclaration";
 import WasmModule from "../module/WasmModule";
+import CompilationUnit from "../compiler/CompilationUnit";
 
 export default class ClassDeclaration extends DeclarationBase implements IDeclaration {
 
@@ -30,6 +31,11 @@ export default class ClassDeclaration extends DeclarationBase implements IDeclar
 
     get name(): string {
         return this.id.value;
+    }
+
+    set unit(unit: CompilationUnit) {
+        this._unit = unit;
+        this.functions.forEach(f => f.unit = unit);
     }
 
     register(context: Context): void {

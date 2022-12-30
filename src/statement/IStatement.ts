@@ -4,9 +4,11 @@ import FunctionBody from "../module/FunctionBody";
 import IType from "../type/IType";
 import Annotation from "../builder/Annotation";
 import ExportType from "../compiler/ExportType";
+import CompilationUnit from "../compiler/CompilationUnit";
 
 export default interface IStatement {
 
+    unit: CompilationUnit;
     annotations: Annotation[];
     exportType: ExportType;
 

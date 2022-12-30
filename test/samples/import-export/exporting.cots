@@ -1,0 +1,2 @@
+export default const SOME_DEFAULT: i32 = 27;
+export const SOME_CHILD: i32 = 4;

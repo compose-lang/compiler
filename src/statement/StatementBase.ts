@@ -6,14 +6,24 @@ import FunctionBody from "../module/FunctionBody";
 import IType from "../type/IType";
 import Annotation from "../builder/Annotation";
 import ExportType from "../compiler/ExportType";
+import CompilationUnit from "../compiler/CompilationUnit";
 
 export default abstract class StatementBase extends CodeFragment implements IStatement {
 
+    _unit: CompilationUnit;
     annotations: Annotation[];
     exportType: ExportType;
 
     isModuleExport() {
         return this.annotations && this.annotations.some(a => a.name === "@ModuleExport");
+    }
+
+    set unit(unit: CompilationUnit) {
+        this._unit = unit;
+    }
+
+    get unit() {
+        return this._unit;
     }
 
     abstract check(context: Context): IType;

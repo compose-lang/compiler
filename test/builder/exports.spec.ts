@@ -1,21 +1,31 @@
 import * as assert from "assert";
 import Builder from "../../src/builder/Builder";
 
-it('exports statement',  () => {
+it('exports child statement',  () => {
     const code = "export const Stuff1 = 35; const Stuff2 = 36;";
     const unit = Builder.parse_unit(code);
     assert.equal(unit.declarations.length, 0);
     assert.equal(unit.statements.length, 2);
+    assert.equal(unit.mainExport, null);
     assert.equal(unit.childExports.length, 1);
     assert.equal(unit.childExports[0], unit.statements[0]);
 });
 
+it('exports default statement',  () => {
+    const code = "export default const Stuff1 = 35; const Stuff2 = 36;";
+    const unit = Builder.parse_unit(code);
+    assert.equal(unit.declarations.length, 0);
+    assert.equal(unit.statements.length, 2);
+    assert.equal(unit.childExports, 0);
+    assert.equal(unit.mainExport, unit.statements[0]);
+});
 
-it('exports declaration',  () => {
+it('exports child declaration',  () => {
     const code = "export class Stuff1{} class Stuff2{}";
     const unit = Builder.parse_unit(code);
     assert.equal(unit.declarations.length, 2);
     assert.equal(unit.statements.length, 0);
+    assert.equal(unit.mainExport, null);
     assert.equal(unit.childExports.length, 1);
     assert.equal(unit.childExports[0], unit.declarations[0]);
 });
@@ -28,7 +38,7 @@ it('exports default declaration',  () => {
     assert.equal(unit.mainExport, unit.declarations[0]);
 });
 
-it("imports statement", () => {
+it("reads import statement", () => {
     const code = 'import Stuff1, { Stuff2 } from "./Stuff";';
     const unit = Builder.parse_unit(code);
     assert.equal(unit.imports.length, 1);

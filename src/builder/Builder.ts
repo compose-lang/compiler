@@ -147,7 +147,10 @@ interface IndexedNode {
 export default class Builder extends ComposeParserListener {
 
     static parse_unit(data: string): CompilationUnit | null {
-        return Builder.doParse<CompilationUnit>((parser: ComposeParser) => parser.compilation_unit(), data);
+        const unit = Builder.doParse<CompilationUnit>((parser: ComposeParser) => parser.compilation_unit(), data);
+        if(fileExists(data))
+            unit.path = data;
+        return unit;
     }
 
     static parse_import(data: string): ImportStatement | null {

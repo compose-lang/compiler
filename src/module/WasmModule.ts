@@ -12,6 +12,7 @@ import GlobalsSection from "./GlobalsSection";
 import Variable from "../context/Variable";
 import Global from "./Global";
 import MemorySection from "./MemorySection";
+import CompilationUnit from "../compiler/CompilationUnit";
 
 export default class WasmModule {
 
@@ -37,9 +38,9 @@ export default class WasmModule {
         target.writeBytes(1, 0, 0, 0);
     }
 
-    declareGlobal(variable: Variable, value: IExpression, exported: boolean) {
+    declareGlobal(unit: CompilationUnit, variable: Variable, value: IExpression, exported: boolean) {
         // TODO check unique
-        const global = new Global(variable, value);
+        const global = new Global(unit, variable, value);
         const globalIndex = this.getGlobalsSection().addGlobal(global);
         this.globals[globalIndex] = global;
         if(exported) {
