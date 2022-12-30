@@ -6,7 +6,7 @@ import {
 } from "antlr4";
 import {fileExists} from "../utils/FileUtils";
 import ComposeParser, {
-    Abstract_function_declarationContext, AddExpressionContext,
+    Abstract_function_declarationContext, AddExpressionContext, AlignofExpressionContext,
     AnnotationContext,
     Assign_instance_statementContext,
     Attribute_declarationContext,
@@ -135,6 +135,7 @@ import Instruction from "../assembly/Instruction";
 import NativeFunctionDeclaration from "../declaration/NativeFunctionDeclaration";
 import StatementList from "../statement/StatementList";
 import SizeofExpression from "../expression/SizeofExpression";
+import AlignofExpression from "../expression/AlignofExpression";
 
 interface IndexedNode {
     __id?: number;
@@ -551,6 +552,11 @@ export default class Builder extends ComposeParserListener {
     exitSizeofExpression = (ctx: SizeofExpressionContext) => {
         const type = this.getNodeValue<IDataType>(ctx.data_type());
         this.setNodeValue(ctx, new SizeofExpression(type));
+    }
+
+    exitAlignofExpression = (ctx: AlignofExpressionContext) => {
+        const type = this.getNodeValue<IDataType>(ctx.data_type());
+        this.setNodeValue(ctx, new AlignofExpression(type));
     }
 
     exitStatement = (ctx: StatementContext) => {

@@ -60,6 +60,7 @@ SUPER: 'super';
 TYPE_OF: 'typeof';
 INSTANCE_OF: 'instanceof';
 SIZE_OF: 'sizeof';
+ALIGN_OF: 'alignof';
 
 IN: 'in';
 AS: 'as';

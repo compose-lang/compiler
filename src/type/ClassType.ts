@@ -27,6 +27,10 @@ export default class ClassType extends UserType implements IDataType {
         return 0; // TODO
     }
 
+    alignof(): number {
+        return 0; // TODO
+    }
+
     count(): number {
         return 0; // TODO
     }

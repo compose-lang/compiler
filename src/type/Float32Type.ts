@@ -1,11 +1,10 @@
-import NativeType from "./NativeType";
 import DecimalType from "./DecimalType";
 import IWasmTarget from "../compiler/IWasmTarget";
 import Context from "../context/Context";
 import IType from "./IType";
 import IntegerType from "./IntegerType";
 
-export default class Float32Type extends NativeType implements DecimalType {
+export default class Float32Type extends DecimalType {
 
     static instance = new Float32Type();
 

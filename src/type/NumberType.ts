@@ -7,6 +7,10 @@ export default abstract class NumberType extends NativeType implements IDataType
 
     abstract sizeof(): number;
 
+    alignof(): number {
+        return 4;
+    }
+
     isAssignableFrom(context: Context, type: IType): boolean {
         return type instanceof NumberType;
     }
