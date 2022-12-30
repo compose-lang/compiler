@@ -116,7 +116,7 @@ class Root(flMap) {
 
 @inline const SL_START: usize = sizeof(usize);
 
-@inline const SL_END: usize = SL_START + (FL_BITS << alignof<u32>());
+@inline const SL_END: usize = SL_START + (FL_BITS << alignof(u32));
 
 @inline const HL_START: usize = (SL_END + AL_MASK) & ~AL_MASK;
 
@@ -131,7 +131,7 @@ class Root(flMap) {
 
 @inline function GETSL(root: Root, fl: usize): u32 {
   return load<u32>(
-    changetype<usize>(root) + (fl << alignof<u32>()),
+    changetype<usize>(root) + (fl << alignof(u32)),
     SL_START
   );
 }
@@ -140,7 +140,7 @@ class Root(flMap) {
 
 @inline function SETSL(root: Root, fl: usize, slMap: u32): void {
   store<u32>(
-    changetype<usize>(root) + (fl << alignof<u32>()),
+    changetype<usize>(root) + (fl << alignof(u32)),
     slMap,
     SL_START
   );
@@ -150,7 +150,7 @@ class Root(flMap) {
 
 @inline function GETHEAD(root: Root, fl: usize, sl: u32): Block | null {
   return load<Block>(
-    changetype<usize>(root) + (((fl << SL_BITS) + <usize>sl) << alignof<usize>()),
+    changetype<usize>(root) + (((fl << SL_BITS) + <usize>sl) << alignof(usize)),
     HL_START
   );
 }
@@ -159,7 +159,7 @@ class Root(flMap) {
 
 @inline function SETHEAD(root: Root, fl: usize, sl: u32, head: Block | null): void {
   store<Block | null>(
-    changetype<usize>(root) + (((fl << SL_BITS) + <usize>sl) << alignof<usize>()),
+    changetype<usize>(root) + (((fl << SL_BITS) + <usize>sl) << alignof(usize)),
     head,
     HL_START
   );
