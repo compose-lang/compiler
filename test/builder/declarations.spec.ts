@@ -11,7 +11,7 @@ import NativeFunctionDeclaration from "../../src/declaration/NativeFunctionDecla
 import FunctionCall from "../../src/expression/FunctionCall";
 
 it('parses an attribute declaration ',  () => {
-    const unit = Builder.parse_unit("attribute text: string");
+    const unit = Builder.parse_unit("attribute text: string;");
     assert.equal(unit.declarations.length, 1);
     assert.ok(unit.declarations[0] instanceof AttributeDeclaration);
     assert.equal(unit.declarations[0].name, "text");
