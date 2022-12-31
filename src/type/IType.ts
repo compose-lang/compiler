@@ -11,8 +11,11 @@ export default interface IType {
     byteLength(): number;
     writeTo(target: IWasmTarget): void;
 
+    prepareContext(context: Context): Context;
+
     checkAdd(context: Context, rightType: IType, tryReverse: boolean): IType;
+    compileAdd(context: Context, rightType: IType, module: WasmModule, body: FunctionBody, tryReverse: boolean): IType;
+
     checkSubtract(context: Context, rightType: IType): IType;
 
-    compileAdd(context: Context, rightType: IType, module: WasmModule, body: FunctionBody, b: boolean): IType;
 }

@@ -14,11 +14,15 @@ export default class TypeType extends UserType {
     }
 
     get typeName(): string {
-        return "typeof(" + this.type.typeName + ")";
+        return "typeof<" + this.type.typeName + ">";
     }
 
     isAssignableFrom(context: Context, type: IType): boolean {
         return type instanceof TypeType;
+    }
+
+    prepareContext(context: Context): Context {
+        return context.newStaticContext(this.type);
     }
 
     count(): number {

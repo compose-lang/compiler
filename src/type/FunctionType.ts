@@ -5,6 +5,7 @@ import IWasmTarget from "../compiler/IWasmTarget";
 import Context from "../context/Context";
 import UserType from "./UserType";
 import {equalArrays, equalObjects} from "../utils/ObjectUtils";
+import assert from "assert";
 
 export default class FunctionType extends UserType {
 
@@ -27,7 +28,7 @@ export default class FunctionType extends UserType {
     }
 
     get typeName(): string {
-        return "<method>";
+        return this.toString();
     }
 
     isAssignableFrom(context: Context, type: IType): boolean {
@@ -43,6 +44,10 @@ export default class FunctionType extends UserType {
         if(!this.returnType.isAssignableFrom(context, type.returnType))
             return false;
         return true;
+    }
+
+    prepareContext(context: Context): Context {
+        assert.ok(false); // TODO
     }
 
     count(): number {

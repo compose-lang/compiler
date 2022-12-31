@@ -165,10 +165,7 @@ class MemberSimpleFinder extends FunctionFinder {
         const type = this.parent.check(this.context);
         assert.ok(type);
         assert.ok(type != VoidType.instance);
-        if(type instanceof TypeType)
-            this.context = this.context.newStaticContext(type.type);
-        else
-            assert.ok(false); // TODO
+        this.context = type.prepareContext(this.context);
     }
 
     protected resolveGenericType(decl: IFunctionDeclaration, type: IType) {

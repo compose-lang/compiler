@@ -13,6 +13,8 @@ import Variable from "../context/Variable";
 import Global from "./Global";
 import MemorySection from "./MemorySection";
 import CompilationUnit from "../compiler/CompilationUnit";
+import ImportsSection from "./ImportsSection";
+import * as assert from "assert";
 
 export default class WasmModule {
 
@@ -48,10 +50,18 @@ export default class WasmModule {
         }
     }
 
-    declareFunction(decl: IFunctionDeclaration, exported = false) {
-        // TODO check unique
+    declareImportedFunction(decl: IFunctionDeclaration) {
+        assert.ok(!this.sections.has(SectionType.FUNCTIONS));
         const typeIndex = this.getTypesSection().addType(decl.type());
-        const functionIndex = this.getFunctionsSection().addFunction(typeIndex);
+        const functionIndex = this.getImportsSection().importFunction(decl, typeIndex);
+        this.functions[functionIndex] = decl as unknown as ICompilable;
+    }
+
+    declareConcreteFunction(decl: IFunctionDeclaration, exported: boolean) {
+        const typeIndex = this.getTypesSection().addType(decl.type());
+        let functionIndex = this.getFunctionsSection().addFunction(typeIndex);
+        if(this.sections.has(SectionType.IMPORTS))
+            functionIndex += this.getImportsSection().countFunctions();
         this.functions[functionIndex] = decl as unknown as ICompilable;
         if(exported) {
             this.getExportsSection().exportFunction(decl, functionIndex);
@@ -77,6 +87,10 @@ export default class WasmModule {
         return this.getOrCreateSection(GlobalsSection, SectionType.GLOBALS);
     }
 
+    getImportsSection(): ImportsSection {
+        return this.getOrCreateSection(ImportsSection, SectionType.IMPORTS);
+    }
+
     getExportsSection(): ExportsSection {
         return this.getOrCreateSection(ExportsSection, SectionType.EXPORTS);
     }
@@ -94,5 +108,6 @@ export default class WasmModule {
             this.sections.set(type, new section());
         return this.sections.get(type) as T;
     }
+
 
 }

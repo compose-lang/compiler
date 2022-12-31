@@ -7,7 +7,7 @@ import * as assert from "assert";
 import WasmModule from "../module/WasmModule";
 import FunctionBody from "../module/FunctionBody";
 
-export default abstract class NativeType extends CodeFragment {
+export default abstract class NativeType extends CodeFragment implements IType {
 
     nullable = false;
     typeName: string;
@@ -33,6 +33,10 @@ export default abstract class NativeType extends CodeFragment {
 
     isAssignableFrom(context: Context, type: IType): boolean {
         return type === this;
+    }
+
+    prepareContext(context: Context): Context {
+        return context;
     }
 
     checkAdd(context: Context, rightType: IType, tryReverse: boolean): IType {

@@ -13,7 +13,12 @@ export default interface IDeclaration extends ICodeFragment {
     exportType: ExportType;
     name: string;
 
+    isModuleImport(): boolean;
+    isModuleExport(): boolean;
+    getModuleImportName(): string;
+
     register(context: Context): void;
     check(context: Context): IType;
     declare(context: Context, module: WasmModule): void;
+
 }

@@ -6,6 +6,7 @@ import Context from "../context/Context";
 import UserType from "./UserType";
 import ClassDeclaration from "../declaration/ClassDeclaration";
 import IDataType from "./IDataType";
+import * as assert from "assert";
 
 export default class ClassType extends UserType implements IDataType {
 
@@ -24,27 +25,31 @@ export default class ClassType extends UserType implements IDataType {
     }
 
     sizeof(): number {
-        return 0; // TODO
+        assert.ok(false); // TODO
     }
 
     alignof(): number {
-        return 0; // TODO
+        assert.ok(false); // TODO
     }
 
     count(): number {
-        return 0; // TODO
+        assert.ok(false); // TODO
     }
 
     byteLength(): number {
-        return 0; // TODO
+        assert.ok(false); // TODO
     }
 
     writeTo(target: IWasmTarget): void {
-        // TODO
+        assert.ok(false); // TODO
     }
 
     isAssignableFrom(context: Context, type: IType): boolean {
-        return false; // TODO
+        assert.ok(false); // TODO
+    }
+
+    prepareContext(context: Context): Context {
+        assert.ok(false); // TODO
     }
 
 }

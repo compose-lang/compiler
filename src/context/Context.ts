@@ -7,6 +7,8 @@ import Identifier from "../builder/Identifier";
 import IType from "../type/IType";
 import ClassType from "../type/ClassType";
 import EnumDeclaration from "../declaration/EnumDeclaration";
+import ImportsType from "../type/ImportsType";
+import FunctionType from "../type/FunctionType";
 
 export default class Context {
 
@@ -59,6 +61,14 @@ export default class Context {
         return context;
     }
 
+    newImportsContext(type: ImportsType): Context {
+        const context = new ImportsContext(type);
+        context.globals = this.globals;
+        context.calling = this.calling;
+        context.parent = this;
+        return context;
+    }
+
     registerClass(klass: ClassDeclaration) {
         assert.ok(!this.classes.has(klass.name) && !this.enums.has(klass.name));
         this.classes.set(klass.name, klass);
@@ -91,6 +101,13 @@ export default class Context {
             return this.parent.getRegisteredLocal(id);
         else
             return null;
+    }
+
+    registerGlobal(global: Variable) {
+        if(this.globals && this.globals != this)
+            this.globals.registerGlobal(global);
+        else
+            this.registerLocal(global);
     }
 
     getRegisteredGlobal(id: Identifier): Variable {
@@ -178,5 +195,22 @@ class StaticContext extends Context {
         super.collectFunctions(id, map);
         if(this.type instanceof ClassType)
             this.type.klass.collectStaticFunctions(id, map);
+    }
+}
+
+class ImportsContext extends Context {
+
+    type: ImportsType;
+
+    constructor(type: ImportsType) {
+        super();
+        this.type = type;
+    }
+
+    protected collectFunctions(id: Identifier, map: Map<string, IFunctionDeclaration>) {
+        super.collectFunctions(id, map);
+        if (this.type.has(id.value)) {
+            map.set(id.value, this.type.get(id.value));
+        }
     }
 }

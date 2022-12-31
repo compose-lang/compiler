@@ -32,12 +32,22 @@ export default abstract class DeclarationBase extends CodeFragment implements ID
         this._unit = unit;
     }
 
+    isModuleImport() {
+        return this.annotations && this.annotations.some(a => a.name === "@ModuleImport");
+    }
+
     isModuleExport() {
         return this.annotations && this.annotations.some(a => a.name === "@ModuleExport");
     }
 
+    getModuleImportName() {
+        const annotation = this.annotations.find(a => a.id.value == "@ModuleImport");
+        return annotation.value.text.substring(1, annotation.value.text.length - 1);
+    }
+
     abstract register(context: Context): void;
     abstract check(context: Context): IType;
+
     declare(context: Context, module: WasmModule): void {
         // nothing to do
     }

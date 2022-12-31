@@ -24,11 +24,11 @@ export default class Compiler {
     addUnit(unit: CompilationUnit) {
         this.units.push(unit);
         unit.context = Context.newGlobalsContext();
-        this.processImports(unit);
+        this.processUnitImports(unit);
         this.populateContextAndCheck(unit);
     }
 
-    private processImports(unit: CompilationUnit) {
+    private processUnitImports(unit: CompilationUnit) {
         unit.imports.forEach(imp => imp.process(unit, this));
     }
 
@@ -43,7 +43,8 @@ export default class Compiler {
     }
 
     private declareUnits() {
-        this.units.forEach(unit => unit.declarations.forEach(decl => decl.declare(unit.context, this.module), this), this);
+        this.units.forEach(unit => unit.declarations.filter(decl => decl.isModuleImport()).forEach(decl => decl.declare(unit.context, this.module), this), this);
+        this.units.forEach(unit => unit.declarations.filter(decl => !decl.isModuleImport()).forEach(decl => decl.declare(unit.context, this.module), this), this);
         this.units.forEach(unit => unit.statements.forEach(stmt => stmt.declare(unit.context, this.module), this), this);
     }
 

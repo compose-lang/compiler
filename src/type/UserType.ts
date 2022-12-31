@@ -15,6 +15,7 @@ export default abstract class UserType extends CodeFragment implements IType {
     abstract count(): number;
     abstract writeTo(target: IWasmTarget): void;
     abstract isAssignableFrom(context: Context, type: IType): boolean;
+    abstract prepareContext(context: Context): Context;
 
     checkAdd(context: Context, rightType: IType, tryReverse: boolean): IType {
         if(tryReverse)
