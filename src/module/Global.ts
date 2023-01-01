@@ -39,7 +39,8 @@ export default class Global implements ICompilable {
     }
 
     compile(context: Context, module: WasmModule): void {
-        this.value.compile(context, module, this.body);
+        const value = this.value.constify(context);
+        value.compile(context, module, this.body);
         this.body.addOpCode(OpCode.END);
     }
 

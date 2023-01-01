@@ -61,17 +61,6 @@ export default class DeclareInstanceStatement extends StatementBase implements I
         this.expression.declare(context, module);
     }
 
-    constify(context: Context, module: WasmModule): void {
-        if (context.isGlobal()) {
-            const expression = this.expression.constify(context);
-            if(expression != this.expression) {
-                const variable = context.getRegisteredLocal(this.id);
-                assert.ok(variable !== null);
-                module.setGlobalValue(variable, expression);
-            }
-        }
-    }
-
     rehearse(context: Context, module: WasmModule, body: FunctionBody): void {
         this.expression.rehearse(context, module, body);
         const type = this._check(context);
