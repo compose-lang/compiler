@@ -141,6 +141,8 @@ import ImportSource from "../module/ImportSource";
 import ExportType from "../compiler/ExportType";
 import EnumDeclaration from "../declaration/EnumDeclaration";
 import ILiteralExpression from "../literal/ILiteralExpression";
+import PreprocessedFileStream from "./PreprocessedFileStream";
+import PreprocessedCharStream from "./PreprocessedCharStream";
 
 interface IndexedNode {
     __id?: number;
@@ -148,15 +150,15 @@ interface IndexedNode {
 
 export default class Builder extends ComposeParserListener {
 
-    static parse_unit(data: string): CompilationUnit | null {
-        const unit = Builder.doParse<CompilationUnit>((parser: ComposeParser) => parser.compilation_unit(), data);
+    static parse_unit(data: string, directives?: Map<string, boolean>): CompilationUnit | null {
+        const unit = Builder.doParse<CompilationUnit>((parser: ComposeParser) => parser.compilation_unit(), data, null, directives);
         if(fileExists(data))
             unit.path = data;
         return unit;
     }
 
     static parse_import(data: string): ImportStatement | null {
-        return Builder.doParse<ImportStatement>((parser: ComposeParser) => parser.import_statement(), data);
+        return Builder.doParse<ImportStatement>((parser: ComposeParser) => parser.import_statement(), data,);
     }
 
     static parse_function_type(data: string): FunctionType | null {
@@ -202,11 +204,11 @@ export default class Builder extends ComposeParserListener {
     }
 
 
-    static doParse<T>(rule: (parser: ComposeParser) => ParseTree, data?: string, stream?: CharStream): T | null {
+    static doParse<T>(rule: (parser: ComposeParser) => ParseTree, data?: string, stream?: CharStream, directives?: Map<string, boolean>): T | null {
         try {
             const isFile = data && fileExists(data);
             const path = isFile ? data : "";
-            stream = stream || isFile ? new FileStream(data, false) : new CharStream(data, false);
+            stream = stream || isFile ? new PreprocessedFileStream(data, directives) : new PreprocessedCharStream(data, directives);
             const lexer = new ComposeLexer(stream);
             const tokenStream = new CommonTokenStream(lexer);
             const parser = new ComposeParser(tokenStream);

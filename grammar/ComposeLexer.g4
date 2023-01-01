@@ -79,27 +79,27 @@ LCURL: '{';
 RCURL: '}';
 
 ARROW: '=>';
-GT : '>';
-LT : '<';
-LTE : '<=';
-GTE : '>=';
-EQUALS : '==';
-NOT_EQUALS : '!=';
+GT: '>';
+LT: '<';
+LTE: '<=';
+GTE: '>=';
+EQUALS: '==';
+NOT_EQUALS: '!=';
 
-NOT : '!';
-AND : '&&';
-OR : '||';
+NOT: '!';
+AND: '&&';
+OR: '||';
 
-QUESTION : '?';
-SEMI : ';';
-COLON : ':';
-COMMA : ',';
+QUESTION: '?';
+SEMI: ';';
+COLON: ':';
+COMMA: ',';
 ETC: '...';
-DOT : '.';
-AT : '@';
+DOT: '.';
+AT: '@';
 
-INC : '++';
-DEC : '--';
+INC: '++';
+DEC: '--';
 
 PLUS: '+';
 MINUS: '-';
@@ -110,340 +110,341 @@ PERCENT: '%';
 
 CARET: '^';
 TILDE: '~';
-AMP : '&';
-PIPE : '|';
-LSHIFT : '<<';
-RSHIFT : '>>';
-URSHIFT : '>>>';
+AMP: '&';
+PIPE: '|';
+LSHIFT: '<<';
+RSHIFT: '>>';
+URSHIFT: '>>>';
 
-ASSIGN : '=';
-ADD_ASSIGN : '+=';
-SUB_ASSIGN : '-=';
-MUL_ASSIGN : '*=';
-DIV_ASSIGN : '/=';
-AND_ASSIGN : '&=';
-OR_ASSIGN : '|=';
-XOR_ASSIGN : '^=';
-MOD_ASSIGN : '%=';
-LSHIFT_ASSIGN : '<<=';
-RSHIFT_ASSIGN : '>>=';
-URSHIFT_ASSIGN : '>>>=';
+ASSIGN: '=';
+ADD_ASSIGN: '+=';
+SUB_ASSIGN: '-=';
+MUL_ASSIGN: '*=';
+DIV_ASSIGN: '/=';
+AND_ASSIGN: '&=';
+OR_ASSIGN: '|=';
+XOR_ASSIGN: '^=';
+MOD_ASSIGN: '%=';
+LSHIFT_ASSIGN: '<<=';
+RSHIFT_ASSIGN: '>>=';
+URSHIFT_ASSIGN: '>>>=';
 
 // §3.10.1 Integer Literals
 
-INTEGER_LITERAL
-	:	DecimalIntegerLiteral
-	|	HexIntegerLiteral
+INTEGER_LITERAL:
+    DecimalIntegerLiteral
+    |	HexIntegerLiteral
 	|	OctalIntegerLiteral
 	|	BinaryIntegerLiteral
 	;
 
 fragment
-DecimalIntegerLiteral
-	:	DecimalNumeral IntegerTypeSuffix?
+DecimalIntegerLiteral:
+	DecimalNumeral IntegerTypeSuffix?
 	;
 
 fragment
-HexIntegerLiteral
-	:	HexNumeral IntegerTypeSuffix?
+HexIntegerLiteral:
+	HexNumeral IntegerTypeSuffix?
 	;
 
 fragment
-OctalIntegerLiteral
-	:	OctalNumeral IntegerTypeSuffix?
+OctalIntegerLiteral:
+	OctalNumeral IntegerTypeSuffix?
 	;
 
 fragment
-BinaryIntegerLiteral
-	:	BinaryNumeral IntegerTypeSuffix?
+BinaryIntegerLiteral:
+	BinaryNumeral IntegerTypeSuffix?
 	;
 
 fragment
-IntegerTypeSuffix
-	:	[lL]
+IntegerTypeSuffix:
+	[lL]
 	;
 
 fragment
-DecimalNumeral
-	:	'0'
+DecimalNumeral:
+	'0'
 	|	NonZeroDigit (Digits? | Underscores Digits)
 	;
 
 fragment
-Digits
-	:	Digit (DigitsAndUnderscores? Digit)?
+Digits:
+	Digit (DigitsAndUnderscores? Digit)?
 	;
 
 fragment
-Digit
-	:	'0'
+Digit:
+	'0'
 	|	NonZeroDigit
 	;
 
 fragment
-NonZeroDigit
-	:	[1-9]
+NonZeroDigit:
+	[1-9]
 	;
 
 fragment
-DigitsAndUnderscores
-	:	DigitOrUnderscore+
+DigitsAndUnderscores:
+	DigitOrUnderscore+
 	;
 
 fragment
-DigitOrUnderscore
-	:	Digit
+DigitOrUnderscore:
+	Digit
 	|	'_'
 	;
 
 fragment
-Underscores
-	:	'_'+
+Underscores:
+	'_'+
 	;
 
 fragment
-HexNumeral
-	:	'0' [xX] HexDigits
+HexNumeral:
+	'0' [xX] HexDigits
 	;
 
 fragment
-HexDigits
-	:	HexDigit (HexDigitsAndUnderscores? HexDigit)?
+HexDigits:
+	HexDigit (HexDigitsAndUnderscores? HexDigit)?
 	;
 
 fragment
-HexDigit
-	:	[0-9a-fA-F]
+HexDigit:
+	[0-9a-fA-F]
 	;
 
 fragment
-HexDigitsAndUnderscores
-	:	HexDigitOrUnderscore+
+HexDigitsAndUnderscores:
+	HexDigitOrUnderscore+
 	;
 
 fragment
-HexDigitOrUnderscore
-	:	HexDigit
+HexDigitOrUnderscore:
+	HexDigit
 	|	'_'
 	;
 
 fragment
-OctalNumeral
-	:	'0' Underscores? OctalDigits
+OctalNumeral:
+	'0' Underscores? OctalDigits
 	;
 
 fragment
-OctalDigits
-	:	OctalDigit (OctalDigitsAndUnderscores? OctalDigit)?
+OctalDigits:
+	OctalDigit (OctalDigitsAndUnderscores? OctalDigit)?
 	;
 
 fragment
-OctalDigit
-	:	[0-7]
+OctalDigit:
+	[0-7]
 	;
 
 fragment
-OctalDigitsAndUnderscores
-	:	OctalDigitOrUnderscore+
+OctalDigitsAndUnderscores:
+	OctalDigitOrUnderscore+
 	;
 
 fragment
-OctalDigitOrUnderscore
-	:	OctalDigit
+OctalDigitOrUnderscore:
+	OctalDigit
 	|	'_'
 	;
 
 fragment
-BinaryNumeral
-	:	'0' [bB] BinaryDigits
+BinaryNumeral:
+	'0' [bB] BinaryDigits
 	;
 
 fragment
-BinaryDigits
-	:	BinaryDigit (BinaryDigitsAndUnderscores? BinaryDigit)?
+BinaryDigits:
+	BinaryDigit (BinaryDigitsAndUnderscores? BinaryDigit)?
 	;
 
 fragment
-BinaryDigit
-	:	[01]
+BinaryDigit:
+	[01]
 	;
 
 fragment
-BinaryDigitsAndUnderscores
-	:	BinaryDigitOrUnderscore+
+BinaryDigitsAndUnderscores:
+	BinaryDigitOrUnderscore+
 	;
 
 fragment
-BinaryDigitOrUnderscore
-	:	BinaryDigit
+BinaryDigitOrUnderscore:
+	BinaryDigit
 	|	'_'
 	;
 
 // §3.10.2 Floating-Point Literals
 
-DECIMAL_LITERAL
-	:	DecimalFloatingPointLiteral
+DECIMAL_LITERAL:
+	DecimalFloatingPointLiteral
 	|	HexadecimalFloatingPointLiteral
 	;
 
 fragment
-DecimalFloatingPointLiteral
-	:	Digits '.' Digits? ExponentPart? FloatTypeSuffix?
+DecimalFloatingPointLiteral:
+	Digits '.' Digits? ExponentPart? FloatTypeSuffix?
 	|	'.' Digits ExponentPart? FloatTypeSuffix?
 	|	Digits ExponentPart FloatTypeSuffix?
 	|	Digits FloatTypeSuffix
 	;
 
 fragment
-ExponentPart
-	:	ExponentIndicator SignedInteger
+ExponentPart:
+	ExponentIndicator SignedInteger
 	;
 
 fragment
-ExponentIndicator
-	:	[eE]
+ExponentIndicator:
+	[eE]
 	;
 
 fragment
-SignedInteger
-	:	Sign? Digits
+SignedInteger:
+	Sign? Digits
 	;
 
 fragment
-Sign
-	:	[+-]
+Sign:
+	[+-]
 	;
 
 fragment
-FloatTypeSuffix
-	:	[fFdD]
+FloatTypeSuffix:
+	[fFdD]
 	;
 
 fragment
-HexadecimalFloatingPointLiteral
-	:	HexSignificand BinaryExponent FloatTypeSuffix?
+HexadecimalFloatingPointLiteral:
+	HexSignificand BinaryExponent FloatTypeSuffix?
 	;
 
 fragment
-HexSignificand
-	:	HexNumeral '.'?
+HexSignificand:
+	HexNumeral '.'?
 	|	'0' [xX] HexDigits? '.' HexDigits
 	;
 
 fragment
-BinaryExponent
-	:	BinaryExponentIndicator SignedInteger
+BinaryExponent:
+	BinaryExponentIndicator SignedInteger
 	;
 
 fragment
-BinaryExponentIndicator
-	:	[pP]
+BinaryExponentIndicator:
+	[pP]
 	;
 
 // §3.10.3 Boolean Literals
 
-BOOLEAN_LITERAL
-	:	'true'
+BOOLEAN_LITERAL:
+	'true'
 	|	'false'
 	;
 
 // §3.10.4 Character Literals
 
-CHAR_LITERAL
-	:	'\'' SingleCharacter '\''
+CHAR_LITERAL:
+	'\'' SingleCharacter '\''
 	|	'\'' EscapeSequence '\''
 	;
 
 fragment
-SingleCharacter
-	:	~['\\\r\n]
+SingleCharacter:
+	~['\\\r\n]
 	;
 
 // §3.10.5 String Literals
 
-STRING_LITERAL
-	:	'"' StringCharacters? '"'
+STRING_LITERAL:
+	'"' StringCharacters? '"'
 	;
 
 fragment
-StringCharacters
-	:	StringCharacter+
+StringCharacters:
+	StringCharacter+
 	;
 
 fragment
-StringCharacter
-	:	~["\\\r\n]
+StringCharacter:
+	~["\\\r\n]
 	|	EscapeSequence
 	;
 
 // §3.10.6 Escape Sequences for Character and String Literals
 
 fragment
-EscapeSequence
-	:	'\\' [btnfr"'\\]
+EscapeSequence:
+       '\\' [btnfr"'\\]
 	|	OctalEscape
     |   UnicodeEscape // This is not in the spec but prevents having to preprocess the input
 	;
 
 fragment
-OctalEscape
-	:	'\\' OctalDigit
+OctalEscape:
+	'\\' OctalDigit
 	|	'\\' OctalDigit OctalDigit
 	|	'\\' ZeroToThree OctalDigit OctalDigit
 	;
 
 fragment
-ZeroToThree
-	:	[0-3]
+ZeroToThree:
+	[0-3]
 	;
 
 // This is not in the spec but prevents having to preprocess the input
 fragment
-UnicodeEscape
-    :   '\\' 'u'+ HexDigit HexDigit HexDigit HexDigit
+UnicodeEscape:
+	'\\' 'u'+ HexDigit HexDigit HexDigit HexDigit
     ;
 
 // §3.10.7 The Null Literal
 
-NULL_LITERAL
-	:	'null'
+NULL_LITERAL:
+	'null'
 	;
 
 // §3.8 Identifiers (must appear after all keywords in the grammar)
 // moved to AssemblyLexer until import sequence is fixed
 /*
-IDENTIFIER
-	:	Letter LetterOrDigit*
+IDENTIFIER:
+	Letter LetterOrDigit*
 	;
 
 fragment
-Letter
-	:	[a-zA-Z$_] // these are the "letters" below 0x7F
+Letter:
+	[a-zA-Z$_] // these are the "letters" below 0x7F
 	;
 
 fragment
-LetterOrDigit
-	:	[a-zA-Z0-9$_] // these are the "letters or digits" below 0x7F
+LetterOrDigit:
+	[a-zA-Z0-9$_] // these are the "letters or digits" below 0x7F
 	;
 */
 
 // Annotation
 
-ANNOTATION
-    : '@' IDENTIFIER
+ANNOTATION:
+	'@' IDENTIFIER
     ;
 
 //
 // Whitespace and comments
 //
 
-WS  :  [ \t\r\n\u000C]+ -> skip
+WS:
+	[ \t\r\n\u000C]+ -> skip
     ;
 
-COMMENT
-    :   '/*' .*? '*/' -> channel(HIDDEN)
+COMMENT:
+	'/*' .*? '*/' -> channel(HIDDEN)
     ;
 
-LINE_COMMENT
-    :   '//' ~[\r\n]* -> channel(HIDDEN)
+LINE_COMMENT:
+	'//' ~[\r\n]* -> channel(HIDDEN)
     ;
