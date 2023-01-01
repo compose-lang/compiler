@@ -4,6 +4,7 @@ import LEB128 from "../utils/LEB128";
 
 export default abstract class WasmTargetBase implements IWasmTarget {
 
+    abstract asWasmBuffer(): Uint8Array;
     abstract asWasmSource(): IWasmSource;
     abstract writeBytesArray(bytes: number[]): void;
     abstract writeUint8Array(bytes: Uint8Array): void;

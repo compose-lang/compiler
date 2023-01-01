@@ -1,6 +1,7 @@
 import IWasmSource from "../runner/IWasmSource";
 
 export default interface IWasmTarget {
+    asWasmBuffer(): Uint8Array
     asWasmSource(): IWasmSource;
     writeUInts(...uints: number[]): void;
     writeUIntsArray(uints: number[]): void;
