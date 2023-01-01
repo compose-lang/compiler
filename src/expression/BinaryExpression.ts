@@ -38,9 +38,9 @@ export default class BinaryExpression extends ExpressionBase {
         return this.left.isConst(context) && this.right.isConst(context);
     }
 
-    constify(context: Context, module: WasmModule): IExpression {
-        const left = this.left.constify(context, module);
-        const right = this.right.constify(context, module);
+    constify(context: Context): IExpression {
+        const left = this.left.constify(context);
+        const right = this.right.constify(context);
         const leftType = left.check(context);
         const rightType = right.check(context);
         const constifier = BINARY_CONSTIFIERS.getConstifier(leftType, rightType, this.operator);

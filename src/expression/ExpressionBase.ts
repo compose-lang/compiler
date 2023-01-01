@@ -9,13 +9,15 @@ import assert from "assert";
 export default abstract class ExpressionBase extends CodeFragment implements IExpression {
 
     abstract check(context: Context): IType;
+
     isConst(context: Context): boolean {
         return false;
     }
 
-    constify(context: Context, module: WasmModule): IExpression {
+    constify(context: Context): IExpression {
         assert.ok(false); // must override if isConst returns true
     }
+
     abstract declare(context: Context, module: WasmModule): void;
     rehearse(context: Context, module: WasmModule, body: FunctionBody): void {
         assert.ok(false);

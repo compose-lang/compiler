@@ -63,7 +63,7 @@ export default class DeclareInstanceStatement extends StatementBase implements I
 
     constify(context: Context, module: WasmModule): void {
         if (context.isGlobal()) {
-            const expression = this.expression.constify(context, module);
+            const expression = this.expression.constify(context);
             if(expression != this.expression) {
                 const variable = context.getRegisteredLocal(this.id);
                 assert.ok(variable !== null);

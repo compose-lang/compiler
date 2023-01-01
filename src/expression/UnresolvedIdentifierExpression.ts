@@ -35,9 +35,9 @@ export default class UnresolvedIdentifierExpression extends ExpressionBase {
         return this.resolved.isConst(context);
     }
 
-    constify(context: Context, module: WasmModule): IExpression {
+    constify(context: Context): IExpression {
         this.resolve(context);
-        return this.resolved.constify(context, module);
+        return this.resolved.constify(context);
     }
 
     declare(context: Context, module: WasmModule): void {
@@ -172,10 +172,10 @@ class GlobalVariableExpression extends ExpressionBase {
         return true; // all globals must be initialized with a const expression
     }
 
-    constify(context: Context, module: WasmModule): IExpression {
-        const global = module.getGlobalsSection().getGlobal(this.name);
-        assert.ok(global);
-        return global.value.constify(context, module);
+    constify(context: Context): IExpression {
+        const value = context.getRegisteredGlobalValue(this.id);
+        assert.ok(value);
+        return value.constify(context);
     }
 
     declare(context: Context, module: WasmModule): void {

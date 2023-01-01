@@ -20,7 +20,7 @@ export default abstract class LiteralBase<T> extends ExpressionBase implements I
         return true;
     }
 
-    constify(context: Context, module: WasmModule): IExpression {
+    constify(context: Context): IExpression {
         return this;
     }
 
