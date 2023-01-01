@@ -50,6 +50,12 @@ export default class WasmModule {
         }
     }
 
+    setGlobalValue(variable: Variable, value: IExpression) {
+        const global = this.getGlobalsSection().getGlobal(variable.name);
+        assert.ok(global);
+        global.value = value;
+    }
+
     declareImportedFunction(decl: IFunctionDeclaration) {
         assert.ok(!this.sections.has(SectionType.FUNCTIONS));
         const typeIndex = this.getTypesSection().addType(decl.type());
@@ -108,6 +114,7 @@ export default class WasmModule {
             this.sections.set(type, new section());
         return this.sections.get(type) as T;
     }
+
 
 
 }

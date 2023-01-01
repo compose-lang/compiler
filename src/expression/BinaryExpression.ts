@@ -6,6 +6,7 @@ import Operator from "./Operator";
 import IExpression from "./IExpression";
 import * as assert from "assert";
 import FunctionBody from "../module/FunctionBody";
+import { BINARY_CONSTIFIERS } from "../compiler/Constifiers";
 
 export default class BinaryExpression extends ExpressionBase {
 
@@ -31,6 +32,20 @@ export default class BinaryExpression extends ExpressionBase {
             default:
                 assert.ok(false);
         }
+    }
+
+    isConst(context: Context): boolean {
+        return this.left.isConst(context) && this.right.isConst(context);
+    }
+
+    constify(context: Context, module: WasmModule): IExpression {
+        const left = this.left.constify(context, module);
+        const right = this.right.constify(context, module);
+        const leftType = left.check(context);
+        const rightType = right.check(context);
+        const constifier = BINARY_CONSTIFIERS.getConstifier(leftType, rightType, this.operator);
+        assert.ok(constifier);
+        return constifier(left, right);
     }
 
     declare(context: Context, module: WasmModule): void {

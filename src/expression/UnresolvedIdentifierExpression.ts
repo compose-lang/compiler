@@ -30,6 +30,16 @@ export default class UnresolvedIdentifierExpression extends ExpressionBase {
         return this.resolved.check(context);
     }
 
+    isConst(context: Context): boolean {
+        this.resolve(context);
+        return this.resolved.isConst(context);
+    }
+
+    constify(context: Context, module: WasmModule): IExpression {
+        this.resolve(context);
+        return this.resolved.constify(context, module);
+    }
+
     declare(context: Context, module: WasmModule): void {
         this.resolve(context);
         this.resolved.declare(context, module);
@@ -53,7 +63,7 @@ export default class UnresolvedIdentifierExpression extends ExpressionBase {
     }
 
     private resolveLocalVariable(context: Context) {
-        const local = context.getRegisteredLocal(this.id);
+        const local = context.isGlobal() ? null : context.getRegisteredLocal(this.id);
         if(local)
             return new LocalVariableExpression(this.id);
         else
@@ -62,6 +72,14 @@ export default class UnresolvedIdentifierExpression extends ExpressionBase {
 
     private resolveGlobalVariable(context: Context) {
         const global = context.getRegisteredGlobal(this.id);
+        if(global)
+            return new GlobalVariableExpression(this.id);
+        else
+            return this.resolveGlobalValue(context);
+    }
+
+    private resolveGlobalValue(context: Context) {
+        const global = context.getRegisteredGlobalValue(this.id);
         if(global)
             return new GlobalVariableExpression(this.id);
         else
@@ -143,8 +161,21 @@ class GlobalVariableExpression extends ExpressionBase {
 
     check(context: Context): IType {
         const global = context.getRegisteredGlobal(this.id);
-        assert.ok(global !== null);
-        return global.type;
+        if(global)
+            return global.type;
+        const value = context.getRegisteredGlobalValue(this.id);
+        assert.ok(value !== null);
+        return value.check(context);
+    }
+
+    isConst(context: Context): boolean {
+        return true; // all globals must be initialized with a const expression
+    }
+
+    constify(context: Context, module: WasmModule): IExpression {
+        const global = module.getGlobalsSection().getGlobal(this.name);
+        assert.ok(global);
+        return global.value.constify(context, module);
     }
 
     declare(context: Context, module: WasmModule): void {

@@ -1,5 +1,5 @@
 import IDeclaration from "../declaration/IDeclaration";
-import IStatement from "../statement/IStatement";
+import IGlobalStatement from "../statement/IGlobalStatement";
 import ImportStatement from "../module/ImportStatement";
 import Context from "../context/Context";
 
@@ -7,13 +7,13 @@ export default class CompilationUnit {
 
     path: string = "<memory>";
     imports: ImportStatement[] = [];
-    statements: IStatement[] = [];
+    statements: IGlobalStatement[] = [];
     declarations: IDeclaration[] = [];
     mainExport: any = null;
     childExports: any[] = [];
     context: Context = null;
 
-    constructor(imports: ImportStatement[], statements: IStatement[], declarations: IDeclaration[], mainExport: any, childExports: any[]) {
+    constructor(imports: ImportStatement[], statements: IGlobalStatement[], declarations: IDeclaration[], mainExport: any, childExports: any[]) {
         this.imports = imports;
         this.statements = statements;
         this.declarations = declarations;

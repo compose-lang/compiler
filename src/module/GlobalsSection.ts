@@ -30,4 +30,8 @@ export default class GlobalsSection extends SectionBase {
     getGlobalIndex(name: string) {
         return this.globals.findIndex(g => g.variable.name == name);
     }
+
+    getGlobal(name: string) {
+        return this.globals.find(g => g.variable.name == name);
+    }
 }

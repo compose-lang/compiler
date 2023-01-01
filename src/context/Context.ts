@@ -9,6 +9,7 @@ import ClassType from "../type/ClassType";
 import EnumDeclaration from "../declaration/EnumDeclaration";
 import ImportsType from "../type/ImportsType";
 import FunctionType from "../type/FunctionType";
+import IExpression from "../expression/IExpression";
 
 export default class Context {
 
@@ -28,6 +29,7 @@ export default class Context {
     enums = new Map<string, EnumDeclaration>();
     functions = new Map<string, Map<string, IFunctionDeclaration>>();
     locals = new Map<string, Variable>();
+    values = new Map<string, IExpression>();
 
     protected constructor(globals?: Context) {
         this.globals = globals || this;
@@ -104,23 +106,31 @@ export default class Context {
     }
 
     registerGlobal(global: Variable) {
-        if(this.globals && this.globals != this)
+        if(this.globals && this.globals!=this)
             this.globals.registerGlobal(global);
         else
             this.registerLocal(global);
     }
 
     getRegisteredGlobal(id: Identifier): Variable {
-        const result = this.getRegisteredLocal(id);
-        if(result)
-            return result
-        else if(this.parent)
-            return this.parent.getRegisteredGlobal(id);
-        else if(this.globals && this.globals != this)
-            return this.globals.getRegisteredGlobal(id);
+        if(this.globals)
+            return this.globals.getRegisteredLocal(id);
         else
             return null;
     }
+
+    registerGlobalValue(id: Identifier, value: IExpression) {
+        if(this.globals)
+            this.globals.values.set(id.value, value);
+    }
+
+    getRegisteredGlobalValue(id: Identifier): IExpression {
+        if(this.globals && this.globals.values.has(id.value))
+            return this.globals.values.get(id.value);
+        else
+            return null;
+    }
+
 
     getRegisteredAttribute(id: Identifier): AttributeDeclaration {
         const result = this.attributes.get(id.value) || null;

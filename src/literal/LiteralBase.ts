@@ -3,6 +3,7 @@ import WasmModule from "../module/WasmModule";
 import Context from "../context/Context";
 import ILiteralExpression from "./ILiteralExpression";
 import FunctionBody from "../module/FunctionBody";
+import IExpression from "../expression/IExpression";
 
 export default abstract class LiteralBase<T> extends ExpressionBase implements ILiteralExpression {
 
@@ -13,6 +14,14 @@ export default abstract class LiteralBase<T> extends ExpressionBase implements I
         super();
         this.text = text;
         this.value = value;
+    }
+
+    isConst(context: Context) {
+        return true;
+    }
+
+    constify(context: Context, module: WasmModule): IExpression {
+        return this;
     }
 
     declare(context: Context, module: WasmModule): void {

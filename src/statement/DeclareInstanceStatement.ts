@@ -10,9 +10,9 @@ import Variable from "../context/Variable";
 import InstanceModifier from "./InstanceModifier";
 import * as assert from "assert";
 import VoidType from "../type/VoidType";
-import CompilationUnit from "../compiler/CompilationUnit";
+import IGlobalStatement from "./IGlobalStatement";
 
-export default class DeclareInstanceStatement extends StatementBase {
+export default class DeclareInstanceStatement extends StatementBase implements IGlobalStatement {
 
     modifier: InstanceModifier;
     id: Identifier;
@@ -31,12 +31,18 @@ export default class DeclareInstanceStatement extends StatementBase {
         return this.id.value;
     }
 
+    register(context: Context) {
+        context.registerGlobalValue(this.id, this.expression);
+    }
+
     check(context: Context): IType {
         this._check(context);
         return VoidType.instance;
     }
 
     private _check(context: Context): IType {
+        if(context.isGlobal())
+            assert.ok(this.expression.isConst(context));
         let type = this.expression.check(context);
         if(this.type) {
             assert.ok(this.type.isAssignableFrom(context, type));
@@ -53,6 +59,17 @@ export default class DeclareInstanceStatement extends StatementBase {
             module.declareGlobal(this.unit, variable, this.expression, this.isModuleExport());
         }
         this.expression.declare(context, module);
+    }
+
+    constify(context: Context, module: WasmModule): void {
+        if (context.isGlobal()) {
+            const expression = this.expression.constify(context, module);
+            if(expression != this.expression) {
+                const variable = context.getRegisteredLocal(this.id);
+                assert.ok(variable !== null);
+                module.setGlobalValue(variable, expression);
+            }
+        }
     }
 
     rehearse(context: Context, module: WasmModule, body: FunctionBody): void {

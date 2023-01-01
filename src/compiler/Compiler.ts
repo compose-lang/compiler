@@ -34,9 +34,9 @@ export default class Compiler {
 
     private populateContextAndCheck(unit: CompilationUnit) {
         // register declarations first, since this has no side effect
-        unit.declarations.forEach(decl => decl.register(unit.context)); // safe
-        // TODO register globals to avoid rare edge case of global referring to a declaration referring to a global not yet registered
-        // check globals once declarations are registered
+        unit.declarations.forEach(decl => decl.register(unit.context));
+        // register then check globals once declarations are registered
+        unit.statements.forEach(stmt => stmt.register(unit.context)); // may refer to a declaration
         unit.statements.forEach(stmt => stmt.check(unit.context)); // may refer to a declaration
         // check declarations
         unit.declarations.forEach(decl => decl.check(unit.context)); // may refer to a global
@@ -46,6 +46,7 @@ export default class Compiler {
         this.units.forEach(unit => unit.declarations.filter(decl => decl.isModuleImport()).forEach(decl => decl.declare(unit.context, this.module), this), this);
         this.units.forEach(unit => unit.declarations.filter(decl => !decl.isModuleImport()).forEach(decl => decl.declare(unit.context, this.module), this), this);
         this.units.forEach(unit => unit.statements.forEach(stmt => stmt.declare(unit.context, this.module), this), this);
+        this.units.forEach(unit => unit.statements.forEach(stmt => stmt.constify(unit.context, this.module), this), this);
     }
 
     private compileAtoms() {
