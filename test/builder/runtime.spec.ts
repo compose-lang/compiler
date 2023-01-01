@@ -6,7 +6,7 @@ import ComposeBuilder from "../../src/builder/ComposeBuilder";
 it('parses common.cots',  (done) => {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = dirname(dirname(dirname(__filename)));
-    const path = __dirname + "/src/runtime/rt/common.cots";
+    const path = __dirname + "/runtime/rt/common.cots";
     const unit = ComposeBuilder.parse_unit(path);
     assert.equal(unit.declarations.length, 7);
     assert.equal(unit.statements.length, 12);
@@ -17,7 +17,7 @@ it('parses common.cots',  (done) => {
 it('parses tlfs.cots',  (done) => {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = dirname(dirname(dirname(__filename)));
-    const path = __dirname + "/src/runtime/rt/tlfs.cots";
+    const path = __dirname + "/runtime/rt/tlfs.cots";
     const unit = ComposeBuilder.parse_unit(path);
     assert.equal(unit.declarations.length, 30);
     assert.equal(unit.statements.length, 15);
@@ -27,7 +27,7 @@ it('parses tlfs.cots',  (done) => {
 it('parses rtrace.cots',  (done) => {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = dirname(dirname(dirname(__filename)));
-    const path = __dirname + "/src/runtime/rt/rtrace.cots";
+    const path = __dirname + "/runtime/rt/rtrace.cots";
     const unit = ComposeBuilder.parse_unit(path);
     assert.equal(unit.declarations.length, 9);
     assert.equal(unit.statements.length, 0);
@@ -37,7 +37,7 @@ it('parses rtrace.cots',  (done) => {
 it('parses typeinfo.cots',  (done) => {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = dirname(dirname(dirname(__filename)));
-    const path = __dirname + "/src/runtime/shared/typeinfo.cots";
+    const path = __dirname + "/runtime/shared/typeinfo.cots";
     const unit = ComposeBuilder.parse_unit(path);
     assert.equal(unit.declarations.length, 4);
     assert.equal(unit.statements.length, 0);
@@ -47,7 +47,7 @@ it('parses typeinfo.cots',  (done) => {
 it('parses error.cots',  (done) => {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = dirname(dirname(dirname(__filename)));
-    const path = __dirname + "/src/runtime/util/error.cots";
+    const path = __dirname + "/runtime/util/error.cots";
     const unit = ComposeBuilder.parse_unit(path);
     assert.equal(unit.declarations.length, 0);
     assert.equal(unit.statements.length, 13);
