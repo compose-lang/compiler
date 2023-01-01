@@ -148,33 +148,33 @@ interface IndexedNode {
     __id?: number;
 }
 
-export default class Builder extends ComposeParserListener {
+export default class ComposeBuilder extends ComposeParserListener {
 
     static parse_unit(data: string, directives?: Map<string, boolean>): CompilationUnit | null {
-        const unit = Builder.doParse<CompilationUnit>((parser: ComposeParser) => parser.compilation_unit(), data, null, directives);
+        const unit = ComposeBuilder.doParse<CompilationUnit>((parser: ComposeParser) => parser.compilation_unit(), data, null, directives);
         if(fileExists(data))
             unit.path = data;
         return unit;
     }
 
     static parse_import(data: string): ImportStatement | null {
-        return Builder.doParse<ImportStatement>((parser: ComposeParser) => parser.import_statement(), data,);
+        return ComposeBuilder.doParse<ImportStatement>((parser: ComposeParser) => parser.import_statement(), data,);
     }
 
     static parse_function_type(data: string): FunctionType | null {
-        return Builder.doParse<FunctionType>((parser: ComposeParser) => parser.function_type(), data);
+        return ComposeBuilder.doParse<FunctionType>((parser: ComposeParser) => parser.function_type(), data);
     }
 
     static parse_expression(data: string): IExpression | null {
-        return Builder.doParse<IExpression>((parser: ComposeParser) => parser.expression(), data);
+        return ComposeBuilder.doParse<IExpression>((parser: ComposeParser) => parser.expression(), data);
     }
 
     static parse_statement(data: string): IStatement | null {
-        return Builder.doParse<IStatement>((parser: ComposeParser) => parser.statement(), data);
+        return ComposeBuilder.doParse<IStatement>((parser: ComposeParser) => parser.statement(), data);
     }
 
     static parse_instruction(data: string): Instruction | null {
-        return Builder.doParse<Instruction>((parser: ComposeParser) => parser.instruction(), data);
+        return ComposeBuilder.doParse<Instruction>((parser: ComposeParser) => parser.instruction(), data);
     }
 
     static readAccessibility(ctx: ParserRuleContext) {
@@ -213,7 +213,7 @@ export default class Builder extends ComposeParserListener {
             const tokenStream = new CommonTokenStream(lexer);
             const parser = new ComposeParser(tokenStream);
             const tree = rule(parser);
-            const builder = new Builder(parser, path);
+            const builder = new ComposeBuilder(parser, path);
             const walker = new ParseTreeWalker();
             walker.walk(builder, tree);
             return builder.getNodeValue<T>(tree);
@@ -399,7 +399,7 @@ export default class Builder extends ComposeParserListener {
             .map(child => this.getNodeValue<Identifier>(child), this);
         const functions = ctx.function_declaration_list()
             .map(child => this.getNodeValue<FunctionDeclarationBase>(child), this);
-        const accessibility = Builder.readAccessibility(ctx.accessibility());
+        const accessibility = ComposeBuilder.readAccessibility(ctx.accessibility());
         this.setNodeValue(ctx, new ClassDeclaration(accessibility, id, attributes, parents, functions, ctx.ABSTRACT() != null));
     }
 
@@ -452,13 +452,13 @@ export default class Builder extends ComposeParserListener {
     }
 
     exitAbstract_function_declaration = (ctx: Abstract_function_declarationContext) => {
-        const accessibility = Builder.readAccessibility(ctx.accessibility());
+        const accessibility = ComposeBuilder.readAccessibility(ctx.accessibility());
         const proto = this.getNodeValue<Prototype>(ctx.function_prototype());
         this.setNodeValue(ctx, new AbstractFunctionDeclaration(accessibility, proto));
     }
 
     exitConcrete_function_declaration = (ctx: Concrete_function_declarationContext) => {
-        const accessibility = Builder.readAccessibility(ctx.accessibility());
+        const accessibility = ComposeBuilder.readAccessibility(ctx.accessibility());
         const isStatic = ctx.STATIC() != null;
         const proto = this.getNodeValue<Prototype>(ctx.function_prototype());
         const stmts = ctx.statement_list().flatMap(s => this.getNodeValue<IStatement>(s));
@@ -466,7 +466,7 @@ export default class Builder extends ComposeParserListener {
     }
 
     exitNative_function_declaration = (ctx: Native_function_declarationContext) => {
-        const accessibility = Builder.readAccessibility(ctx.accessibility());
+        const accessibility = ComposeBuilder.readAccessibility(ctx.accessibility());
         const proto = this.getNodeValue<Prototype>(ctx.function_prototype());
         const instructions = ctx.instruction_list().flatMap(s => this.getNodeValue<Instruction>(s));
         this.setNodeValue(ctx, new NativeFunctionDeclaration(accessibility, proto, instructions));
@@ -485,7 +485,7 @@ export default class Builder extends ComposeParserListener {
 
     exitDeclaration = (ctx: DeclarationContext) => {
         const annotations = ctx.annotation_list().map(child => this.getNodeValue<Annotation>(child), this);
-        const exportType = Builder.readExportType(ctx.EXPORT(), ctx.DEFAULT());
+        const exportType = ComposeBuilder.readExportType(ctx.EXPORT(), ctx.DEFAULT());
         const decl = this.getNodeValue<IDeclaration>(ctx.getChild(annotations.length + exportType));
         decl.annotations = annotations;
         decl.exportType = exportType;
@@ -525,7 +525,7 @@ export default class Builder extends ComposeParserListener {
 
     exitGlobal_statement = (ctx: Global_statementContext) => {
         const annotations = ctx.annotation_list().map(child => this.getNodeValue<Annotation>(child), this);
-        const exportType = Builder.readExportType(ctx.EXPORT(), ctx.DEFAULT());
+        const exportType = ComposeBuilder.readExportType(ctx.EXPORT(), ctx.DEFAULT());
         const stmt = this.getNodeValue<IStatement>(ctx.getChild(annotations.length + exportType));
         const stmts: IStatement[] = Array.isArray(stmt) ? stmt : [stmt];
         stmts.forEach(s => {
@@ -721,7 +721,7 @@ export default class Builder extends ComposeParserListener {
 
     exitInstruction = (ctx: InstructionContext) => {
         const expressions = ctx.expression_list().map(e => this.getNodeValue<IExpression>(e), this);
-        const opcode = Builder.readOpCode(ctx.opcode());
+        const opcode = ComposeBuilder.readOpCode(ctx.opcode());
         const variants = ctx.INTEGER_LITERAL_list().map(i => IntegerLiteral.parseInteger(i.getText()));
         this.setNodeValue(ctx, new Instruction(expressions, opcode, variants) );
     }

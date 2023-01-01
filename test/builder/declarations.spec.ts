@@ -1,4 +1,4 @@
-import Builder from "../../src/builder/Builder";
+import ComposeBuilder from "../../src/builder/ComposeBuilder";
 import * as assert from "assert";
 import AttributeDeclaration from "../../src/declaration/AttributeDeclaration";
 import ClassDeclaration from "../../src/declaration/ClassDeclaration";
@@ -11,7 +11,7 @@ import NativeFunctionDeclaration from "../../src/declaration/NativeFunctionDecla
 import FunctionCall from "../../src/expression/FunctionCall";
 
 it('parses an attribute declaration ',  () => {
-    const unit = Builder.parse_unit("attribute text: string;");
+    const unit = ComposeBuilder.parse_unit("attribute text: string;");
     assert.equal(unit.declarations.length, 1);
     assert.ok(unit.declarations[0] instanceof AttributeDeclaration);
     assert.equal(unit.declarations[0].name, "text");
@@ -19,7 +19,7 @@ it('parses an attribute declaration ',  () => {
 });
 
 it('parses a class declaration ',  () => {
-    const unit = Builder.parse_unit("class Thing(a, b) extends C, D {}");
+    const unit = ComposeBuilder.parse_unit("class Thing(a, b) extends C, D {}");
     assert.equal(unit.declarations.length, 1);
     assert.ok(unit.declarations[0] instanceof ClassDeclaration);
     assert.equal(unit.declarations[0].name, "Thing");
@@ -29,7 +29,7 @@ it('parses a class declaration ',  () => {
 });
 
 it('parses a class declaration with annotations',  () => {
-    const unit = Builder.parse_unit("@ModuleExport @Inline class Thing(a, b) extends C, D {}");
+    const unit = ComposeBuilder.parse_unit("@ModuleExport @Inline class Thing(a, b) extends C, D {}");
     const decl = unit.declarations[0];
     assert.equal(decl.annotations.length, 2);
     assert.equal(decl.annotations[0].name, "@ModuleExport");
@@ -37,7 +37,7 @@ it('parses a class declaration with annotations',  () => {
 });
 
 it('parses an abstract function declaration without param and single return type',  () => {
-    const unit = Builder.parse_unit("class Stuff { abstract Thing(): string; }");
+    const unit = ComposeBuilder.parse_unit("class Stuff { abstract Thing(): string; }");
     assert.equal(unit.declarations.length, 1);
     const decl = unit.declarations[0];
     assert.ok(decl instanceof ClassDeclaration);
@@ -51,7 +51,7 @@ it('parses an abstract function declaration without param and single return type
 });
 
 it('parses an abstract function declaration without param and multiple return types',  () => {
-    const unit = Builder.parse_unit("class Stuff { abstract Thing(): string, boolean; }");
+    const unit = ComposeBuilder.parse_unit("class Stuff { abstract Thing(): string, boolean; }");
     assert.equal(unit.declarations.length, 1);
     const decl = unit.declarations[0];
     assert.ok(decl instanceof ClassDeclaration);
@@ -66,7 +66,7 @@ it('parses an abstract function declaration without param and multiple return ty
 });
 
 it('parses an abstract function declaration with attribute param and single return type',  () => {
-    const unit = Builder.parse_unit("class Stuff { abstract Thing(name): string; }");
+    const unit = ComposeBuilder.parse_unit("class Stuff { abstract Thing(name): string; }");
     assert.equal(unit.declarations.length, 1);
     const decl = unit.declarations[0];
     assert.ok(decl instanceof ClassDeclaration);
@@ -81,7 +81,7 @@ it('parses an abstract function declaration with attribute param and single retu
 });
 
 it('parses an abstract function declaration with typed param and single return type',  () => {
-    const unit = Builder.parse_unit("class Stuff { abstract Thing(name: string): string; }");
+    const unit = ComposeBuilder.parse_unit("class Stuff { abstract Thing(name: string): string; }");
     assert.equal(unit.declarations.length, 1);
     const declaration = unit.declarations[0];
     const decl = unit.declarations[0];
@@ -98,7 +98,7 @@ it('parses an abstract function declaration with typed param and single return t
 });
 
 it('parses a concrete function declaration with a return statement',  () => {
-    const unit = Builder.parse_unit("function Thing() { return 2; }");
+    const unit = ComposeBuilder.parse_unit("function Thing() { return 2; }");
     assert.equal(unit.declarations.length, 1);
     const declaration = unit.declarations[0];
     assert.ok(declaration instanceof ConcreteFunctionDeclaration);
@@ -112,7 +112,7 @@ it('parses a concrete function declaration with a return statement',  () => {
 });
 
 it('parses a parameterized function declaration',  () => {
-    const unit = Builder.parse_unit("function Thing<T>() { return 2; }");
+    const unit = ComposeBuilder.parse_unit("function Thing<T>() { return 2; }");
     assert.equal(unit.declarations.length, 1);
     const declaration = unit.declarations[0];
     assert.ok(declaration instanceof ConcreteFunctionDeclaration);
@@ -124,7 +124,7 @@ it('parses a parameterized function declaration',  () => {
 });
 
 it('parses a static member function declaration',  () => {
-    const unit = Builder.parse_unit("class Thing { static sm() { return 2; } }");
+    const unit = ComposeBuilder.parse_unit("class Thing { static sm() { return 2; } }");
     assert.equal(unit.declarations.length, 1);
     const declaration = unit.declarations[0];
     assert.ok(declaration instanceof ClassDeclaration);
@@ -137,7 +137,7 @@ it('parses a static member function declaration',  () => {
 
 
 it('parses a native function declaration',  () => {
-    const unit = Builder.parse_unit("native function sm(): i32 { i32.const 2; }");
+    const unit = ComposeBuilder.parse_unit("native function sm(): i32 { i32.const 2; }");
     assert.equal(unit.declarations.length, 1);
     const declaration = unit.declarations[0];
     assert.ok(declaration instanceof NativeFunctionDeclaration);
@@ -145,7 +145,7 @@ it('parses a native function declaration',  () => {
 });
 
 it('parses a native member function declaration',  () => {
-    const unit = Builder.parse_unit("class Thing { static native sm(): i32 { i32.const 2; } }");
+    const unit = ComposeBuilder.parse_unit("class Thing { static native sm(): i32 { i32.const 2; } }");
     assert.equal(unit.declarations.length, 1);
     const declaration = unit.declarations[0];
     assert.ok(declaration instanceof ClassDeclaration);
@@ -158,7 +158,7 @@ it('parses a native member function declaration',  () => {
 });
 
 it('parses a static member function call',  () => {
-    const unit = Builder.parse_unit("class Thing { static sm(): i32 { return 12; } } function Stuff() { return Thing.sm(); }");
+    const unit = ComposeBuilder.parse_unit("class Thing { static sm(): i32 { return 12; } } function Stuff() { return Thing.sm(); }");
     assert.equal(unit.declarations.length, 2);
     const klass = unit.declarations[0];
     assert.ok(klass instanceof ClassDeclaration);

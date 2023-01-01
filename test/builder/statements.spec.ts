@@ -1,4 +1,4 @@
-import Builder from "../../src/builder/Builder";
+import ComposeBuilder from "../../src/builder/ComposeBuilder";
 import * as assert from "assert";
 import ReturnStatement from "../../src/statement/ReturnStatement";
 import IntegerLiteral from "../../src/literal/IntegerLiteral";
@@ -10,7 +10,7 @@ import OpCode from "../../src/compiler/OpCode";
 import ImportStatement from "../../src/module/ImportStatement";
 
 it('parses a declare statement',  () => {
-    const stmts = Builder.parse_statement("const a = 2, b: i64 = 3;");
+    const stmts = ComposeBuilder.parse_statement("const a = 2, b: i64 = 3;");
     assert.ok(Array.isArray(stmts));
     assert.equal(stmts.length, 2);
     assert.ok(stmts[0] instanceof DeclareInstanceStatement);
@@ -23,33 +23,33 @@ it('parses a declare statement',  () => {
 });
 
 it('parses an assign statement',  () => {
-    const stmt = Builder.parse_statement("a = 2;");
+    const stmt = ComposeBuilder.parse_statement("a = 2;");
     assert.ok(stmt instanceof AssignInstanceStatement);
     assert.ok(stmt.expression instanceof IntegerLiteral);
     assert.equal(stmt.expression.value, 2);
 });
 
 it('parses a return statement',  () => {
-    const stmt = Builder.parse_statement("return 2;");
+    const stmt = ComposeBuilder.parse_statement("return 2;");
     assert.ok(stmt instanceof ReturnStatement);
     assert.ok(stmt.expression instanceof IntegerLiteral);
     assert.equal(stmt.expression.value, 2);
 });
 
 it('parses a call statement',  () => {
-    const stmt = Builder.parse_statement("hello();");
+    const stmt = ComposeBuilder.parse_statement("hello();");
     assert.ok(stmt instanceof FunctionCallStatement);
     assert.equal(stmt.name, "hello");
 });
 
 it('parses an instruction',  () => {
-    const instruction = Builder.parse_instruction("i32.const 12;");
+    const instruction = ComposeBuilder.parse_instruction("i32.const 12;");
     assert.equal(instruction.opcode, OpCode.I32_CONST);
     assert.equal(instruction.variants.length, 1);
 });
 
 it('parses an import statement',  () => {
-    const stmt = Builder.parse_import('import Stuff, { Stuff1, Stuff2 } from "./Stuff";');
+    const stmt = ComposeBuilder.parse_import('import Stuff, { Stuff1, Stuff2 } from "./Stuff";');
     assert.ok(stmt instanceof ImportStatement);
     assert.equal(stmt.mainSymbol.value, "Stuff");
     assert.deepEqual(stmt.childSymbols.map(id => id.value), [ "Stuff1", "Stuff2" ]);

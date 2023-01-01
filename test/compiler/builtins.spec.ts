@@ -1,5 +1,5 @@
 import * as assert from "assert";
-import Builder from "../../src/builder/Builder";
+import ComposeBuilder from "../../src/builder/ComposeBuilder";
 import Compiler from "../../src/compiler/Compiler";
 import WasmBufferTarget from "../../src/compiler/WasmBufferTarget";
 import Runner from "../../src/runner/Runner";
@@ -7,7 +7,7 @@ import Runner from "../../src/runner/Runner";
 it('reads sizeof<boolean>',  () => {
     const compiler = new Compiler();
     const target = new WasmBufferTarget();
-    const unit = Builder.parse_unit("@ModuleExport function boolean_sizeof(): i32 { return sizeof(boolean); }");
+    const unit = ComposeBuilder.parse_unit("@ModuleExport function boolean_sizeof(): i32 { return sizeof(boolean); }");
     compiler.buildOne(unit, target);
     const runner = Runner.of(target.asWasmSource());
     const result = runner.runFunction<number>("boolean_sizeof");
@@ -17,7 +17,7 @@ it('reads sizeof<boolean>',  () => {
 it('reads sizeof<i32>',  () => {
     const compiler = new Compiler();
     const target = new WasmBufferTarget();
-    const unit = Builder.parse_unit("@ModuleExport function i32_sizeof(): i32 { return sizeof(i32); }");
+    const unit = ComposeBuilder.parse_unit("@ModuleExport function i32_sizeof(): i32 { return sizeof(i32); }");
     compiler.buildOne(unit, target);
     const runner = Runner.of(target.asWasmSource());
     const result = runner.runFunction<number>("i32_sizeof");
@@ -27,7 +27,7 @@ it('reads sizeof<i32>',  () => {
 it('reads sizeof<i64>',  () => {
     const compiler = new Compiler();
     const target = new WasmBufferTarget();
-    const unit = Builder.parse_unit("@ModuleExport function i64_sizeof(): i32 { return sizeof(i64); }");
+    const unit = ComposeBuilder.parse_unit("@ModuleExport function i64_sizeof(): i32 { return sizeof(i64); }");
     compiler.buildOne(unit, target);
     const runner = Runner.of(target.asWasmSource());
     const result = runner.runFunction<number>("i64_sizeof");
@@ -37,7 +37,7 @@ it('reads sizeof<i64>',  () => {
 it('reads alignof<boolean>',  () => {
     const compiler = new Compiler();
     const target = new WasmBufferTarget();
-    const unit = Builder.parse_unit("@ModuleExport function boolean_alignof(): i32 { return alignof(boolean); }");
+    const unit = ComposeBuilder.parse_unit("@ModuleExport function boolean_alignof(): i32 { return alignof(boolean); }");
     compiler.buildOne(unit, target);
     const runner = Runner.of(target.asWasmSource());
     const result = runner.runFunction<number>("boolean_alignof");
@@ -47,7 +47,7 @@ it('reads alignof<boolean>',  () => {
 it('reads alignof<i32>',  () => {
     const compiler = new Compiler();
     const target = new WasmBufferTarget();
-    const unit = Builder.parse_unit("@ModuleExport function i32_alignof(): i32 { return alignof(i32); }");
+    const unit = ComposeBuilder.parse_unit("@ModuleExport function i32_alignof(): i32 { return alignof(i32); }");
     compiler.buildOne(unit, target);
     const runner = Runner.of(target.asWasmSource());
     const result = runner.runFunction<number>("i32_alignof");
@@ -57,7 +57,7 @@ it('reads alignof<i32>',  () => {
 it('reads alignof<i64>',  () => {
     const compiler = new Compiler();
     const target = new WasmBufferTarget();
-    const unit = Builder.parse_unit("@ModuleExport function i64_alignof(): i32 { return alignof(i64); }");
+    const unit = ComposeBuilder.parse_unit("@ModuleExport function i64_alignof(): i32 { return alignof(i64); }");
     compiler.buildOne(unit, target);
     const runner = Runner.of(target.asWasmSource());
     const result = runner.runFunction<number>("i64_alignof");

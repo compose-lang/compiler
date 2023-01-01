@@ -1,4 +1,4 @@
-import Builder from "../../src/builder/Builder";
+import ComposeBuilder from "../../src/builder/ComposeBuilder";
 import * as assert from "assert";
 import ComposeLexer from "../../src/parser/ComposeLexer";
 import PreprocessedCharStream from "../../src/builder/PreprocessedCharStream";
@@ -15,7 +15,7 @@ it("ignores directive text", () => {
 it('parses declarations outside disabled directives',  () => {
     const code = `attribute text: string;
 attribute name: string;`;
-    const unit = Builder.parse_unit(code, new Map<string, boolean>([["TRACE", false]]));
+    const unit = ComposeBuilder.parse_unit(code, new Map<string, boolean>([["TRACE", false]]));
     assert.equal(unit.declarations.length, 2);
 });
 
@@ -24,7 +24,7 @@ it('skips declarations inside disabled directives',  () => {
 attribute text: string;
 #endif
 attribute name: string;`
-    const unit = Builder.parse_unit(code, new Map<string, boolean>([["TRACE", false]]));
+    const unit = ComposeBuilder.parse_unit(code, new Map<string, boolean>([["TRACE", false]]));
     assert.equal(unit.declarations.length, 1);
 });
 
@@ -33,7 +33,7 @@ it('parses declarations inside enabled directives',  () => {
 attribute text: string;
 #endif
 attribute name: string;`
-    const unit = Builder.parse_unit(code, new Map<string, boolean>([["TRACE", true]]));
+    const unit = ComposeBuilder.parse_unit(code, new Map<string, boolean>([["TRACE", true]]));
     assert.equal(unit.declarations.length, 2);
 });
 
@@ -46,7 +46,7 @@ attribute other: string;
 attribute other2: string;
 #endif
 attribute name: string;`
-    const unit = Builder.parse_unit(code, new Map<string, boolean>([["TRACE2", true]]));
+    const unit = ComposeBuilder.parse_unit(code, new Map<string, boolean>([["TRACE2", true]]));
     assert.equal(unit.declarations.length, 2);
 });
 
@@ -59,7 +59,7 @@ attribute other: string;
 attribute other: string;
 #endif
 attribute name: string;`
-    const unit = Builder.parse_unit(code, new Map<string, boolean>([["TRACE", false]]));
+    const unit = ComposeBuilder.parse_unit(code, new Map<string, boolean>([["TRACE", false]]));
     assert.equal(unit.declarations.length, 2);
 });
 
@@ -74,7 +74,7 @@ attribute text3: string;
 #endif TRACE2
 #endif TRACE1
 attribute text: string;`
-    const unit = Builder.parse_unit(code, new Map<string, boolean>([["TRACE1", false], ["TRACE2", false], ["TRACE3", true]]));
+    const unit = ComposeBuilder.parse_unit(code, new Map<string, boolean>([["TRACE1", false], ["TRACE2", false], ["TRACE3", true]]));
     assert.equal(unit.declarations.length, 2);
     assert.equal(unit.declarations[0].name, "text3");
     assert.equal(unit.declarations[1].name, "text");

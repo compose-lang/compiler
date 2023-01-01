@@ -4,7 +4,7 @@ import Compiler from "../compiler/Compiler";
 import CodeFragment from "../builder/CodeFragment";
 import CompilationUnit from "../compiler/CompilationUnit";
 import * as assert from "assert";
-import Builder from "../builder/Builder";
+import ComposeBuilder from "../builder/ComposeBuilder";
 import IDeclaration from "../declaration/IDeclaration";
 import IStatement from "../statement/IStatement";
 import DeclarationBase from "../declaration/DeclarationBase";
@@ -26,7 +26,7 @@ export default class ImportStatement extends CodeFragment {
     process(unit: CompilationUnit, compiler: Compiler) {
         const path = this.source.resolve(unit.path);
         assert.ok(path);
-        const importedUnit = Builder.parse_unit(path);
+        const importedUnit = ComposeBuilder.parse_unit(path);
         compiler.addUnit(importedUnit);
         if(this.mainSymbol) {
             assert.equal(this.mainSymbol.value, importedUnit.mainExport.name);
