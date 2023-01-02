@@ -1,15 +1,16 @@
 import Identifier from "../builder/Identifier";
 import Accessibility from "./Accessibility";
-import IDataType from "../type/IDataType";
+import IValueType from "../type/IValueType";
+import IClassMember from "./IClassMember";
 
-export default class FieldDeclaration {
+export default class FieldDeclaration implements IClassMember {
 
     accessibility: Accessibility;
     isStatic: boolean;
     id: Identifier;
-    type: IDataType;
+    type: IValueType;
 
-    constructor(accessibility: Accessibility, isStatic: boolean, id: Identifier, type: IDataType) {
+    constructor(accessibility: Accessibility, isStatic: boolean, id: Identifier, type: IValueType) {
         this.accessibility = accessibility;
         this.isStatic = isStatic;
         this.id = id;

@@ -1,5 +1,7 @@
 import NativeType from "./NativeType";
 import IWasmTarget from "../compiler/IWasmTarget";
+import IExpression from "../expression/IExpression";
+import * as assert from "assert";
 
 export default class VoidType extends NativeType {
 
@@ -7,6 +9,10 @@ export default class VoidType extends NativeType {
 
     private constructor() {
         super("void")
+    }
+
+    defaultValue(): IExpression {
+        assert.ok(false); // should never get there
     }
 
     count(): number {

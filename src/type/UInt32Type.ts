@@ -1,7 +1,6 @@
 import IntegerType from "./IntegerType";
 import IWasmTarget from "../compiler/IWasmTarget";
-import Context from "../context/Context";
-import IType from "./IType";
+import NumberPrecedence from "./NumberPrecedence";
 
 export default class UInt32Type extends IntegerType {
 
@@ -9,6 +8,10 @@ export default class UInt32Type extends IntegerType {
 
     private constructor() {
         super("u32");
+    }
+
+    get precedence(): NumberPrecedence {
+        return NumberPrecedence.UInt32;
     }
 
     sizeof(): number {
@@ -19,11 +22,5 @@ export default class UInt32Type extends IntegerType {
         target.writeUInts(0x7F);
     }
 
-    checkAdd(context: Context, rightType: IType, tryReverse: boolean): IType {
-        if(rightType == this)
-            return this;
-        else
-            return super.checkAdd(context, rightType, tryReverse);
-    }
 
 }

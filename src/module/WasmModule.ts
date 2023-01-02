@@ -58,13 +58,13 @@ export default class WasmModule {
 
     declareImportedFunction(decl: IFunctionDeclaration) {
         assert.ok(!this.sections.has(SectionType.FUNCTIONS));
-        const typeIndex = this.getTypesSection().addType(decl.type());
+        const typeIndex = this.getTypesSection().addType(decl.functionType());
         const functionIndex = this.getImportsSection().importFunction(decl, typeIndex);
         this.functions[functionIndex] = decl as unknown as ICompilable;
     }
 
     declareConcreteFunction(decl: IFunctionDeclaration, exported: boolean) {
-        const typeIndex = this.getTypesSection().addType(decl.type());
+        const typeIndex = this.getTypesSection().addType(decl.functionType());
         let functionIndex = this.getFunctionsSection().addFunction(typeIndex);
         if(this.sections.has(SectionType.IMPORTS))
             functionIndex += this.getImportsSection().countFunctions();

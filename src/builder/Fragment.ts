@@ -17,4 +17,7 @@ export default class Fragment {
     endLocation: Location;
     isBreakpoint: boolean;
 
+    toString(): string {
+        return "line " + this.startLocation.line + " in " + this.path;
+    }
 }

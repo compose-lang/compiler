@@ -16,7 +16,7 @@ export default class StatementList extends Array<IStatement> {
     check(context: Context, returnType: IType): IType {
         if(returnType == VoidType.instance) {
             this.forEach(stmt => {
-                const type = stmt.check(context) || VoidType.instance;
+                const type = stmt.check(context) || null;
                 assert.ok(type != VoidType.instance);
             }, this);
             return VoidType.instance
@@ -25,8 +25,8 @@ export default class StatementList extends Array<IStatement> {
             if(returnType != null)
                 typeMap.add(returnType);
             this.forEach(stmt => {
-                const type = stmt.check(context) || VoidType.instance;
-                if(type != VoidType.instance)
+                const type = stmt.check(context) || null;
+                if(type)
                     typeMap.add(type);
             }, this);
             const type = typeMap.inferType(context);

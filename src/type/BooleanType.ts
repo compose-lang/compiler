@@ -1,13 +1,19 @@
 import NativeType from "./NativeType";
 import IWasmTarget from "../compiler/IWasmTarget";
-import IDataType from "./IDataType";
+import IValueType from "./IValueType";
+import BooleanLiteral from "../literal/BooleanLiteral";
+import IExpression from "../expression/IExpression";
 
-export default class BooleanType extends NativeType implements IDataType {
+export default class BooleanType extends NativeType implements IValueType {
 
     static instance = new BooleanType()
 
     private constructor() {
         super("boolean")
+    }
+
+    defaultValue(): IExpression {
+        return new BooleanLiteral("false");
     }
 
     sizeof(): number {

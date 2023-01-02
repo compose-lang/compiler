@@ -3,13 +3,9 @@ import Context from "../context/Context";
 import Identifier from "../builder/Identifier";
 import IType from "../type/IType";
 import IFunctionDeclaration from "../declaration/IFunctionDeclaration";
-import FunctionType from "../type/FunctionType";
 import * as assert from "assert";
 import IExpression from "../expression/IExpression";
 import VoidType from "../type/VoidType";
-import ClassType from "../type/ClassType";
-import AttributeType from "../type/AttributeType";
-import TypeType from "../type/TypeType";
 
 enum Score {
     WORSE = -1,
@@ -19,7 +15,7 @@ enum Score {
 
 export default abstract class FunctionFinder {
 
-    static findFunction(context: Context, call: FunctionCall): IFunctionDeclaration {
+    static findDeclaration(context: Context, call: FunctionCall): IFunctionDeclaration {
         const argTypes = call.args.map(x => x.check(context));
         const finder = FunctionFinder.newFinder(context, call, argTypes);
         return finder ? finder.find() : null;
@@ -70,7 +66,15 @@ export default abstract class FunctionFinder {
             const param = decl.parameters[i];
             if(i >= this.argTypes.length && param.defaultValue == null)
                 return false;
-            const argType = this.argTypes[i];
+            let argType;
+            if(i < this.argTypes.length)
+                argType = this.argTypes[i];
+            else {
+                if(param.defaultValue)
+                    argType = param.defaultValue.check(this.context);
+                else
+                    return false;
+            }
             const paramType = this.resolveGenericType(decl, param.type);
             if(!paramType.isAssignableFrom(this.context, argType))
                 return false;
@@ -101,8 +105,8 @@ export default abstract class FunctionFinder {
     }
 
     protected compareSpecificity(decl1: IFunctionDeclaration, decl2: IFunctionDeclaration): Score {
-        const types1 = decl1.type().parameters.map(param => param.type);
-        const types2 = decl2.type().parameters.map(param => param.type);
+        const types1 = decl1.functionType().parameters.map(param => param.type);
+        const types2 = decl2.functionType().parameters.map(param => param.type);
         for(let i=0; i < this.argTypes.length; i++) {
             const type1 = types1[i];
             const type2 = types2[i];

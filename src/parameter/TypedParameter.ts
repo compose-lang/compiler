@@ -1,7 +1,7 @@
 import CodeFragment from "../builder/CodeFragment";
 import IParameter from "./IParameter";
 import Identifier from "../builder/Identifier";
-import IDataType from "../type/IDataType";
+import IValueType from "../type/IValueType";
 import ILiteralExpression from "../literal/ILiteralExpression";
 import Context from "../context/Context";
 import Variable from "../context/Variable";
@@ -14,10 +14,10 @@ import {equalObjects} from "../utils/ObjectUtils";
 export default class TypedParameter extends CodeFragment implements IParameter {
 
     id: Identifier;
-    type: IDataType;
+    type: IValueType;
     defaultValue: ILiteralExpression;
 
-    constructor(id: Identifier, type: IDataType, defaultValue: ILiteralExpression = null) {
+    constructor(id: Identifier, type: IValueType, defaultValue: ILiteralExpression = null) {
         super();
         this.id = id;
         this.type = type;
@@ -40,7 +40,7 @@ export default class TypedParameter extends CodeFragment implements IParameter {
         if(type == this.type)
             return this;
         else
-            return new TypedParameter(this.id, type as IDataType, this.defaultValue);
+            return new TypedParameter(this.id, type as IValueType, this.defaultValue);
     }
 
     toString() {

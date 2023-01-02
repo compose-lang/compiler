@@ -58,7 +58,7 @@ export default class UnresolvedIdentifierExpression extends ExpressionBase {
     private resolve(context: Context) {
         if(!this.resolved) {
             this.resolved = this.resolveLocalVariable(context);
-            assert.ok(this.resolved);
+            assert.ok(this.resolved, "Could not resolve '" + this.name + "' at " + this.fragment.toString());
         }
     }
 

@@ -22,7 +22,7 @@ export default class FunctionCallStatement extends StatementBase {
 
     check(context: Context): IType {
         this.call.check(context);
-        return VoidType.instance;
+        return null;
     }
 
     declare(context: Context, module: WasmModule): void {

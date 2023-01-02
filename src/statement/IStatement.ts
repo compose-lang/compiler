@@ -13,6 +13,7 @@ export default interface IStatement {
     exportType: ExportType;
 
     check(context: Context): IType;
+    isConst(context: Context): boolean;
     declare(context: Context, module: WasmModule): void;
     rehearse(context: Context, module: WasmModule, body: FunctionBody): void;
     compile(context: Context, module: WasmModule, body: FunctionBody): IType;

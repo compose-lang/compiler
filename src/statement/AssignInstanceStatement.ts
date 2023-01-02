@@ -30,12 +30,31 @@ export default class AssignInstanceStatement extends StatementBase {
     }
 
     check(context: Context): IType {
+        const required = this.checkRequired(context);
+        assert.ok(required);
+        const actual = this.expression.check(context);
+        assert.ok(required.isAssignableFrom(context, actual));
+        // TODO check operator
+        return null;
+    }
+
+    private checkRequired(context: Context): IType {
+        if (this.parent)
+            return this.checkMember(context);
+        else
+            return this.checkVariable(context);
+    }
+
+    private checkMember(context: Context): IType  {
+        const parentType = this.parent.check(context);
+        assert.ok(parentType);
+        return parentType.checkMember(context, this.id);
+    }
+
+    private checkVariable(context: Context): IType  {
         const registered = context.getRegisteredLocal(this.id);
         assert.ok(registered);
-        const actual = this.expression.check(context);
-        assert.ok(registered.type.isAssignableFrom(context, actual));
-        // TODO check operator
-        return VoidType.instance;
+        return registered.type;
     }
 
     declare(context: Context, module: WasmModule): void {

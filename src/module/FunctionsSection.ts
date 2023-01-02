@@ -11,7 +11,7 @@ export default class FunctionsSection extends SectionBase {
         return SectionType.FUNCTIONS;
     }
 
-    get length(): number {
+    get byteLength(): number {
         return LEB128.unsignedLength(this.functionTypes.length)
             + this.functionTypes.map(idx => LEB128.unsignedLength(idx)).reduce((p, v) => p + v, 0);
     }

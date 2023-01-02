@@ -23,6 +23,13 @@ export default class ReturnStatement extends StatementBase {
             return VoidType.instance;
     }
 
+    isConst(context: Context): boolean {
+        if(this.expression)
+            return this.expression.isConst(context);
+        else
+            return false; // void is not const
+    }
+
     declare(context: Context, module: WasmModule): void {
         if(this.expression)
             this.expression.declare(context, module);

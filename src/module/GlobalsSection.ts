@@ -12,7 +12,7 @@ export default class GlobalsSection extends SectionBase {
         return SectionType.GLOBALS;
     }
 
-    get length(): number {
+    get byteLength(): number {
         return LEB128.unsignedLength(this.globals.length)
             + this.globals.map(glob => glob.length).reduce((p, v) => p + v, 0);
     }

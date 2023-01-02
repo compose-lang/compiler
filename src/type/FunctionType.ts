@@ -6,6 +6,8 @@ import Context from "../context/Context";
 import UserType from "./UserType";
 import {equalArrays, equalObjects} from "../utils/ObjectUtils";
 import assert from "assert";
+import NullLiteral from "../literal/NullLiteral";
+import IExpression from "../expression/IExpression";
 
 export default class FunctionType extends UserType {
 
@@ -17,6 +19,10 @@ export default class FunctionType extends UserType {
         super();
         this.parameters = parameters;
         this.returnType = returnType;
+    }
+
+    defaultValue(): IExpression {
+        return new NullLiteral();
     }
 
     equals(other: any) {

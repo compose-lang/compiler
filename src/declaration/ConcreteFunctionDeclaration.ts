@@ -11,6 +11,7 @@ import Identifier from "../builder/Identifier";
 import Accessibility from "./Accessibility";
 import StatementList from "../statement/StatementList";
 import CompilationUnit from "../compiler/CompilationUnit";
+import AnyType from "../type/AnyType";
 
 export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase implements ICompilable {
 
@@ -23,14 +24,20 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
         this.statements = statements;
     }
 
-    register(context: Context): void {
-        context.registerFunction(this);
+    check(context: Context): IType {
+        if(this.isGeneric())
+            return AnyType.instance;
+        else {
+            const local = context.newLocalContext();
+            this.parameters.forEach(param => param.register(local));
+            return this.statements.check(local, this.returnType);
+        }
     }
 
-    check(context: Context): IType {
+    isConst(context: Context): boolean {
         const local = context.newLocalContext();
         this.parameters.forEach(param => param.register(local));
-        return this.statements.check(local, this.returnType);
+        return this.statements.every(stmt => stmt.isConst(context));
     }
 
     declare(context: Context, module: WasmModule): void {

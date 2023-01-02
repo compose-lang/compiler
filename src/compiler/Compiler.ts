@@ -33,7 +33,9 @@ export default class Compiler {
     }
 
     private populateContextAndCheck(unit: CompilationUnit) {
-        // register declarations first, since this has no side effect
+        // register builtins
+        unit.context.registerBuiltins();
+        // register declarations
         unit.declarations.forEach(decl => decl.register(unit.context));
         // register then check globals (once declarations are registered)
         unit.statements.forEach(stmt => stmt.register(unit.context));

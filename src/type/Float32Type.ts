@@ -1,8 +1,6 @@
 import DecimalType from "./DecimalType";
 import IWasmTarget from "../compiler/IWasmTarget";
-import Context from "../context/Context";
-import IType from "./IType";
-import IntegerType from "./IntegerType";
+import NumberPrecedence from "./NumberPrecedence";
 
 export default class Float32Type extends DecimalType {
 
@@ -12,6 +10,10 @@ export default class Float32Type extends DecimalType {
         super("f32");
     }
 
+    get precedence(): NumberPrecedence {
+        return NumberPrecedence.Float32;
+    }
+
     sizeof(): number {
         return 4;
     }
@@ -19,14 +21,5 @@ export default class Float32Type extends DecimalType {
     writeTo(target: IWasmTarget): void {
         target.writeUInts(0x7D);
     }
-
-    checkAdd(context: Context, rightType: IType, tryReverse: boolean): IType {
-        if(rightType == Float32Type.instance || rightType instanceof IntegerType)
-            return this;
-        else
-            return super.checkAdd(context, rightType, tryReverse);
-    }
-
-
 
 }

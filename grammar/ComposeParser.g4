@@ -56,7 +56,7 @@ enum_item:
     ;
 
 attribute_declaration:
-    ATTRIBUTE identifier COLON data_type_or_null SEMI
+    ATTRIBUTE identifier COLON value_type_or_null SEMI
     ;
 
 identifier:
@@ -67,13 +67,18 @@ annotation:
     ANNOTATION ( LPAR literal_expression RPAR )?
     ;
 
-data_type:
+value_type:
     native_type
     | class_type
+    | any_type
     ;
 
-data_type_or_null:
-    data_type (PIPE NULL_LITERAL)?
+value_type_or_null:
+    value_type (PIPE NULL_LITERAL)?
+    ;
+
+any_type:
+    ANY
     ;
 
 native_type:
@@ -176,7 +181,7 @@ function_type_or_null:
     ;
 
 return_type[boolean requireParenthesis]:
-    data_type_or_null
+    value_type_or_null
     | attribute_type_or_null
     | { !$requireParenthesis }? function_type_or_null
     | LPAR function_type_or_null RPAR
@@ -189,7 +194,7 @@ return_types:
 
 parameter:
     attribute_type_or_null                     # AttributeParameter
-    | identifier COLON data_type_or_null       # TypedParameter
+    | identifier COLON value_type_or_null       # TypedParameter
     | identifier COLON function_type_or_null   # FunctionParameter
     ;
 
@@ -207,7 +212,7 @@ accessibility:
     ;
 
 field_declaration:
-    accessibility? STATIC? identifier COLON data_type_or_null SEMI
+    accessibility? STATIC? identifier COLON value_type_or_null SEMI
     ;
 
 function_declaration[boolean as_member]:
@@ -240,7 +245,7 @@ function_prototype[boolean mandatory_return]:
     ;
 
 generic_parameter:
-    class_ref ( EXTENDS data_type )?
+    class_ref ( EXTENDS value_type )?
     ;
 
 
@@ -272,7 +277,7 @@ try_statement:
     ;
 
 catch_clause:
-    CATCH LPAR identifier COLON data_type (PIPE data_type)* RPAR 
+    CATCH LPAR identifier COLON value_type (PIPE value_type)* RPAR
         LCURL statement* RCURL
     ;
 
@@ -321,7 +326,7 @@ declare_instances_statement:
     ;
 
 declare_one:
-    identifier (COLON data_type_or_null | function_type_or_null)? (ASSIGN expression)?
+    identifier (COLON value_type_or_null | function_type_or_null)? (ASSIGN expression)?
     ;
 
 assign_instance_statement:
@@ -348,8 +353,10 @@ expression:
     | parent = expression
         DOT member = identifier                     # MemberExpression
     | NEW function_call                             # NewExpression
-    | SIZE_OF LPAR data_type RPAR                   # SizeofExpression
-    | ALIGN_OF LPAR data_type RPAR                  # AlignofExpression
+    | SIZE_OF LPAR value_type RPAR                  # SizeofExpression
+    | ALIGN_OF LPAR value_type RPAR                 # AlignofExpression
+    | OFFSET_OF LPAR class_type
+        (COMMA attribute_ref)? RPAR                 # OffsetofExpression
     | function_call                                 # SimpleCallExpression
     | expression DOT function_call                  # ChildCallExpression
     | expression { $parser.willNotContainLineTerminator()}
@@ -396,13 +403,13 @@ expression:
     | SUPER ( LT identifier GT )?                   # SuperExpression
     | literal_expression                            # LiteralExpression
     | LPAR expression RPAR                          # ParenthesisExpression
-    | LT data_type GT expression                    # PreCastExpression
-    | expression AS data_type                       # CastAsExpression
+    | LT value_type GT expression                   # PreCastExpression
+    | expression AS value_type                      # CastAsExpression
     | identifier assign_op expression               # AssignExpression
     ;
 
 function_call:
-    name = identifier ( LT data_type_or_null (COMMA data_type_or_null)* GT )? LPAR ( expression ( COMMA expression)* )? RPAR
+    name = identifier ( LT value_type_or_null (COMMA value_type_or_null)* GT )? LPAR ( expression ( COMMA expression)* )? RPAR
     ;
 
 literal_expression:

@@ -24,6 +24,8 @@ export default class DeclareInstanceStatement extends StatementBase implements I
         this.modifier = modifier;
         this.id = id;
         this.type = type;
+        if(!expression)
+            expression = type.defaultValue();
         this.expression = expression;
     }
 
@@ -37,7 +39,7 @@ export default class DeclareInstanceStatement extends StatementBase implements I
 
     check(context: Context): IType {
         this._check(context);
-        return VoidType.instance;
+        return null;
     }
 
     private _check(context: Context): IType {

@@ -1,11 +1,12 @@
 import LiteralBase from "./LiteralBase";
 import IType from "../type/IType";
 import Context from "../context/Context";
+import NullType from "../type/NullType";
 
 export default class NullLiteral extends LiteralBase<any> {
 
-    constructor(text: string) {
-        super(text, null);
+    constructor() {
+        super("null", null);
     }
 
     toNative(): any {
@@ -13,7 +14,7 @@ export default class NullLiteral extends LiteralBase<any> {
     }
 
     check(context: Context): IType {
-        return undefined; // TODO
+        return NullType.instance;
     }
 
 }

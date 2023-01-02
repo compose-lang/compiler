@@ -12,7 +12,7 @@ export default class CodeSection extends SectionBase {
         return SectionType.CODE;
     }
 
-    get length(): number {
+    get byteLength(): number {
         return LEB128.unsignedLength(this.functionCodes.length)
             + this.functionCodes.map(code => code.length).reduce((p, v) => p+ v, 0);
     }

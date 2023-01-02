@@ -1,14 +1,11 @@
 import FunctionDeclarationBase from "./FunctionDeclarationBase";
 import ICompilable from "../compiler/ICompilable";
-import IStatement from "../statement/IStatement";
 import Accessibility from "./Accessibility";
 import Prototype from "./Prototype";
 import Instruction from "../assembly/Instruction";
 import WasmModule from "../module/WasmModule";
 import Context from "../context/Context";
-import * as assert from "assert";
 import IType from "../type/IType";
-import OpCode from "../compiler/OpCode";
 
 export default class NativeFunctionDeclaration extends FunctionDeclarationBase implements ICompilable {
 
@@ -21,10 +18,6 @@ export default class NativeFunctionDeclaration extends FunctionDeclarationBase i
 
     get isStatic(): boolean {
         return true;
-    }
-
-    register(context: Context): void {
-        context.registerFunction(this);
     }
 
     check(context: Context): IType {

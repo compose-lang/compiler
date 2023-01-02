@@ -15,8 +15,9 @@ import { Enum_itemContext } from "./ComposeParser";
 import { Attribute_declarationContext } from "./ComposeParser";
 import { IdentifierContext } from "./ComposeParser";
 import { AnnotationContext } from "./ComposeParser";
-import { Data_typeContext } from "./ComposeParser";
-import { Data_type_or_nullContext } from "./ComposeParser";
+import { Value_typeContext } from "./ComposeParser";
+import { Value_type_or_nullContext } from "./ComposeParser";
+import { Any_typeContext } from "./ComposeParser";
 import { Native_typeContext } from "./ComposeParser";
 import { Boolean_typeContext } from "./ComposeParser";
 import { Number_typeContext } from "./ComposeParser";
@@ -104,6 +105,7 @@ import { UnaryBitNotExpressionContext } from "./ComposeParser";
 import { MemberExpressionContext } from "./ComposeParser";
 import { BitAndExpressionContext } from "./ComposeParser";
 import { AddExpressionContext } from "./ComposeParser";
+import { OffsetofExpressionContext } from "./ComposeParser";
 import { BitOrExpressionContext } from "./ComposeParser";
 import { UnaryPreDecrementExpressionContext } from "./ComposeParser";
 import { EqualsExpressionContext } from "./ComposeParser";
@@ -254,25 +256,35 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 */
 	exitAnnotation?: (ctx: AnnotationContext) => void;
 	/**
-	 * Enter a parse tree produced by `ComposeParser.data_type`.
+	 * Enter a parse tree produced by `ComposeParser.value_type`.
 	 * @param ctx the parse tree
 	 */
-	enterData_type?: (ctx: Data_typeContext) => void;
+	enterValue_type?: (ctx: Value_typeContext) => void;
 	/**
-	 * Exit a parse tree produced by `ComposeParser.data_type`.
+	 * Exit a parse tree produced by `ComposeParser.value_type`.
 	 * @param ctx the parse tree
 	 */
-	exitData_type?: (ctx: Data_typeContext) => void;
+	exitValue_type?: (ctx: Value_typeContext) => void;
 	/**
-	 * Enter a parse tree produced by `ComposeParser.data_type_or_null`.
+	 * Enter a parse tree produced by `ComposeParser.value_type_or_null`.
 	 * @param ctx the parse tree
 	 */
-	enterData_type_or_null?: (ctx: Data_type_or_nullContext) => void;
+	enterValue_type_or_null?: (ctx: Value_type_or_nullContext) => void;
 	/**
-	 * Exit a parse tree produced by `ComposeParser.data_type_or_null`.
+	 * Exit a parse tree produced by `ComposeParser.value_type_or_null`.
 	 * @param ctx the parse tree
 	 */
-	exitData_type_or_null?: (ctx: Data_type_or_nullContext) => void;
+	exitValue_type_or_null?: (ctx: Value_type_or_nullContext) => void;
+	/**
+	 * Enter a parse tree produced by `ComposeParser.any_type`.
+	 * @param ctx the parse tree
+	 */
+	enterAny_type?: (ctx: Any_typeContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.any_type`.
+	 * @param ctx the parse tree
+	 */
+	exitAny_type?: (ctx: Any_typeContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.native_type`.
 	 * @param ctx the parse tree
@@ -1217,6 +1229,18 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitAddExpression?: (ctx: AddExpressionContext) => void;
+	/**
+	 * Enter a parse tree produced by the `OffsetofExpression`
+	 * labeled alternative in `ComposeParser.expression`.
+	 * @param ctx the parse tree
+	 */
+	enterOffsetofExpression?: (ctx: OffsetofExpressionContext) => void;
+	/**
+	 * Exit a parse tree produced by the `OffsetofExpression`
+	 * labeled alternative in `ComposeParser.expression`.
+	 * @param ctx the parse tree
+	 */
+	exitOffsetofExpression?: (ctx: OffsetofExpressionContext) => void;
 	/**
 	 * Enter a parse tree produced by the `BitOrExpression`
 	 * labeled alternative in `ComposeParser.expression`.

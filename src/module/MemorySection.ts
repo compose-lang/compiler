@@ -33,7 +33,7 @@ export default class MemorySection extends SectionBase {
         return SectionType.MEMORY;
     }
 
-    get length(): number {
+    get byteLength(): number {
         return LEB128.unsignedLength(this.memories.length)
             + this.memories.map(mem => mem.byteLength()).reduce((p, v) => p + v, 0);
     }

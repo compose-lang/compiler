@@ -2,6 +2,8 @@ import LiteralBase from "./LiteralBase";
 import Context from "../context/Context";
 import IType from "../type/IType";
 import StringType from "../type/StringType";
+import WasmModule from "../module/WasmModule";
+import FunctionBody from "../module/FunctionBody";
 
 export default class StringLiteral extends LiteralBase<string> {
 
@@ -16,5 +18,10 @@ export default class StringLiteral extends LiteralBase<string> {
     check(context: Context): IType {
         return StringType.instance;
     }
-
+/*
+    compile(context: Context, module: WasmModule, body: FunctionBody): IType {
+        const index = module.getDataSection()
+        return super.compile(context, module, body);
+    }
+*/
 }

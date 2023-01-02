@@ -1,5 +1,8 @@
 import NativeType from "./NativeType";
 import IWasmTarget from "../compiler/IWasmTarget";
+import IExpression from "../expression/IExpression";
+import DecimalLiteral from "../literal/DecimalLiteral";
+import NullLiteral from "../literal/NullLiteral";
 
 export default class StringType extends NativeType {
 
@@ -7,6 +10,10 @@ export default class StringType extends NativeType {
 
     private constructor() {
         super("string")
+    }
+
+    defaultValue(): IExpression {
+        return new NullLiteral();
     }
 
     sizeof(): number {

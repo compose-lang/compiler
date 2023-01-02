@@ -8,6 +8,7 @@ import GenericParameter from "./GenericParameter";
 import * as assert from "assert";
 import Accessibility from "./Accessibility";
 import ClassDeclaration from "./ClassDeclaration";
+import Context from "../context/Context";
 
 export default abstract class FunctionDeclarationBase extends DeclarationBase implements IFunctionDeclaration {
 
@@ -28,16 +29,24 @@ export default abstract class FunctionDeclarationBase extends DeclarationBase im
 
     abstract get isStatic(): boolean;
 
-    type(): FunctionType {
+    isConst(context: Context): boolean {
+        return false;
+    }
+
+    functionType(): FunctionType {
         return new FunctionType(this.parameters, this.returnType);
+    }
+
+    prototype(): Prototype {
+        return new Prototype(this.id, this.generics, this.parameters, this.returnType);
     }
 
     isGeneric() {
         return this.generics.length > 0;
     }
 
-    prototype(): Prototype {
-        return new Prototype(this.id, this.generics, this.parameters, this.returnType);
+    register(context: Context): void {
+        context.registerFunction(this);
     }
 
     resolveGenericType(type: IType, typeArguments: IType[]): IType {

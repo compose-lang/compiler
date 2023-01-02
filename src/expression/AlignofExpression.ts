@@ -3,22 +3,26 @@ import Context from "../context/Context";
 import IType from "../type/IType";
 import WasmModule from "../module/WasmModule";
 import FunctionBody from "../module/FunctionBody";
-import IDataType from "../type/IDataType";
+import IValueType from "../type/IValueType";
 import UInt32Type from "../type/UInt32Type";
 import OpCode from "../compiler/OpCode";
 import LEB128 from "../utils/LEB128";
 
 export default class AlignofExpression extends ExpressionBase {
 
-    type: IDataType;
+    type: IValueType;
 
-    constructor(type: IDataType) {
+    constructor(type: IValueType) {
         super();
         this.type = type;
     }
 
     check(context: Context): IType {
         return UInt32Type.instance;
+    }
+
+    isConst(context: Context): boolean {
+        return true;
     }
 
     declare(context: Context, module: WasmModule): void {

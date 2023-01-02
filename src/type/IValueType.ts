@@ -1,6 +1,6 @@
 import IType from "./IType";
 
-export default interface IDataType extends IType {
+export default interface IValueType extends IType {
 
     sizeof(): number;
     alignof(): number;

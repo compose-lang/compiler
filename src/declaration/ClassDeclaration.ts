@@ -11,6 +11,8 @@ import IFunctionDeclaration from "./IFunctionDeclaration";
 import WasmModule from "../module/WasmModule";
 import CompilationUnit from "../compiler/CompilationUnit";
 import FieldList from "../builder/FieldList";
+import IClassMember from "./IClassMember";
+import * as assert from "assert";
 
 export default class ClassDeclaration extends DeclarationBase implements IDeclaration {
 
@@ -58,10 +60,34 @@ export default class ClassDeclaration extends DeclarationBase implements IDeclar
     }
 
     collectInstanceFunctions(id: Identifier, map: Map<string, IFunctionDeclaration>) {
-        this.functions.filter(f => !f.isStatic).filter(f => f.name == id.value).forEach(f => map.set(f.type().toString(), f));
+        this.functions.filter(f => !f.isStatic).filter(f => f.name == id.value).forEach(f => map.set(f.functionType().toString(), f));
     }
 
     collectStaticFunctions(id: Identifier, map: Map<string, IFunctionDeclaration>) {
-        this.functions.filter(f => f.isStatic).filter(f => f.name == id.value).forEach(f => map.set(f.type().toString(), f));
+        this.functions.filter(f => f.isStatic).filter(f => f.name == id.value).forEach(f => map.set(f.functionType().toString(), f));
+    }
+
+    findMember(context: Context, memberId: Identifier): IClassMember {
+        const name = memberId.value;
+        const field = this.fields.find(f => f.name == name) || null;
+        if(field)
+            return field;
+        const attr = this.attributes.find(a => a.value == name);
+        if(attr)
+            return context.getRegisteredAttribute(memberId);
+        else
+            return this.findInheritedMember(context, memberId);
+    }
+
+
+    private findInheritedMember(context: Context, memberId: Identifier) {
+        for(let i=0; i<this.parents.length; i++) {
+            const parent = context.getRegisteredClass(this.parents[i]);
+            assert.ok(parent);
+            const member = parent.findMember(context, memberId);
+            if(member)
+                return member;
+        }
+        return null;
     }
 }

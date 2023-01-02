@@ -1,7 +1,6 @@
 import IntegerType from "./IntegerType";
 import IWasmTarget from "../compiler/IWasmTarget";
-import Context from "../context/Context";
-import IType from "./IType";
+import NumberPrecedence from "./NumberPrecedence";
 
 export default class Int64Type extends IntegerType {
 
@@ -11,19 +10,16 @@ export default class Int64Type extends IntegerType {
         super("i64");
     }
 
+    get precedence(): NumberPrecedence {
+        return NumberPrecedence.Int64;
+    }
+
     sizeof(): number {
         return 8;
     }
 
     writeTo(target: IWasmTarget): void {
         target.writeUInts(0x7E);
-    }
-
-    checkAdd(context: Context, rightType: IType, tryReverse: boolean): IType {
-        if(rightType == this || rightType instanceof IntegerType)
-            return this;
-        else
-            return super.checkAdd(context, rightType, tryReverse);
     }
 
 }

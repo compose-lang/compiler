@@ -6,7 +6,7 @@ import Context from "../context/Context";
 import WasmModule from "../module/WasmModule";
 import FunctionBody from "../module/FunctionBody";
 import IType from "../type/IType";
-import IDataType from "../type/IDataType";
+import IValueType from "../type/IValueType";
 import TypedParameter from "./TypedParameter";
 
 export default class AttributeParameter extends CodeFragment implements IParameter {
@@ -36,7 +36,7 @@ export default class AttributeParameter extends CodeFragment implements IParamet
         if(type == this.type)
             return this;
         else
-            return new TypedParameter(this.type.id, type as IDataType, this.defaultValue);
+            return new TypedParameter(this.type.id, type as IValueType, this.defaultValue);
     }
 
     toString() {

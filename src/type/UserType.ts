@@ -5,6 +5,9 @@ import assert from "assert";
 import IWasmTarget from "../compiler/IWasmTarget";
 import WasmModule from "../module/WasmModule";
 import FunctionBody from "../module/FunctionBody";
+import IExpression from "../expression/IExpression";
+import NullLiteral from "../literal/NullLiteral";
+import Identifier from "../builder/Identifier";
 
 export default abstract class UserType extends CodeFragment implements IType {
 
@@ -16,6 +19,22 @@ export default abstract class UserType extends CodeFragment implements IType {
     abstract writeTo(target: IWasmTarget): void;
     abstract isAssignableFrom(context: Context, type: IType): boolean;
     abstract prepareContext(context: Context): Context;
+
+    defaultValue(): IExpression {
+        return new NullLiteral();
+    }
+
+    checkMember(context: Context, memberId: Identifier): IType {
+        assert.ok(false);
+    }
+
+    checkEquals(context: Context, rightType: IType): IType {
+        assert.ok(false);
+    }
+
+    checkCompare(context: Context, rightType: IType): IType {
+        assert.ok(false);
+    }
 
     checkAdd(context: Context, rightType: IType, tryReverse: boolean): IType {
         if(tryReverse)
@@ -35,4 +54,14 @@ export default abstract class UserType extends CodeFragment implements IType {
         assert.ok(false);
     }
 
+    checkMultiply(context: Context, rightType: IType, tryReverse: boolean): IType {
+        if(tryReverse)
+            return rightType.checkMultiply(context, this, false);
+        else
+            assert.ok(false);
+    }
+
+    checkBitsOperation(context: Context, rightType: IType): IType {
+        assert.ok(false);
+    }
 }

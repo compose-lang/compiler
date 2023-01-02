@@ -8,8 +8,11 @@ import IType from "../type/IType";
 import ClassType from "../type/ClassType";
 import EnumDeclaration from "../declaration/EnumDeclaration";
 import ImportsType from "../type/ImportsType";
-import FunctionType from "../type/FunctionType";
 import IExpression from "../expression/IExpression";
+import ChangeTypeFunction from "../builtins/ChangeTypeFunction";
+import LoadFunction from "../builtins/LoadFunction";
+import StoreFunction from "../builtins/StoreFunction";
+import AssertFunction from "../builtins/AssertFunction";
 
 export default class Context {
 
@@ -71,6 +74,13 @@ export default class Context {
         return context;
     }
 
+    registerBuiltins() {
+        new ChangeTypeFunction().register(this);
+        new LoadFunction().register(this);
+        new StoreFunction().register(this);
+        new AssertFunction().register(this);
+    }
+
     registerClass(klass: ClassDeclaration) {
         assert.ok(!this.classes.has(klass.name) && !this.enums.has(klass.name));
         this.classes.set(klass.name, klass);
@@ -85,7 +95,7 @@ export default class Context {
         if(!this.functions.has(decl.name))
             this.functions.set(decl.name, new Map<string, IFunctionDeclaration>());
         const protos = this.functions.get(decl.name);
-        const proto = decl.type().toString();
+        const proto = decl.functionType().toString();
         assert.ok(!protos.has(proto));
         protos.set(proto, decl);
     }

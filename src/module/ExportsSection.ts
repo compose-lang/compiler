@@ -95,7 +95,7 @@ export default class ExportsSection extends SectionBase {
         return SectionType.EXPORTS;
     }
 
-    get length(): number {
+    get byteLength(): number {
         return LEB128.unsignedLength(this.exports.length)
             + this.exports.map(x => x.length).reduce((p, v) => p + v, 0);
     }

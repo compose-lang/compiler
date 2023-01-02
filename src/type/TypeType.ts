@@ -1,8 +1,8 @@
-import UserType from "./UserType";
 import IWasmTarget from "../compiler/IWasmTarget";
 import IType from "./IType";
 import * as assert from "assert";
 import Context from "../context/Context";
+import UserType from "./UserType";
 
 export default class TypeType extends UserType {
 

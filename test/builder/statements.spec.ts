@@ -8,6 +8,7 @@ import Int64Type from "../../src/type/Int64Type";
 import FunctionCallStatement from "../../src/statement/FunctionCallStatement";
 import OpCode from "../../src/compiler/OpCode";
 import ImportStatement from "../../src/module/ImportStatement";
+import IfStatement from "../../src/statement/IfStatement";
 
 it('parses a declare statement',  () => {
     const stmts = ComposeBuilder.parse_statement("const a = 2, b: i64 = 3;");
@@ -56,3 +57,14 @@ it('parses an import statement',  () => {
     assert.equal(stmt.source.value, "./Stuff");
 });
 
+it('parses an if statement',  () => {
+    const stmt = ComposeBuilder.parse_statement('if(c1) f1(); else if(c2) { f2(); ff2(); } else {}');
+    assert.ok(stmt instanceof IfStatement);
+    assert.equal(stmt.blocks.length, 3);
+    assert.ok(stmt.blocks[0].condition);
+    assert.equal(stmt.blocks[0].statements.length, 1);
+    assert.ok(stmt.blocks[1].condition);
+    assert.equal(stmt.blocks[1].statements.length, 2);
+    assert.ok(!stmt.blocks[2].condition);
+    assert.equal(stmt.blocks[2].statements.length, 0);
+});

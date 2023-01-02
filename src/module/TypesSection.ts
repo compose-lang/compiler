@@ -14,7 +14,7 @@ export default class TypesSection extends SectionBase {
         return SectionType.TYPES;
     }
 
-    get length(): number {
+    get byteLength(): number {
         return LEB128.unsignedLength(this.types.length)
             + this.types.map(type => type.byteLength()).reduce((p,v) => p + v, 0);
     }

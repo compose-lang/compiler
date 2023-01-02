@@ -1,5 +1,6 @@
 import IntegerType from "./IntegerType";
 import IWasmTarget from "../compiler/IWasmTarget";
+import NumberPrecedence from "./NumberPrecedence";
 
 export default class USizeType extends IntegerType {
 
@@ -7,6 +8,10 @@ export default class USizeType extends IntegerType {
 
     private constructor() {
         super("usize");
+    }
+
+    get precedence(): NumberPrecedence {
+        return NumberPrecedence.UInt32;
     }
 
     sizeof(): number {

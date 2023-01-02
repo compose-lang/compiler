@@ -13,6 +13,7 @@ F64: 'f64';
 V128: 'v128';
 STRING: 'string';
 BOOLEAN: 'boolean';
+ANY: 'any';
 VOID: 'void';
 
 ATTRIBUTE: 'attribute';
@@ -63,6 +64,7 @@ TYPE_OF: 'typeof';
 INSTANCE_OF: 'instanceof';
 SIZE_OF: 'sizeof';
 ALIGN_OF: 'alignof';
+OFFSET_OF: 'offsetof';
 
 EXPORT: 'export';
 IMPORT: 'import';

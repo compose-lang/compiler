@@ -1,0 +1,12 @@
+export abstract class Memory {
+
+    static native size(): i32 {
+        memory.size 0;
+        end;
+    }
+
+    static native grow(delta: i32): i32 {
+        memory.grow;
+        end;
+    }
+}

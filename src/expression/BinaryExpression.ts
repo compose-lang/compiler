@@ -6,7 +6,7 @@ import Operator from "./Operator";
 import IExpression from "./IExpression";
 import * as assert from "assert";
 import FunctionBody from "../module/FunctionBody";
-import { BINARY_CONSTIFIERS } from "../compiler/Constifiers";
+import {BINARY_CONSTIFIERS} from "../compiler/Constifiers";
 
 export default class BinaryExpression extends ExpressionBase {
 
@@ -29,6 +29,15 @@ export default class BinaryExpression extends ExpressionBase {
                 return leftType.checkAdd(context, rightType, true);
             case Operator.MINUS:
                 return leftType.checkSubtract(context, rightType);
+            case Operator.MULTIPLY:
+                return leftType.checkMultiply(context, rightType, true);
+            case Operator.LSHIFT:
+            case Operator.RSHIFT:
+            case Operator.URSHIFT:
+            case Operator.BIT_AND:
+            case Operator.BIT_OR:
+            case Operator.BIT_XOR:
+                return leftType.checkBitsOperation(context, rightType);
             default:
                 assert.ok(false);
         }

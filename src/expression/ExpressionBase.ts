@@ -19,6 +19,7 @@ export default abstract class ExpressionBase extends CodeFragment implements IEx
     }
 
     abstract declare(context: Context, module: WasmModule): void;
+
     rehearse(context: Context, module: WasmModule, body: FunctionBody): void {
         assert.ok(false);
     }

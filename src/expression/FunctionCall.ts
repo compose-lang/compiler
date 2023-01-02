@@ -33,16 +33,17 @@ export default class FunctionCall extends ExpressionBase {
     }
 
     check(context: Context): IType {
-        this.args.forEach(arg => arg.check(context));
-        const decl = FunctionFinder.findFunction(context, this); // will instantiate generic function if required
-        assert.ok(decl);
+        const decl = this.findDeclaration(context);
         return decl.returnType;
     }
 
+    isConst(context: Context): boolean {
+        const decl = this.findDeclaration(context);
+        return decl.isConst(context);
+    }
+
     declare(context: Context, module: WasmModule): void {
-        this.args.forEach(arg => arg.declare(context, module));
-        const decl = FunctionFinder.findFunction(context, this);
-        assert.ok(decl);
+        const decl = this.findDeclaration(context);
         if(this.isGeneric())
             decl.declare(context, module);
     }
@@ -52,13 +53,19 @@ export default class FunctionCall extends ExpressionBase {
     }
 
     compile(context: Context, module: WasmModule, body: FunctionBody): IType {
-        const decl = FunctionFinder.findFunction(context, this);
-        assert.ok(decl);
         this.args.forEach(arg => arg.compile(context, module, body));
+        const decl = FunctionFinder.findDeclaration(context, this);
+        assert.ok(decl);
         const index = module.getFunctionIndex(decl);
         assert.ok(index >= 0);
         body.addOpCode(OpCode.CALL, [index]); // TODO encode if index > 0x7F
-        return decl.type().returnType;
+        return decl.functionType().returnType;
     }
 
+    private findDeclaration(context: Context) {
+        this.args.forEach(arg => arg.check(context));
+        const decl = FunctionFinder.findDeclaration(context, this); // will instantiate generic function if required
+        assert.ok(decl, "Could not find function '" + this.name + "' at " + this.fragment.toString());
+        return decl;
+    }
 }

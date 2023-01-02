@@ -1,0 +1,35 @@
+export function min<T>(v1: T, v2: T): T {
+    return v1 <= v2 ? v1 : v2;
+}
+
+export function max<T>(v1: T, v2: T): T {
+    return v1 >= v2 ? v1 : v2;
+}
+
+export function clz<T>(v: T): T {
+    return sizeof(T) == 4 ? clz32<T>(v) : clz64<T>(v);
+}
+
+export function ctz<T>(v: T): T {
+    return sizeof(T) == 4 ? ctz32(v) : ctz64(v);
+}
+
+export native function clz32<T>(v: T): T {
+    i32.clz;
+    end;
+}
+
+export native function ctz32<T>(v: T): T {
+    i32.ctz;
+    end;
+}
+
+export native function clz64<T>(v: T): T {
+    i64.clz;
+    end;
+}
+
+export native function ctz64<T>(v: T): T {
+    i64.ctz;
+    end;
+}
