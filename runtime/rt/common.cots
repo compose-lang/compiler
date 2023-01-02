@@ -22,10 +22,11 @@ export const PROFILE = isDefined(ASC_PROFILE);
 // │                              ...                              │
 
 
-/** Memory manager info. */
-attribute mmInfo: usize;
-
 export class BLOCK(mmInfo) {
+
+    /** Memory manager info. */
+    mmInfo: usize;
+
 }
 
 /** Overhead of a memory manager block. */
@@ -55,16 +56,17 @@ export const BLOCK_MAXSIZE: usize = (1 << 30) - BLOCK_OVERHEAD;
 // │                              ...                              │
 
 
-/** Garbage collector info. */
-attribute gcInfo: u32;
-/** Garbage collector info. */
-attribute gcInfo2: u32;
-/** Runtime class id. */
-attribute rtId: u32;
-/** Runtime object size. */
-attribute rtSize: u32;
+export class OBJECT extends BLOCK {
 
-export class OBJECT(gcInfo, gcInfo2, rtId, rtSize) extends BLOCK {
+    /** Garbage collector info. */
+    gcInfo: u32;
+    /** Garbage collector info. */
+    gcInfo2: u32;
+    /** Runtime class id. */
+    rtId: u32;
+    /** Runtime object size. */
+    rtSize: u32;
+
 }
 
 /** Overhead of a garbage collector object. Excludes memory manager block overhead. */

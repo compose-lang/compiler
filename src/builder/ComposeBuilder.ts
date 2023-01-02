@@ -66,7 +66,7 @@ import ComposeParser, {
     TypedParameterContext,
     U32_typeContext,
     U64_typeContext,
-    Usize_typeContext
+    Usize_typeContext, Field_declarationContext
 } from "../parser/ComposeParser";
 import ComposeLexer from "../parser/ComposeLexer";
 import ComposeParserListener from "../parser/ComposeParserListener";
@@ -143,6 +143,7 @@ import EnumDeclaration from "../declaration/EnumDeclaration";
 import ILiteralExpression from "../literal/ILiteralExpression";
 import PreprocessedFileStream from "./PreprocessedFileStream";
 import PreprocessedCharStream from "./PreprocessedCharStream";
+import FieldDeclaration from "../declaration/FieldDeclaration";
 
 interface IndexedNode {
     __id?: number;
@@ -391,16 +392,25 @@ export default class ComposeBuilder extends ComposeParserListener {
     }
 
     exitClass_declaration = (ctx: Class_declarationContext) => {
+        const accessibility = ComposeBuilder.readAccessibility(ctx.accessibility());
         const id = this.getNodeValue<Identifier>(ctx._id);
         const attributes = ctx.attribute_ref_list()
             .map(child => this.getNodeValue<Identifier>(child), this);
+        const fields = ctx.field_declaration_list()
+            .map(child => this.getNodeValue<FieldDeclaration>(child), this);
         const parents = ctx.class_ref_list()
             .slice(1) // skip id which is also a class_type
             .map(child => this.getNodeValue<Identifier>(child), this);
         const functions = ctx.function_declaration_list()
             .map(child => this.getNodeValue<FunctionDeclarationBase>(child), this);
+        this.setNodeValue(ctx, new ClassDeclaration(accessibility, ctx.ABSTRACT() != null, id, attributes, parents, fields, functions));
+    }
+
+    exitField_declaration = (ctx: Field_declarationContext) => {
         const accessibility = ComposeBuilder.readAccessibility(ctx.accessibility());
-        this.setNodeValue(ctx, new ClassDeclaration(accessibility, id, attributes, parents, functions, ctx.ABSTRACT() != null));
+        const id = this.getNodeValue<Identifier>(ctx.identifier());
+        const type = this.getNodeValue<IDataType>(ctx.data_type_or_null());
+        this.setNodeValue(ctx, new FieldDeclaration(accessibility, ctx.STATIC() != null, id, type));
     }
 
     exitEnum_declaration = (ctx: Enum_declarationContext) => {

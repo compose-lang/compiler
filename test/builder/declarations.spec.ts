@@ -9,6 +9,7 @@ import IntegerLiteral from "../../src/literal/IntegerLiteral";
 import MultiType from "../../src/type/MultiType";
 import NativeFunctionDeclaration from "../../src/declaration/NativeFunctionDeclaration";
 import FunctionCall from "../../src/expression/FunctionCall";
+import Accessibility from "../../src/declaration/Accessibility";
 
 it('parses an attribute declaration ',  () => {
     const unit = ComposeBuilder.parse_unit("attribute text: string;");
@@ -176,5 +177,21 @@ it('parses a static member function call',  () => {
     assert.ok(stmt instanceof ReturnStatement);
     const exp = stmt.expression;
     assert.ok(exp instanceof FunctionCall);
+});
+
+it('parses class fields',  () => {
+    const unit = ComposeBuilder.parse_unit("class Thing { static thing1: i32; private thing2: string; }");
+    assert.equal(unit.declarations.length, 1);
+    const klass = unit.declarations[0];
+    assert.ok(klass instanceof ClassDeclaration);
+    assert.equal(klass.name, "Thing");
+    assert.equal(klass.fields.length,  2);
+    let field = klass.fields[0];
+    assert.equal(field.name, "thing1");
+    assert.ok(field.isStatic);
+    field = klass.fields[1];
+    assert.equal(field.name, "thing2");
+    assert.ok(!field.isStatic);
+    assert.ok(field.accessibility == Accessibility.PRIVATE);
 });
 

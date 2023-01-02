@@ -197,12 +197,17 @@ class_declaration:
     accessibility? ABSTRACT? CLASS id = class_ref ( LPAR attribute_ref (COMMA attribute_ref)* RPAR )?
             ( EXTENDS class_ref (COMMA class_ref)* )?
         LCURL
+            field_declaration*
             function_declaration[true]*
         RCURL
     ;
 
 accessibility:
     PUBLIC | PROTECTED | PRIVATE
+    ;
+
+field_declaration:
+    accessibility? STATIC? identifier COLON data_type_or_null SEMI
     ;
 
 function_declaration[boolean as_member]:

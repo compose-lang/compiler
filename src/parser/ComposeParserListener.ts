@@ -46,6 +46,7 @@ import { TypedParameterContext } from "./ComposeParser";
 import { FunctionParameterContext } from "./ComposeParser";
 import { Class_declarationContext } from "./ComposeParser";
 import { AccessibilityContext } from "./ComposeParser";
+import { Field_declarationContext } from "./ComposeParser";
 import { Function_declarationContext } from "./ComposeParser";
 import { Abstract_function_declarationContext } from "./ComposeParser";
 import { Concrete_function_declarationContext } from "./ComposeParser";
@@ -568,6 +569,16 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitAccessibility?: (ctx: AccessibilityContext) => void;
+	/**
+	 * Enter a parse tree produced by `ComposeParser.field_declaration`.
+	 * @param ctx the parse tree
+	 */
+	enterField_declaration?: (ctx: Field_declarationContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.field_declaration`.
+	 * @param ctx the parse tree
+	 */
+	exitField_declaration?: (ctx: Field_declarationContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.function_declaration`.
 	 * @param ctx the parse tree

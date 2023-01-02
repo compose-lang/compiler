@@ -14,12 +14,11 @@
 
 
 /** Runtime type information data structure. */
-/** Flags describing the shape of this class type. */
-attribute typeFlags: i32;
-/** Base class id or `0` if none. */
-attribute baseClassId: u32;
-@unmanaged
-export class Typeinfo(typeFlags, baseClassId) {
+export class Typeinfo {
+    /** Flags describing the shape of this class type. */
+    typeFlags: i32;
+    /** Base class id or `0` if none. */
+    baseClassId: u32;
 }
 
 /** Runtime type information flags. */

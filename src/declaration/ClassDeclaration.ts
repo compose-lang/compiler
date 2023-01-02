@@ -10,22 +10,25 @@ import ClassType from "../type/ClassType";
 import IFunctionDeclaration from "./IFunctionDeclaration";
 import WasmModule from "../module/WasmModule";
 import CompilationUnit from "../compiler/CompilationUnit";
+import FieldList from "../builder/FieldList";
 
 export default class ClassDeclaration extends DeclarationBase implements IDeclaration {
 
     accessibility: Accessibility;
     attributes: IdentifierList;
     parents: IdentifierList;
+    fields: FieldList;
     functions: FunctionList;
     abstract: boolean;
 
-    constructor(accessibility: Accessibility, id: Identifier, attributes: IdentifierList, parents: IdentifierList, functions: FunctionList, abstract: boolean) {
+    constructor(accessibility: Accessibility, isAbstract: boolean, id: Identifier, attributes: IdentifierList, parents: IdentifierList, fields: FieldList, functions: FunctionList) {
         super(id);
         this.accessibility = accessibility | Accessibility.PUBLIC;
+        this.abstract = isAbstract;
         this.attributes = attributes;
         this.parents = parents;
+        this.fields = fields;
         this.functions = functions;
-        this.abstract = abstract;
         this.functions.forEach(f => f.parentClass = this);
     }
 
@@ -45,6 +48,8 @@ export default class ClassDeclaration extends DeclarationBase implements IDeclar
     check(context: Context): IType {
         // this.attributes.forEach(a => a.check(context));
         // this.parents.forEach(p => p.check)
+        // this.fields.forEach(p => p.check)
+        // this.functions.forEach(p => p.check)
         return new ClassType(this.id, this);
     }
 
