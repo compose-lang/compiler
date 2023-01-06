@@ -3,7 +3,7 @@ import * as assert from "assert";
 import UnresolvedIdentifierExpression from "../../src/expression/UnresolvedIdentifierExpression";
 import FunctionCall from "../../src/expression/FunctionCall";
 import BinaryExpression from "../../src/expression/BinaryExpression";
-import BinaryOperator from "../../src/expression/Operator";
+import BinaryOperator from "../../src/expression/BinaryOperator";
 
 it('parses a variable',  () => {
     const exp = ComposeBuilder.parse_expression("my_var");
