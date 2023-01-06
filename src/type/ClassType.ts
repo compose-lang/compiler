@@ -25,6 +25,11 @@ export default class ClassType extends UserType implements IValueType {
         return this.id.value;
     }
 
+    getClass(context: Context): ClassDeclaration {
+        this.ensureClass(context);
+        return this.klass;
+    }
+
     sizeof(): number {
         assert.ok(false); // TODO
     }
@@ -77,7 +82,7 @@ export default class ClassType extends UserType implements IValueType {
     private ensureClass(context: Context) {
         if(!this.klass) {
             this.klass = context.getRegisteredClass(this.id);
-            assert.ok(this.klass);
+            assert.ok(this.klass, "Cannot find class '" + this.id.value + "'");
         }
    }
 }

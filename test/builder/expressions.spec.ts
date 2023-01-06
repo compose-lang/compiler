@@ -3,7 +3,7 @@ import * as assert from "assert";
 import UnresolvedIdentifierExpression from "../../src/expression/UnresolvedIdentifierExpression";
 import FunctionCall from "../../src/expression/FunctionCall";
 import BinaryExpression from "../../src/expression/BinaryExpression";
-import Operator from "../../src/expression/Operator";
+import BinaryOperator from "../../src/expression/Operator";
 
 it('parses a variable',  () => {
     const exp = ComposeBuilder.parse_expression("my_var");
@@ -33,6 +33,6 @@ it('parses a parameterized function call',  () => {
 it('parses a plus expression',  () => {
     const exp = ComposeBuilder.parse_expression("a + 2");
     assert.ok(exp instanceof BinaryExpression);
-    assert.equal(exp.operator, Operator.PLUS);
+    assert.equal(exp.operator, BinaryOperator.PLUS);
 });
 

@@ -8,6 +8,8 @@ import FunctionBody from "../module/FunctionBody";
 import IExpression from "../expression/IExpression";
 import NullLiteral from "../literal/NullLiteral";
 import Identifier from "../builder/Identifier";
+import BinaryOperator from "../expression/BinaryOperator";
+import UnaryOperator from "../expression/UnaryOperator";
 
 export default abstract class UserType extends CodeFragment implements IType {
 
@@ -61,7 +63,11 @@ export default abstract class UserType extends CodeFragment implements IType {
             assert.ok(false);
     }
 
-    checkBitsOperation(context: Context, rightType: IType): IType {
+    checkBitsOperator(context: Context, operator: BinaryOperator, rightType: IType): IType {
+        assert.ok(false);
+    }
+
+    checkUnaryOperator(context: Context, operator: UnaryOperator): IType {
         assert.ok(false);
     }
 }

@@ -7,6 +7,8 @@ import Context from "../context/Context";
 import Identifier from "../builder/Identifier";
 import IFunctionDeclaration from "../declaration/IFunctionDeclaration";
 import IExpression from "../expression/IExpression";
+import BinaryOperator from "../expression/BinaryOperator";
+import UnaryOperator from "../expression/UnaryOperator";
 
 export default class ImportsType extends Map<string, IFunctionDeclaration> implements IType {
 
@@ -70,9 +72,12 @@ export default class ImportsType extends Map<string, IFunctionDeclaration> imple
         assert.ok(false); // should never get there
     }
 
-    checkBitsOperation(context: Context, rightType: IType): IType {
+    checkBitsOperator(context: Context, operator: BinaryOperator, rightType: IType): IType {
         assert.ok(false); // should never get there
     }
 
+    checkUnaryOperator(context: Context, operator: UnaryOperator): IType {
+        assert.ok(false);
+    }
 
 }

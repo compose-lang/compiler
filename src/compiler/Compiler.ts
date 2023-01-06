@@ -3,6 +3,10 @@ import IWasmTarget from "./IWasmTarget";
 import WasmModule from "../module/WasmModule";
 import Context from "../context/Context";
 import * as assert from "assert";
+import ComposeBuilder from "../builder/ComposeBuilder";
+import {fileURLToPath} from "url";
+import {dirname} from "path";
+import CompilerOptions from "./CompilerOptions";
 
 export default class Compiler {
 
@@ -13,12 +17,20 @@ export default class Compiler {
         this.module.getMemorySection().addMemory(minPages, maxPages);
     }
 
-    buildOne(unit: CompilationUnit, target: IWasmTarget) {
+    buildOne(unit: CompilationUnit, target: IWasmTarget, options = CompilerOptions.DEFAULTS) {
         assert.ok(this.units.length == 0);
-        this.addUnit(unit);
-        this.declareUnits();
-        this.compileAtoms();
-        this.buildModule(target);
+        if(options.parseAndCheck) {
+            this.addUnit(unit);
+            if (options.declare) {
+                this.declareUnits();
+                if (options.compile) {
+                    this.compileAtoms();
+                    if (options.assemble) {
+                        this.assembleModule(target);
+                    }
+                }
+            }
+        }
     }
 
     addUnit(unit: CompilationUnit) {
@@ -33,7 +45,9 @@ export default class Compiler {
     }
 
     private populateContextAndCheck(unit: CompilationUnit) {
-        // register builtins
+        // parse and register cots builtins
+        Compiler.parseAndRegisterBuiltins(unit.context);
+        // register special builtins
         unit.context.registerBuiltins();
         // register declarations
         unit.declarations.forEach(decl => decl.register(unit.context));
@@ -57,8 +71,21 @@ export default class Compiler {
         this.module.functions.forEach(decl => decl.compile(decl.unit.context, this.module));
     }
 
-    buildModule(target: IWasmTarget) {
+    assembleModule(target: IWasmTarget) {
         this.module.writeTo(target);
+    }
+
+    private static parseAndRegisterBuiltins(context: Context) {
+        // parse and register cots builtins
+        ["/runtime/util/error.cots"].forEach(name => Compiler.parseAndRegisterBuiltin(name, context));
+    }
+
+    private static parseAndRegisterBuiltin(name: string, context: Context) {
+        const __filename = fileURLToPath(import.meta.url);
+        const __dirname = dirname(dirname(dirname(__filename)));
+        const path = __dirname + name;
+        const unit = ComposeBuilder.parse_unit(path);
+        unit.declarations.forEach(decl => decl.register(context));
     }
 
 }

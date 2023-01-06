@@ -52,8 +52,10 @@ export default class AssignInstanceStatement extends StatementBase {
     }
 
     private checkVariable(context: Context): IType  {
-        const registered = context.getRegisteredLocal(this.id);
-        assert.ok(registered);
+        let registered = context.getRegisteredLocal(this.id);
+        if(!registered)
+            registered = context.getRegisteredGlobal(this.id);
+        assert.ok(registered, "Unknown variable " + this.id.value + ", at " + this.fragment.toString());
         return registered.type;
     }
 
@@ -67,9 +69,15 @@ export default class AssignInstanceStatement extends StatementBase {
 
     compile(context: Context, module: WasmModule, body: FunctionBody): IType {
         this.expression.compile(context, module, body);
-        const index = body.getRegisteredLocalIndex(this.name);
-        // TODO compile operator
-        body.addOpCode(OpCode.LOCAL_SET, [index]); // TODO encode if index > 0x7F
+        let index = body.getRegisteredLocalIndex(this.name);
+        if(index) {
+            // TODO compile operator
+            body.addOpCode(OpCode.LOCAL_SET, [index]); // TODO encode if index > 0x7F
+        } else {
+            index  = module.getGlobalsSection().getGlobalIndex(this.name);
+            assert.ok(index);
+            body.addOpCode(OpCode.GLOBAL_SET, [index]); // TODO encode if index > 0x7F
+        }
         return null;
     }
 

@@ -47,6 +47,11 @@ export default class ClassDeclaration extends DeclarationBase implements IDeclar
         context.registerClass(this);
     }
 
+    hasParent(context: Context, parent: Identifier): boolean {
+        return this.parents.some(p => p.value == parent.value)
+            || this.parents.some(p => context.getRegisteredClass(p).hasParent(context, parent));
+    }
+
     check(context: Context): IType {
         // this.attributes.forEach(a => a.check(context));
         // this.parents.forEach(p => p.check)
@@ -90,4 +95,5 @@ export default class ClassDeclaration extends DeclarationBase implements IDeclar
         }
         return null;
     }
+
 }

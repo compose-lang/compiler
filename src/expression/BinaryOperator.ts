@@ -1,4 +1,4 @@
-enum Operator {
+enum BinaryOperator {
     PLUS,
     MINUS,
     MULTIPLY,
@@ -12,4 +12,4 @@ enum Operator {
     BIT_XOR
 }
 
-export default Operator;
+export default BinaryOperator;

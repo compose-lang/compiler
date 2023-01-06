@@ -1,19 +1,31 @@
 import CompilationUnit from "../compiler/CompilationUnit";
 import {
-    CharStream, CommonTokenStream, ParserRuleContext, ParseTree, ParseTreeWalker, TerminalNode, Token
+    CharStream,
+    CommonTokenStream,
+    ParserRuleContext,
+    ParseTree,
+    ParseTreeWalker,
+    TerminalNode,
+    Token
 } from "antlr4";
 import {fileExists} from "../utils/FileUtils";
 import ComposeParser, {
     Abstract_function_declarationContext,
     AddExpressionContext,
     AlignofExpressionContext,
+    AndExpressionContext,
     AnnotationContext,
+    Any_typeContext,
     Assign_instance_statementContext,
     Attribute_declarationContext,
     Attribute_refContext,
     Attribute_type_or_nullContext,
     Attribute_typeContext,
     AttributeParameterContext,
+    BitAndExpressionContext,
+    BitOrExpressionContext,
+    BitShiftExpressionContext,
+    BitXorExpressionContext,
     Boolean_typeContext,
     BooleanLiteralContext,
     CharLiteralContext,
@@ -21,6 +33,7 @@ import ComposeParser, {
     Class_declarationContext,
     Class_refContext,
     Class_typeContext,
+    CompareExpressionContext,
     Compilation_atomContext,
     Compilation_unitContext,
     Concrete_function_declarationContext,
@@ -31,10 +44,14 @@ import ComposeParser, {
     Declare_oneContext,
     Enum_declarationContext,
     Enum_itemContext,
+    EqualsExpressionContext, ExpressionContext,
     F32_typeContext,
     F64_typeContext,
+    Field_declarationContext,
+    For_statementContext,
     Function_call_statementContext,
     Function_callContext,
+    Function_declarationContext,
     Function_prototypeContext,
     Function_type_or_nullContext,
     Function_typeContext,
@@ -45,8 +62,9 @@ import ComposeParser, {
     I64_typeContext,
     IdentifierContext,
     IdentifierExpressionContext,
+    If_statementContext,
     Import_sourceContext,
-    Import_statementContext,
+    Import_statementContext, Increment_statementContext,
     InstructionContext,
     Integer_typeContext,
     IntegerLiteralContext,
@@ -57,11 +75,16 @@ import ComposeParser, {
     Map_entryContext,
     Map_literalContext,
     MapLiteralContext,
-    Function_declarationContext,
+    MemberExpressionContext,
+    MultiplyExpressionContext,
     Native_function_declarationContext,
-    Native_typeContext,
+    Native_typeContext, NewExpressionContext,
     NullLiteralContext,
     Number_typeContext,
+    OffsetofExpressionContext,
+    OrExpressionContext,
+    ParenthesisExpressionContext,
+    PreCastExpressionContext, PreIncrementExpressionContext,
     Return_statementContext,
     Return_typeContext,
     Return_typesContext,
@@ -70,33 +93,19 @@ import ComposeParser, {
     SimpleCallExpressionContext,
     SizeofExpressionContext,
     StatementContext,
+    StatementsContext,
     String_typeContext,
     StringLiteralContext,
+    TernaryExpressionContext,
+    Throw_statementContext,
     TypedParameterContext,
     U32_typeContext,
     U64_typeContext,
-    Usize_typeContext,
-    Field_declarationContext,
-    BitShiftExpressionContext,
-    BitOrExpressionContext,
-    BitAndExpressionContext,
-    MemberExpressionContext,
-    TernaryExpressionContext,
-    ParenthesisExpressionContext,
-    PreCastExpressionContext,
-    Value_typeContext,
-    Value_type_or_nullContext,
-    MultiplyExpressionContext,
     UnaryBitNotExpressionContext,
-    OffsetofExpressionContext,
-    Any_typeContext,
-    If_statementContext,
-    StatementsContext,
-    CompareExpressionContext,
-    EqualsExpressionContext,
-    AndExpressionContext,
-    OrExpressionContext,
-    UnaryNotExpressionContext, BitXorExpressionContext
+    UnaryNotExpressionContext,
+    Usize_typeContext,
+    Value_type_or_nullContext,
+    Value_typeContext
 } from "../parser/ComposeParser";
 import ComposeLexer from "../parser/ComposeLexer";
 import ComposeParserListener from "../parser/ComposeParserListener";
@@ -157,7 +166,7 @@ import * as assert from "assert";
 import MultiType from "../type/MultiType";
 import FunctionCallStatement from "../statement/FunctionCallStatement";
 import GenericParameter from "../declaration/GenericParameter";
-import Operator from "../expression/Operator";
+import BinaryOperator from "../expression/BinaryOperator";
 import BinaryExpression from "../expression/BinaryExpression";
 import Accessibility from "../declaration/Accessibility";
 import OpCode from "../compiler/OpCode";
@@ -181,13 +190,19 @@ import CastExpression from "../expression/CastExpression";
 import BitNotExpression from "../expression/BitNotExpression";
 import OffsetofExpression from "../expression/OffsetofExpression";
 import AnyType from "../type/AnyType";
-import IfStatement, { IfBlock } from "../statement/IfStatement";
+import IfStatement, {IfBlock} from "../statement/IfStatement";
 import CompareExpression from "../expression/CompareExpression";
 import Comparator from "../expression/Comparator";
 import EqualsExpression from "../expression/EqualsExpression";
 import AndExpression from "../expression/AndExpression";
 import OrExpression from "../expression/OrExpression";
 import LogicalNotExpression from "../expression/LogicalNotExpression";
+import ThrowStatement from "../statement/ThrowStatement";
+import ForStatement from "../statement/ForStatement";
+import ConstructorExpression from "../expression/ConstructorExpression";
+import UnaryExpression from "../expression/UnaryExpression";
+import UnaryOperator from "../expression/UnaryOperator";
+import UnaryStatement from "../statement/UnaryStatement";
 
 interface IndexedNode {
     __id?: number;
@@ -798,21 +813,21 @@ export default class ComposeBuilder extends ComposeParserListener {
     exitAddExpression = (ctx: AddExpressionContext) => {
         const left = this.getNodeValue<IExpression>(ctx._left);
         const right = this.getNodeValue<IExpression>(ctx._right);
-        const op = ctx.PLUS() ? Operator.PLUS : Operator.MINUS;
+        const op = ctx.PLUS() ? BinaryOperator.PLUS : BinaryOperator.MINUS;
         this.setNodeValue(ctx, new BinaryExpression(left, op, right));
     }
 
     exitMultiplyExpression = (ctx: MultiplyExpressionContext) => {
         const left = this.getNodeValue<IExpression>(ctx._left);
         const right = this.getNodeValue<IExpression>(ctx._right);
-        const op = ctx.STAR() ? Operator.MULTIPLY : ctx.SLASH() ? Operator.DIVIDE : Operator.MODULO;
+        const op = ctx.STAR() ? BinaryOperator.MULTIPLY : ctx.SLASH() ? BinaryOperator.DIVIDE : BinaryOperator.MODULO;
         this.setNodeValue(ctx, new BinaryExpression(left, op, right));
     }
 
     exitBitShiftExpression = (ctx: BitShiftExpressionContext) => {
         const left = this.getNodeValue<IExpression>(ctx._left);
         const right = this.getNodeValue<IExpression>(ctx._right);
-        const op = ctx.LSHIFT() ? Operator.LSHIFT : ctx.RSHIFT() ? Operator.RSHIFT : Operator.URSHIFT;
+        const op = ctx.LSHIFT() ? BinaryOperator.LSHIFT : ctx.RSHIFT() ? BinaryOperator.RSHIFT : BinaryOperator.URSHIFT;
         this.setNodeValue(ctx, new BinaryExpression(left, op, right));
     }
 
@@ -855,19 +870,19 @@ export default class ComposeBuilder extends ComposeParserListener {
     exitBitOrExpression = (ctx: BitOrExpressionContext) => {
         const left = this.getNodeValue<IExpression>(ctx._left);
         const right = this.getNodeValue<IExpression>(ctx._right);
-        this.setNodeValue(ctx, new BinaryExpression(left, Operator.BIT_OR, right));
+        this.setNodeValue(ctx, new BinaryExpression(left, BinaryOperator.BIT_OR, right));
     }
 
     exitBitXorExpression = (ctx: BitXorExpressionContext) => {
         const left = this.getNodeValue<IExpression>(ctx._left);
         const right = this.getNodeValue<IExpression>(ctx._right);
-        this.setNodeValue(ctx, new BinaryExpression(left, Operator.BIT_XOR, right));
+        this.setNodeValue(ctx, new BinaryExpression(left, BinaryOperator.BIT_XOR, right));
     }
 
     exitBitAndExpression = (ctx: BitAndExpressionContext) => {
         const left = this.getNodeValue<IExpression>(ctx._left);
         const right = this.getNodeValue<IExpression>(ctx._right);
-        this.setNodeValue(ctx, new BinaryExpression(left, Operator.BIT_AND, right));
+        this.setNodeValue(ctx, new BinaryExpression(left, BinaryOperator.BIT_AND, right));
     }
 
     exitMemberExpression = (ctx: MemberExpressionContext) => {
@@ -892,6 +907,39 @@ export default class ComposeBuilder extends ComposeParserListener {
     exitParenthesisExpression = (ctx: ParenthesisExpressionContext) => {
         const expression = this.getNodeValue<IExpression>(ctx.expression());
         this.setNodeValue(ctx, new ParenthesisExpression(expression));
+    }
+
+    exitNewExpression = (ctx: NewExpressionContext) => {
+        const call = this.getNodeValue<FunctionCall>(ctx.function_call());
+        this.setNodeValue(ctx, new ConstructorExpression(call.id, call.genericTypes, call.args));
+    }
+
+    exitPreIncrementExpression = (ctx: PreIncrementExpressionContext) => {
+        const expression = this.getNodeValue<IExpression>(ctx.expression());
+        this.setNodeValue(ctx, new UnaryExpression(expression, UnaryOperator.PRE_INC));
+    }
+
+    exitThrow_statement = (ctx: Throw_statementContext) => {
+        const expression = this.getNodeValue<IExpression>(ctx.expression());
+        this.setNodeValue(ctx, new ThrowStatement(expression));
+    }
+
+    exitFor_statement = (ctx: For_statementContext) => {
+        const declare_ones = ctx.declare_one_list().map(child => this.getNodeValue<DeclareInstanceStatement>(child), this);
+        declare_ones.forEach(one => one.modifier = InstanceModifier.LET);
+        const checkExpressions = ctx.expression_list().map(child => this.getNodeValue<IExpression>(child), this);
+        const loopStatements = ctx.statement_list().map(child => this.getNodeValue<IStatement>(child), this);
+        const statements = this.getNodeValue<StatementList>(ctx.statements());
+        this.setNodeValue(ctx, new ForStatement(declare_ones, checkExpressions, StatementList.from(loopStatements), statements));
+    }
+
+    exitIncrement_statement = (ctx: Increment_statementContext) => {
+        const expression = this.getNodeValue<IExpression>(ctx.expression());
+        const isPost = ctx.getChild(0) == ctx.expression();
+        const op = ctx.INC() != null ?
+            (isPost ? UnaryOperator.POST_INC : UnaryOperator.PRE_INC)
+            : (isPost ? UnaryOperator.POST_DEC : UnaryOperator.PRE_DEC);
+        this.setNodeValue(ctx, new UnaryStatement(expression, op));
     }
 
     exitInstruction = (ctx: InstructionContext) => {

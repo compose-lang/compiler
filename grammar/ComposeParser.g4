@@ -254,6 +254,7 @@ statement:
     ( declare_instances_statement
     | assign_instance_statement
     | assign_item_statement
+    | increment_statement
     | function_call_statement
     | if_statement
     | for_statement
@@ -262,6 +263,15 @@ statement:
     | return_statement
     | break_statement
     )
+    ;
+
+increment_statement:
+    expression { $parser.willNotContainLineTerminator()}
+        INC
+    | expression { $parser.willNotContainLineTerminator()}
+        DEC
+    | INC expression
+    | DEC expression
     ;
 
 throw_statement:
@@ -301,7 +311,7 @@ for_statement:
         SEMI
         (expression (COMMA expression)*)?
         SEMI
-        (expression (COMMA expression)*)?
+        (statement (COMMA statement)*)?
         RPAR
         statements
     ;
@@ -365,8 +375,8 @@ expression:
         DEC                                         # PostDecrementExpression
     | TYPE_OF ((LPAR expression RPAR)
           | TYPE_OF expression)                     # TypeofExpression
-    | INC expression                                # UnaryPreIncrementExpression
-    | DEC expression                                # UnaryPreDecrementExpression
+    | INC expression                                # PreIncrementExpression
+    | DEC expression                                # PreDecrementExpression
     | PLUS expression                               # UnaryPlusExpression
     | MINUS expression                              # UnaryMinusExpression
     | TILDE expression                              # UnaryBitNotExpression

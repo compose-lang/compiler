@@ -9,4 +9,9 @@ export abstract class Memory {
         memory.grow;
         end;
     }
+
+    static native copy(source: i32, target: i32, size: i32): void {
+        memory.copy;
+        end;
+    }
 }

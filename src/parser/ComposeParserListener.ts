@@ -55,6 +55,7 @@ import { Native_function_declarationContext } from "./ComposeParser";
 import { Function_prototypeContext } from "./ComposeParser";
 import { Generic_parameterContext } from "./ComposeParser";
 import { StatementContext } from "./ComposeParser";
+import { Increment_statementContext } from "./ComposeParser";
 import { Throw_statementContext } from "./ComposeParser";
 import { Try_statementContext } from "./ComposeParser";
 import { Catch_clauseContext } from "./ComposeParser";
@@ -74,6 +75,7 @@ import { Return_statementContext } from "./ComposeParser";
 import { ChildCallExpressionContext } from "./ComposeParser";
 import { TernaryExpressionContext } from "./ComposeParser";
 import { AssignExpressionContext } from "./ComposeParser";
+import { PreIncrementExpressionContext } from "./ComposeParser";
 import { SimpleCallExpressionContext } from "./ComposeParser";
 import { InExpressionContext } from "./ComposeParser";
 import { ItemExpressionContext } from "./ComposeParser";
@@ -94,12 +96,12 @@ import { SuperExpressionContext } from "./ComposeParser";
 import { BitShiftExpressionContext } from "./ComposeParser";
 import { UnaryNotExpressionContext } from "./ComposeParser";
 import { PostIncrementExpressionContext } from "./ComposeParser";
+import { PreDecrementExpressionContext } from "./ComposeParser";
 import { NewExpressionContext } from "./ComposeParser";
 import { ParenthesisExpressionContext } from "./ComposeParser";
 import { LiteralExpressionContext } from "./ComposeParser";
 import { MultiplyExpressionContext } from "./ComposeParser";
 import { BitXorExpressionContext } from "./ComposeParser";
-import { UnaryPreIncrementExpressionContext } from "./ComposeParser";
 import { IdentifierExpressionContext } from "./ComposeParser";
 import { UnaryBitNotExpressionContext } from "./ComposeParser";
 import { MemberExpressionContext } from "./ComposeParser";
@@ -107,7 +109,6 @@ import { BitAndExpressionContext } from "./ComposeParser";
 import { AddExpressionContext } from "./ComposeParser";
 import { OffsetofExpressionContext } from "./ComposeParser";
 import { BitOrExpressionContext } from "./ComposeParser";
-import { UnaryPreDecrementExpressionContext } from "./ComposeParser";
 import { EqualsExpressionContext } from "./ComposeParser";
 import { Function_callContext } from "./ComposeParser";
 import { NullLiteralContext } from "./ComposeParser";
@@ -662,6 +663,16 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 */
 	exitStatement?: (ctx: StatementContext) => void;
 	/**
+	 * Enter a parse tree produced by `ComposeParser.increment_statement`.
+	 * @param ctx the parse tree
+	 */
+	enterIncrement_statement?: (ctx: Increment_statementContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.increment_statement`.
+	 * @param ctx the parse tree
+	 */
+	exitIncrement_statement?: (ctx: Increment_statementContext) => void;
+	/**
 	 * Enter a parse tree produced by `ComposeParser.throw_statement`.
 	 * @param ctx the parse tree
 	 */
@@ -857,6 +868,18 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitAssignExpression?: (ctx: AssignExpressionContext) => void;
+	/**
+	 * Enter a parse tree produced by the `PreIncrementExpression`
+	 * labeled alternative in `ComposeParser.expression`.
+	 * @param ctx the parse tree
+	 */
+	enterPreIncrementExpression?: (ctx: PreIncrementExpressionContext) => void;
+	/**
+	 * Exit a parse tree produced by the `PreIncrementExpression`
+	 * labeled alternative in `ComposeParser.expression`.
+	 * @param ctx the parse tree
+	 */
+	exitPreIncrementExpression?: (ctx: PreIncrementExpressionContext) => void;
 	/**
 	 * Enter a parse tree produced by the `SimpleCallExpression`
 	 * labeled alternative in `ComposeParser.expression`.
@@ -1098,6 +1121,18 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 */
 	exitPostIncrementExpression?: (ctx: PostIncrementExpressionContext) => void;
 	/**
+	 * Enter a parse tree produced by the `PreDecrementExpression`
+	 * labeled alternative in `ComposeParser.expression`.
+	 * @param ctx the parse tree
+	 */
+	enterPreDecrementExpression?: (ctx: PreDecrementExpressionContext) => void;
+	/**
+	 * Exit a parse tree produced by the `PreDecrementExpression`
+	 * labeled alternative in `ComposeParser.expression`.
+	 * @param ctx the parse tree
+	 */
+	exitPreDecrementExpression?: (ctx: PreDecrementExpressionContext) => void;
+	/**
 	 * Enter a parse tree produced by the `NewExpression`
 	 * labeled alternative in `ComposeParser.expression`.
 	 * @param ctx the parse tree
@@ -1157,18 +1192,6 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitBitXorExpression?: (ctx: BitXorExpressionContext) => void;
-	/**
-	 * Enter a parse tree produced by the `UnaryPreIncrementExpression`
-	 * labeled alternative in `ComposeParser.expression`.
-	 * @param ctx the parse tree
-	 */
-	enterUnaryPreIncrementExpression?: (ctx: UnaryPreIncrementExpressionContext) => void;
-	/**
-	 * Exit a parse tree produced by the `UnaryPreIncrementExpression`
-	 * labeled alternative in `ComposeParser.expression`.
-	 * @param ctx the parse tree
-	 */
-	exitUnaryPreIncrementExpression?: (ctx: UnaryPreIncrementExpressionContext) => void;
 	/**
 	 * Enter a parse tree produced by the `IdentifierExpression`
 	 * labeled alternative in `ComposeParser.expression`.
@@ -1253,18 +1276,6 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitBitOrExpression?: (ctx: BitOrExpressionContext) => void;
-	/**
-	 * Enter a parse tree produced by the `UnaryPreDecrementExpression`
-	 * labeled alternative in `ComposeParser.expression`.
-	 * @param ctx the parse tree
-	 */
-	enterUnaryPreDecrementExpression?: (ctx: UnaryPreDecrementExpressionContext) => void;
-	/**
-	 * Exit a parse tree produced by the `UnaryPreDecrementExpression`
-	 * labeled alternative in `ComposeParser.expression`.
-	 * @param ctx the parse tree
-	 */
-	exitUnaryPreDecrementExpression?: (ctx: UnaryPreDecrementExpressionContext) => void;
 	/**
 	 * Enter a parse tree produced by the `EqualsExpression`
 	 * labeled alternative in `ComposeParser.expression`.

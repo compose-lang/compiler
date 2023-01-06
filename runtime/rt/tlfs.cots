@@ -2,7 +2,7 @@ import { AL_BITS, AL_SIZE, AL_MASK, DEBUG, BLOCK, BLOCK_OVERHEAD, BLOCK_MAXSIZE 
 #if RTRACE
 import { oninit, onalloc, onresize, onmove, onfree } from "./rtrace";
 #endif
-import { E_ALLOCATION_TOO_LARGE, unreachable } from "../util/error";
+import { E_ALLOCATION_TOO_LARGE, unreachable } from "../util/stderrors";
 import { min, max, clz, ctz } from "../util/maths";
 import { Memory } from "./memory";
 
@@ -460,6 +460,8 @@ function prepareSize(size: usize): usize {
   return computeSize(size);
 }
 
+const __heap_base = 0;
+
 /** Initializes the root structure. */
 function initialize(): void {
 #if RTRACE
@@ -479,13 +481,13 @@ function initialize(): void {
     }
   }
   let memStart = rootOffset + ROOT_SIZE;
-  if (ASC_LOW_MEMORY_LIMIT) {
+#if ASC_LOW_MEMORY_LIMIT
     const memEnd = <usize>ASC_LOW_MEMORY_LIMIT & ~AL_MASK;
     if (memStart <= memEnd) addMemory(root, memStart, memEnd);
     else unreachable(); // low memory limit already exceeded
-  } else {
+#else
     addMemory(root, memStart, Memory.size() << 16);
-  }
+#endif
   ROOT = root;
 }
 
@@ -493,7 +495,7 @@ function initialize(): void {
 function allocateBlock(root: Root, size: usize): Block {
   let payloadSize = prepareSize(size);
   let block = searchBlock(root, payloadSize);
-  if (!block) {
+  if (block == null) {
     growMemory(root, payloadSize);
     block = changetype<Block>(searchBlock(root, payloadSize));
     if (DEBUG) assert(block); // must be found now
@@ -525,7 +527,7 @@ function reallocateBlock(root: Root, block: Block, size: usize): Block {
   // merge with right free block if merger is large enough
   let right = GETRIGHT(block);
   let rightInfo = right.mmInfo;
-  if (rightInfo & FREE) {
+  if ((rightInfo & FREE) != 0) {
     let mergeSize = blockSize + BLOCK_OVERHEAD + (rightInfo & ~TAGS_MASK);
     if (mergeSize >= payloadSize) {
       removeBlock(root, right);
@@ -568,19 +570,19 @@ function freeBlock(root: Root, block: Block): void {
 function checkUsedBlock(ptr: usize): Block {
   let block = changetype<Block>(ptr - BLOCK_OVERHEAD);
   assert(
-    ptr != 0 && !(ptr & AL_MASK) &&  // must exist and be aligned
-    !(block.mmInfo & FREE)           // must be used
+    ptr != 0 && (ptr & AL_MASK) == 0 &&  // must exist and be aligned
+    (block.mmInfo & FREE) == 0           // must be used
   );
   return block;
 }
 
 function __alloc(size: usize): usize {
-  if (!ROOT) initialize();
+  if (ROOT == null) initialize();
   return changetype<usize>(allocateBlock(ROOT, size)) + BLOCK_OVERHEAD;
 }
 
 function __realloc(ptr: usize, size: usize): usize {
-  if (!ROOT) initialize();
+  if (ROOT == null) initialize();
   return (ptr < __heap_base
     ? changetype<usize>(moveBlock(ROOT, checkUsedBlock(ptr), size))
     : changetype<usize>(reallocateBlock(ROOT, checkUsedBlock(ptr), size))
@@ -589,6 +591,6 @@ function __realloc(ptr: usize, size: usize): usize {
 
 function __free(ptr: usize): void {
   if (ptr < __heap_base) return;
-  if (!ROOT) initialize();
+  if (ROOT == null) initialize();
   freeBlock(ROOT, checkUsedBlock(ptr));
 }

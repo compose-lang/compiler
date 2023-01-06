@@ -17,7 +17,7 @@ export default class LogicalNotExpression extends ExpressionBase {
 
     check(context: Context): IType {
         const type = this.expression.check(context);
-        assert.ok(type == BooleanType.instance);
+        assert.ok(type == BooleanType.instance, "Not a boolean at " + this.fragment.toString());
         return BooleanType.instance;
     }
 

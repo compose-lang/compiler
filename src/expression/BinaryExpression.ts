@@ -2,7 +2,7 @@ import ExpressionBase from "./ExpressionBase";
 import WasmModule from "../module/WasmModule";
 import IType from "../type/IType";
 import Context from "../context/Context";
-import Operator from "./Operator";
+import BinaryOperator from "./BinaryOperator";
 import IExpression from "./IExpression";
 import * as assert from "assert";
 import FunctionBody from "../module/FunctionBody";
@@ -12,9 +12,9 @@ export default class BinaryExpression extends ExpressionBase {
 
     left: IExpression;
     right: IExpression;
-    operator: Operator;
+    operator: BinaryOperator;
 
-    constructor(left: IExpression, op: Operator, right: IExpression) {
+    constructor(left: IExpression, op: BinaryOperator, right: IExpression) {
         super();
         this.left = left;
         this.right = right;
@@ -25,19 +25,19 @@ export default class BinaryExpression extends ExpressionBase {
         const leftType = this.left.check(context);
         const rightType = this.right.check(context);
         switch(this.operator) {
-            case Operator.PLUS:
+            case BinaryOperator.PLUS:
                 return leftType.checkAdd(context, rightType, true);
-            case Operator.MINUS:
+            case BinaryOperator.MINUS:
                 return leftType.checkSubtract(context, rightType);
-            case Operator.MULTIPLY:
+            case BinaryOperator.MULTIPLY:
                 return leftType.checkMultiply(context, rightType, true);
-            case Operator.LSHIFT:
-            case Operator.RSHIFT:
-            case Operator.URSHIFT:
-            case Operator.BIT_AND:
-            case Operator.BIT_OR:
-            case Operator.BIT_XOR:
-                return leftType.checkBitsOperation(context, rightType);
+            case BinaryOperator.LSHIFT:
+            case BinaryOperator.RSHIFT:
+            case BinaryOperator.URSHIFT:
+            case BinaryOperator.BIT_AND:
+            case BinaryOperator.BIT_OR:
+            case BinaryOperator.BIT_XOR:
+                return leftType.checkBitsOperator(context, this.operator, rightType);
             default:
                 assert.ok(false);
         }
