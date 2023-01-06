@@ -5,5 +5,5 @@ export default class CompilerOptions {
     parseAndCheck = true;
     declare = true;
     compile = true;
-    assemble: true;
+    assemble = true;
 }

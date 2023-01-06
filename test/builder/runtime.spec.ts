@@ -20,7 +20,7 @@ it('parses tlfs.cots',  (done) => {
     const path = __dirname + "/runtime/rt/tlfs.cots";
     const unit = ComposeBuilder.parse_unit(path);
     assert.equal(unit.declarations.length, 27);
-    assert.equal(unit.statements.length, 15);
+    assert.equal(unit.statements.length, 16);
     done();
  }).timeout(5000);
 
@@ -44,12 +44,22 @@ it('parses typeinfo.cots',  (done) => {
     done();
 }).timeout(5000);
 
+it('parses stderrors.cots',  (done) => {
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = dirname(dirname(dirname(__filename)));
+    const path = __dirname + "/runtime/util/stderrors.cots";
+    const unit = ComposeBuilder.parse_unit(path);
+    assert.equal(unit.declarations.length, 1);
+    assert.equal(unit.statements.length, 13);
+    done();
+}).timeout(5000);
+
 it('parses error.cots',  (done) => {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = dirname(dirname(dirname(__filename)));
     const path = __dirname + "/runtime/util/error.cots";
     const unit = ComposeBuilder.parse_unit(path);
-    assert.equal(unit.declarations.length, 0);
-    assert.equal(unit.statements.length, 13);
+    assert.equal(unit.declarations.length, 1);
+    assert.equal(unit.statements.length, 0);
     done();
 }).timeout(5000);
