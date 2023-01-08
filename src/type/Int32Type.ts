@@ -8,6 +8,7 @@ import FunctionBody from "../module/FunctionBody";
 import OpCode from "../compiler/OpCode";
 import UnaryOperator from "../expression/UnaryOperator";
 import IExpression from "../expression/IExpression";
+import BinaryOperator from "../expression/BinaryOperator";
 
 export default class Int32Type extends IntegerType {
 
@@ -29,12 +30,12 @@ export default class Int32Type extends IntegerType {
         target.writeUInts(0x7F);
     }
 
-    compileAdd(context: Context, rightType: IType, module: WasmModule, body: FunctionBody, tryReverse: boolean): IType {
+    compileAdd(context: Context, module: WasmModule, body: FunctionBody, rightType: IType, tryReverse: boolean): IType {
         if(rightType instanceof Int32Type) {
             body.addOpCode(OpCode.I32_ADD);
             return this;
         } else
-            return super.compileAdd(context, rightType, module, body, tryReverse);
+            return super.compileAdd(context, module, body, rightType, tryReverse);
     }
 
     compileUnaryOperator(context: Context, module: WasmModule, body: FunctionBody, expression: IExpression, operator: UnaryOperator): IType {
@@ -70,6 +71,20 @@ export default class Int32Type extends IntegerType {
             default:
                 return super.compileUnaryOperator(context, module, body, expression, operator);
         }
+    }
+
+    compileBitsOperator(context: Context, module: WasmModule, body: FunctionBody, rightType: IType, operator: BinaryOperator): IType {
+        if(rightType instanceof Int32Type) {
+            switch(operator) {
+                case BinaryOperator.LSHIFT:
+                    body.addOpCode(OpCode.I32_SHL);
+                    return this;
+                case BinaryOperator.RSHIFT:
+                    body.addOpCode(OpCode.I32_SHR_S);
+                    return this;
+            }
+        }
+        return super.compileBitsOperator(context, module, body, rightType, operator);
     }
 
 }

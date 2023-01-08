@@ -28,13 +28,15 @@ export default interface IType {
     checkCompare(context: Context, rightType: IType): IType;
 
     checkAdd(context: Context, rightType: IType, tryReverse: boolean): IType;
-    compileAdd(context: Context, rightType: IType, module: WasmModule, body: FunctionBody, tryReverse: boolean): IType;
+
+    compileAdd(context: Context, module: WasmModule, body: FunctionBody, rightType: IType, tryReverse: boolean): IType;
 
     checkSubtract(context: Context, rightType: IType): IType;
 
     checkMultiply(context: Context, rightType: IType, tryReverse: boolean): IType;
 
     checkBitsOperator(context: Context, operator: BinaryOperator, rightType: IType): IType;
+    compileBitsOperator(context: Context, module: WasmModule, body: FunctionBody, rightType: IType, operator: BinaryOperator): IType;
 
     checkUnaryOperator(context: Context, operator: UnaryOperator): IType;
 

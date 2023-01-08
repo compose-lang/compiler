@@ -39,7 +39,7 @@ export default class BinaryExpression extends ExpressionBase {
             case BinaryOperator.BIT_XOR:
                 return leftType.checkBitsOperator(context, this.operator, rightType);
             default:
-                assert.ok(false);
+                assert.ok(false, "Not implemented: " + BinaryOperator[this.operator]);
         }
     }
 
@@ -70,6 +70,14 @@ export default class BinaryExpression extends ExpressionBase {
     compile(context: Context, module: WasmModule, body: FunctionBody): IType {
         const leftType = this.left.compile(context, module, body);
         const rightType = this.right.compile(context, module, body);
-        return leftType.compileAdd(context, rightType, module, body, true);
+        switch(this.operator) {
+            case BinaryOperator.PLUS:
+                return leftType.compileAdd(context, module, body, rightType,true);
+            case BinaryOperator.LSHIFT:
+            case BinaryOperator.RSHIFT:
+                return leftType.compileBitsOperator(context, module, body, rightType, this.operator);
+            default:
+                assert.ok(false, "Not implemented: " + BinaryOperator[this.operator]);
+        }
     }
 }

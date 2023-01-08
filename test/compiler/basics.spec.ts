@@ -210,3 +210,35 @@ it('runs a post-increment statement',  () => {
     assert.equal(result, 4);
 });
 
+it('runs a binary lshift expression on int32',  () => {
+    const compiler = new Compiler();
+    const target = new WasmBufferTarget();
+    const unit = ComposeBuilder.parse_unit("" +
+        "@ModuleExport function stuff(v: i32, k: i32): i32 { return v << k; }");
+    compiler.buildOne(unit, target);
+    const runner = Runner.of(target.asWasmSource());
+    const result = runner.runFunction<number>("stuff", 64, 2);
+    assert.equal(result, 64 << 2);
+});
+
+it('runs a binary rshift expression on int32',  () => {
+    const compiler = new Compiler();
+    const target = new WasmBufferTarget();
+    const unit = ComposeBuilder.parse_unit("" +
+        "@ModuleExport function stuff(v: i32, k: i32): i32 { return v >> k; }");
+    compiler.buildOne(unit, target);
+    const runner = Runner.of(target.asWasmSource());
+    const result = runner.runFunction<number>("stuff", -64, 2);
+    assert.equal(result, -64 >> 2);
+});
+
+it('runs a binary rshift expression on uint32',  () => {
+    const compiler = new Compiler();
+    const target = new WasmBufferTarget();
+    const unit = ComposeBuilder.parse_unit("" +
+        "@ModuleExport function stuff(v: u32, k: u32): u32 { return v >> k; }");
+    compiler.buildOne(unit, target);
+    const runner = Runner.of(target.asWasmSource());
+    const result = runner.runFunction<number>("stuff", 64, 2);
+    assert.equal(result, 64 >> 2);
+});

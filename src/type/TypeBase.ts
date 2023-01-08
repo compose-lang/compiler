@@ -63,9 +63,9 @@ export default abstract class TypeBase extends CodeFragment implements IType {
             assert.ok(false);
     }
 
-    compileAdd(context: Context, rightType: IType, module: WasmModule, body: FunctionBody, tryReverse: boolean): IType {
+    compileAdd(context: Context, module: WasmModule, body: FunctionBody, rightType: IType, tryReverse: boolean): IType {
         if (tryReverse)
-            return rightType.compileAdd(context, this, module, body, false);
+            return rightType.compileAdd(context, module, body, this, false);
         else
             assert.ok(false);
     }
@@ -82,6 +82,10 @@ export default abstract class TypeBase extends CodeFragment implements IType {
     }
 
     checkBitsOperator(context: Context, operator: BinaryOperator, rightType: IType): IType {
+        assert.ok(false);
+    }
+
+    compileBitsOperator(context: Context, module: WasmModule, body: FunctionBody, rightType: IType, operator: BinaryOperator): IType {
         assert.ok(false);
     }
 

@@ -41,12 +41,12 @@ export default abstract class NumberType extends NativeType implements IValueTyp
             return super.checkAdd(context, rightType, tryReverse);
     }
 
-    compileAdd(context: Context, rightType: IType, module: WasmModule, body: FunctionBody, tryReverse: boolean): IType {
+    compileAdd(context: Context, module: WasmModule, body: FunctionBody, rightType: IType, tryReverse: boolean): IType {
         if(rightType instanceof NumberType) {
             const resultType = NumberType.bestType(this, rightType);
-            return resultType.compileAdd(context, rightType, module, body, tryReverse);
+            return resultType.compileAdd(context, module, body, rightType, tryReverse);
         } else
-            return super.compileAdd(context, rightType, module, body, tryReverse);
+            return super.compileAdd(context, module, body, rightType, tryReverse);
     }
 
     checkSubtract(context: Context, rightType: IType): IType {

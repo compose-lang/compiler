@@ -22,7 +22,7 @@ export default class Runner {
 
     runFunction<T>(method: string, ...args: any[]): T {
         const runnable = this.readFunction(method);
-        return runnable(args) as T;
+        return runnable.apply(null, args) as T;
     }
 
     readGlobal<T>(name: string): T {
