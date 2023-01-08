@@ -58,6 +58,8 @@ import { Native_function_declarationContext } from "./ComposeParser";
 import { Function_prototypeContext } from "./ComposeParser";
 import { Generic_parameterContext } from "./ComposeParser";
 import { StatementContext } from "./ComposeParser";
+import { Embeddable_statementContext } from "./ComposeParser";
+import { Standalone_statementContext } from "./ComposeParser";
 import { Unary_statementContext } from "./ComposeParser";
 import { Throw_statementContext } from "./ComposeParser";
 import { Try_statementContext } from "./ComposeParser";
@@ -703,6 +705,26 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitStatement?: (ctx: StatementContext) => void;
+	/**
+	 * Enter a parse tree produced by `ComposeParser.embeddable_statement`.
+	 * @param ctx the parse tree
+	 */
+	enterEmbeddable_statement?: (ctx: Embeddable_statementContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.embeddable_statement`.
+	 * @param ctx the parse tree
+	 */
+	exitEmbeddable_statement?: (ctx: Embeddable_statementContext) => void;
+	/**
+	 * Enter a parse tree produced by `ComposeParser.standalone_statement`.
+	 * @param ctx the parse tree
+	 */
+	enterStandalone_statement?: (ctx: Standalone_statementContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.standalone_statement`.
+	 * @param ctx the parse tree
+	 */
+	exitStandalone_statement?: (ctx: Standalone_statementContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.unary_statement`.
 	 * @param ctx the parse tree

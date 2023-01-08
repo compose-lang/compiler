@@ -41,7 +41,7 @@ import ComposeParser, {
     DecimalLiteralContext,
     DeclarationContext,
     Declare_instances_statementContext,
-    Declare_oneContext,
+    Declare_oneContext, Embeddable_statementContext,
     Enum_declarationContext,
     Enum_itemContext,
     EqualsExpressionContext, ExpressionContext,
@@ -91,7 +91,7 @@ import ComposeParser, {
     Set_literalContext,
     SetLiteralContext, SetTypeContext,
     SimpleCallExpressionContext,
-    SizeofExpressionContext,
+    SizeofExpressionContext, Standalone_statementContext,
     StatementContext,
     StatementsContext,
     String_typeContext,
@@ -709,6 +709,14 @@ export default class ComposeBuilder extends ComposeParserListener {
         this.setNodeValue(ctx, stmt);
     }
 
+    exitEmbeddable_statement = (ctx: Embeddable_statementContext) => {
+        this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
+    }
+
+    exitStandalone_statement = (ctx: Standalone_statementContext) => {
+        this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
+    }
+
     exitReturn_statement = (ctx: Return_statementContext) => {
         const exp = this.getNodeValue<IExpression>(ctx.expression());
         this.setNodeValue(ctx, new ReturnStatement(exp));
@@ -961,7 +969,7 @@ export default class ComposeBuilder extends ComposeParserListener {
         const declare_ones = ctx.declare_one_list().map(child => this.getNodeValue<DeclareInstanceStatement>(child), this);
         declare_ones.forEach(one => one.modifier = InstanceModifier.LET);
         const checkExpressions = ctx.expression_list().map(child => this.getNodeValue<IExpression>(child), this);
-        const loopStatements = ctx.statement_list().map(child => this.getNodeValue<IStatement>(child), this);
+        const loopStatements = ctx.embeddable_statement_list().map(child => this.getNodeValue<IStatement>(child), this);
         const statements = this.getNodeValue<StatementList>(ctx.statements());
         this.setNodeValue(ctx, new ForStatement(declare_ones, checkExpressions, StatementList.from(loopStatements), statements));
     }

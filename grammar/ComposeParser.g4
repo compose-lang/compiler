@@ -35,7 +35,8 @@ compilation_atom:
 global_statement:
     annotation*
     (EXPORT DEFAULT?)?
-    ( declare_instances_statement )
+    declare_instances_statement
+    SEMI
     ;
 
 declaration:
@@ -253,27 +254,34 @@ generic_parameter:
 
 statement:
     annotation*
-    ( declare_instances_statement
+    ( embeddable_statement SEMI
+        | standalone_statement )
+    ;
+
+embeddable_statement:
+    declare_instances_statement
     | assign_instance_statement
     | assign_item_statement
     | unary_statement
     | function_call_statement
-    | if_statement
+    ;
+
+standalone_statement:
+    if_statement
     | for_statement
     | try_statement
     | throw_statement
-    | return_statement
     | break_statement
-    )
+    | return_statement
     ;
 
 unary_statement:
     expression { $parser.willNotContainLineTerminator()}
-        INC SEMI
+        INC
     | expression { $parser.willNotContainLineTerminator()}
-        DEC SEMI
-    | INC expression SEMI
-    | DEC expression SEMI
+        DEC
+    | INC expression
+    | DEC expression
     ;
 
 throw_statement:
@@ -304,7 +312,7 @@ finally_clause:
     ;
 
 break_statement:
-    BREAK
+    BREAK SEMI
     ;
 
 for_statement:
@@ -313,7 +321,7 @@ for_statement:
         SEMI
         (expression (COMMA expression)*)?
         SEMI
-        (statement (COMMA statement)*)?
+        (embeddable_statement (COMMA embeddable_statement)*)?
         RPAR
         statements
     ;
@@ -330,11 +338,11 @@ statements:
     ;
 
 function_call_statement:
-    (expression DOT)? function_call SEMI
+    (expression DOT)? function_call
     ;
 
 declare_instances_statement:
-    (LET | CONST) declare_one (COMMA declare_one)* SEMI
+    (LET | CONST) declare_one (COMMA declare_one)*
     ;
 
 declare_one:
@@ -342,7 +350,7 @@ declare_one:
     ;
 
 assign_instance_statement:
-    (parent = expression DOT)? identifier assign_op value = expression SEMI
+    (parent = expression DOT)? identifier assign_op value = expression
     ;
 
 assign_op:
@@ -352,7 +360,7 @@ assign_op:
     ;
 
 assign_item_statement:
-    expression LPAR expression RPAR assign_op expression SEMI
+    expression LPAR expression RPAR assign_op expression
     ;
 
 return_statement:
