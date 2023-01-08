@@ -26,7 +26,8 @@ export default class CompareExpression extends ExpressionBase {
     }
 
     declare(context: Context, module: WasmModule): void {
-        assert.ok(false); // TODO
+        this.left.declare(context, module);
+        this.right.declare(context, module);
     }
 
 }

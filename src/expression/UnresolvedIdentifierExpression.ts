@@ -65,7 +65,7 @@ export default class UnresolvedIdentifierExpression extends ExpressionBase {
     private resolveLocalVariable(context: Context) {
         const local = context.isGlobal() ? null : context.getRegisteredLocal(this.id);
         if(local)
-            return new LocalVariableExpression(this.id);
+            return LocalVariableExpression.from(this);
         else
             return this.resolveGlobalVariable(context);
     }
@@ -73,7 +73,7 @@ export default class UnresolvedIdentifierExpression extends ExpressionBase {
     private resolveGlobalVariable(context: Context) {
         const global = context.getRegisteredGlobal(this.id);
         if(global)
-            return new GlobalVariableExpression(this.id);
+            return GlobalVariableExpression.from(this);
         else
             return this.resolveGlobalValue(context);
     }
@@ -81,7 +81,7 @@ export default class UnresolvedIdentifierExpression extends ExpressionBase {
     private resolveGlobalValue(context: Context) {
         const global = context.getRegisteredGlobalValue(this.id);
         if(global)
-            return new GlobalVariableExpression(this.id);
+            return GlobalVariableExpression.from(this);
         else
             return this.resolveAttributeExpression(context);
     }
@@ -105,13 +105,19 @@ export default class UnresolvedIdentifierExpression extends ExpressionBase {
     private resolveClassExpression(context: Context) {
         const klass = context.getRegisteredClass(this.id)
         if(klass)
-            return new ClassExpression(this.id, klass);
+            return ClassExpression.from(this, klass);
         else
             return null;
     }
 }
 
 class LocalVariableExpression extends ExpressionBase {
+
+    static from(source: UnresolvedIdentifierExpression) {
+        const result = new LocalVariableExpression(source.id);
+        result.fragment = source.fragment;
+        return result;
+    }
 
     id: Identifier
 
@@ -126,7 +132,7 @@ class LocalVariableExpression extends ExpressionBase {
 
     check(context: Context): IType {
         const local = context.getRegisteredLocal(this.id);
-        assert.ok(local !== null);
+        assert.ok(local !== null, "Could not resolve local '" + this.name + "' at " + this.fragment.toString());
         return local.type;
     }
 
@@ -147,6 +153,12 @@ class LocalVariableExpression extends ExpressionBase {
 }
 
 class GlobalVariableExpression extends ExpressionBase {
+
+    static from(source: UnresolvedIdentifierExpression) {
+        const result = new GlobalVariableExpression(source.id);
+        result.fragment = source.fragment;
+        return result;
+    }
 
     id: Identifier
 
@@ -195,6 +207,12 @@ class GlobalVariableExpression extends ExpressionBase {
 }
 
 class ClassExpression extends ExpressionBase {
+
+    static from(source: UnresolvedIdentifierExpression, klass: ClassDeclaration) {
+        const result = new ClassExpression(source.id, klass);
+        result.fragment = source.fragment;
+        return result;
+    }
 
     id: Identifier;
     klass: ClassDeclaration;

@@ -11,10 +11,11 @@ import AnyType from "../type/AnyType";
 import IntegerLiteral from "../literal/IntegerLiteral";
 import IType from "../type/IType";
 import IFunctionDeclaration from "../declaration/IFunctionDeclaration";
+import CompilationUnit from "../compiler/CompilationUnit";
 
 export default class StoreFunction extends NativeFunctionDeclaration {
 
-    constructor() {
+    constructor(unit: CompilationUnit) {
         const functionId = new Identifier("store");
         const genericId = new Identifier("T");
         const generics = [new GenericParameter(genericId, null)];
@@ -26,10 +27,13 @@ export default class StoreFunction extends NativeFunctionDeclaration {
         const proto = new Prototype(functionId, generics, params, new ClassType(genericId));
         const instructions: Instruction[] = [];
         super(Accessibility.PUBLIC, proto, instructions);
+        this.unit = unit;
     }
 
     instantiateGeneric(typeArguments: IType[]): IFunctionDeclaration {
-        return new SpecificStoreFunction(typeArguments[0]);
+        const func = new SpecificStoreFunction(typeArguments[0]);
+        func.unit = this.unit;
+        return func;
     }
 
 }

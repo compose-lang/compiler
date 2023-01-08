@@ -28,7 +28,7 @@ export default class ParenthesisExpression extends ExpressionBase {
     }
 
     declare(context: Context, module: WasmModule): void {
-        assert.ok(false); // TODO
+        this.expression.declare(context, module);
     }
 
 }

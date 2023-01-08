@@ -8,10 +8,11 @@ import GenericParameter from "../declaration/GenericParameter";
 import TypedParameter from "../parameter/TypedParameter";
 import AnyType from "../type/AnyType";
 import ClassType from "../type/ClassType";
+import CompilationUnit from "../compiler/CompilationUnit";
 
 export default class ChangeTypeFunction extends ConcreteFunctionDeclaration {
 
-    constructor() {
+    constructor(unit: CompilationUnit) {
         const functionId = new Identifier("changetype");
         const genericId = new Identifier("T");
         const generics = [new GenericParameter(genericId, null)];
@@ -19,6 +20,7 @@ export default class ChangeTypeFunction extends ConcreteFunctionDeclaration {
         const proto = new Prototype(functionId, generics, params, new ClassType(genericId));
         const stmts = new StatementList();
         super(Accessibility.PUBLIC, false, proto, stmts);
+        this.unit = unit;
     }
 
     isConst(context: Context): boolean {

@@ -14,7 +14,7 @@ it('parses and checks tlfs.cots',  (done) => {
     const compiler = new Compiler();
     const target = new WasmBufferTarget();
     const options = new CompilerOptions();
-    options.declare = false; // TODO
+    options.compile = false; // TODO
     compiler.buildOne(unit, target, options);
     // TODO once we declare assert.equal(compiler.module.getGlobalsSection().globals.length, 13);
     done();

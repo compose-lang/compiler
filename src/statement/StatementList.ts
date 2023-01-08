@@ -4,6 +4,7 @@ import Context from "../context/Context";
 import VoidType from "../type/VoidType";
 import * as assert from "assert";
 import TypeMap from "../type/TypeMap";
+import WasmModule from "../module/WasmModule";
 
 export default class StatementList extends Array<IStatement> {
 
@@ -32,5 +33,9 @@ export default class StatementList extends Array<IStatement> {
             const type = typeMap.inferType(context);
             return returnType || type;
         }
+    }
+
+    declare(context: Context, module: WasmModule) {
+        this.forEach(stmt => stmt.declare(context, module), this);
     }
 }

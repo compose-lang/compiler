@@ -23,7 +23,7 @@ export default class MemberExpression extends ExpressionBase {
     }
 
     declare(context: Context, module: WasmModule): void {
-        assert.ok(false); // TODO
+        this.parent.declare(context, module);
     }
 
 

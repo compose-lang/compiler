@@ -6,4 +6,5 @@ export default class CompilerOptions {
     declare = true;
     compile = true;
     assemble = true;
+    optimize = false;
 }

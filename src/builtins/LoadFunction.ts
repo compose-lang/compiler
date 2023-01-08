@@ -10,10 +10,11 @@ import Instruction from "../assembly/Instruction";
 import IntegerLiteral from "../literal/IntegerLiteral";
 import IFunctionDeclaration from "../declaration/IFunctionDeclaration";
 import IType from "../type/IType";
+import CompilationUnit from "../compiler/CompilationUnit";
 
 export default class LoadFunction extends NativeFunctionDeclaration {
 
-    constructor() {
+    constructor(unit: CompilationUnit) {
         const functionId = new Identifier("load");
         const genericId = new Identifier("T");
         const generics = [new GenericParameter(genericId, null)];
@@ -24,10 +25,13 @@ export default class LoadFunction extends NativeFunctionDeclaration {
         const proto = new Prototype(functionId, generics, params, new ClassType(genericId));
         const instructions: Instruction[] = [];
         super(Accessibility.PUBLIC, proto, instructions);
+        this.unit = unit;
     }
 
     instantiateGeneric(typeArguments: IType[]): IFunctionDeclaration {
-        return new SpecificLoadFunction(typeArguments[0]);
+        const func = new SpecificLoadFunction(typeArguments[0]);
+        func.unit = this.unit;
+        return func;
     }
 
 }

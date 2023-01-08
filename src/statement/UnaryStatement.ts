@@ -26,7 +26,7 @@ export default class UnaryStatement extends StatementBase {
     }
 
     declare(context: Context, module: WasmModule): void {
-        assert.ok(false); // TODO
+        this.expression.declare(context, module);
     }
 
     rehearse(context: Context, module: WasmModule, body: FunctionBody): void {

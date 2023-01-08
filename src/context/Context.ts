@@ -13,6 +13,7 @@ import ChangeTypeFunction from "../builtins/ChangeTypeFunction";
 import LoadFunction from "../builtins/LoadFunction";
 import StoreFunction from "../builtins/StoreFunction";
 import AssertFunction from "../builtins/AssertFunction";
+import CompilationUnit from "../compiler/CompilationUnit";
 
 export default class Context {
 
@@ -75,10 +76,12 @@ export default class Context {
     }
 
     registerBuiltins() {
-        new ChangeTypeFunction().register(this);
-        new LoadFunction().register(this);
-        new StoreFunction().register(this);
-        new AssertFunction().register(this);
+        const unit = new CompilationUnit([], [], [], null, null);
+        unit.context = this.globals;
+        new ChangeTypeFunction(unit).register(this);
+        new AssertFunction(unit).register(this);
+        new LoadFunction(unit).register(this);
+        new StoreFunction(unit).register(this);
     }
 
     registerClass(klass: ClassDeclaration) {

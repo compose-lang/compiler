@@ -7,29 +7,29 @@ export function max<T>(v1: T, v2: T): T {
 }
 
 export function clz<T>(v: T): T {
-    return sizeof(T) == 4 ? clz32<T>(v) : clz64<T>(v);
+    return sizeof(T) == 4 ? clz32(v) : clz64(v);
 }
 
 export function ctz<T>(v: T): T {
     return sizeof(T) == 4 ? ctz32(v) : ctz64(v);
 }
 
-export native function clz32<T>(v: T): T {
+export native function clz32(v: i32): i32 {
     i32.clz;
     end;
 }
 
-export native function ctz32<T>(v: T): T {
+export native function ctz32(v: i32): i32 {
     i32.ctz;
     end;
 }
 
-export native function clz64<T>(v: T): T {
+export native function clz64(v: i64): i64 {
     i64.clz;
     end;
 }
 
-export native function ctz64<T>(v: T): T {
+export native function ctz64(v: i64): i64 {
     i64.ctz;
     end;
 }

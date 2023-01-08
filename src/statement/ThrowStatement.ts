@@ -22,15 +22,16 @@ export default class ThrowStatement extends StatementBase {
         return null;
     }
 
-    compile(context: Context, module: WasmModule, body: FunctionBody): IType {
-        assert.ok(false); // TODO
-    }
-
     declare(context: Context, module: WasmModule): void {
-        assert.ok(false); // TODO
+        this.expression.declare(context, module);
     }
 
     rehearse(context: Context, module: WasmModule, body: FunctionBody): void {
         assert.ok(false); // TODO
     }
+
+    compile(context: Context, module: WasmModule, body: FunctionBody): IType {
+        assert.ok(false); // TODO
+    }
+
 }

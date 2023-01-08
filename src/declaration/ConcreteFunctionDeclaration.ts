@@ -25,6 +25,7 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
     }
 
     check(context: Context): IType {
+        context = this._unit.context;
         this.checkRestParameters(context);
         if(this.isGeneric())
             return AnyType.instance;
@@ -36,20 +37,26 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
     }
 
     isConst(context: Context): boolean {
+        context = this._unit.context;
         const local = context.newLocalContext();
         this.parameters.forEach(param => param.register(local));
         return this.statements.every(stmt => stmt.isConst(context));
     }
 
     declare(context: Context, module: WasmModule): void {
-        if(!this.isGeneric())
-            module.declareConcreteFunction(this, this.isModuleExport());
+        if(this.isGeneric())
+            return;
+        context = this._unit.context;
+        module.declareConcreteFunction(this, this.isModuleExport());
         const local = context.newLocalContext();
-        this.parameters.forEach(param => param.declare(local, module));
-        this.statements.forEach(stmt => stmt.declare(local, module));
+        this.parameters.forEach(param => param.declare(local, module), this);
+        this.statements.declare(local, module);
     }
 
     compile(context: Context, module: WasmModule): void {
+        if(this.isGeneric())
+            return;
+        context = this._unit.context;
         const section = module.getCodeSection();
         const body = section.createFunctionCode();
         const local = context.newLocalContext();

@@ -33,7 +33,9 @@ export default class TernaryExpression extends ExpressionBase {
     }
 
     declare(context: Context, module: WasmModule): void {
-        assert.ok(false); // TODO
+        this.condition.declare(context, module);
+        this.ifTrue.declare(context, module);
+        this.ifFalse.declare(context, module);
     }
 
 }

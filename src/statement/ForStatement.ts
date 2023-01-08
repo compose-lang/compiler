@@ -24,25 +24,28 @@ export default class ForStatement extends StatementBase {
         this.statements = statements;
     }
 
-
     check(context: Context): IType {
         context = context.newChildContext();
         this.locals.forEach(local => local.check(context), this);
         this.checkExpressions.forEach(exp => exp.check(context), this);
-        this.loopStatements.forEach(stmt => stmt.check(context), this);
+        this.loopStatements.check(context, null);
         const returnType = this.statements.check(context, null);
         return returnType == VoidType.instance ? null : returnType;
     }
 
-    compile(context: Context, module: WasmModule, body: FunctionBody): IType {
-        assert.ok(false); // TODO
-    }
-
     declare(context: Context, module: WasmModule): void {
-        assert.ok(false); // TODO
+        context = context.newChildContext();
+        this.locals.forEach(local => local.declare(context, module), this);
+        this.checkExpressions.forEach(exp => exp.declare(context, module), this);
+        this.loopStatements.declare(context, module);
+        this.statements.declare(context, module);
     }
 
     rehearse(context: Context, module: WasmModule, body: FunctionBody): void {
+        assert.ok(false); // TODO
+    }
+
+    compile(context: Context, module: WasmModule, body: FunctionBody): IType {
         assert.ok(false); // TODO
     }
 

@@ -7,6 +7,7 @@ import Context from "../context/Context";
 import IntegerType from "../type/IntegerType";
 
 export default class BitNotExpression extends ExpressionBase {
+
     expression: IExpression;
 
     constructor(expression: IExpression) {
@@ -25,7 +26,7 @@ export default class BitNotExpression extends ExpressionBase {
     }
 
     declare(context: Context, module: WasmModule): void {
-        assert.ok(false); // TODO
+        this.expression.declare(context, module);
     }
 
 }

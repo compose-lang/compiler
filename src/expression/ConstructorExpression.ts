@@ -34,7 +34,9 @@ export default class ConstructorExpression extends ExpressionBase {
     }
 
     declare(context: Context, module: WasmModule): void {
-        assert.ok(false); // TODO
+        const klass = context.getRegisteredClass(this.id);
+        klass.declare(context, module);
+        this.args.forEach(arg => arg.declare(context, module));
     }
 
 }

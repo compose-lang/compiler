@@ -48,7 +48,11 @@ export default class IfStatement extends StatementBase {
     }
 
     declare(context: Context, module: WasmModule): void {
-        assert.ok(false); // TODO
+        this.blocks.forEach(block => {
+            if(block.condition)
+                block.condition.declare(context, module);
+            block.statements.declare(context, module);
+        })
     }
 
     rehearse(context: Context, module: WasmModule, body: FunctionBody): void {
