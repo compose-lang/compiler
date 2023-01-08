@@ -83,8 +83,8 @@ import ComposeParser, {
     Number_typeContext,
     OffsetofExpressionContext,
     OrExpressionContext,
-    ParenthesisExpressionContext,
-    PreCastExpressionContext, PreIncrementExpressionContext,
+    ParenthesisExpressionContext, PostDecrementExpressionContext, PostIncrementExpressionContext,
+    PreCastExpressionContext, PreDecrementExpressionContext, PreIncrementExpressionContext,
     Return_statementContext,
     Return_typeContext,
     Return_typesContext,
@@ -935,6 +935,21 @@ export default class ComposeBuilder extends ComposeParserListener {
     exitPreIncrementExpression = (ctx: PreIncrementExpressionContext) => {
         const expression = this.getNodeValue<IExpression>(ctx.expression());
         this.setNodeValue(ctx, new UnaryExpression(expression, UnaryOperator.PRE_INC));
+    }
+
+    exitPreDecrementExpression = (ctx: PreDecrementExpressionContext) => {
+        const expression = this.getNodeValue<IExpression>(ctx.expression());
+        this.setNodeValue(ctx, new UnaryExpression(expression, UnaryOperator.PRE_DEC));
+    }
+
+    exitPostIncrementExpression = (ctx: PostIncrementExpressionContext) => {
+        const expression = this.getNodeValue<IExpression>(ctx.expression());
+        this.setNodeValue(ctx, new UnaryExpression(expression, UnaryOperator.POST_INC));
+    }
+
+    exitPostDecrementExpression = (ctx: PostDecrementExpressionContext) => {
+        const expression = this.getNodeValue<IExpression>(ctx.expression());
+        this.setNodeValue(ctx, new UnaryExpression(expression, UnaryOperator.POST_DEC));
     }
 
     exitThrow_statement = (ctx: Throw_statementContext) => {

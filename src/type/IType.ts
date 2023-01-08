@@ -38,5 +38,8 @@ export default interface IType {
 
     checkUnaryOperator(context: Context, operator: UnaryOperator): IType;
 
+    compileUnaryOperator(context: Context, module: WasmModule, body: FunctionBody, expression: IExpression, operator: UnaryOperator): IType;
+
     convertExpression(context: Context, expression: IExpression): IExpression;
+
 }

@@ -56,7 +56,7 @@ export default class TypedParameter extends CodeFragment implements IParameter {
 
     rehearse(context: Context, module: WasmModule, body: FunctionBody): void {
         this.register(context);
-        body.registerLocal(this.name, this.type);
+        body.registerParameter(this.name, this.type);
     }
 
 

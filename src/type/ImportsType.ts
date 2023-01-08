@@ -21,27 +21,27 @@ export default class ImportsType extends Map<string, IFunctionDeclaration> imple
     }
 
     isAssignableFrom(context: Context, type: IType): boolean {
-        assert.ok(false); // should never get there
+        assert.ok(false, "Should never get there!");
     }
 
     defaultValue(): IExpression {
-        assert.ok(false); // should never get there
+        assert.ok(false, "Should never get there!");
     }
 
     convertExpression(context: Context, expression: IExpression): IExpression {
-        assert.ok(false); // TODO
+        assert.ok(false, "Should never get there!");
     }
 
     count(): number {
-        assert.ok(false); // should never get there
+        assert.ok(false, "Should never get there!");
     }
 
     byteLength(): number {
-        assert.ok(false); // should never get there
+        assert.ok(false, "Should never get there!");
     }
 
     writeTo(target: IWasmTarget): void {
-        assert.ok(false); // should never get there
+        assert.ok(false, "Should never get there!");
     }
 
     prepareContext(context: Context): Context {
@@ -49,39 +49,43 @@ export default class ImportsType extends Map<string, IFunctionDeclaration> imple
     }
 
     checkMember(context: Context, memberId: Identifier): IType {
-        assert.ok(false); // should never get there
+        assert.ok(false, "Should never get there!");
     }
 
     checkEquals(context: Context, rightType: IType): IType {
-        assert.ok(false); // should never get there
+        assert.ok(false, "Should never get there!");
     }
 
     checkCompare(context: Context, rightType: IType): IType {
-        assert.ok(false); // should never get there
+        assert.ok(false, "Should never get there!");
     }
 
     checkAdd(context: Context, rightType: IType, tryReverse: boolean): IType {
-        assert.ok(false); // should never get there
+        assert.ok(false, "Should never get there!");
     }
 
     checkSubtract(context: Context, rightType: IType): IType {
-        assert.ok(false); // should never get there
+        assert.ok(false, "Should never get there!");
     }
 
     checkMultiply(context: Context, rightType: IType, tryReverse: boolean): IType {
-        assert.ok(false); // should never get there
+        assert.ok(false, "Should never get there!");
     }
 
     compileAdd(context: Context, rightType: IType, module: WasmModule, body: FunctionBody, tryReverse: boolean): IType {
-        assert.ok(false); // should never get there
+        assert.ok(false, "Should never get there!");
     }
 
     checkBitsOperator(context: Context, operator: BinaryOperator, rightType: IType): IType {
-        assert.ok(false); // should never get there
+        assert.ok(false, "Should never get there!");
     }
 
     checkUnaryOperator(context: Context, operator: UnaryOperator): IType {
-        assert.ok(false);
+        assert.ok(false, "Should never get there!");
+    }
+
+    compileUnaryOperator(context: Context, module: WasmModule, body: FunctionBody, expression: IExpression, operator: UnaryOperator): IType {
+        assert.ok(false, "Should never get there!");
     }
 
 }

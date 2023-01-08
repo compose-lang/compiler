@@ -4,6 +4,7 @@ import IType from "../type/IType";
 import ExpressionBase from "./ExpressionBase";
 import IExpression from "./IExpression";
 import UnaryOperator from "./UnaryOperator";
+import FunctionBody from "../module/FunctionBody";
 
 export default class UnaryExpression extends ExpressionBase {
 
@@ -13,6 +14,7 @@ export default class UnaryExpression extends ExpressionBase {
     constructor(expression: IExpression, operator: UnaryOperator) {
         super();
         this.expression = expression;
+        this.operator = operator;
     }
 
     check(context: Context): IType {
@@ -21,7 +23,16 @@ export default class UnaryExpression extends ExpressionBase {
     }
 
     declare(context: Context, module: WasmModule): void {
-        throw new Error("Method not implemented.");
+        this.expression.declare(context, module);
+    }
+
+    rehearse(context: Context, module: WasmModule, body: FunctionBody) {
+        this.expression.rehearse(context, module, body);
+    }
+
+    compile(context: Context, module: WasmModule, body: FunctionBody): IType {
+        const type = this.expression.check(context);
+        return type.compileUnaryOperator(context, module, body, this.expression, this.operator);
     }
 
 }

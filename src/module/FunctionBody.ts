@@ -2,16 +2,20 @@ import OpCode from "../compiler/OpCode";
 import LEB128 from "../utils/LEB128";
 import IWasmTarget from "../compiler/IWasmTarget";
 import IType from "../type/IType";
+import IValueType from "../type/IValueType";
 
-class Local {
+interface Local {
 
     name: string;
     type: IType;
+    isLocal: boolean
 
-    constructor(name: string, type: IType) {
-        this.name = name;
-        this.type = type;
-    }
+}
+
+interface LocalType {
+
+    count: number;
+    type: IType;
 
 }
 
@@ -20,6 +24,7 @@ export default class FunctionBody {
     instructions: number[][] = [];
     locals: Local[] = [];
     localsMap = new Map<string, number>();
+    localTypes: LocalType[] = null;
 
     get length(): number {
         const bodyLength = this.bodyLength();
@@ -42,11 +47,11 @@ export default class FunctionBody {
     }
 
     writeContentsTo(target: IWasmTarget) {
-        target.writeUInts(this.bodyLength(), this.locals.length);
-        if(this.locals.length > 0) {
-            target.writeUInts(this.locals.length);
-            this.locals.forEach(local => local.type.writeTo(target));
-        }
+        target.writeUInts(this.bodyLength(), this.localTypes.length);
+        this.localTypes.forEach(local => {
+            target.writeUInts(local.count);
+            local.type.writeTo(target)
+        }, this);
         this.writeInstructionsTo(target);
     }
 
@@ -58,13 +63,29 @@ export default class FunctionBody {
         this.instructions.forEach(inst => target.writeBytesArray(inst));
     }
 
-    private localsLength() {
-        return (this.locals.length > 0 ? LEB128.unsignedLength(this.locals.length) : 0)
-                + this.locals.map(local => local.type.byteLength()).reduce((p, v) => p + v, 0);
+    private computeLocalTypes(): void {
+        if(this.localTypes == null) {
+            const localTypes: LocalType[] = [];
+            this.locals.filter(local => local.isLocal)
+                .forEach(local => {
+                    const currentType = localTypes.length ? localTypes.at(-1) : null;
+                    if (currentType != null && currentType.type == local.type)
+                        currentType.count++;
+                    else
+                        localTypes.push({count: 1, type: local.type});
+                });
+            this.localTypes = localTypes;
+        }
+    }
+
+    private localTypesLength() {
+        return this.localTypes.map(local => LEB128.unsignedLength(local.count) + local.type.byteLength())
+            .reduce((p, v) => p + v, 0);
     }
 
     private bodyLength() {
-        return LEB128.unsignedLength(this.locals.length) + this.localsLength() + this.instructionsLength();
+        this.computeLocalTypes();
+        return LEB128.unsignedLength(this.localTypes.length) + this.localTypesLength() + this.instructionsLength();
     }
 
     private dropRedundantReturn(op: OpCode) {
@@ -75,8 +96,15 @@ export default class FunctionBody {
         }
     }
 
+    registerParameter(name: string, type: IValueType) {
+        this.locals.push({ name, type, isLocal: false });
+        const index = this.locals.length - 1; // 0-based
+        this.localsMap.set(name, index);
+        return index;
+    }
+
     registerLocal(name: string, type: IType) {
-        this.locals.push(new Local(name, type));
+        this.locals.push({ name, type, isLocal: true });
         const index = this.locals.length - 1; // 0-based
         this.localsMap.set(name, index);
         return index;

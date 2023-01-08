@@ -55,6 +55,11 @@ export default class UnresolvedIdentifierExpression extends ExpressionBase {
         return this.resolved.compile(context, module, body);
     }
 
+    compileAssign(context: Context, module: WasmModule, body: FunctionBody): void {
+        this.resolve(context);
+        this.resolved.compileAssign(context, module, body);
+    }
+
     private resolve(context: Context) {
         if(!this.resolved) {
             this.resolved = this.resolveLocalVariable(context);
@@ -150,6 +155,10 @@ class LocalVariableExpression extends ExpressionBase {
         return context.getRegisteredLocal(this.id).type;
     }
 
+    compileAssign(context: Context, module: WasmModule, body: FunctionBody): void {
+        const index = body.getRegisteredLocalIndex(this.id.value);
+        body.addOpCode(OpCode.LOCAL_SET, [index]); // TODO encode if index > 0x7F
+    }
 }
 
 class GlobalVariableExpression extends ExpressionBase {

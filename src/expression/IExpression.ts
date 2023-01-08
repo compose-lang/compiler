@@ -14,4 +14,5 @@ export default interface IExpression {
     rehearse(context: Context, module: WasmModule, body: FunctionBody): void;
     compile(context: Context, module: WasmModule, body: FunctionBody): IType;
 
+    compileAssign(context: Context, module: WasmModule, body: FunctionBody): void; // for unary operators
 }
