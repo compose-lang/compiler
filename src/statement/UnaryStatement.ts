@@ -5,7 +5,7 @@ import IType from "../type/IType";
 import Context from "../context/Context";
 import IExpression from "../expression/IExpression";
 import UnaryOperator from "../expression/UnaryOperator";
-import * as assert from "assert";
+import OpCode from "../compiler/OpCode";
 
 export default class UnaryStatement extends StatementBase {
 
@@ -30,11 +30,14 @@ export default class UnaryStatement extends StatementBase {
     }
 
     rehearse(context: Context, module: WasmModule, body: FunctionBody): void {
-        assert.ok(false); // TODO
+        this.expression.rehearse(context, module, body);
     }
 
     compile(context: Context, module: WasmModule, body: FunctionBody): IType {
-        assert.ok(false); // TODO
+        const type = this.expression.check(context);
+        type.compileUnaryOperator(context, module, body, this.expression, this.operator);
+        body.addOpCode(OpCode.DROP); // let optimizer do the job
+        return null;
     }
 
 }

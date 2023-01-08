@@ -64,7 +64,7 @@ import ComposeParser, {
     IdentifierExpressionContext,
     If_statementContext,
     Import_sourceContext,
-    Import_statementContext, Increment_statementContext,
+    Import_statementContext,
     InstructionContext,
     Integer_typeContext,
     IntegerLiteralContext,
@@ -100,7 +100,7 @@ import ComposeParser, {
     Throw_statementContext,
     TypedParameterContext,
     U32_typeContext,
-    U64_typeContext,
+    U64_typeContext, Unary_statementContext,
     UnaryBitNotExpressionContext,
     UnaryNotExpressionContext,
     Usize_typeContext,
@@ -966,7 +966,7 @@ export default class ComposeBuilder extends ComposeParserListener {
         this.setNodeValue(ctx, new ForStatement(declare_ones, checkExpressions, StatementList.from(loopStatements), statements));
     }
 
-    exitIncrement_statement = (ctx: Increment_statementContext) => {
+    exitUnary_statement = (ctx: Unary_statementContext) => {
         const expression = this.getNodeValue<IExpression>(ctx.expression());
         const isPost = ctx.getChild(0) == ctx.expression();
         const op = ctx.INC() != null ?

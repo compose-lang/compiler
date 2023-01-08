@@ -58,7 +58,7 @@ import { Native_function_declarationContext } from "./ComposeParser";
 import { Function_prototypeContext } from "./ComposeParser";
 import { Generic_parameterContext } from "./ComposeParser";
 import { StatementContext } from "./ComposeParser";
-import { Increment_statementContext } from "./ComposeParser";
+import { Unary_statementContext } from "./ComposeParser";
 import { Throw_statementContext } from "./ComposeParser";
 import { Try_statementContext } from "./ComposeParser";
 import { Catch_clauseContext } from "./ComposeParser";
@@ -704,15 +704,15 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 */
 	exitStatement?: (ctx: StatementContext) => void;
 	/**
-	 * Enter a parse tree produced by `ComposeParser.increment_statement`.
+	 * Enter a parse tree produced by `ComposeParser.unary_statement`.
 	 * @param ctx the parse tree
 	 */
-	enterIncrement_statement?: (ctx: Increment_statementContext) => void;
+	enterUnary_statement?: (ctx: Unary_statementContext) => void;
 	/**
-	 * Exit a parse tree produced by `ComposeParser.increment_statement`.
+	 * Exit a parse tree produced by `ComposeParser.unary_statement`.
 	 * @param ctx the parse tree
 	 */
-	exitIncrement_statement?: (ctx: Increment_statementContext) => void;
+	exitUnary_statement?: (ctx: Unary_statementContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.throw_statement`.
 	 * @param ctx the parse tree

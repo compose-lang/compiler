@@ -256,7 +256,7 @@ statement:
     ( declare_instances_statement
     | assign_instance_statement
     | assign_item_statement
-    | increment_statement
+    | unary_statement
     | function_call_statement
     | if_statement
     | for_statement
@@ -267,13 +267,13 @@ statement:
     )
     ;
 
-increment_statement:
+unary_statement:
     expression { $parser.willNotContainLineTerminator()}
-        INC
+        INC SEMI
     | expression { $parser.willNotContainLineTerminator()}
-        DEC
-    | INC expression
-    | DEC expression
+        DEC SEMI
+    | INC expression SEMI
+    | DEC expression SEMI
     ;
 
 throw_statement:

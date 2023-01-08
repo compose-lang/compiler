@@ -165,3 +165,48 @@ it('runs a post-increment expression',  () => {
     const result = runner.runFunction<number>("stuff", 6);
     assert.equal(result, 5);
 });
+
+it('runs a pre-increment statement',  () => {
+    const compiler = new Compiler();
+    const target = new WasmBufferTarget();
+    const unit = ComposeBuilder.parse_unit("" +
+        "@ModuleExport function stuff(v: i32): i32 { ++v; return ++v; }");
+    compiler.buildOne(unit, target);
+    const runner = Runner.of(target.asWasmSource());
+    const result = runner.runFunction<number>("stuff", 6);
+    assert.equal(result, 8);
+});
+
+it('runs a pre-decrement statement',  () => {
+    const compiler = new Compiler();
+    const target = new WasmBufferTarget();
+    const unit = ComposeBuilder.parse_unit("" +
+        "@ModuleExport function stuff(v: i32): i32 { --v; return --v; }");
+    compiler.buildOne(unit, target);
+    const runner = Runner.of(target.asWasmSource());
+    const result = runner.runFunction<number>("stuff", 6);
+    assert.equal(result, 4);
+});
+
+it('runs a post-increment statement',  () => {
+    const compiler = new Compiler();
+    const target = new WasmBufferTarget();
+    const unit = ComposeBuilder.parse_unit("" +
+        "@ModuleExport function stuff(v: i32): i32 { v++; const a: i32 = v++; const b: i32 = v++; return b; }");
+    compiler.buildOne(unit, target);
+    const runner = Runner.of(target.asWasmSource());
+    const result = runner.runFunction<number>("stuff", 6);
+    assert.equal(result, 8);
+});
+
+it('runs a post-increment statement',  () => {
+    const compiler = new Compiler();
+    const target = new WasmBufferTarget();
+    const unit = ComposeBuilder.parse_unit("" +
+        "@ModuleExport function stuff(v: i32): i32 { v--; const a: i32 = v--; const b: i32 = v--; return b; }");
+    compiler.buildOne(unit, target);
+    const runner = Runner.of(target.asWasmSource());
+    const result = runner.runFunction<number>("stuff", 6);
+    assert.equal(result, 4);
+});
+
