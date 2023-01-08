@@ -15,7 +15,7 @@ import ComposeParser, {
     AlignofExpressionContext,
     AndExpressionContext,
     AnnotationContext,
-    Any_typeContext,
+    Any_typeContext, ArrayTypeContext,
     Assign_instance_statementContext,
     Attribute_declarationContext,
     Attribute_refContext,
@@ -32,7 +32,7 @@ import ComposeParser, {
     ChildCallExpressionContext,
     Class_declarationContext,
     Class_refContext,
-    Class_typeContext,
+    Class_typeContext, ClassTypeContext,
     CompareExpressionContext,
     Compilation_atomContext,
     Compilation_unitContext,
@@ -78,7 +78,7 @@ import ComposeParser, {
     MemberExpressionContext,
     MultiplyExpressionContext,
     Native_function_declarationContext,
-    Native_typeContext, NewExpressionContext,
+    Native_typeContext, NativeTypeContext, NewExpressionContext,
     NullLiteralContext,
     Number_typeContext,
     OffsetofExpressionContext,
@@ -89,7 +89,7 @@ import ComposeParser, {
     Return_typeContext,
     Return_typesContext,
     Set_literalContext,
-    SetLiteralContext,
+    SetLiteralContext, SetTypeContext,
     SimpleCallExpressionContext,
     SizeofExpressionContext,
     StatementContext,
@@ -203,6 +203,9 @@ import ConstructorExpression from "../expression/ConstructorExpression";
 import UnaryExpression from "../expression/UnaryExpression";
 import UnaryOperator from "../expression/UnaryOperator";
 import UnaryStatement from "../statement/UnaryStatement";
+import RestParameter from "../parameter/RestParameter";
+import ArrayType from "../type/ArrayType";
+import SetType from "../type/SetType";
 
 interface IndexedNode {
     __id?: number;
@@ -403,8 +406,22 @@ export default class ComposeBuilder extends ComposeParserListener {
         this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
     }
 
-    exitValue_type = (ctx: Value_typeContext) => {
+    exitNativeType = (ctx: NativeTypeContext) => {
         this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
+    }
+
+    exitClassType = (ctx: ClassTypeContext) => {
+        this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
+    }
+
+    exitArrayType = (ctx: ArrayTypeContext) => {
+        const type = this.getNodeValue<IType>(ctx.value_type());
+        this.setNodeValue(ctx, new ArrayType(type));
+    }
+
+    exitSetType = (ctx: SetTypeContext) => {
+        const type = this.getNodeValue<IType>(ctx.value_type());
+        this.setNodeValue(ctx, new SetType(type));
     }
 
     exitValue_type_or_null = (ctx: Value_type_or_nullContext) => {
@@ -492,7 +509,8 @@ export default class ComposeBuilder extends ComposeParserListener {
     exitTypedParameter = (ctx: TypedParameterContext) => {
         const id = this.getNodeValue<Identifier>(ctx.identifier());
         const type = this.getNodeValue<IValueType>(ctx.value_type_or_null());
-        this.setNodeValue(ctx, new TypedParameter(id, type));
+        const param = ctx.ETC() != null ? new RestParameter(id, type) : new TypedParameter(id, type);
+        this.setNodeValue(ctx, param);
     }
 
     exitFunctionParameter = (ctx: FunctionParameterContext) => {

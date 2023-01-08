@@ -68,23 +68,25 @@ annotation:
     ;
 
 value_type:
-    native_type
-    | class_type
-    | any_type
+    native_type                 #NativeType
+    | class_type                #ClassType
+    | value_type LBRAK RBRAK    #ArrayType
+    | value_type LT GT          #SetType
     ;
 
 value_type_or_null:
     value_type (PIPE NULL_LITERAL)?
     ;
 
-any_type:
-    ANY
-    ;
-
 native_type:
     boolean_type
     | number_type
     | string_type
+    | any_type
+    ;
+
+any_type:
+    ANY
     ;
 
 boolean_type:
@@ -193,9 +195,9 @@ return_types:
     ;
 
 parameter:
-    attribute_type_or_null                     # AttributeParameter
-    | identifier COLON value_type_or_null       # TypedParameter
-    | identifier COLON function_type_or_null   # FunctionParameter
+    attribute_type_or_null                          # AttributeParameter
+    | ETC? identifier COLON value_type_or_null     # TypedParameter
+    | identifier COLON function_type_or_null        # FunctionParameter
     ;
 
 class_declaration:

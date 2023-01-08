@@ -25,6 +25,7 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
     }
 
     check(context: Context): IType {
+        this.checkRestParameters(context);
         if(this.isGeneric())
             return AnyType.instance;
         else {

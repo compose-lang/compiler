@@ -26,6 +26,10 @@ export default abstract class UserType extends CodeFragment implements IType {
         return new NullLiteral();
     }
 
+    convertExpression(context: Context, expression: IExpression): IExpression {
+        assert.ok(false); // TODO
+    }
+
     checkMember(context: Context, memberId: Identifier): IType {
         assert.ok(false);
     }

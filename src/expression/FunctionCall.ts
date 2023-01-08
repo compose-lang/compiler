@@ -8,6 +8,9 @@ import FunctionBody from "../module/FunctionBody";
 import * as assert from "assert";
 import FunctionFinder from "../finder/FunctionFinder";
 import OpCode from "../compiler/OpCode";
+import IFunctionDeclaration from "../declaration/IFunctionDeclaration";
+import RestParameter from "../parameter/RestParameter";
+import IntegerLiteral from "../literal/IntegerLiteral";
 
 export default class FunctionCall extends ExpressionBase {
 
@@ -53,13 +56,38 @@ export default class FunctionCall extends ExpressionBase {
     }
 
     compile(context: Context, module: WasmModule, body: FunctionBody): IType {
-        this.args.forEach(arg => arg.compile(context, module, body));
         const decl = FunctionFinder.findDeclaration(context, this);
         assert.ok(decl);
+        const args = this.makeArgs(context, decl);
+        args.forEach(arg => arg.compile(context, module, body));
         const index = module.getFunctionIndex(decl);
         assert.ok(index >= 0);
         body.addOpCode(OpCode.CALL, [index]); // TODO encode if index > 0x7F
         return decl.functionType().returnType;
+    }
+
+    private makeArgs(context: Context, decl: IFunctionDeclaration) {
+        const actualArgs = Array.from(this.args);
+        const convertedArgs: IExpression[] = [];
+        decl.parameters.forEach(param => {
+            const actualArg = actualArgs.length > 0 ? actualArgs.shift() : param.defaultValue;
+            assert.ok(actualArg);
+            const paramType = param instanceof RestParameter ? param.atomicType : param.type;
+            let convertedArg = paramType.convertExpression(context, actualArg);
+            if(param instanceof RestParameter) {
+                const items: IExpression[] = [];
+                items.push(convertedArg);
+                while(actualArgs.length > 0) {
+                    const actualArg = actualArgs.shift();
+                    const convertedArg = paramType.convertExpression(context, actualArg);
+                    items.push(convertedArg);
+                }
+                // TODO compile new array + items
+                convertedArg = new IntegerLiteral("0"); // TODO placeholder to push something on the stack
+            }
+            convertedArgs.push(convertedArg);
+        });
+        return convertedArgs;
     }
 
     private findDeclaration(context: Context) {
@@ -68,4 +96,5 @@ export default class FunctionCall extends ExpressionBase {
         assert.ok(decl, "Could not find function '" + this.name + "' at " + this.fragment.toString());
         return decl;
     }
+
 }

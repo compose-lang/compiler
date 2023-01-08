@@ -37,6 +37,7 @@ export default class AbstractFunctionDeclaration extends FunctionDeclarationBase
 
     check(context: Context): IType {
         // TODO
+        this.checkRestParameters(context);
         return this.returnType;
     }
 

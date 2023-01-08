@@ -9,7 +9,6 @@ import InstanceModifier from "../statement/InstanceModifier";
 import WasmModule from "../module/WasmModule";
 import FunctionBody from "../module/FunctionBody";
 import IType from "../type/IType";
-import {equalObjects} from "../utils/ObjectUtils";
 
 export default class TypedParameter extends CodeFragment implements IParameter {
 

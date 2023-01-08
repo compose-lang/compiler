@@ -28,6 +28,10 @@ export default class ImportsType extends Map<string, IFunctionDeclaration> imple
         assert.ok(false); // should never get there
     }
 
+    convertExpression(context: Context, expression: IExpression): IExpression {
+        assert.ok(false); // TODO
+    }
+
     count(): number {
         assert.ok(false); // should never get there
     }

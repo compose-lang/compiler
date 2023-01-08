@@ -112,3 +112,12 @@ it('runs a static function with parameters',  () => {
     assert.equal(result, 13);
 });
 
+it('runs a global function with rest parameter',  () => {
+    const compiler = new Compiler();
+    const target = new WasmBufferTarget();
+    const unit = ComposeBuilder.parse_unit("function withRest(...x: i32[]): i32 { return 5; } @ModuleExport function stuff(): i32 { return withRest(5, 12, 29); }");
+    compiler.buildOne(unit, target);
+    const runner = Runner.of(target.asWasmSource());
+    const result = runner.runFunction<number>("stuff");
+    assert.equal(result, 5);
+});

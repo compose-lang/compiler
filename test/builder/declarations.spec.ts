@@ -10,6 +10,9 @@ import MultiType from "../../src/type/MultiType";
 import NativeFunctionDeclaration from "../../src/declaration/NativeFunctionDeclaration";
 import FunctionCall from "../../src/expression/FunctionCall";
 import Accessibility from "../../src/declaration/Accessibility";
+import Int32Type from "../../src/type/Int32Type";
+import RestParameter from "../../src/parameter/RestParameter";
+
 
 it('parses an attribute declaration ',  () => {
     const unit = ComposeBuilder.parse_unit("attribute text: string;");
@@ -26,7 +29,6 @@ it('parses a class declaration ',  () => {
     assert.equal(unit.declarations[0].name, "Thing");
     assert.deepEqual(unit.declarations[0].attributes.map(a => a.value), ["a", "b"]);
     assert.deepEqual(unit.declarations[0].parents.map(a => a.value), ["C", "D"]);
-
 });
 
 it('parses a class declaration with annotations',  () => {
@@ -195,3 +197,15 @@ it('parses class fields',  () => {
     assert.ok(field.accessibility == Accessibility.PRIVATE);
 });
 
+it('parses rest parameters',  () => {
+    const unit = ComposeBuilder.parse_unit("function Thing( x: i32, y: i32, ...z: i32[] ): void { }");
+    assert.equal(unit.declarations.length, 1);
+    const func = unit.declarations[0];
+    assert.ok(func instanceof ConcreteFunctionDeclaration);
+    assert.equal(func.name, "Thing");
+    assert.equal(func.parameters.length,  3);
+    const param = func.parameters[2];
+    assert.equal(param.name, "z");
+    assert.ok(param instanceof RestParameter);
+    assert.equal(param.atomicType, Int32Type.instance);
+});

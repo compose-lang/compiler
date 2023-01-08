@@ -9,6 +9,7 @@ import * as assert from "assert";
 import Accessibility from "./Accessibility";
 import ClassDeclaration from "./ClassDeclaration";
 import Context from "../context/Context";
+import RestParameter from "../parameter/RestParameter";
 
 export default abstract class FunctionDeclarationBase extends DeclarationBase implements IFunctionDeclaration {
 
@@ -56,6 +57,13 @@ export default abstract class FunctionDeclarationBase extends DeclarationBase im
 
     instantiateGeneric(typeArguments: IType[]): IFunctionDeclaration {
         assert.ok(false);
+    }
+
+    checkRestParameters(context: Context): void {
+        const restParams = this.parameters.filter(param => param instanceof RestParameter);
+        assert.ok(restParams.length <= 1);
+        if(restParams.length == 1)
+            assert.equal(this.parameters.at(-1), restParams[0]); // must be last
     }
 
 }

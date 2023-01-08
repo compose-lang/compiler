@@ -30,6 +30,18 @@ export default abstract class NativeType extends CodeFragment implements IType {
 
     abstract defaultValue(): IExpression;
 
+    convertExpression(context: Context, expression: IExpression): IExpression {
+        const type = expression.check(context);
+        if(type == this)
+            return expression;
+        else
+            return this.convertTypedExpression(type, expression);
+    }
+
+    convertTypedExpression(type: IType, expression: IExpression): IExpression {
+        assert.ok(false); // TODO
+    }
+
     count(): number {
         return 1;
     }

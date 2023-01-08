@@ -6,6 +6,7 @@ import IFunctionDeclaration from "../declaration/IFunctionDeclaration";
 import * as assert from "assert";
 import IExpression from "../expression/IExpression";
 import VoidType from "../type/VoidType";
+import RestParameter from "../parameter/RestParameter";
 
 enum Score {
     WORSE = -1,
@@ -62,22 +63,23 @@ export default abstract class FunctionFinder {
     }
 
     protected isCompatible(decl: IFunctionDeclaration) {
+        let argTypes = Array.from(this.argTypes);
         for(let i=0; i < decl.parameters.length; i++) {
             const param = decl.parameters[i];
-            if(i >= this.argTypes.length && param.defaultValue == null)
+            if(argTypes.length == 0 && param.defaultValue == null)
                 return false;
-            let argType;
-            if(i < this.argTypes.length)
-                argType = this.argTypes[i];
-            else {
-                if(param.defaultValue)
-                    argType = param.defaultValue.check(this.context);
-                else
-                    return false;
-            }
-            const paramType = this.resolveGenericType(decl, param.type);
+            const argType = argTypes.length > 0 ? argTypes.shift() : param.defaultValue.check(this.context);
+            let paramType = param instanceof RestParameter ? param.atomicType : param.type;
+            paramType = this.resolveGenericType(decl, paramType);
             if(!paramType.isAssignableFrom(this.context, argType))
                 return false;
+            if(param instanceof RestParameter) {
+                while(argTypes.length > 0) {
+                    const argType = argTypes.shift();
+                    if(!paramType.isAssignableFrom(this.context, argType))
+                        return false;
+                }
+            }
         }
         return true;
     }

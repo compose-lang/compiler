@@ -37,4 +37,6 @@ export default interface IType {
     checkBitsOperator(context: Context, operator: BinaryOperator, rightType: IType): IType;
 
     checkUnaryOperator(context: Context, operator: UnaryOperator): IType;
+
+    convertExpression(context: Context, expression: IExpression): IExpression;
 }

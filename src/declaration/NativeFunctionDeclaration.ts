@@ -21,6 +21,7 @@ export default class NativeFunctionDeclaration extends FunctionDeclarationBase i
     }
 
     check(context: Context): IType {
+        this.checkRestParameters(context);
         const local = context.newLocalContext();
         this.parameters.forEach(param => param.register(local));
         this.instructions.forEach(i => i.check(local), this);

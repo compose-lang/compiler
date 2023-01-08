@@ -15,10 +15,13 @@ import { Enum_itemContext } from "./ComposeParser";
 import { Attribute_declarationContext } from "./ComposeParser";
 import { IdentifierContext } from "./ComposeParser";
 import { AnnotationContext } from "./ComposeParser";
-import { Value_typeContext } from "./ComposeParser";
+import { ArrayTypeContext } from "./ComposeParser";
+import { SetTypeContext } from "./ComposeParser";
+import { NativeTypeContext } from "./ComposeParser";
+import { ClassTypeContext } from "./ComposeParser";
 import { Value_type_or_nullContext } from "./ComposeParser";
-import { Any_typeContext } from "./ComposeParser";
 import { Native_typeContext } from "./ComposeParser";
+import { Any_typeContext } from "./ComposeParser";
 import { Boolean_typeContext } from "./ComposeParser";
 import { Number_typeContext } from "./ComposeParser";
 import { Integer_typeContext } from "./ComposeParser";
@@ -257,15 +260,53 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 */
 	exitAnnotation?: (ctx: AnnotationContext) => void;
 	/**
-	 * Enter a parse tree produced by `ComposeParser.value_type`.
+	 * Enter a parse tree produced by the `ArrayType`
+	 * labeled alternative in `ComposeParser.value_type`.
 	 * @param ctx the parse tree
 	 */
-	enterValue_type?: (ctx: Value_typeContext) => void;
+	enterArrayType?: (ctx: ArrayTypeContext) => void;
 	/**
-	 * Exit a parse tree produced by `ComposeParser.value_type`.
+	 * Exit a parse tree produced by the `ArrayType`
+	 * labeled alternative in `ComposeParser.value_type`.
 	 * @param ctx the parse tree
 	 */
-	exitValue_type?: (ctx: Value_typeContext) => void;
+	exitArrayType?: (ctx: ArrayTypeContext) => void;
+	/**
+	 * Enter a parse tree produced by the `SetType`
+	 * labeled alternative in `ComposeParser.value_type`.
+	 * @param ctx the parse tree
+	 */
+	enterSetType?: (ctx: SetTypeContext) => void;
+	/**
+	 * Exit a parse tree produced by the `SetType`
+	 * labeled alternative in `ComposeParser.value_type`.
+	 * @param ctx the parse tree
+	 */
+	exitSetType?: (ctx: SetTypeContext) => void;
+	/**
+	 * Enter a parse tree produced by the `NativeType`
+	 * labeled alternative in `ComposeParser.value_type`.
+	 * @param ctx the parse tree
+	 */
+	enterNativeType?: (ctx: NativeTypeContext) => void;
+	/**
+	 * Exit a parse tree produced by the `NativeType`
+	 * labeled alternative in `ComposeParser.value_type`.
+	 * @param ctx the parse tree
+	 */
+	exitNativeType?: (ctx: NativeTypeContext) => void;
+	/**
+	 * Enter a parse tree produced by the `ClassType`
+	 * labeled alternative in `ComposeParser.value_type`.
+	 * @param ctx the parse tree
+	 */
+	enterClassType?: (ctx: ClassTypeContext) => void;
+	/**
+	 * Exit a parse tree produced by the `ClassType`
+	 * labeled alternative in `ComposeParser.value_type`.
+	 * @param ctx the parse tree
+	 */
+	exitClassType?: (ctx: ClassTypeContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.value_type_or_null`.
 	 * @param ctx the parse tree
@@ -277,16 +318,6 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 */
 	exitValue_type_or_null?: (ctx: Value_type_or_nullContext) => void;
 	/**
-	 * Enter a parse tree produced by `ComposeParser.any_type`.
-	 * @param ctx the parse tree
-	 */
-	enterAny_type?: (ctx: Any_typeContext) => void;
-	/**
-	 * Exit a parse tree produced by `ComposeParser.any_type`.
-	 * @param ctx the parse tree
-	 */
-	exitAny_type?: (ctx: Any_typeContext) => void;
-	/**
 	 * Enter a parse tree produced by `ComposeParser.native_type`.
 	 * @param ctx the parse tree
 	 */
@@ -296,6 +327,16 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitNative_type?: (ctx: Native_typeContext) => void;
+	/**
+	 * Enter a parse tree produced by `ComposeParser.any_type`.
+	 * @param ctx the parse tree
+	 */
+	enterAny_type?: (ctx: Any_typeContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.any_type`.
+	 * @param ctx the parse tree
+	 */
+	exitAny_type?: (ctx: Any_typeContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.boolean_type`.
 	 * @param ctx the parse tree
