@@ -265,6 +265,49 @@ it('runs a binary and expression on uint32',  () => {
     assert.equal(result, 67 & 37);
 });
 
+it('runs a binary or expression on int32',  () => {
+    const compiler = new Compiler();
+    const target = new WasmBufferTarget();
+    const unit = ComposeBuilder.parse_unit("" +
+        "@ModuleExport function stuff(v1: i32, v2: i32): i32 { return v1 | v2; }");
+    compiler.buildOne(unit, target);
+    const runner = Runner.of(target.asWasmSource());
+    const result = runner.runFunction<number>("stuff", -67, 37);
+    assert.equal(result, -67 | 37);
+});
+
+it('runs a binary or expression on uint32',  () => {
+    const compiler = new Compiler();
+    const target = new WasmBufferTarget();
+    const unit = ComposeBuilder.parse_unit("" +
+        "@ModuleExport function stuff(v1: u32, v2: u32): u32 { return v1 | v2; }");
+    compiler.buildOne(unit, target);
+    const runner = Runner.of(target.asWasmSource());
+    const result = runner.runFunction<number>("stuff", 67, 37);
+    assert.equal(result, 67 | 37);
+});
+
+it('runs a binary xor expression on int32',  () => {
+    const compiler = new Compiler();
+    const target = new WasmBufferTarget();
+    const unit = ComposeBuilder.parse_unit("" +
+        "@ModuleExport function stuff(v1: i32, v2: i32): i32 { return v1 ^ v2; }");
+    compiler.buildOne(unit, target);
+    const runner = Runner.of(target.asWasmSource());
+    const result = runner.runFunction<number>("stuff", -67, 37);
+    assert.equal(result, -67 ^ 37);
+});
+
+it('runs a binary xor expression on uint32',  () => {
+    const compiler = new Compiler();
+    const target = new WasmBufferTarget();
+    const unit = ComposeBuilder.parse_unit("" +
+        "@ModuleExport function stuff(v1: u32, v2: u32): u32 { return v1 ^ v2; }");
+    compiler.buildOne(unit, target);
+    const runner = Runner.of(target.asWasmSource());
+    const result = runner.runFunction<number>("stuff", 67, 37);
+    assert.equal(result, 67 ^ 37);
+});
 
 it('runs a binary not expression on uint32',  () => {
     const compiler = new Compiler();

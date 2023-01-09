@@ -51,7 +51,12 @@ export default class Int32Type extends IntegerType {
                 case BinaryOperator.BIT_AND:
                     body.addOpCode(OpCode.I32_AND);
                     return this;
-
+                case BinaryOperator.BIT_OR:
+                    body.addOpCode(OpCode.I32_OR);
+                    return this;
+                case BinaryOperator.BIT_XOR:
+                    body.addOpCode(OpCode.I32_XOR);
+                    return this;
             }
         }
         return super.compileBinaryBitsOperator(context, module, body, rightType, operator);
