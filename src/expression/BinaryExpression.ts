@@ -37,7 +37,7 @@ export default class BinaryExpression extends ExpressionBase {
             case BinaryOperator.BIT_AND:
             case BinaryOperator.BIT_OR:
             case BinaryOperator.BIT_XOR:
-                return leftType.checkBitsOperator(context, this.operator, rightType);
+                return leftType.checkBinaryBitsOperator(context, this.operator, rightType);
             default:
                 assert.ok(false, "Not implemented: " + BinaryOperator[this.operator]);
         }
@@ -75,7 +75,8 @@ export default class BinaryExpression extends ExpressionBase {
                 return leftType.compileAdd(context, module, body, rightType,true);
             case BinaryOperator.LSHIFT:
             case BinaryOperator.RSHIFT:
-                return leftType.compileBitsOperator(context, module, body, rightType, this.operator);
+            case BinaryOperator.BIT_AND:
+                return leftType.compileBinaryBitsOperator(context, module, body, rightType, this.operator);
             default:
                 assert.ok(false, "Not implemented: " + BinaryOperator[this.operator]);
         }

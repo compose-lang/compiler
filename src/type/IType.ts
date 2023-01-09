@@ -35,11 +35,10 @@ export default interface IType {
 
     checkMultiply(context: Context, rightType: IType, tryReverse: boolean): IType;
 
-    checkBitsOperator(context: Context, operator: BinaryOperator, rightType: IType): IType;
-    compileBitsOperator(context: Context, module: WasmModule, body: FunctionBody, rightType: IType, operator: BinaryOperator): IType;
+    checkBinaryBitsOperator(context: Context, operator: BinaryOperator, rightType: IType): IType;
+    compileBinaryBitsOperator(context: Context, module: WasmModule, body: FunctionBody, rightType: IType, operator: BinaryOperator): IType;
 
     checkUnaryOperator(context: Context, operator: UnaryOperator): IType;
-
     compileUnaryOperator(context: Context, module: WasmModule, body: FunctionBody, expression: IExpression, operator: UnaryOperator): IType;
 
     convertExpression(context: Context, expression: IExpression): IExpression;

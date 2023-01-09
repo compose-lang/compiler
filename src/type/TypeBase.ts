@@ -81,11 +81,11 @@ export default abstract class TypeBase extends CodeFragment implements IType {
             assert.ok(false);
     }
 
-    checkBitsOperator(context: Context, operator: BinaryOperator, rightType: IType): IType {
+    checkBinaryBitsOperator(context: Context, operator: BinaryOperator, rightType: IType): IType {
         assert.ok(false);
     }
 
-    compileBitsOperator(context: Context, module: WasmModule, body: FunctionBody, rightType: IType, operator: BinaryOperator): IType {
+    compileBinaryBitsOperator(context: Context, module: WasmModule, body: FunctionBody, rightType: IType, operator: BinaryOperator): IType {
         assert.ok(false);
     }
 

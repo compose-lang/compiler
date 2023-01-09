@@ -12,11 +12,11 @@ export default abstract class IntegerType extends NumberType {
         return new IntegerLiteral("0");
     }
 
-    checkBitsOperator(context: Context, operator: BinaryOperator, rightType: IType): IType {
+    checkBinaryBitsOperator(context: Context, operator: BinaryOperator, rightType: IType): IType {
         if(rightType instanceof IntegerType)
             return this;
         else
-            return super.checkBitsOperator(context, operator, rightType);
+            return super.checkBinaryBitsOperator(context, operator, rightType);
     }
 
     checkUnaryOperator(context: Context, operator: UnaryOperator): IType {

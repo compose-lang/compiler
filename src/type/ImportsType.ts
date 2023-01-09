@@ -76,11 +76,11 @@ export default class ImportsType extends Map<string, IFunctionDeclaration> imple
         assert.ok(false, "Should never get there!");
     }
 
-    checkBitsOperator(context: Context, operator: BinaryOperator, rightType: IType): IType {
+    checkBinaryBitsOperator(context: Context, operator: BinaryOperator, rightType: IType): IType {
         assert.ok(false, "Should never get there!");
     }
 
-    compileBitsOperator(context: Context, module: WasmModule, body: FunctionBody, rightType: IType, operator: BinaryOperator): IType {
+    compileBinaryBitsOperator(context: Context, module: WasmModule, body: FunctionBody, rightType: IType, operator: BinaryOperator): IType {
         assert.ok(false, "Should never get there!");
     }
 

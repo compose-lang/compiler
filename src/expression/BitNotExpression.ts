@@ -5,6 +5,8 @@ import WasmModule from "../module/WasmModule";
 import IType from "../type/IType";
 import Context from "../context/Context";
 import IntegerType from "../type/IntegerType";
+import FunctionBody from "../module/FunctionBody";
+import UnaryOperator from "./UnaryOperator";
 
 export default class BitNotExpression extends ExpressionBase {
 
@@ -27,6 +29,15 @@ export default class BitNotExpression extends ExpressionBase {
 
     declare(context: Context, module: WasmModule): void {
         this.expression.declare(context, module);
+    }
+
+    rehearse(context: Context, module: WasmModule, body: FunctionBody) {
+        this.expression.rehearse(context, module, body);
+    }
+
+    compile(context: Context, module: WasmModule, body: FunctionBody): IType {
+        const type = this.expression.check(context);
+        return type.compileUnaryOperator(context, module, body, this.expression, UnaryOperator.BIT_NOT);
     }
 
 }
