@@ -14,6 +14,7 @@
   "devDependencies": {
     "@types/glob": "^8.0.0",
     "@types/mocha": "^10.0.0",
+    "mathjax-full": "^3.2.2",
     "mocha": "^10.1.0",
     "ts-loader": "^9.4.1",
     "ts-node": "^10.9.1",
@@ -21,7 +22,7 @@
     "webpack-cli": "^4.10.0"
   },
   "dependencies": {
-    "antlr4": "^4.12.0-beta.3",
+    "antlr4": "4.13.1-patch-1",
     "binaryen": "^111.0.0"
   }
 }

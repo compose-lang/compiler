@@ -319,3 +319,14 @@ it('runs a binary not expression on uint32',  () => {
     const result = runner.runFunction<number>("stuff", 64);
     assert.equal(result, ~64);
 });
+
+it('runs a simple if',  () => {
+    const compiler = new Compiler();
+    const target = new WasmBufferTarget();
+    const unit = ComposeBuilder.parse_unit("" +
+        "@ModuleExport function stuff(v: u32): u32 { if(true) v = v + 1; return v; }");
+    compiler.buildOne(unit, target);
+    const runner = Runner.of(target.asWasmSource());
+    const result = runner.runFunction<number>("stuff", 64);
+    assert.equal(result, 65);
+});

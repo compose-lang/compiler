@@ -2,3 +2,4 @@ dist
 *.js
 *.map
 grammar/gen
+/opcodes/gc/
