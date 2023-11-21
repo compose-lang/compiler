@@ -12,11 +12,11 @@ opcode:
     ;
 
 plain_opcode:
-    UNREACHABLE | NOP | BLOCK | LOOP | END | BR | BR_IF | BR_TABLE | CALL | CALL_INDIRECT | DROP | SELECT | SELECT_TYPE
+    UNREACHABLE | NOP | BLOCK | LOOP | END | BR | BR_IF | BR_TABLE | CALL | CALL_INDIRECT | DROP | SELECT | SELECT_T
     ;
 
 keyword_opcode:
-    IF | ELSE | RETURN | TRY | CATCH | THROW | RETHROW
+    IF | ELSE | RETURN | TRY | CATCH | THROW
     ;
 
 composite_opcode:

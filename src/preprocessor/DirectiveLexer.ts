@@ -1,4 +1,4 @@
-// Generated from Directive.g4 by ANTLR 4.11.2-SNAPSHOT
+// Generated from Directive.g4 by ANTLR 4.13.1
 // noinspection ES6UnusedImports,JSUnusedGlobalSymbols,JSUnusedLocalSymbols
 import {
 	ATN,
@@ -36,21 +36,27 @@ export default class DirectiveLexer extends Lexer {
 	public static readonly EOF = Token.EOF;
 
 	public static readonly channelNames: string[] = [ "DEFAULT_TOKEN_CHANNEL", "HIDDEN" ];
-	public static readonly literalNames: string[] = [ null, "'#if'", "'#IF'", 
-                                                   "'#else if'", "'#elif'", 
-                                                   "'#ELSE IF'", "'#ELIF'", 
-                                                   "'#else'", "'#ELSE'", 
-                                                   "'#end'", "'#endif'", 
-                                                   "'#END'", "'#ENDIF'", 
-                                                   "'true'", "'TRUE'", "'1'", 
-                                                   "'false'", "'FALSE'", 
-                                                   "'0'" ];
-	public static readonly symbolicNames: string[] = [ null, null, null, null, 
-                                                    null, null, null, null, 
-                                                    null, null, null, null, 
-                                                    null, null, null, null, 
-                                                    null, null, null, "IDENTIFIER", 
-                                                    "WS", "TRAILER" ];
+	public static readonly literalNames: (string | null)[] = [ null, "'#if'", 
+                                                            "'#IF'", "'#else if'", 
+                                                            "'#elif'", "'#ELSE IF'", 
+                                                            "'#ELIF'", "'#else'", 
+                                                            "'#ELSE'", "'#end'", 
+                                                            "'#endif'", 
+                                                            "'#END'", "'#ENDIF'", 
+                                                            "'true'", "'TRUE'", 
+                                                            "'1'", "'false'", 
+                                                            "'FALSE'", "'0'" ];
+	public static readonly symbolicNames: (string | null)[] = [ null, null, 
+                                                             null, null, 
+                                                             null, null, 
+                                                             null, null, 
+                                                             null, null, 
+                                                             null, null, 
+                                                             null, null, 
+                                                             null, null, 
+                                                             null, null, 
+                                                             null, "IDENTIFIER", 
+                                                             "WS", "TRAILER" ];
 	public static readonly modeNames: string[] = [ "DEFAULT_MODE", ];
 
 	public static readonly ruleNames: string[] = [

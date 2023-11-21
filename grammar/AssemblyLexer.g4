@@ -1,5 +1,9 @@
 lexer grammar AssemblyLexer;
 
+tokens {
+    SELECT_T
+}
+
 // see https://webassembly.github.io/spec/core/appendix/index-instructions.html
 UNREACHABLE: 'unreachable';
 NOP: 'nop';
@@ -474,6 +478,11 @@ I32X4_TRUNC_SAT_F64X2_S_ZERO: 'i32x4.trunc_sat_f64x2_s_zero';
 I32X4_TRUNC_SAT_F64X2_U_ZERO: 'i32x4.trunc_sat_f64x2_u_zero';
 F64X2_CONVERT_LOW_I32X4_S: 'f64x2.convert_low_i32x4_s';
 F64X2_CONVERT_LOW_I32X4_U: 'f64x2.convert_low_i32x4_u';
+
+// tokens that are used by AssemblyParser
+TRY: 'try';
+CATCH: 'catch';
+THROW: 'throw';
 
 // §3.8 Identifiers (must appear after all keywords in the grammar)
 // moved from ComposeLexer until import sequence is fixed

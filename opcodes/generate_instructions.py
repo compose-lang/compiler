@@ -288,7 +288,7 @@ def generate_lexer_entries(instructions: [Instruction], path: str) -> None:
 def generate_opcodes_enum(instructions: [Instruction], path: str) -> None:
     with open(path, "w") as opcodes_file:
         opcodes_file.write("enum OpCode {\n")
-        for instruction in filter(lambda i: not i.duplicate, instructions):
+        for instruction in instructions:
             opcodes_file.write("    ")
             opcodes_file.write(instruction.token)
             opcodes_file.write(" = 0x")

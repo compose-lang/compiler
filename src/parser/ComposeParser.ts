@@ -1,4 +1,4 @@
-// Generated from ComposeParser.g4 by ANTLR 4.11.2-SNAPSHOT
+// Generated from ComposeParser.g4 by ANTLR 4.13.1
 // noinspection ES6UnusedImports,JSUnusedGlobalSymbols,JSUnusedLocalSymbols
 
 import {
@@ -19,557 +19,593 @@ type int = number;
 import BaseParser from './BaseParser';
 
 export default class ComposeParser extends BaseParser {
-	public static readonly I32 = 1;
-	public static readonly I64 = 2;
-	public static readonly ISIZE = 3;
-	public static readonly U32 = 4;
-	public static readonly U64 = 5;
-	public static readonly USIZE = 6;
-	public static readonly F32 = 7;
-	public static readonly F64 = 8;
-	public static readonly V128 = 9;
-	public static readonly STRING = 10;
-	public static readonly BOOLEAN = 11;
-	public static readonly ANY = 12;
-	public static readonly VOID = 13;
-	public static readonly ATTRIBUTE = 14;
-	public static readonly CLASS = 15;
-	public static readonly ENUM = 16;
-	public static readonly EXTENDS = 17;
-	public static readonly FUNCTION = 18;
-	public static readonly STATIC = 19;
-	public static readonly ABSTRACT = 20;
-	public static readonly NATIVE = 21;
-	public static readonly PUBLIC = 22;
-	public static readonly PROTECTED = 23;
-	public static readonly PRIVATE = 24;
-	public static readonly CONST = 25;
-	public static readonly LET = 26;
-	public static readonly NEW = 27;
-	public static readonly GET = 28;
-	public static readonly SET = 29;
-	public static readonly FROM = 30;
-	public static readonly SWITCH = 31;
-	public static readonly CASE = 32;
-	public static readonly FOR = 33;
-	public static readonly DO = 34;
-	public static readonly WHILE = 35;
-	public static readonly BREAK = 36;
-	public static readonly FINALLY = 37;
-	public static readonly THIS = 38;
-	public static readonly SUPER = 39;
-	public static readonly TYPE_OF = 40;
-	public static readonly INSTANCE_OF = 41;
-	public static readonly SIZE_OF = 42;
-	public static readonly ALIGN_OF = 43;
-	public static readonly OFFSET_OF = 44;
-	public static readonly EXPORT = 45;
-	public static readonly IMPORT = 46;
-	public static readonly DEFAULT = 47;
-	public static readonly IN = 48;
-	public static readonly AS = 49;
-	public static readonly LPAR = 50;
-	public static readonly RPAR = 51;
-	public static readonly LBRAK = 52;
-	public static readonly RBRAK = 53;
-	public static readonly LCURL = 54;
-	public static readonly RCURL = 55;
-	public static readonly ARROW = 56;
-	public static readonly GT = 57;
-	public static readonly LT = 58;
-	public static readonly LTE = 59;
-	public static readonly GTE = 60;
-	public static readonly EQUALS = 61;
-	public static readonly NOT_EQUALS = 62;
-	public static readonly NOT = 63;
-	public static readonly AND = 64;
-	public static readonly OR = 65;
-	public static readonly QUESTION = 66;
-	public static readonly SEMI = 67;
-	public static readonly COLON = 68;
-	public static readonly COMMA = 69;
-	public static readonly ETC = 70;
-	public static readonly DOT = 71;
-	public static readonly AT = 72;
-	public static readonly INC = 73;
-	public static readonly DEC = 74;
-	public static readonly PLUS = 75;
-	public static readonly MINUS = 76;
-	public static readonly STAR = 77;
-	public static readonly SLASH = 78;
-	public static readonly BSLASH = 79;
-	public static readonly PERCENT = 80;
-	public static readonly CARET = 81;
-	public static readonly TILDE = 82;
-	public static readonly AMP = 83;
-	public static readonly PIPE = 84;
-	public static readonly LSHIFT = 85;
-	public static readonly RSHIFT = 86;
-	public static readonly URSHIFT = 87;
-	public static readonly ASSIGN = 88;
-	public static readonly ADD_ASSIGN = 89;
-	public static readonly SUB_ASSIGN = 90;
-	public static readonly MUL_ASSIGN = 91;
-	public static readonly DIV_ASSIGN = 92;
-	public static readonly AND_ASSIGN = 93;
-	public static readonly OR_ASSIGN = 94;
-	public static readonly XOR_ASSIGN = 95;
-	public static readonly MOD_ASSIGN = 96;
-	public static readonly LSHIFT_ASSIGN = 97;
-	public static readonly RSHIFT_ASSIGN = 98;
-	public static readonly URSHIFT_ASSIGN = 99;
-	public static readonly INTEGER_LITERAL = 100;
-	public static readonly DECIMAL_LITERAL = 101;
-	public static readonly BOOLEAN_LITERAL = 102;
-	public static readonly CHAR_LITERAL = 103;
-	public static readonly STRING_LITERAL = 104;
-	public static readonly NULL_LITERAL = 105;
-	public static readonly ANNOTATION = 106;
-	public static readonly WS = 107;
-	public static readonly COMMENT = 108;
-	public static readonly LINE_COMMENT = 109;
-	public static readonly UNREACHABLE = 110;
-	public static readonly NOP = 111;
-	public static readonly BLOCK = 112;
-	public static readonly LOOP = 113;
-	public static readonly IF = 114;
-	public static readonly ELSE = 115;
-	public static readonly TRY = 116;
-	public static readonly CATCH = 117;
-	public static readonly THROW = 118;
-	public static readonly RETHROW = 119;
-	public static readonly END = 120;
-	public static readonly BR = 121;
-	public static readonly BR_IF = 122;
-	public static readonly BR_TABLE = 123;
-	public static readonly RETURN = 124;
-	public static readonly CALL = 125;
-	public static readonly CALL_INDIRECT = 126;
-	public static readonly DROP = 127;
-	public static readonly SELECT_TYPE = 128;
+	public static readonly SELECT_T = 1;
+	public static readonly I32 = 2;
+	public static readonly I64 = 3;
+	public static readonly ISIZE = 4;
+	public static readonly U32 = 5;
+	public static readonly U64 = 6;
+	public static readonly USIZE = 7;
+	public static readonly F32 = 8;
+	public static readonly F64 = 9;
+	public static readonly V128 = 10;
+	public static readonly STRING = 11;
+	public static readonly BOOLEAN = 12;
+	public static readonly ANY = 13;
+	public static readonly VOID = 14;
+	public static readonly ATTRIBUTE = 15;
+	public static readonly CLASS = 16;
+	public static readonly ENUM = 17;
+	public static readonly EXTENDS = 18;
+	public static readonly FUNCTION = 19;
+	public static readonly STATIC = 20;
+	public static readonly ABSTRACT = 21;
+	public static readonly NATIVE = 22;
+	public static readonly PUBLIC = 23;
+	public static readonly PROTECTED = 24;
+	public static readonly PRIVATE = 25;
+	public static readonly CONST = 26;
+	public static readonly LET = 27;
+	public static readonly NEW = 28;
+	public static readonly GET = 29;
+	public static readonly SET = 30;
+	public static readonly FROM = 31;
+	public static readonly SWITCH = 32;
+	public static readonly CASE = 33;
+	public static readonly FOR = 34;
+	public static readonly DO = 35;
+	public static readonly WHILE = 36;
+	public static readonly BREAK = 37;
+	public static readonly FINALLY = 38;
+	public static readonly THIS = 39;
+	public static readonly SUPER = 40;
+	public static readonly TYPE_OF = 41;
+	public static readonly INSTANCE_OF = 42;
+	public static readonly SIZE_OF = 43;
+	public static readonly ALIGN_OF = 44;
+	public static readonly OFFSET_OF = 45;
+	public static readonly EXPORT = 46;
+	public static readonly IMPORT = 47;
+	public static readonly DEFAULT = 48;
+	public static readonly IN = 49;
+	public static readonly AS = 50;
+	public static readonly LPAR = 51;
+	public static readonly RPAR = 52;
+	public static readonly LBRAK = 53;
+	public static readonly RBRAK = 54;
+	public static readonly LCURL = 55;
+	public static readonly RCURL = 56;
+	public static readonly ARROW = 57;
+	public static readonly GT = 58;
+	public static readonly LT = 59;
+	public static readonly LTE = 60;
+	public static readonly GTE = 61;
+	public static readonly EQUALS = 62;
+	public static readonly NOT_EQUALS = 63;
+	public static readonly NOT = 64;
+	public static readonly AND = 65;
+	public static readonly OR = 66;
+	public static readonly QUESTION = 67;
+	public static readonly SEMI = 68;
+	public static readonly COLON = 69;
+	public static readonly COMMA = 70;
+	public static readonly ETC = 71;
+	public static readonly DOT = 72;
+	public static readonly AT = 73;
+	public static readonly INC = 74;
+	public static readonly DEC = 75;
+	public static readonly PLUS = 76;
+	public static readonly MINUS = 77;
+	public static readonly STAR = 78;
+	public static readonly SLASH = 79;
+	public static readonly BSLASH = 80;
+	public static readonly PERCENT = 81;
+	public static readonly CARET = 82;
+	public static readonly TILDE = 83;
+	public static readonly AMP = 84;
+	public static readonly PIPE = 85;
+	public static readonly LSHIFT = 86;
+	public static readonly RSHIFT = 87;
+	public static readonly URSHIFT = 88;
+	public static readonly ASSIGN = 89;
+	public static readonly ADD_ASSIGN = 90;
+	public static readonly SUB_ASSIGN = 91;
+	public static readonly MUL_ASSIGN = 92;
+	public static readonly DIV_ASSIGN = 93;
+	public static readonly AND_ASSIGN = 94;
+	public static readonly OR_ASSIGN = 95;
+	public static readonly XOR_ASSIGN = 96;
+	public static readonly MOD_ASSIGN = 97;
+	public static readonly LSHIFT_ASSIGN = 98;
+	public static readonly RSHIFT_ASSIGN = 99;
+	public static readonly URSHIFT_ASSIGN = 100;
+	public static readonly INTEGER_LITERAL = 101;
+	public static readonly DECIMAL_LITERAL = 102;
+	public static readonly BOOLEAN_LITERAL = 103;
+	public static readonly CHAR_LITERAL = 104;
+	public static readonly STRING_LITERAL = 105;
+	public static readonly NULL_LITERAL = 106;
+	public static readonly ANNOTATION = 107;
+	public static readonly WS = 108;
+	public static readonly COMMENT = 109;
+	public static readonly LINE_COMMENT = 110;
+	public static readonly UNREACHABLE = 111;
+	public static readonly NOP = 112;
+	public static readonly BLOCK = 113;
+	public static readonly LOOP = 114;
+	public static readonly IF = 115;
+	public static readonly ELSE = 116;
+	public static readonly END = 117;
+	public static readonly BR = 118;
+	public static readonly BR_IF = 119;
+	public static readonly BR_TABLE = 120;
+	public static readonly RETURN = 121;
+	public static readonly CALL = 122;
+	public static readonly CALL_INDIRECT = 123;
+	public static readonly RETURN_CALL = 124;
+	public static readonly RETURN_CALL_INDIRECT = 125;
+	public static readonly CALL_REF = 126;
+	public static readonly RETURN_CALL_REF = 127;
+	public static readonly DROP = 128;
 	public static readonly SELECT = 129;
 	public static readonly LOCAL_GET = 130;
 	public static readonly LOCAL_SET = 131;
 	public static readonly LOCAL_TEE = 132;
 	public static readonly GLOBAL_GET = 133;
 	public static readonly GLOBAL_SET = 134;
-	public static readonly I32_LOAD = 135;
-	public static readonly I64_LOAD = 136;
-	public static readonly F32_LOAD = 137;
-	public static readonly F64_LOAD = 138;
-	public static readonly I32_LOAD8_S = 139;
-	public static readonly I32_LOAD8_U = 140;
-	public static readonly I32_LOAD16_S = 141;
-	public static readonly I32_LOAD16_U = 142;
-	public static readonly I64_LOAD8_S = 143;
-	public static readonly I64_LOAD8_U = 144;
-	public static readonly I64_LOAD16_S = 145;
-	public static readonly I64_LOAD16_U = 146;
-	public static readonly I64_LOAD32_S = 147;
-	public static readonly I64_LOAD32_U = 148;
-	public static readonly I32_STORE = 149;
-	public static readonly I64_STORE = 150;
-	public static readonly F32_STORE = 151;
-	public static readonly F64_STORE = 152;
-	public static readonly I32_STORE8 = 153;
-	public static readonly I32_STORE16 = 154;
-	public static readonly I64_STORE8 = 155;
-	public static readonly I64_STORE16 = 156;
-	public static readonly I64_STORE32 = 157;
-	public static readonly MEMORY_SIZE = 158;
-	public static readonly MEMORY_GROW = 159;
-	public static readonly I32_CONST = 160;
-	public static readonly I64_CONST = 161;
-	public static readonly F32_CONST = 162;
-	public static readonly F64_CONST = 163;
-	public static readonly I32_EQZ = 164;
-	public static readonly I32_EQ = 165;
-	public static readonly I32_NE = 166;
-	public static readonly I32_LT_S = 167;
-	public static readonly I32_LT_U = 168;
-	public static readonly I32_GT_S = 169;
-	public static readonly I32_GT_U = 170;
-	public static readonly I32_LE_S = 171;
-	public static readonly I32_LE_U = 172;
-	public static readonly I32_GE_S = 173;
-	public static readonly I32_GE_U = 174;
-	public static readonly I64_EQZ = 175;
-	public static readonly I64_EQ = 176;
-	public static readonly I64_NE = 177;
-	public static readonly I64_LT_S = 178;
-	public static readonly I64_LT_U = 179;
-	public static readonly I64_GT_S = 180;
-	public static readonly I64_GT_U = 181;
-	public static readonly I64_LE_S = 182;
-	public static readonly I64_LE_U = 183;
-	public static readonly I64_GE_S = 184;
-	public static readonly I64_GE_U = 185;
-	public static readonly F32_EQ = 186;
-	public static readonly F32_NE = 187;
-	public static readonly F32_LT = 188;
-	public static readonly F32_GT = 189;
-	public static readonly F32_LE = 190;
-	public static readonly F32_GE = 191;
-	public static readonly F64_EQ = 192;
-	public static readonly F64_NE = 193;
-	public static readonly F64_LT = 194;
-	public static readonly F64_GT = 195;
-	public static readonly F64_LE = 196;
-	public static readonly F64_GE = 197;
-	public static readonly I32_CLZ = 198;
-	public static readonly I32_CTZ = 199;
-	public static readonly I32_POPCNT = 200;
-	public static readonly I32_ADD = 201;
-	public static readonly I32_SUB = 202;
-	public static readonly I32_MUL = 203;
-	public static readonly I32_DIV_S = 204;
-	public static readonly I32_DIV_U = 205;
-	public static readonly I32_REM_S = 206;
-	public static readonly I32_REM_U = 207;
-	public static readonly I32_AND = 208;
-	public static readonly I32_OR = 209;
-	public static readonly I32_XOR = 210;
-	public static readonly I32_SHL = 211;
-	public static readonly I32_SHR_S = 212;
-	public static readonly I32_SHR_U = 213;
-	public static readonly I32_ROTL = 214;
-	public static readonly I32_ROTR = 215;
-	public static readonly I64_CLZ = 216;
-	public static readonly I64_CTZ = 217;
-	public static readonly I64_POPCNT = 218;
-	public static readonly I64_ADD = 219;
-	public static readonly I64_SUB = 220;
-	public static readonly I64_MUL = 221;
-	public static readonly I64_DIV_S = 222;
-	public static readonly I64_DIV_U = 223;
-	public static readonly I64_REM_S = 224;
-	public static readonly I64_REM_U = 225;
-	public static readonly I64_AND = 226;
-	public static readonly I64_OR = 227;
-	public static readonly I64_XOR = 228;
-	public static readonly I64_SHL = 229;
-	public static readonly I64_SHR_S = 230;
-	public static readonly I64_SHR_U = 231;
-	public static readonly I64_ROTL = 232;
-	public static readonly I64_ROTR = 233;
-	public static readonly F32_ABS = 234;
-	public static readonly F32_NEG = 235;
-	public static readonly F32_CEIL = 236;
-	public static readonly F32_FLOOR = 237;
-	public static readonly F32_TRUNC = 238;
-	public static readonly F32_NEAREST = 239;
-	public static readonly F32_SQRT = 240;
-	public static readonly F32_ADD = 241;
-	public static readonly F32_SUB = 242;
-	public static readonly F32_MUL = 243;
-	public static readonly F32_DIV = 244;
-	public static readonly F32_MIN = 245;
-	public static readonly F32_MAX = 246;
-	public static readonly F32_COPYSIGN = 247;
-	public static readonly F64_ABS = 248;
-	public static readonly F64_NEG = 249;
-	public static readonly F64_CEIL = 250;
-	public static readonly F64_FLOOR = 251;
-	public static readonly F64_TRUNC = 252;
-	public static readonly F64_NEAREST = 253;
-	public static readonly F64_SQRT = 254;
-	public static readonly F64_ADD = 255;
-	public static readonly F64_SUB = 256;
-	public static readonly F64_MUL = 257;
-	public static readonly F64_DIV = 258;
-	public static readonly F64_MIN = 259;
-	public static readonly F64_MAX = 260;
-	public static readonly F64_COPYSIGN = 261;
-	public static readonly I32_WRAP_I64 = 262;
-	public static readonly I32_TRUNC_F32_S = 263;
-	public static readonly I32_TRUNC_F32_U = 264;
-	public static readonly I32_TRUNC_F64_S = 265;
-	public static readonly I32_TRUNC_F64_U = 266;
-	public static readonly I64_EXTEND_I32_S = 267;
-	public static readonly I64_EXTEND_I32_U = 268;
-	public static readonly I64_TRUNC_F32_S = 269;
-	public static readonly I64_TRUNC_F32_U = 270;
-	public static readonly I64_TRUNC_F64_S = 271;
-	public static readonly I64_TRUNC_F64_U = 272;
-	public static readonly F32_CONVERT_I32_S = 273;
-	public static readonly F32_CONVERT_I32_U = 274;
-	public static readonly F32_CONVERT_I64_S = 275;
-	public static readonly F32_CONVERT_I64_U = 276;
-	public static readonly F32_DEMOTE_F64 = 277;
-	public static readonly F64_CONVERT_I32_S = 278;
-	public static readonly F64_CONVERT_I32_U = 279;
-	public static readonly F64_CONVERT_I64_S = 280;
-	public static readonly F64_CONVERT_I64_U = 281;
-	public static readonly F64_PROMOTE_F32 = 282;
-	public static readonly I32_REINTERPRET_F32 = 283;
-	public static readonly I64_REINTERPRET_F64 = 284;
-	public static readonly F32_REINTERPRET_I32 = 285;
-	public static readonly F64_REINTERPRET_I64 = 286;
-	public static readonly I32_EXTEND8_S = 287;
-	public static readonly I32_EXTEND16_S = 288;
-	public static readonly I64_EXTEND8_S = 289;
-	public static readonly I64_EXTEND16_S = 290;
-	public static readonly I64_EXTEND32_S = 291;
-	public static readonly I32_TRUNC_SAT_F32_S = 292;
-	public static readonly I32_TRUNC_SAT_F32_U = 293;
-	public static readonly I32_TRUNC_SAT_F64_S = 294;
-	public static readonly I32_TRUNC_SAT_F64_U = 295;
-	public static readonly I64_TRUNC_SAT_F32_S = 296;
-	public static readonly I64_TRUNC_SAT_F32_U = 297;
-	public static readonly I64_TRUNC_SAT_F64_S = 298;
-	public static readonly I64_TRUNC_SAT_F64_U = 299;
-	public static readonly MEMORY_INIT = 300;
-	public static readonly DATA_DROP = 301;
-	public static readonly MEMORY_COPY = 302;
-	public static readonly MEMORY_FILL = 303;
-	public static readonly TABLE_INIT = 304;
-	public static readonly ELEM_DROP = 305;
-	public static readonly TABLE_COPY = 306;
-	public static readonly TABLE_GET = 307;
-	public static readonly TABLE_SET = 308;
-	public static readonly TABLE_GROW = 309;
-	public static readonly TABLE_SIZE = 310;
-	public static readonly TABLE_FILL = 311;
-	public static readonly REF_NULL = 312;
-	public static readonly REF_IS_NULL = 313;
-	public static readonly REF_FUNC = 314;
-	public static readonly V128_LOAD = 315;
-	public static readonly V128_LOAD8X8_S = 316;
-	public static readonly V128_LOAD8X8_U = 317;
-	public static readonly V128_LOAD16X4_S = 318;
-	public static readonly V128_LOAD16X4_U = 319;
-	public static readonly V128_LOAD32X2_S = 320;
-	public static readonly V128_LOAD32X2_U = 321;
-	public static readonly V128_LOAD8_SPLAT = 322;
-	public static readonly V128_LOAD16_SPLAT = 323;
-	public static readonly V128_LOAD32_SPLAT = 324;
-	public static readonly V128_LOAD64_SPLAT = 325;
-	public static readonly V128_STORE = 326;
-	public static readonly V128_CONST = 327;
-	public static readonly I8X16_SHUFFLE = 328;
-	public static readonly I8X16_SWIZZLE = 329;
-	public static readonly I8X16_SPLAT = 330;
-	public static readonly I16X8_SPLAT = 331;
-	public static readonly I32X4_SPLAT = 332;
-	public static readonly I64X2_SPLAT = 333;
-	public static readonly F32X4_SPLAT = 334;
-	public static readonly F64X2_SPLAT = 335;
-	public static readonly I8X16_EXTRACT_LANE_S = 336;
-	public static readonly I8X16_EXTRACT_LANE_U = 337;
-	public static readonly I8X16_REPLACE_LANE = 338;
-	public static readonly I16X8_EXTRACT_LANE_S = 339;
-	public static readonly I16X8_EXTRACT_LANE_U = 340;
-	public static readonly I16X8_REPLACE_LANE = 341;
-	public static readonly I32X4_EXTRACT_LANE = 342;
-	public static readonly I32X4_REPLACE_LANE = 343;
-	public static readonly I64X2_EXTRACT_LANE = 344;
-	public static readonly I64X2_REPLACE_LANE = 345;
-	public static readonly F32X4_EXTRACT_LANE = 346;
-	public static readonly F32X4_REPLACE_LANE = 347;
-	public static readonly F64X2_EXTRACT_LANE = 348;
-	public static readonly F64X2_REPLACE_LANE = 349;
-	public static readonly I8X16_EQ = 350;
-	public static readonly I8X16_NE = 351;
-	public static readonly I8X16_LT_S = 352;
-	public static readonly I8X16_LT_U = 353;
-	public static readonly I8X16_GT_S = 354;
-	public static readonly I8X16_GT_U = 355;
-	public static readonly I8X16_LE_S = 356;
-	public static readonly I8X16_LE_U = 357;
-	public static readonly I8X16_GE_S = 358;
-	public static readonly I8X16_GE_U = 359;
-	public static readonly I16X8_EQ = 360;
-	public static readonly I16X8_NE = 361;
-	public static readonly I16X8_LT_S = 362;
-	public static readonly I16X8_LT_U = 363;
-	public static readonly I16X8_GT_S = 364;
-	public static readonly I16X8_GT_U = 365;
-	public static readonly I16X8_LE_S = 366;
-	public static readonly I16X8_LE_U = 367;
-	public static readonly I16X8_GE_S = 368;
-	public static readonly I16X8_GE_U = 369;
-	public static readonly I32X4_EQ = 370;
-	public static readonly I32X4_NE = 371;
-	public static readonly I32X4_LT_S = 372;
-	public static readonly I32X4_LT_U = 373;
-	public static readonly I32X4_GT_S = 374;
-	public static readonly I32X4_GT_U = 375;
-	public static readonly I32X4_LE_S = 376;
-	public static readonly I32X4_LE_U = 377;
-	public static readonly I32X4_GE_S = 378;
-	public static readonly I32X4_GE_U = 379;
-	public static readonly F32X4_EQ = 380;
-	public static readonly F32X4_NE = 381;
-	public static readonly F32X4_LT = 382;
-	public static readonly F32X4_GT = 383;
-	public static readonly F32X4_LE = 384;
-	public static readonly F32X4_GE = 385;
-	public static readonly F64X2_EQ = 386;
-	public static readonly F64X2_NE = 387;
-	public static readonly F64X2_LT = 388;
-	public static readonly F64X2_GT = 389;
-	public static readonly F64X2_LE = 390;
-	public static readonly F64X2_GE = 391;
-	public static readonly V128_NOT = 392;
-	public static readonly V128_AND = 393;
-	public static readonly V128_ANDNOT = 394;
-	public static readonly V128_OR = 395;
-	public static readonly V128_XOR = 396;
-	public static readonly V128_BITSELECT = 397;
-	public static readonly V128_ANY_TRUE = 398;
-	public static readonly V128_LOAD8_LANE = 399;
-	public static readonly V128_LOAD16_LANE = 400;
-	public static readonly V128_LOAD32_LANE = 401;
-	public static readonly V128_LOAD64_LANE = 402;
-	public static readonly V128_STORE8_LANE = 403;
-	public static readonly V128_STORE16_LANE = 404;
-	public static readonly V128_STORE32_LANE = 405;
-	public static readonly V128_STORE64_LANE = 406;
-	public static readonly V128_LOAD32_ZERO = 407;
-	public static readonly V128_LOAD64_ZERO = 408;
-	public static readonly F32X4_DEMOTE_F64X2_ZERO = 409;
-	public static readonly F64X2_PROMOTE_LOW_F32X4 = 410;
-	public static readonly I8X16_ABS = 411;
-	public static readonly I8X16_NEG = 412;
-	public static readonly I8X16_POPCNT = 413;
-	public static readonly I8X16_ALL_TRUE = 414;
-	public static readonly I8X16_BITMASK = 415;
-	public static readonly I8X16_NARROW_I16X8_S = 416;
-	public static readonly I8X16_NARROW_I16X8_U = 417;
-	public static readonly I8X16_SHL = 418;
-	public static readonly I8X16_SHR_S = 419;
-	public static readonly I8X16_SHR_U = 420;
-	public static readonly I8X16_ADD = 421;
-	public static readonly I8X16_ADD_SAT_S = 422;
-	public static readonly I8X16_ADD_SAT_U = 423;
-	public static readonly I8X16_SUB = 424;
-	public static readonly I8X16_SUB_SAT_S = 425;
-	public static readonly I8X16_SUB_SAT_U = 426;
-	public static readonly I8X16_MIN_S = 427;
-	public static readonly I8X16_MIN_U = 428;
-	public static readonly I8X16_MAX_S = 429;
-	public static readonly I8X16_MAX_U = 430;
-	public static readonly I8X16_AVGR_U = 431;
-	public static readonly I16X8_EXTADD_PAIRWISE_I8X16_S = 432;
-	public static readonly I16X8_EXTADD_PAIRWISE_I8X16_U = 433;
-	public static readonly I32X4_EXTADD_PAIRWISE_I16X8_S = 434;
-	public static readonly I32X4_EXTADD_PAIRWISE_I16X8_U = 435;
-	public static readonly I16X8_ABS = 436;
-	public static readonly I16X8_NEG = 437;
-	public static readonly I16X8_Q15MULR_SAT_S = 438;
-	public static readonly I16X8_ALL_TRUE = 439;
-	public static readonly I16X8_BITMASK = 440;
-	public static readonly I16X8_NARROW_I32X4_S = 441;
-	public static readonly I16X8_NARROW_I32X4_U = 442;
-	public static readonly I16X8_EXTEND_LOW_I8X16_S = 443;
-	public static readonly I16X8_EXTEND_HIGH_I8X16_S = 444;
-	public static readonly I16X8_EXTEND_LOW_I8X16_U = 445;
-	public static readonly I16X8_EXTEND_HIGH_I8X16_U = 446;
-	public static readonly I16X8_SHL = 447;
-	public static readonly I16X8_SHR_S = 448;
-	public static readonly I16X8_SHR_U = 449;
-	public static readonly I16X8_ADD = 450;
-	public static readonly I16X8_ADD_SAT_S = 451;
-	public static readonly I16X8_ADD_SAT_U = 452;
-	public static readonly I16X8_SUB = 453;
-	public static readonly I16X8_SUB_SAT_S = 454;
-	public static readonly I16X8_SUB_SAT_U = 455;
-	public static readonly I16X8_MUL = 456;
-	public static readonly I16X8_MIN_S = 457;
-	public static readonly I16X8_MIN_U = 458;
-	public static readonly I16X8_MAX_S = 459;
-	public static readonly I16X8_MAX_U = 460;
-	public static readonly I16X8_AVGR_U = 461;
-	public static readonly I16X8_EXTMUL_LOW_I8X16_S = 462;
-	public static readonly I16X8_EXTMUL_HIGH_I8X16_S = 463;
-	public static readonly I16X8_EXTMUL_LOW_I8X16_U = 464;
-	public static readonly I16X8_EXTMUL_HIGH_I8X16_U = 465;
-	public static readonly I32X4_ABS = 466;
-	public static readonly I32X4_NEG = 467;
-	public static readonly I32X4_ALL_TRUE = 468;
-	public static readonly I32X4_BITMASK = 469;
-	public static readonly I32X4_EXTEND_LOW_I16X8_S = 470;
-	public static readonly I32X4_EXTEND_HIGH_I16X8_S = 471;
-	public static readonly I32X4_EXTEND_LOW_I16X8_U = 472;
-	public static readonly I32X4_EXTEND_HIGH_I16X8_U = 473;
-	public static readonly I32X4_SHL = 474;
-	public static readonly I32X4_SHR_S = 475;
-	public static readonly I32X4_SHR_U = 476;
-	public static readonly I32X4_ADD = 477;
-	public static readonly I32X4_SUB = 478;
-	public static readonly I32X4_MUL = 479;
-	public static readonly I32X4_MIN_S = 480;
-	public static readonly I32X4_MIN_U = 481;
-	public static readonly I32X4_MAX_S = 482;
-	public static readonly I32X4_MAX_U = 483;
-	public static readonly I32X4_DOT_I16X8_S = 484;
-	public static readonly I32X4_EXTMUL_LOW_I16X8_S = 485;
-	public static readonly I32X4_EXTMUL_HIGH_I16X8_S = 486;
-	public static readonly I32X4_EXTMUL_LOW_I16X8_U = 487;
-	public static readonly I32X4_EXTMUL_HIGH_I16X8_U = 488;
-	public static readonly I64X2_ABS = 489;
-	public static readonly I64X2_NEG = 490;
-	public static readonly I64X2_ALL_TRUE = 491;
-	public static readonly I64X2_BITMASK = 492;
-	public static readonly I64X2_EXTEND_LOW_I32X4_S = 493;
-	public static readonly I64X2_EXTEND_HIGH_I32X4_S = 494;
-	public static readonly I64X2_EXTEND_LOW_I32X4_U = 495;
-	public static readonly I64X2_EXTEND_HIGH_I32X4_U = 496;
-	public static readonly I64X2_SHL = 497;
-	public static readonly I64X2_SHR_S = 498;
-	public static readonly I64X2_SHR_U = 499;
-	public static readonly I64X2_ADD = 500;
-	public static readonly I64X2_SUB = 501;
-	public static readonly I64X2_MUL = 502;
-	public static readonly I64X2_EQ = 503;
-	public static readonly I64X2_NE = 504;
-	public static readonly I64X2_LT_S = 505;
-	public static readonly I64X2_GT_S = 506;
-	public static readonly I64X2_LE_S = 507;
-	public static readonly I64X2_GE_S = 508;
-	public static readonly I64X2_EXTMUL_LOW_I32X4_S = 509;
-	public static readonly I64X2_EXTMUL_HIGH_I32X4_S = 510;
-	public static readonly I64X2_EXTMUL_LOW_I32X4_U = 511;
-	public static readonly I64X2_EXTMUL_HIGH_I32X4_U = 512;
-	public static readonly F32X4_CEIL = 513;
-	public static readonly F32X4_FLOOR = 514;
-	public static readonly F32X4_TRUNC = 515;
-	public static readonly F32X4_NEAREST = 516;
-	public static readonly F64X2_CEIL = 517;
-	public static readonly F64X2_FLOOR = 518;
-	public static readonly F64X2_TRUNC = 519;
-	public static readonly F64X2_NEAREST = 520;
-	public static readonly F32X4_ABS = 521;
-	public static readonly F32X4_NEG = 522;
-	public static readonly F32X4_SQRT = 523;
-	public static readonly F32X4_ADD = 524;
-	public static readonly F32X4_SUB = 525;
-	public static readonly F32X4_MUL = 526;
-	public static readonly F32X4_DIV = 527;
-	public static readonly F32X4_MIN = 528;
-	public static readonly F32X4_MAX = 529;
-	public static readonly F32X4_PMIN = 530;
-	public static readonly F32X4_PMAX = 531;
-	public static readonly F64X2_ABS = 532;
-	public static readonly F64X2_NEG = 533;
-	public static readonly F64X2_SQRT = 534;
-	public static readonly F64X2_ADD = 535;
-	public static readonly F64X2_SUB = 536;
-	public static readonly F64X2_MUL = 537;
-	public static readonly F64X2_DIV = 538;
-	public static readonly F64X2_MIN = 539;
-	public static readonly F64X2_MAX = 540;
-	public static readonly F64X2_PMIN = 541;
-	public static readonly F64X2_PMAX = 542;
-	public static readonly I32X4_TRUNC_SAT_F32X4_S = 543;
-	public static readonly I32X4_TRUNC_SAT_F32X4_U = 544;
-	public static readonly F32X4_CONVERT_I32X4_S = 545;
-	public static readonly F32X4_CONVERT_I32X4_U = 546;
-	public static readonly I32X4_TRUNC_SAT_F64X2_S_ZERO = 547;
-	public static readonly I32X4_TRUNC_SAT_F64X2_U_ZERO = 548;
-	public static readonly F64X2_CONVERT_LOW_I32X4_S = 549;
-	public static readonly F64X2_CONVERT_LOW_I32X4_U = 550;
-	public static readonly IDENTIFIER = 551;
+	public static readonly TABLE_GET = 135;
+	public static readonly TABLE_SET = 136;
+	public static readonly I32_LOAD = 137;
+	public static readonly I64_LOAD = 138;
+	public static readonly F32_LOAD = 139;
+	public static readonly F64_LOAD = 140;
+	public static readonly I32_LOAD8_S = 141;
+	public static readonly I32_LOAD8_U = 142;
+	public static readonly I32_LOAD16_S = 143;
+	public static readonly I32_LOAD16_U = 144;
+	public static readonly I64_LOAD8_S = 145;
+	public static readonly I64_LOAD8_U = 146;
+	public static readonly I64_LOAD16_S = 147;
+	public static readonly I64_LOAD16_U = 148;
+	public static readonly I64_LOAD32_S = 149;
+	public static readonly I64_LOAD32_U = 150;
+	public static readonly I32_STORE = 151;
+	public static readonly I64_STORE = 152;
+	public static readonly F32_STORE = 153;
+	public static readonly F64_STORE = 154;
+	public static readonly I32_STORE8 = 155;
+	public static readonly I32_STORE16 = 156;
+	public static readonly I64_STORE8 = 157;
+	public static readonly I64_STORE16 = 158;
+	public static readonly I64_STORE32 = 159;
+	public static readonly MEMORY_SIZE = 160;
+	public static readonly MEMORY_GROW = 161;
+	public static readonly I32_CONST = 162;
+	public static readonly I64_CONST = 163;
+	public static readonly F32_CONST = 164;
+	public static readonly F64_CONST = 165;
+	public static readonly I32_EQZ = 166;
+	public static readonly I32_EQ = 167;
+	public static readonly I32_NE = 168;
+	public static readonly I32_LT_S = 169;
+	public static readonly I32_LT_U = 170;
+	public static readonly I32_GT_S = 171;
+	public static readonly I32_GT_U = 172;
+	public static readonly I32_LE_S = 173;
+	public static readonly I32_LE_U = 174;
+	public static readonly I32_GE_S = 175;
+	public static readonly I32_GE_U = 176;
+	public static readonly I64_EQZ = 177;
+	public static readonly I64_EQ = 178;
+	public static readonly I64_NE = 179;
+	public static readonly I64_LT_S = 180;
+	public static readonly I64_LT_U = 181;
+	public static readonly I64_GT_S = 182;
+	public static readonly I64_GT_U = 183;
+	public static readonly I64_LE_S = 184;
+	public static readonly I64_LE_U = 185;
+	public static readonly I64_GE_S = 186;
+	public static readonly I64_GE_U = 187;
+	public static readonly F32_EQ = 188;
+	public static readonly F32_NE = 189;
+	public static readonly F32_LT = 190;
+	public static readonly F32_GT = 191;
+	public static readonly F32_LE = 192;
+	public static readonly F32_GE = 193;
+	public static readonly F64_EQ = 194;
+	public static readonly F64_NE = 195;
+	public static readonly F64_LT = 196;
+	public static readonly F64_GT = 197;
+	public static readonly F64_LE = 198;
+	public static readonly F64_GE = 199;
+	public static readonly I32_CLZ = 200;
+	public static readonly I32_CTZ = 201;
+	public static readonly I32_POPCNT = 202;
+	public static readonly I32_ADD = 203;
+	public static readonly I32_SUB = 204;
+	public static readonly I32_MUL = 205;
+	public static readonly I32_DIV_S = 206;
+	public static readonly I32_DIV_U = 207;
+	public static readonly I32_REM_S = 208;
+	public static readonly I32_REM_U = 209;
+	public static readonly I32_AND = 210;
+	public static readonly I32_OR = 211;
+	public static readonly I32_XOR = 212;
+	public static readonly I32_SHL = 213;
+	public static readonly I32_SHR_S = 214;
+	public static readonly I32_SHR_U = 215;
+	public static readonly I32_ROTL = 216;
+	public static readonly I32_ROTR = 217;
+	public static readonly I64_CLZ = 218;
+	public static readonly I64_CTZ = 219;
+	public static readonly I64_POPCNT = 220;
+	public static readonly I64_ADD = 221;
+	public static readonly I64_SUB = 222;
+	public static readonly I64_MUL = 223;
+	public static readonly I64_DIV_S = 224;
+	public static readonly I64_DIV_U = 225;
+	public static readonly I64_REM_S = 226;
+	public static readonly I64_REM_U = 227;
+	public static readonly I64_AND = 228;
+	public static readonly I64_OR = 229;
+	public static readonly I64_XOR = 230;
+	public static readonly I64_SHL = 231;
+	public static readonly I64_SHR_S = 232;
+	public static readonly I64_SHR_U = 233;
+	public static readonly I64_ROTL = 234;
+	public static readonly I64_ROTR = 235;
+	public static readonly F32_ABS = 236;
+	public static readonly F32_NEG = 237;
+	public static readonly F32_CEIL = 238;
+	public static readonly F32_FLOOR = 239;
+	public static readonly F32_TRUNC = 240;
+	public static readonly F32_NEAREST = 241;
+	public static readonly F32_SQRT = 242;
+	public static readonly F32_ADD = 243;
+	public static readonly F32_SUB = 244;
+	public static readonly F32_MUL = 245;
+	public static readonly F32_DIV = 246;
+	public static readonly F32_MIN = 247;
+	public static readonly F32_MAX = 248;
+	public static readonly F32_COPYSIGN = 249;
+	public static readonly F64_ABS = 250;
+	public static readonly F64_NEG = 251;
+	public static readonly F64_CEIL = 252;
+	public static readonly F64_FLOOR = 253;
+	public static readonly F64_TRUNC = 254;
+	public static readonly F64_NEAREST = 255;
+	public static readonly F64_SQRT = 256;
+	public static readonly F64_ADD = 257;
+	public static readonly F64_SUB = 258;
+	public static readonly F64_MUL = 259;
+	public static readonly F64_DIV = 260;
+	public static readonly F64_MIN = 261;
+	public static readonly F64_MAX = 262;
+	public static readonly F64_COPYSIGN = 263;
+	public static readonly I32_WRAP_I64 = 264;
+	public static readonly I32_TRUNC_F32_S = 265;
+	public static readonly I32_TRUNC_F32_U = 266;
+	public static readonly I32_TRUNC_F64_S = 267;
+	public static readonly I32_TRUNC_F64_U = 268;
+	public static readonly I64_EXTEND_I32_S = 269;
+	public static readonly I64_EXTEND_I32_U = 270;
+	public static readonly I64_TRUNC_F32_S = 271;
+	public static readonly I64_TRUNC_F32_U = 272;
+	public static readonly I64_TRUNC_F64_S = 273;
+	public static readonly I64_TRUNC_F64_U = 274;
+	public static readonly F32_CONVERT_I32_S = 275;
+	public static readonly F32_CONVERT_I32_U = 276;
+	public static readonly F32_CONVERT_I64_S = 277;
+	public static readonly F32_CONVERT_I64_U = 278;
+	public static readonly F32_DEMOTE_F64 = 279;
+	public static readonly F64_CONVERT_I32_S = 280;
+	public static readonly F64_CONVERT_I32_U = 281;
+	public static readonly F64_CONVERT_I64_S = 282;
+	public static readonly F64_CONVERT_I64_U = 283;
+	public static readonly F64_PROMOTE_F32 = 284;
+	public static readonly I32_REINTERPRET_F32 = 285;
+	public static readonly I64_REINTERPRET_F64 = 286;
+	public static readonly F32_REINTERPRET_I32 = 287;
+	public static readonly F64_REINTERPRET_I64 = 288;
+	public static readonly I32_EXTEND8_S = 289;
+	public static readonly I32_EXTEND16_S = 290;
+	public static readonly I64_EXTEND8_S = 291;
+	public static readonly I64_EXTEND16_S = 292;
+	public static readonly I64_EXTEND32_S = 293;
+	public static readonly REF_NULL = 294;
+	public static readonly REF_IS_NULL = 295;
+	public static readonly REF_FUNC = 296;
+	public static readonly REF_EQ = 297;
+	public static readonly REF_AS_NON_NULL = 298;
+	public static readonly BR_ON_NULL = 299;
+	public static readonly BR_ON_NON_NULL = 300;
+	public static readonly STRUCT_NEW = 301;
+	public static readonly STRUCT_NEW_DEFAULT = 302;
+	public static readonly STRUCT_GET = 303;
+	public static readonly STRUCT_GETS = 304;
+	public static readonly STRUCT_GETU = 305;
+	public static readonly STRUCT_SET = 306;
+	public static readonly ARRAY_NEW = 307;
+	public static readonly ARRAY_NEWDEFAULT = 308;
+	public static readonly ARRAY_NEW_FIXED = 309;
+	public static readonly ARRAY_NEW_DATA = 310;
+	public static readonly ARRAY_NEW_ELEM = 311;
+	public static readonly ARRAY_GET = 312;
+	public static readonly ARRAY_GETS = 313;
+	public static readonly ARRAY_GETU = 314;
+	public static readonly ARRAY_SET = 315;
+	public static readonly ARRAY_LEN = 316;
+	public static readonly ARRAY_FILL = 317;
+	public static readonly ARRAY_COPY = 318;
+	public static readonly ARRAY_INIT_DATA = 319;
+	public static readonly ARRAY_INIT_ELEM = 320;
+	public static readonly REF_TEST = 321;
+	public static readonly REFCAST_NULL = 322;
+	public static readonly BR_ON_CAST = 323;
+	public static readonly BR_ON_CAST_FAIL = 324;
+	public static readonly ANY_CONVERT_EXTERN = 325;
+	public static readonly EXTERN_CONVERT_ANY = 326;
+	public static readonly REF_I31 = 327;
+	public static readonly I31GETS = 328;
+	public static readonly I31GETU = 329;
+	public static readonly I32_TRUNC_SAT_F32_S = 330;
+	public static readonly I32_TRUNC_SAT_F32_U = 331;
+	public static readonly I32_TRUNC_SAT_F64_S = 332;
+	public static readonly I32_TRUNC_SAT_F64_U = 333;
+	public static readonly I64_TRUNC_SAT_F32_S = 334;
+	public static readonly I64_TRUNC_SAT_F32_U = 335;
+	public static readonly I64_TRUNC_SAT_F64_S = 336;
+	public static readonly I64_TRUNC_SAT_F64_U = 337;
+	public static readonly MEMORY_INIT = 338;
+	public static readonly DATA_DROP = 339;
+	public static readonly MEMORY_COPY = 340;
+	public static readonly MEMORY_FILL = 341;
+	public static readonly TABLE_INIT = 342;
+	public static readonly ELEM_DROP = 343;
+	public static readonly TABLE_COPY = 344;
+	public static readonly TABLE_GROW = 345;
+	public static readonly TABLE_SIZE = 346;
+	public static readonly TABLE_FILL = 347;
+	public static readonly V128_LOAD = 348;
+	public static readonly V128_LOAD8X8_S = 349;
+	public static readonly V128_LOAD8X8_U = 350;
+	public static readonly V128_LOAD16X4_S = 351;
+	public static readonly V128_LOAD16X4_U = 352;
+	public static readonly V128_LOAD32X2_S = 353;
+	public static readonly V128_LOAD32X2_U = 354;
+	public static readonly V128_LOAD8_SPLAT = 355;
+	public static readonly V128_LOAD16_SPLAT = 356;
+	public static readonly V128_LOAD32_SPLAT = 357;
+	public static readonly V128_LOAD64_SPLAT = 358;
+	public static readonly V128_STORE = 359;
+	public static readonly V128_CONST = 360;
+	public static readonly I8X16_SHUFFLE = 361;
+	public static readonly I8X16_SWIZZLE = 362;
+	public static readonly I8X16_SPLAT = 363;
+	public static readonly I16X8_SPLAT = 364;
+	public static readonly I32X4_SPLAT = 365;
+	public static readonly I64X2_SPLAT = 366;
+	public static readonly F32X4_SPLAT = 367;
+	public static readonly F64X2_SPLAT = 368;
+	public static readonly I8X16_EXTRACT_LANE_S = 369;
+	public static readonly I8X16_EXTRACT_LANE_U = 370;
+	public static readonly I8X16_REPLACE_LANE = 371;
+	public static readonly I16X8_EXTRACT_LANE_S = 372;
+	public static readonly I16X8_EXTRACT_LANE_U = 373;
+	public static readonly I16X8_REPLACE_LANE = 374;
+	public static readonly I32X4_EXTRACT_LANE = 375;
+	public static readonly I32X4_REPLACE_LANE = 376;
+	public static readonly I64X2_EXTRACT_LANE = 377;
+	public static readonly I64X2_REPLACE_LANE = 378;
+	public static readonly F32X4_EXTRACT_LANE = 379;
+	public static readonly F32X4_REPLACE_LANE = 380;
+	public static readonly F64X2_EXTRACT_LANE = 381;
+	public static readonly F64X2_REPLACE_LANE = 382;
+	public static readonly I8X16_EQ = 383;
+	public static readonly I8X16_NE = 384;
+	public static readonly I8X16_LT_S = 385;
+	public static readonly I8X16_LT_U = 386;
+	public static readonly I8X16_GT_S = 387;
+	public static readonly I8X16_GT_U = 388;
+	public static readonly I8X16_LE_S = 389;
+	public static readonly I8X16_LE_U = 390;
+	public static readonly I8X16_GE_S = 391;
+	public static readonly I8X16_GE_U = 392;
+	public static readonly I16X8_EQ = 393;
+	public static readonly I16X8_NE = 394;
+	public static readonly I16X8_LT_S = 395;
+	public static readonly I16X8_LT_U = 396;
+	public static readonly I16X8_GT_S = 397;
+	public static readonly I16X8_GT_U = 398;
+	public static readonly I16X8_LE_S = 399;
+	public static readonly I16X8_LE_U = 400;
+	public static readonly I16X8_GE_S = 401;
+	public static readonly I16X8_GE_U = 402;
+	public static readonly I32X4_EQ = 403;
+	public static readonly I32X4_NE = 404;
+	public static readonly I32X4_LT_S = 405;
+	public static readonly I32X4_LT_U = 406;
+	public static readonly I32X4_GT_S = 407;
+	public static readonly I32X4_GT_U = 408;
+	public static readonly I32X4_LE_S = 409;
+	public static readonly I32X4_LE_U = 410;
+	public static readonly I32X4_GE_S = 411;
+	public static readonly I32X4_GE_U = 412;
+	public static readonly F32X4_EQ = 413;
+	public static readonly F32X4_NE = 414;
+	public static readonly F32X4_LT = 415;
+	public static readonly F32X4_GT = 416;
+	public static readonly F32X4_LE = 417;
+	public static readonly F32X4_GE = 418;
+	public static readonly F64X2_EQ = 419;
+	public static readonly F64X2_NE = 420;
+	public static readonly F64X2_LT = 421;
+	public static readonly F64X2_GT = 422;
+	public static readonly F64X2_LE = 423;
+	public static readonly F64X2_GE = 424;
+	public static readonly V128_NOT = 425;
+	public static readonly V128_AND = 426;
+	public static readonly V128_ANDNOT = 427;
+	public static readonly V128_OR = 428;
+	public static readonly V128_XOR = 429;
+	public static readonly V128_BITSELECT = 430;
+	public static readonly V128_ANY_TRUE = 431;
+	public static readonly V128_LOAD8_LANE = 432;
+	public static readonly V128_LOAD16_LANE = 433;
+	public static readonly V128_LOAD32_LANE = 434;
+	public static readonly V128_LOAD64_LANE = 435;
+	public static readonly V128_STORE8_LANE = 436;
+	public static readonly V128_STORE16_LANE = 437;
+	public static readonly V128_STORE32_LANE = 438;
+	public static readonly V128_STORE64_LANE = 439;
+	public static readonly V128_LOAD32_ZERO = 440;
+	public static readonly V128_LOAD64_ZERO = 441;
+	public static readonly F32X4_DEMOTE_F64X2_ZERO = 442;
+	public static readonly F64X2_PROMOTE_LOW_F32X4 = 443;
+	public static readonly I8X16_ABS = 444;
+	public static readonly I8X16_NEG = 445;
+	public static readonly I8X16_POPCNT = 446;
+	public static readonly I8X16_ALL_TRUE = 447;
+	public static readonly I8X16_BITMASK = 448;
+	public static readonly I8X16_NARROW_I16X8_S = 449;
+	public static readonly I8X16_NARROW_I16X8_U = 450;
+	public static readonly F32X4_CEIL = 451;
+	public static readonly F32X4_FLOOR = 452;
+	public static readonly F32X4_TRUNC = 453;
+	public static readonly F32X4_NEAREST = 454;
+	public static readonly I8X16_SHL = 455;
+	public static readonly I8X16_SHR_S = 456;
+	public static readonly I8X16_SHR_U = 457;
+	public static readonly I8X16_ADD = 458;
+	public static readonly I8X16_ADD_SAT_S = 459;
+	public static readonly I8X16_ADD_SAT_U = 460;
+	public static readonly I8X16_SUB = 461;
+	public static readonly I8X16_SUB_SAT_S = 462;
+	public static readonly I8X16_SUB_SAT_U = 463;
+	public static readonly F64X2_CEIL = 464;
+	public static readonly F64X2_FLOOR = 465;
+	public static readonly I8X16_MIN_S = 466;
+	public static readonly I8X16_MIN_U = 467;
+	public static readonly I8X16_MAX_S = 468;
+	public static readonly I8X16_MAX_U = 469;
+	public static readonly F64X2_TRUNC = 470;
+	public static readonly I8X16_AVGR_U = 471;
+	public static readonly I16X8_EXTADD_PAIRWISE_I8X16_S = 472;
+	public static readonly I16X8_EXTADD_PAIRWISE_I8X16_U = 473;
+	public static readonly I32X4_EXTADD_PAIRWISE_I16X8_S = 474;
+	public static readonly I32X4_EXTADD_PAIRWISE_I16X8_U = 475;
+	public static readonly I16X8_ABS = 476;
+	public static readonly I16X8_NEG = 477;
+	public static readonly I16X8_Q15MULR_SAT_S = 478;
+	public static readonly I16X8_ALL_TRUE = 479;
+	public static readonly I16X8_BITMASK = 480;
+	public static readonly I16X8_NARROW_I32X4_S = 481;
+	public static readonly I16X8_NARROW_I32X4_U = 482;
+	public static readonly I16X8_EXTEND_LOW_I8X16_S = 483;
+	public static readonly I16X8_EXTEND_HIGH_I8X16_S = 484;
+	public static readonly I16X8_EXTEND_LOW_I8X16_U = 485;
+	public static readonly I16X8_EXTEND_HIGH_I8X16_U = 486;
+	public static readonly I16X8_SHL = 487;
+	public static readonly I16X8_SHR_S = 488;
+	public static readonly I16X8_SHR_U = 489;
+	public static readonly I16X8_ADD = 490;
+	public static readonly I16X8_ADD_SAT_S = 491;
+	public static readonly I16X8_ADD_SAT_U = 492;
+	public static readonly I16X8_SUB = 493;
+	public static readonly I16X8_SUB_SAT_S = 494;
+	public static readonly I16X8_SUB_SAT_U = 495;
+	public static readonly F64X2_NEAREST = 496;
+	public static readonly I16X8_MUL = 497;
+	public static readonly I16X8_MIN_S = 498;
+	public static readonly I16X8_MIN_U = 499;
+	public static readonly I16X8_MAX_S = 500;
+	public static readonly I16X8_MAX_U = 501;
+	public static readonly I16X8_AVGR_U = 502;
+	public static readonly I16X8_EXTMUL_LOW_I8X16_S = 503;
+	public static readonly I16X8_EXTMUL_HIGH_I8X16_S = 504;
+	public static readonly I16X8_EXTMUL_LOW_I8X16_U = 505;
+	public static readonly I16X8_EXTMUL_HIGH_I8X16_U = 506;
+	public static readonly I32X4_ABS = 507;
+	public static readonly I32X4_NEG = 508;
+	public static readonly I32X4_ALL_TRUE = 509;
+	public static readonly I32X4_BITMASK = 510;
+	public static readonly I32X4_EXTEND_LOW_I16X8_S = 511;
+	public static readonly I32X4_EXTEND_HIGH_I16X8_S = 512;
+	public static readonly I32X4_EXTEND_LOW_I16X8_U = 513;
+	public static readonly I32X4_EXTEND_HIGH_I16X8_U = 514;
+	public static readonly I32X4_SHL = 515;
+	public static readonly I32X4_SHR_S = 516;
+	public static readonly I32X4_SHR_U = 517;
+	public static readonly I32X4_ADD = 518;
+	public static readonly I32X4_SUB = 519;
+	public static readonly I32X4_MUL = 520;
+	public static readonly I32X4_MIN_S = 521;
+	public static readonly I32X4_MIN_U = 522;
+	public static readonly I32X4_MAX_S = 523;
+	public static readonly I32X4_MAX_U = 524;
+	public static readonly I32X4_DOT_I16X8_S = 525;
+	public static readonly I32X4_EXTMUL_LOW_I16X8_S = 526;
+	public static readonly I32X4_EXTMUL_HIGH_I16X8_S = 527;
+	public static readonly I32X4_EXTMUL_LOW_I16X8_U = 528;
+	public static readonly I32X4_EXTMUL_HIGH_I16X8_U = 529;
+	public static readonly I64X2_ABS = 530;
+	public static readonly I64X2_NEG = 531;
+	public static readonly I64X2_ALL_TRUE = 532;
+	public static readonly I64X2_BITMASK = 533;
+	public static readonly I64X2_EXTEND_LOW_I32X4_S = 534;
+	public static readonly I64X2_EXTEND_HIGH_I32X4_S = 535;
+	public static readonly I64X2_EXTEND_LOW_I32X4_U = 536;
+	public static readonly I64X2_EXTEND_HIGH_I32X4_U = 537;
+	public static readonly I64X2_SHL = 538;
+	public static readonly I64X2_SHR_S = 539;
+	public static readonly I64X2_SHR_U = 540;
+	public static readonly I64X2_ADD = 541;
+	public static readonly I64X2_SUB = 542;
+	public static readonly I64X2_MUL = 543;
+	public static readonly I64X2_EQ = 544;
+	public static readonly I64X2_NE = 545;
+	public static readonly I64X2_LT_S = 546;
+	public static readonly I64X2_GT_S = 547;
+	public static readonly I64X2_LE_S = 548;
+	public static readonly I64X2_GE_S = 549;
+	public static readonly I64X2_EXTMUL_LOW_I32X4_S = 550;
+	public static readonly I64X2_EXTMUL_HIGH_I32X4_S = 551;
+	public static readonly I64X2_EXTMUL_LOW_I32X4_U = 552;
+	public static readonly I64X2_EXTMUL_HIGH_I32X4_U = 553;
+	public static readonly F32X4_ABS = 554;
+	public static readonly F32X4_NEG = 555;
+	public static readonly F32X4_SQRT = 556;
+	public static readonly F32X4_ADD = 557;
+	public static readonly F32X4_SUB = 558;
+	public static readonly F32X4_MUL = 559;
+	public static readonly F32X4_DIV = 560;
+	public static readonly F32X4_MIN = 561;
+	public static readonly F32X4_MAX = 562;
+	public static readonly F32X4_PMIN = 563;
+	public static readonly F32X4_PMAX = 564;
+	public static readonly F64X2_ABS = 565;
+	public static readonly F64X2_NEG = 566;
+	public static readonly F64X2_SQRT = 567;
+	public static readonly F64X2_ADD = 568;
+	public static readonly F64X2_SUB = 569;
+	public static readonly F64X2_MUL = 570;
+	public static readonly F64X2_DIV = 571;
+	public static readonly F64X2_MIN = 572;
+	public static readonly F64X2_MAX = 573;
+	public static readonly F64X2_PMIN = 574;
+	public static readonly F64X2_PMAX = 575;
+	public static readonly I32X4_TRUNC_SAT_F32X4_S = 576;
+	public static readonly I32X4_TRUNC_SAT_F32X4_U = 577;
+	public static readonly F32X4_CONVERT_I32X4_S = 578;
+	public static readonly F32X4_CONVERT_I32X4_U = 579;
+	public static readonly I32X4_TRUNC_SAT_F64X2_S_ZERO = 580;
+	public static readonly I32X4_TRUNC_SAT_F64X2_U_ZERO = 581;
+	public static readonly F64X2_CONVERT_LOW_I32X4_S = 582;
+	public static readonly F64X2_CONVERT_LOW_I32X4_U = 583;
+	public static readonly TRY = 584;
+	public static readonly CATCH = 585;
+	public static readonly THROW = 586;
+	public static readonly IDENTIFIER = 587;
 	public static readonly EOF = Token.EOF;
 	public static readonly RULE_compilation_unit = 0;
 	public static readonly RULE_preamble = 1;
@@ -652,627 +688,1070 @@ export default class ComposeParser extends BaseParser {
 	public static readonly RULE_plain_opcode = 78;
 	public static readonly RULE_keyword_opcode = 79;
 	public static readonly RULE_composite_opcode = 80;
-	public static readonly literalNames: string[] = [ null, "'i32'", "'i64'", 
-                                                   "'isize'", "'u32'", "'u64'", 
-                                                   "'usize'", "'f32'", "'f64'", 
-                                                   "'v128'", "'string'", 
-                                                   "'boolean'", "'any'", 
-                                                   "'void'", "'attribute'", 
-                                                   "'class'", "'enum'", 
-                                                   "'extends'", "'function'", 
-                                                   "'static'", "'abstract'", 
-                                                   "'native'", "'public'", 
-                                                   "'protected'", "'private'", 
-                                                   "'const'", "'let'", "'new'", 
-                                                   "'get'", "'set'", "'from'", 
-                                                   "'switch'", "'case'", 
-                                                   "'for'", "'do'", "'while'", 
-                                                   "'break'", "'finally'", 
-                                                   "'this'", "'super'", 
-                                                   "'typeof'", "'instanceof'", 
-                                                   "'sizeof'", "'alignof'", 
-                                                   "'offsetof'", "'export'", 
-                                                   "'import'", "'default'", 
-                                                   "'in'", "'as'", "'('", 
-                                                   "')'", "'['", "']'", 
-                                                   "'{'", "'}'", "'=>'", 
-                                                   "'>'", "'<'", "'<='", 
-                                                   "'>='", "'=='", "'!='", 
-                                                   "'!'", "'&&'", "'||'", 
-                                                   "'?'", "';'", "':'", 
-                                                   "','", "'...'", "'.'", 
-                                                   "'@'", "'++'", "'--'", 
-                                                   "'+'", "'-'", "'*'", 
-                                                   "'/'", "'\\'", "'%'", 
-                                                   "'^'", "'~'", "'&'", 
-                                                   "'|'", "'<<'", "'>>'", 
-                                                   "'>>>'", "'='", "'+='", 
-                                                   "'-='", "'*='", "'/='", 
-                                                   "'&='", "'|='", "'^='", 
-                                                   "'%='", "'<<='", "'>>='", 
-                                                   "'>>>='", null, null, 
-                                                   null, null, null, "'null'", 
-                                                   null, null, null, null, 
-                                                   "'unreachable'", "'nop'", 
-                                                   "'block'", "'loop'", 
-                                                   "'if'", "'else'", "'try'", 
-                                                   "'catch'", "'throw'", 
-                                                   "'rethrow'", "'end'", 
-                                                   "'br'", "'br_if'", "'br_table'", 
-                                                   "'return'", "'call'", 
-                                                   "'call_indirect'", "'drop'", 
-                                                   "'select_type'", "'select'", 
-                                                   "'local.get'", "'local.set'", 
-                                                   "'local.tee'", "'global.get'", 
-                                                   "'global.set'", "'i32.load'", 
-                                                   "'i64.load'", "'f32.load'", 
-                                                   "'f64.load'", "'i32.load8_s'", 
-                                                   "'i32.load8_u'", "'i32.load16_s'", 
-                                                   "'i32.load16_u'", "'i64.load8_s'", 
-                                                   "'i64.load8_u'", "'i64.load16_s'", 
-                                                   "'i64.load16_u'", "'i64.load32_s'", 
-                                                   "'i64.load32_u'", "'i32.store'", 
-                                                   "'i64.store'", "'f32.store'", 
-                                                   "'f64.store'", "'i32.store8'", 
-                                                   "'i32.store16'", "'i64.store8'", 
-                                                   "'i64.store16'", "'i64.store32'", 
-                                                   "'memory.size'", "'memory.grow'", 
-                                                   "'i32.const'", "'i64.const'", 
-                                                   "'f32.const'", "'f64.const'", 
-                                                   "'i32.eqz'", "'i32.eq'", 
-                                                   "'i32.ne'", "'i32.lt_s'", 
-                                                   "'i32.lt_u'", "'i32.gt_s'", 
-                                                   "'i32.gt_u'", "'i32.le_s'", 
-                                                   "'i32.le_u'", "'i32.ge_s'", 
-                                                   "'i32.ge_u'", "'i64.eqz'", 
-                                                   "'i64.eq'", "'i64.ne'", 
-                                                   "'i64.lt_s'", "'i64.lt_u'", 
-                                                   "'i64.gt_s'", "'i64.gt_u'", 
-                                                   "'i64.le_s'", "'i64.le_u'", 
-                                                   "'i64.ge_s'", "'i64.ge_u'", 
-                                                   "'f32.eq'", "'f32.ne'", 
-                                                   "'f32.lt'", "'f32.gt'", 
-                                                   "'f32.le'", "'f32.ge'", 
-                                                   "'f64.eq'", "'f64.ne'", 
-                                                   "'f64.lt'", "'f64.gt'", 
-                                                   "'f64.le'", "'f64.ge'", 
-                                                   "'i32.clz'", "'i32.ctz'", 
-                                                   "'i32.popcnt'", "'i32.add'", 
-                                                   "'i32.sub'", "'i32.mul'", 
-                                                   "'i32.div_s'", "'i32.div_u'", 
-                                                   "'i32.rem_s'", "'i32.rem_u'", 
-                                                   "'i32.and'", "'i32.or'", 
-                                                   "'i32.xor'", "'i32.shl'", 
-                                                   "'i32.shr_s'", "'i32.shr_u'", 
-                                                   "'i32.rotl'", "'i32.rotr'", 
-                                                   "'i64.clz'", "'i64.ctz'", 
-                                                   "'i64.popcnt'", "'i64.add'", 
-                                                   "'i64.sub'", "'i64.mul'", 
-                                                   "'i64.div_s'", "'i64.div_u'", 
-                                                   "'i64.rem_s'", "'i64.rem_u'", 
-                                                   "'i64.and'", "'i64.or'", 
-                                                   "'i64.xor'", "'i64.shl'", 
-                                                   "'i64.shr_s'", "'i64.shr_u'", 
-                                                   "'i64.rotl'", "'i64.rotr'", 
-                                                   "'f32.abs'", "'f32.neg'", 
-                                                   "'f32.ceil'", "'f32.floor'", 
-                                                   "'f32.trunc'", "'f32.nearest'", 
-                                                   "'f32.sqrt'", "'f32.add'", 
-                                                   "'f32.sub'", "'f32.mul'", 
-                                                   "'f32.div'", "'f32.min'", 
-                                                   "'f32.max'", "'f32.copysign'", 
-                                                   "'f64.abs'", "'f64.neg'", 
-                                                   "'f64.ceil'", "'f64.floor'", 
-                                                   "'f64.trunc'", "'f64.nearest'", 
-                                                   "'f64.sqrt'", "'f64.add'", 
-                                                   "'f64.sub'", "'f64.mul'", 
-                                                   "'f64.div'", "'f64.min'", 
-                                                   "'f64.max'", "'f64.copysign'", 
-                                                   "'i32.wrap_i64'", "'i32.trunc_f32_s'", 
-                                                   "'i32.trunc_f32_u'", 
-                                                   "'i32.trunc_f64_s'", 
-                                                   "'i32.trunc_f64_u'", 
-                                                   "'i64.extend_i32_s'", 
-                                                   "'i64.extend_i32_u'", 
-                                                   "'i64.trunc_f32_s'", 
-                                                   "'i64.trunc_f32_u'", 
-                                                   "'i64.trunc_f64_s'", 
-                                                   "'i64.trunc_f64_u'", 
-                                                   "'f32.convert_i32_s'", 
-                                                   "'f32.convert_i32_u'", 
-                                                   "'f32.convert_i64_s'", 
-                                                   "'f32.convert_i64_u'", 
-                                                   "'f32.demote_f64'", "'f64.convert_i32_s'", 
-                                                   "'f64.convert_i32_u'", 
-                                                   "'f64.convert_i64_s'", 
-                                                   "'f64.convert_i64_u'", 
-                                                   "'f64.promote_f32'", 
-                                                   "'i32.reinterpret_f32'", 
-                                                   "'i64.reinterpret_f64'", 
-                                                   "'f32.reinterpret_i32'", 
-                                                   "'f64.reinterpret_i64'", 
-                                                   "'i32.extend8_s'", "'i32.extend16_s'", 
-                                                   "'i64.extend8_s'", "'i64.extend16_s'", 
-                                                   "'i64.extend32_s'", "'i32.trunc_sat_f32_s'", 
-                                                   "'i32.trunc_sat_f32_u'", 
-                                                   "'i32.trunc_sat_f64_s'", 
-                                                   "'i32.trunc_sat_f64_u'", 
-                                                   "'i64.trunc_sat_f32_s'", 
-                                                   "'i64.trunc_sat_f32_u'", 
-                                                   "'i64.trunc_sat_f64_s'", 
-                                                   "'i64.trunc_sat_f64_u'", 
-                                                   "'memory.init'", "'data.drop'", 
-                                                   "'memory.copy'", "'memory.fill'", 
-                                                   "'table.init'", "'elem.drop'", 
-                                                   "'table.copy'", "'table.get'", 
-                                                   "'table.set'", "'table.grow'", 
-                                                   "'table.size'", "'table.fill'", 
-                                                   "'ref.null'", "'ref.is_null'", 
-                                                   "'ref.func'", "'v128.load'", 
-                                                   "'v128.load8x8_s'", "'v128.load8x8_u'", 
-                                                   "'v128.load16x4_s'", 
-                                                   "'v128.load16x4_u'", 
-                                                   "'v128.load32x2_s'", 
-                                                   "'v128.load32x2_u'", 
-                                                   "'v128.load8_splat'", 
-                                                   "'v128.load16_splat'", 
-                                                   "'v128.load32_splat'", 
-                                                   "'v128.load64_splat'", 
-                                                   "'v128.store'", "'v128.const'", 
-                                                   "'i8x16.shuffle'", "'i8x16.swizzle'", 
-                                                   "'i8x16.splat'", "'i16x8.splat'", 
-                                                   "'i32x4.splat'", "'i64x2.splat'", 
-                                                   "'f32x4.splat'", "'f64x2.splat'", 
-                                                   "'i8x16.extract_lane_s'", 
-                                                   "'i8x16.extract_lane_u'", 
-                                                   "'i8x16.replace_lane'", 
-                                                   "'i16x8.extract_lane_s'", 
-                                                   "'i16x8.extract_lane_u'", 
-                                                   "'i16x8.replace_lane'", 
-                                                   "'i32x4.extract_lane'", 
-                                                   "'i32x4.replace_lane'", 
-                                                   "'i64x2.extract_lane'", 
-                                                   "'i64x2.replace_lane'", 
-                                                   "'f32x4.extract_lane'", 
-                                                   "'f32x4.replace_lane'", 
-                                                   "'f64x2.extract_lane'", 
-                                                   "'f64x2.replace_lane'", 
-                                                   "'i8x16.eq'", "'i8x16.ne'", 
-                                                   "'i8x16.lt_s'", "'i8x16.lt_u'", 
-                                                   "'i8x16.gt_s'", "'i8x16.gt_u'", 
-                                                   "'i8x16.le_s'", "'i8x16.le_u'", 
-                                                   "'i8x16.ge_s'", "'i8x16.ge_u'", 
-                                                   "'i16x8.eq'", "'i16x8.ne'", 
-                                                   "'i16x8.lt_s'", "'i16x8.lt_u'", 
-                                                   "'i16x8.gt_s'", "'i16x8.gt_u'", 
-                                                   "'i16x8.le_s'", "'i16x8.le_u'", 
-                                                   "'i16x8.ge_s'", "'i16x8.ge_u'", 
-                                                   "'i32x4.eq'", "'i32x4.ne'", 
-                                                   "'i32x4.lt_s'", "'i32x4.lt_u'", 
-                                                   "'i32x4.gt_s'", "'i32x4.gt_u'", 
-                                                   "'i32x4.le_s'", "'i32x4.le_u'", 
-                                                   "'i32x4.ge_s'", "'i32x4.ge_u'", 
-                                                   "'f32x4.eq'", "'f32x4.ne'", 
-                                                   "'f32x4.lt'", "'f32x4.gt'", 
-                                                   "'f32x4.le'", "'f32x4.ge'", 
-                                                   "'f64x2.eq'", "'f64x2.ne'", 
-                                                   "'f64x2.lt'", "'f64x2.gt'", 
-                                                   "'f64x2.le'", "'f64x2.ge'", 
-                                                   "'v128.not'", "'v128.and'", 
-                                                   "'v128.andnot'", "'v128.or'", 
-                                                   "'v128.xor'", "'v128.bitselect'", 
-                                                   "'v128.any_true'", "'v128.load8_lane'", 
-                                                   "'v128.load16_lane'", 
-                                                   "'v128.load32_lane'", 
-                                                   "'v128.load64_lane'", 
-                                                   "'v128.store8_lane'", 
-                                                   "'v128.store16_lane'", 
-                                                   "'v128.store32_lane'", 
-                                                   "'v128.store64_lane'", 
-                                                   "'v128.load32_zero'", 
-                                                   "'v128.load64_zero'", 
-                                                   "'f32x4.demote_f64x2_zero'", 
-                                                   "'f64x2.promote_low_f32x4'", 
-                                                   "'i8x16.abs'", "'i8x16.neg'", 
-                                                   "'i8x16.popcnt'", "'i8x16.all_true'", 
-                                                   "'i8x16.bitmask'", "'i8x16.narrow_i16x8_s'", 
-                                                   "'i8x16.narrow_i16x8_u'", 
-                                                   "'i8x16.shl'", "'i8x16.shr_s'", 
-                                                   "'i8x16.shr_u'", "'i8x16.add'", 
-                                                   "'i8x16.add_sat_s'", 
-                                                   "'i8x16.add_sat_u'", 
-                                                   "'i8x16.sub'", "'i8x16.sub_sat_s'", 
-                                                   "'i8x16.sub_sat_u'", 
-                                                   "'i8x16.min_s'", "'i8x16.min_u'", 
-                                                   "'i8x16.max_s'", "'i8x16.max_u'", 
-                                                   "'i8x16.avgr_u'", "'i16x8.extadd_pairwise_i8x16_s'", 
-                                                   "'i16x8.extadd_pairwise_i8x16_u'", 
-                                                   "'i32x4.extadd_pairwise_i16x8_s'", 
-                                                   "'i32x4.extadd_pairwise_i16x8_u'", 
-                                                   "'i16x8.abs'", "'i16x8.neg'", 
-                                                   "'i16x8.q15mulr_sat_s'", 
-                                                   "'i16x8.all_true'", "'i16x8.bitmask'", 
-                                                   "'i16x8.narrow_i32x4_s'", 
-                                                   "'i16x8.narrow_i32x4_u'", 
-                                                   "'i16x8.extend_low_i8x16_s'", 
-                                                   "'i16x8.extend_high_i8x16_s'", 
-                                                   "'i16x8.extend_low_i8x16_u'", 
-                                                   "'i16x8.extend_high_i8x16_u'", 
-                                                   "'i16x8.shl'", "'i16x8.shr_s'", 
-                                                   "'i16x8.shr_u'", "'i16x8.add'", 
-                                                   "'i16x8.add_sat_s'", 
-                                                   "'i16x8.add_sat_u'", 
-                                                   "'i16x8.sub'", "'i16x8.sub_sat_s'", 
-                                                   "'i16x8.sub_sat_u'", 
-                                                   "'i16x8.mul'", "'i16x8.min_s'", 
-                                                   "'i16x8.min_u'", "'i16x8.max_s'", 
-                                                   "'i16x8.max_u'", "'i16x8.avgr_u'", 
-                                                   "'i16x8.extmul_low_i8x16_s'", 
-                                                   "'i16x8.extmul_high_i8x16_s'", 
-                                                   "'i16x8.extmul_low_i8x16_u'", 
-                                                   "'i16x8.extmul_high_i8x16_u'", 
-                                                   "'i32x4.abs'", "'i32x4.neg'", 
-                                                   "'i32x4.all_true'", "'i32x4.bitmask'", 
-                                                   "'i32x4.extend_low_i16x8_s'", 
-                                                   "'i32x4.extend_high_i16x8_s'", 
-                                                   "'i32x4.extend_low_i16x8_u'", 
-                                                   "'i32x4.extend_high_i16x8_u'", 
-                                                   "'i32x4.shl'", "'i32x4.shr_s'", 
-                                                   "'i32x4.shr_u'", "'i32x4.add'", 
-                                                   "'i32x4.sub'", "'i32x4.mul'", 
-                                                   "'i32x4.min_s'", "'i32x4.min_u'", 
-                                                   "'i32x4.max_s'", "'i32x4.max_u'", 
-                                                   "'i32x4.dot_i16x8_s'", 
-                                                   "'i32x4.extmul_low_i16x8_s'", 
-                                                   "'i32x4.extmul_high_i16x8_s'", 
-                                                   "'i32x4.extmul_low_i16x8_u'", 
-                                                   "'i32x4.extmul_high_i16x8_u'", 
-                                                   "'i64x2.abs'", "'i64x2.neg'", 
-                                                   "'i64x2.all_true'", "'i64x2.bitmask'", 
-                                                   "'i64x2.extend_low_i32x4_s'", 
-                                                   "'i64x2.extend_high_i32x4_s'", 
-                                                   "'i64x2.extend_low_i32x4_u'", 
-                                                   "'i64x2.extend_high_i32x4_u'", 
-                                                   "'i64x2.shl'", "'i64x2.shr_s'", 
-                                                   "'i64x2.shr_u'", "'i64x2.add'", 
-                                                   "'i64x2.sub'", "'i64x2.mul'", 
-                                                   "'i64x2.eq'", "'i64x2.ne'", 
-                                                   "'i64x2.lt_s'", "'i64x2.gt_s'", 
-                                                   "'i64x2.le_s'", "'i64x2.ge_s'", 
-                                                   "'i64x2.extmul_low_i32x4_s'", 
-                                                   "'i64x2.extmul_high_i32x4_s'", 
-                                                   "'i64x2.extmul_low_i32x4_u'", 
-                                                   "'i64x2.extmul_high_i32x4_u'", 
-                                                   "'f32x4.ceil'", "'f32x4.floor'", 
-                                                   "'f32x4.trunc'", "'f32x4.nearest'", 
-                                                   "'f64x2.ceil'", "'f64x2.floor'", 
-                                                   "'f64x2.trunc'", "'f64x2.nearest'", 
-                                                   "'f32x4.abs'", "'f32x4.neg'", 
-                                                   "'f32x4.sqrt'", "'f32x4.add'", 
-                                                   "'f32x4.sub'", "'f32x4.mul'", 
-                                                   "'f32x4.div'", "'f32x4.min'", 
-                                                   "'f32x4.max'", "'f32x4.pmin'", 
-                                                   "'f32x4.pmax'", "'f64x2.abs'", 
-                                                   "'f64x2.neg'", "'f64x2.sqrt'", 
-                                                   "'f64x2.add'", "'f64x2.sub'", 
-                                                   "'f64x2.mul'", "'f64x2.div'", 
-                                                   "'f64x2.min'", "'f64x2.max'", 
-                                                   "'f64x2.pmin'", "'f64x2.pmax'", 
-                                                   "'i32x4.trunc_sat_f32x4_s'", 
-                                                   "'i32x4.trunc_sat_f32x4_u'", 
-                                                   "'f32x4.convert_i32x4_s'", 
-                                                   "'f32x4.convert_i32x4_u'", 
-                                                   "'i32x4.trunc_sat_f64x2_s_zero'", 
-                                                   "'i32x4.trunc_sat_f64x2_u_zero'", 
-                                                   "'f64x2.convert_low_i32x4_s'", 
-                                                   "'f64x2.convert_low_i32x4_u'" ];
-	public static readonly symbolicNames: string[] = [ null, "I32", "I64", 
-                                                    "ISIZE", "U32", "U64", 
-                                                    "USIZE", "F32", "F64", 
-                                                    "V128", "STRING", "BOOLEAN", 
-                                                    "ANY", "VOID", "ATTRIBUTE", 
-                                                    "CLASS", "ENUM", "EXTENDS", 
-                                                    "FUNCTION", "STATIC", 
-                                                    "ABSTRACT", "NATIVE", 
-                                                    "PUBLIC", "PROTECTED", 
-                                                    "PRIVATE", "CONST", 
-                                                    "LET", "NEW", "GET", 
-                                                    "SET", "FROM", "SWITCH", 
-                                                    "CASE", "FOR", "DO", 
-                                                    "WHILE", "BREAK", "FINALLY", 
-                                                    "THIS", "SUPER", "TYPE_OF", 
-                                                    "INSTANCE_OF", "SIZE_OF", 
-                                                    "ALIGN_OF", "OFFSET_OF", 
-                                                    "EXPORT", "IMPORT", 
-                                                    "DEFAULT", "IN", "AS", 
-                                                    "LPAR", "RPAR", "LBRAK", 
-                                                    "RBRAK", "LCURL", "RCURL", 
-                                                    "ARROW", "GT", "LT", 
-                                                    "LTE", "GTE", "EQUALS", 
-                                                    "NOT_EQUALS", "NOT", 
-                                                    "AND", "OR", "QUESTION", 
-                                                    "SEMI", "COLON", "COMMA", 
-                                                    "ETC", "DOT", "AT", 
-                                                    "INC", "DEC", "PLUS", 
-                                                    "MINUS", "STAR", "SLASH", 
-                                                    "BSLASH", "PERCENT", 
-                                                    "CARET", "TILDE", "AMP", 
-                                                    "PIPE", "LSHIFT", "RSHIFT", 
-                                                    "URSHIFT", "ASSIGN", 
-                                                    "ADD_ASSIGN", "SUB_ASSIGN", 
-                                                    "MUL_ASSIGN", "DIV_ASSIGN", 
-                                                    "AND_ASSIGN", "OR_ASSIGN", 
-                                                    "XOR_ASSIGN", "MOD_ASSIGN", 
-                                                    "LSHIFT_ASSIGN", "RSHIFT_ASSIGN", 
-                                                    "URSHIFT_ASSIGN", "INTEGER_LITERAL", 
-                                                    "DECIMAL_LITERAL", "BOOLEAN_LITERAL", 
-                                                    "CHAR_LITERAL", "STRING_LITERAL", 
-                                                    "NULL_LITERAL", "ANNOTATION", 
-                                                    "WS", "COMMENT", "LINE_COMMENT", 
-                                                    "UNREACHABLE", "NOP", 
-                                                    "BLOCK", "LOOP", "IF", 
-                                                    "ELSE", "TRY", "CATCH", 
-                                                    "THROW", "RETHROW", 
-                                                    "END", "BR", "BR_IF", 
-                                                    "BR_TABLE", "RETURN", 
-                                                    "CALL", "CALL_INDIRECT", 
-                                                    "DROP", "SELECT_TYPE", 
-                                                    "SELECT", "LOCAL_GET", 
-                                                    "LOCAL_SET", "LOCAL_TEE", 
-                                                    "GLOBAL_GET", "GLOBAL_SET", 
-                                                    "I32_LOAD", "I64_LOAD", 
-                                                    "F32_LOAD", "F64_LOAD", 
-                                                    "I32_LOAD8_S", "I32_LOAD8_U", 
-                                                    "I32_LOAD16_S", "I32_LOAD16_U", 
-                                                    "I64_LOAD8_S", "I64_LOAD8_U", 
-                                                    "I64_LOAD16_S", "I64_LOAD16_U", 
-                                                    "I64_LOAD32_S", "I64_LOAD32_U", 
-                                                    "I32_STORE", "I64_STORE", 
-                                                    "F32_STORE", "F64_STORE", 
-                                                    "I32_STORE8", "I32_STORE16", 
-                                                    "I64_STORE8", "I64_STORE16", 
-                                                    "I64_STORE32", "MEMORY_SIZE", 
-                                                    "MEMORY_GROW", "I32_CONST", 
-                                                    "I64_CONST", "F32_CONST", 
-                                                    "F64_CONST", "I32_EQZ", 
-                                                    "I32_EQ", "I32_NE", 
-                                                    "I32_LT_S", "I32_LT_U", 
-                                                    "I32_GT_S", "I32_GT_U", 
-                                                    "I32_LE_S", "I32_LE_U", 
-                                                    "I32_GE_S", "I32_GE_U", 
-                                                    "I64_EQZ", "I64_EQ", 
-                                                    "I64_NE", "I64_LT_S", 
-                                                    "I64_LT_U", "I64_GT_S", 
-                                                    "I64_GT_U", "I64_LE_S", 
-                                                    "I64_LE_U", "I64_GE_S", 
-                                                    "I64_GE_U", "F32_EQ", 
-                                                    "F32_NE", "F32_LT", 
-                                                    "F32_GT", "F32_LE", 
-                                                    "F32_GE", "F64_EQ", 
-                                                    "F64_NE", "F64_LT", 
-                                                    "F64_GT", "F64_LE", 
-                                                    "F64_GE", "I32_CLZ", 
-                                                    "I32_CTZ", "I32_POPCNT", 
-                                                    "I32_ADD", "I32_SUB", 
-                                                    "I32_MUL", "I32_DIV_S", 
-                                                    "I32_DIV_U", "I32_REM_S", 
-                                                    "I32_REM_U", "I32_AND", 
-                                                    "I32_OR", "I32_XOR", 
-                                                    "I32_SHL", "I32_SHR_S", 
-                                                    "I32_SHR_U", "I32_ROTL", 
-                                                    "I32_ROTR", "I64_CLZ", 
-                                                    "I64_CTZ", "I64_POPCNT", 
-                                                    "I64_ADD", "I64_SUB", 
-                                                    "I64_MUL", "I64_DIV_S", 
-                                                    "I64_DIV_U", "I64_REM_S", 
-                                                    "I64_REM_U", "I64_AND", 
-                                                    "I64_OR", "I64_XOR", 
-                                                    "I64_SHL", "I64_SHR_S", 
-                                                    "I64_SHR_U", "I64_ROTL", 
-                                                    "I64_ROTR", "F32_ABS", 
-                                                    "F32_NEG", "F32_CEIL", 
-                                                    "F32_FLOOR", "F32_TRUNC", 
-                                                    "F32_NEAREST", "F32_SQRT", 
-                                                    "F32_ADD", "F32_SUB", 
-                                                    "F32_MUL", "F32_DIV", 
-                                                    "F32_MIN", "F32_MAX", 
-                                                    "F32_COPYSIGN", "F64_ABS", 
-                                                    "F64_NEG", "F64_CEIL", 
-                                                    "F64_FLOOR", "F64_TRUNC", 
-                                                    "F64_NEAREST", "F64_SQRT", 
-                                                    "F64_ADD", "F64_SUB", 
-                                                    "F64_MUL", "F64_DIV", 
-                                                    "F64_MIN", "F64_MAX", 
-                                                    "F64_COPYSIGN", "I32_WRAP_I64", 
-                                                    "I32_TRUNC_F32_S", "I32_TRUNC_F32_U", 
-                                                    "I32_TRUNC_F64_S", "I32_TRUNC_F64_U", 
-                                                    "I64_EXTEND_I32_S", 
-                                                    "I64_EXTEND_I32_U", 
-                                                    "I64_TRUNC_F32_S", "I64_TRUNC_F32_U", 
-                                                    "I64_TRUNC_F64_S", "I64_TRUNC_F64_U", 
-                                                    "F32_CONVERT_I32_S", 
-                                                    "F32_CONVERT_I32_U", 
-                                                    "F32_CONVERT_I64_S", 
-                                                    "F32_CONVERT_I64_U", 
-                                                    "F32_DEMOTE_F64", "F64_CONVERT_I32_S", 
-                                                    "F64_CONVERT_I32_U", 
-                                                    "F64_CONVERT_I64_S", 
-                                                    "F64_CONVERT_I64_U", 
-                                                    "F64_PROMOTE_F32", "I32_REINTERPRET_F32", 
-                                                    "I64_REINTERPRET_F64", 
-                                                    "F32_REINTERPRET_I32", 
-                                                    "F64_REINTERPRET_I64", 
-                                                    "I32_EXTEND8_S", "I32_EXTEND16_S", 
-                                                    "I64_EXTEND8_S", "I64_EXTEND16_S", 
-                                                    "I64_EXTEND32_S", "I32_TRUNC_SAT_F32_S", 
-                                                    "I32_TRUNC_SAT_F32_U", 
-                                                    "I32_TRUNC_SAT_F64_S", 
-                                                    "I32_TRUNC_SAT_F64_U", 
-                                                    "I64_TRUNC_SAT_F32_S", 
-                                                    "I64_TRUNC_SAT_F32_U", 
-                                                    "I64_TRUNC_SAT_F64_S", 
-                                                    "I64_TRUNC_SAT_F64_U", 
-                                                    "MEMORY_INIT", "DATA_DROP", 
-                                                    "MEMORY_COPY", "MEMORY_FILL", 
-                                                    "TABLE_INIT", "ELEM_DROP", 
-                                                    "TABLE_COPY", "TABLE_GET", 
-                                                    "TABLE_SET", "TABLE_GROW", 
-                                                    "TABLE_SIZE", "TABLE_FILL", 
-                                                    "REF_NULL", "REF_IS_NULL", 
-                                                    "REF_FUNC", "V128_LOAD", 
-                                                    "V128_LOAD8X8_S", "V128_LOAD8X8_U", 
-                                                    "V128_LOAD16X4_S", "V128_LOAD16X4_U", 
-                                                    "V128_LOAD32X2_S", "V128_LOAD32X2_U", 
-                                                    "V128_LOAD8_SPLAT", 
-                                                    "V128_LOAD16_SPLAT", 
-                                                    "V128_LOAD32_SPLAT", 
-                                                    "V128_LOAD64_SPLAT", 
-                                                    "V128_STORE", "V128_CONST", 
-                                                    "I8X16_SHUFFLE", "I8X16_SWIZZLE", 
-                                                    "I8X16_SPLAT", "I16X8_SPLAT", 
-                                                    "I32X4_SPLAT", "I64X2_SPLAT", 
-                                                    "F32X4_SPLAT", "F64X2_SPLAT", 
-                                                    "I8X16_EXTRACT_LANE_S", 
-                                                    "I8X16_EXTRACT_LANE_U", 
-                                                    "I8X16_REPLACE_LANE", 
-                                                    "I16X8_EXTRACT_LANE_S", 
-                                                    "I16X8_EXTRACT_LANE_U", 
-                                                    "I16X8_REPLACE_LANE", 
-                                                    "I32X4_EXTRACT_LANE", 
-                                                    "I32X4_REPLACE_LANE", 
-                                                    "I64X2_EXTRACT_LANE", 
-                                                    "I64X2_REPLACE_LANE", 
-                                                    "F32X4_EXTRACT_LANE", 
-                                                    "F32X4_REPLACE_LANE", 
-                                                    "F64X2_EXTRACT_LANE", 
-                                                    "F64X2_REPLACE_LANE", 
-                                                    "I8X16_EQ", "I8X16_NE", 
-                                                    "I8X16_LT_S", "I8X16_LT_U", 
-                                                    "I8X16_GT_S", "I8X16_GT_U", 
-                                                    "I8X16_LE_S", "I8X16_LE_U", 
-                                                    "I8X16_GE_S", "I8X16_GE_U", 
-                                                    "I16X8_EQ", "I16X8_NE", 
-                                                    "I16X8_LT_S", "I16X8_LT_U", 
-                                                    "I16X8_GT_S", "I16X8_GT_U", 
-                                                    "I16X8_LE_S", "I16X8_LE_U", 
-                                                    "I16X8_GE_S", "I16X8_GE_U", 
-                                                    "I32X4_EQ", "I32X4_NE", 
-                                                    "I32X4_LT_S", "I32X4_LT_U", 
-                                                    "I32X4_GT_S", "I32X4_GT_U", 
-                                                    "I32X4_LE_S", "I32X4_LE_U", 
-                                                    "I32X4_GE_S", "I32X4_GE_U", 
-                                                    "F32X4_EQ", "F32X4_NE", 
-                                                    "F32X4_LT", "F32X4_GT", 
-                                                    "F32X4_LE", "F32X4_GE", 
-                                                    "F64X2_EQ", "F64X2_NE", 
-                                                    "F64X2_LT", "F64X2_GT", 
-                                                    "F64X2_LE", "F64X2_GE", 
-                                                    "V128_NOT", "V128_AND", 
-                                                    "V128_ANDNOT", "V128_OR", 
-                                                    "V128_XOR", "V128_BITSELECT", 
-                                                    "V128_ANY_TRUE", "V128_LOAD8_LANE", 
-                                                    "V128_LOAD16_LANE", 
-                                                    "V128_LOAD32_LANE", 
-                                                    "V128_LOAD64_LANE", 
-                                                    "V128_STORE8_LANE", 
-                                                    "V128_STORE16_LANE", 
-                                                    "V128_STORE32_LANE", 
-                                                    "V128_STORE64_LANE", 
-                                                    "V128_LOAD32_ZERO", 
-                                                    "V128_LOAD64_ZERO", 
-                                                    "F32X4_DEMOTE_F64X2_ZERO", 
-                                                    "F64X2_PROMOTE_LOW_F32X4", 
-                                                    "I8X16_ABS", "I8X16_NEG", 
-                                                    "I8X16_POPCNT", "I8X16_ALL_TRUE", 
-                                                    "I8X16_BITMASK", "I8X16_NARROW_I16X8_S", 
-                                                    "I8X16_NARROW_I16X8_U", 
-                                                    "I8X16_SHL", "I8X16_SHR_S", 
-                                                    "I8X16_SHR_U", "I8X16_ADD", 
-                                                    "I8X16_ADD_SAT_S", "I8X16_ADD_SAT_U", 
-                                                    "I8X16_SUB", "I8X16_SUB_SAT_S", 
-                                                    "I8X16_SUB_SAT_U", "I8X16_MIN_S", 
-                                                    "I8X16_MIN_U", "I8X16_MAX_S", 
-                                                    "I8X16_MAX_U", "I8X16_AVGR_U", 
-                                                    "I16X8_EXTADD_PAIRWISE_I8X16_S", 
-                                                    "I16X8_EXTADD_PAIRWISE_I8X16_U", 
-                                                    "I32X4_EXTADD_PAIRWISE_I16X8_S", 
-                                                    "I32X4_EXTADD_PAIRWISE_I16X8_U", 
-                                                    "I16X8_ABS", "I16X8_NEG", 
-                                                    "I16X8_Q15MULR_SAT_S", 
-                                                    "I16X8_ALL_TRUE", "I16X8_BITMASK", 
-                                                    "I16X8_NARROW_I32X4_S", 
-                                                    "I16X8_NARROW_I32X4_U", 
-                                                    "I16X8_EXTEND_LOW_I8X16_S", 
-                                                    "I16X8_EXTEND_HIGH_I8X16_S", 
-                                                    "I16X8_EXTEND_LOW_I8X16_U", 
-                                                    "I16X8_EXTEND_HIGH_I8X16_U", 
-                                                    "I16X8_SHL", "I16X8_SHR_S", 
-                                                    "I16X8_SHR_U", "I16X8_ADD", 
-                                                    "I16X8_ADD_SAT_S", "I16X8_ADD_SAT_U", 
-                                                    "I16X8_SUB", "I16X8_SUB_SAT_S", 
-                                                    "I16X8_SUB_SAT_U", "I16X8_MUL", 
-                                                    "I16X8_MIN_S", "I16X8_MIN_U", 
-                                                    "I16X8_MAX_S", "I16X8_MAX_U", 
-                                                    "I16X8_AVGR_U", "I16X8_EXTMUL_LOW_I8X16_S", 
-                                                    "I16X8_EXTMUL_HIGH_I8X16_S", 
-                                                    "I16X8_EXTMUL_LOW_I8X16_U", 
-                                                    "I16X8_EXTMUL_HIGH_I8X16_U", 
-                                                    "I32X4_ABS", "I32X4_NEG", 
-                                                    "I32X4_ALL_TRUE", "I32X4_BITMASK", 
-                                                    "I32X4_EXTEND_LOW_I16X8_S", 
-                                                    "I32X4_EXTEND_HIGH_I16X8_S", 
-                                                    "I32X4_EXTEND_LOW_I16X8_U", 
-                                                    "I32X4_EXTEND_HIGH_I16X8_U", 
-                                                    "I32X4_SHL", "I32X4_SHR_S", 
-                                                    "I32X4_SHR_U", "I32X4_ADD", 
-                                                    "I32X4_SUB", "I32X4_MUL", 
-                                                    "I32X4_MIN_S", "I32X4_MIN_U", 
-                                                    "I32X4_MAX_S", "I32X4_MAX_U", 
-                                                    "I32X4_DOT_I16X8_S", 
-                                                    "I32X4_EXTMUL_LOW_I16X8_S", 
-                                                    "I32X4_EXTMUL_HIGH_I16X8_S", 
-                                                    "I32X4_EXTMUL_LOW_I16X8_U", 
-                                                    "I32X4_EXTMUL_HIGH_I16X8_U", 
-                                                    "I64X2_ABS", "I64X2_NEG", 
-                                                    "I64X2_ALL_TRUE", "I64X2_BITMASK", 
-                                                    "I64X2_EXTEND_LOW_I32X4_S", 
-                                                    "I64X2_EXTEND_HIGH_I32X4_S", 
-                                                    "I64X2_EXTEND_LOW_I32X4_U", 
-                                                    "I64X2_EXTEND_HIGH_I32X4_U", 
-                                                    "I64X2_SHL", "I64X2_SHR_S", 
-                                                    "I64X2_SHR_U", "I64X2_ADD", 
-                                                    "I64X2_SUB", "I64X2_MUL", 
-                                                    "I64X2_EQ", "I64X2_NE", 
-                                                    "I64X2_LT_S", "I64X2_GT_S", 
-                                                    "I64X2_LE_S", "I64X2_GE_S", 
-                                                    "I64X2_EXTMUL_LOW_I32X4_S", 
-                                                    "I64X2_EXTMUL_HIGH_I32X4_S", 
-                                                    "I64X2_EXTMUL_LOW_I32X4_U", 
-                                                    "I64X2_EXTMUL_HIGH_I32X4_U", 
-                                                    "F32X4_CEIL", "F32X4_FLOOR", 
-                                                    "F32X4_TRUNC", "F32X4_NEAREST", 
-                                                    "F64X2_CEIL", "F64X2_FLOOR", 
-                                                    "F64X2_TRUNC", "F64X2_NEAREST", 
-                                                    "F32X4_ABS", "F32X4_NEG", 
-                                                    "F32X4_SQRT", "F32X4_ADD", 
-                                                    "F32X4_SUB", "F32X4_MUL", 
-                                                    "F32X4_DIV", "F32X4_MIN", 
-                                                    "F32X4_MAX", "F32X4_PMIN", 
-                                                    "F32X4_PMAX", "F64X2_ABS", 
-                                                    "F64X2_NEG", "F64X2_SQRT", 
-                                                    "F64X2_ADD", "F64X2_SUB", 
-                                                    "F64X2_MUL", "F64X2_DIV", 
-                                                    "F64X2_MIN", "F64X2_MAX", 
-                                                    "F64X2_PMIN", "F64X2_PMAX", 
-                                                    "I32X4_TRUNC_SAT_F32X4_S", 
-                                                    "I32X4_TRUNC_SAT_F32X4_U", 
-                                                    "F32X4_CONVERT_I32X4_S", 
-                                                    "F32X4_CONVERT_I32X4_U", 
-                                                    "I32X4_TRUNC_SAT_F64X2_S_ZERO", 
-                                                    "I32X4_TRUNC_SAT_F64X2_U_ZERO", 
-                                                    "F64X2_CONVERT_LOW_I32X4_S", 
-                                                    "F64X2_CONVERT_LOW_I32X4_U", 
-                                                    "IDENTIFIER" ];
+	public static readonly literalNames: (string | null)[] = [ null, null, 
+                                                            "'i32'", "'i64'", 
+                                                            "'isize'", "'u32'", 
+                                                            "'u64'", "'usize'", 
+                                                            "'f32'", "'f64'", 
+                                                            "'v128'", "'string'", 
+                                                            "'boolean'", 
+                                                            "'any'", "'void'", 
+                                                            "'attribute'", 
+                                                            "'class'", "'enum'", 
+                                                            "'extends'", 
+                                                            "'function'", 
+                                                            "'static'", 
+                                                            "'abstract'", 
+                                                            "'native'", 
+                                                            "'public'", 
+                                                            "'protected'", 
+                                                            "'private'", 
+                                                            "'const'", "'let'", 
+                                                            "'new'", "'get'", 
+                                                            "'set'", "'from'", 
+                                                            "'switch'", 
+                                                            "'case'", "'for'", 
+                                                            "'do'", "'while'", 
+                                                            "'break'", "'finally'", 
+                                                            "'this'", "'super'", 
+                                                            "'typeof'", 
+                                                            "'instanceof'", 
+                                                            "'sizeof'", 
+                                                            "'alignof'", 
+                                                            "'offsetof'", 
+                                                            "'export'", 
+                                                            "'import'", 
+                                                            "'default'", 
+                                                            "'in'", "'as'", 
+                                                            "'('", "')'", 
+                                                            "'['", "']'", 
+                                                            "'{'", "'}'", 
+                                                            "'=>'", "'>'", 
+                                                            "'<'", "'<='", 
+                                                            "'>='", "'=='", 
+                                                            "'!='", "'!'", 
+                                                            "'&&'", "'||'", 
+                                                            "'?'", "';'", 
+                                                            "':'", "','", 
+                                                            "'...'", "'.'", 
+                                                            "'@'", "'++'", 
+                                                            "'--'", "'+'", 
+                                                            "'-'", "'*'", 
+                                                            "'/'", "'\\'", 
+                                                            "'%'", "'^'", 
+                                                            "'~'", "'&'", 
+                                                            "'|'", "'<<'", 
+                                                            "'>>'", "'>>>'", 
+                                                            "'='", "'+='", 
+                                                            "'-='", "'*='", 
+                                                            "'/='", "'&='", 
+                                                            "'|='", "'^='", 
+                                                            "'%='", "'<<='", 
+                                                            "'>>='", "'>>>='", 
+                                                            null, null, 
+                                                            null, null, 
+                                                            null, "'null'", 
+                                                            null, null, 
+                                                            null, null, 
+                                                            "'unreachable'", 
+                                                            "'nop'", "'block'", 
+                                                            "'loop'", "'if'", 
+                                                            "'else'", "'end'", 
+                                                            "'br'", "'br_if'", 
+                                                            "'br_table'", 
+                                                            "'return'", 
+                                                            "'call'", "'call_indirect'", 
+                                                            "'return_call'", 
+                                                            "'return_call_indirect'", 
+                                                            "'call_ref'", 
+                                                            "'return_call_ref'", 
+                                                            "'drop'", "'select'", 
+                                                            "'local.get'", 
+                                                            "'local.set'", 
+                                                            "'local.tee'", 
+                                                            "'global.get'", 
+                                                            "'global.set'", 
+                                                            "'table.get'", 
+                                                            "'table.set'", 
+                                                            "'i32.load'", 
+                                                            "'i64.load'", 
+                                                            "'f32.load'", 
+                                                            "'f64.load'", 
+                                                            "'i32.load8_s'", 
+                                                            "'i32.load8_u'", 
+                                                            "'i32.load16_s'", 
+                                                            "'i32.load16_u'", 
+                                                            "'i64.load8_s'", 
+                                                            "'i64.load8_u'", 
+                                                            "'i64.load16_s'", 
+                                                            "'i64.load16_u'", 
+                                                            "'i64.load32_s'", 
+                                                            "'i64.load32_u'", 
+                                                            "'i32.store'", 
+                                                            "'i64.store'", 
+                                                            "'f32.store'", 
+                                                            "'f64.store'", 
+                                                            "'i32.store8'", 
+                                                            "'i32.store16'", 
+                                                            "'i64.store8'", 
+                                                            "'i64.store16'", 
+                                                            "'i64.store32'", 
+                                                            "'memory.size'", 
+                                                            "'memory.grow'", 
+                                                            "'i32.const'", 
+                                                            "'i64.const'", 
+                                                            "'f32.const'", 
+                                                            "'f64.const'", 
+                                                            "'i32.eqz'", 
+                                                            "'i32.eq'", 
+                                                            "'i32.ne'", 
+                                                            "'i32.lt_s'", 
+                                                            "'i32.lt_u'", 
+                                                            "'i32.gt_s'", 
+                                                            "'i32.gt_u'", 
+                                                            "'i32.le_s'", 
+                                                            "'i32.le_u'", 
+                                                            "'i32.ge_s'", 
+                                                            "'i32.ge_u'", 
+                                                            "'i64.eqz'", 
+                                                            "'i64.eq'", 
+                                                            "'i64.ne'", 
+                                                            "'i64.lt_s'", 
+                                                            "'i64.lt_u'", 
+                                                            "'i64.gt_s'", 
+                                                            "'i64.gt_u'", 
+                                                            "'i64.le_s'", 
+                                                            "'i64.le_u'", 
+                                                            "'i64.ge_s'", 
+                                                            "'i64.ge_u'", 
+                                                            "'f32.eq'", 
+                                                            "'f32.ne'", 
+                                                            "'f32.lt'", 
+                                                            "'f32.gt'", 
+                                                            "'f32.le'", 
+                                                            "'f32.ge'", 
+                                                            "'f64.eq'", 
+                                                            "'f64.ne'", 
+                                                            "'f64.lt'", 
+                                                            "'f64.gt'", 
+                                                            "'f64.le'", 
+                                                            "'f64.ge'", 
+                                                            "'i32.clz'", 
+                                                            "'i32.ctz'", 
+                                                            "'i32.popcnt'", 
+                                                            "'i32.add'", 
+                                                            "'i32.sub'", 
+                                                            "'i32.mul'", 
+                                                            "'i32.div_s'", 
+                                                            "'i32.div_u'", 
+                                                            "'i32.rem_s'", 
+                                                            "'i32.rem_u'", 
+                                                            "'i32.and'", 
+                                                            "'i32.or'", 
+                                                            "'i32.xor'", 
+                                                            "'i32.shl'", 
+                                                            "'i32.shr_s'", 
+                                                            "'i32.shr_u'", 
+                                                            "'i32.rotl'", 
+                                                            "'i32.rotr'", 
+                                                            "'i64.clz'", 
+                                                            "'i64.ctz'", 
+                                                            "'i64.popcnt'", 
+                                                            "'i64.add'", 
+                                                            "'i64.sub'", 
+                                                            "'i64.mul'", 
+                                                            "'i64.div_s'", 
+                                                            "'i64.div_u'", 
+                                                            "'i64.rem_s'", 
+                                                            "'i64.rem_u'", 
+                                                            "'i64.and'", 
+                                                            "'i64.or'", 
+                                                            "'i64.xor'", 
+                                                            "'i64.shl'", 
+                                                            "'i64.shr_s'", 
+                                                            "'i64.shr_u'", 
+                                                            "'i64.rotl'", 
+                                                            "'i64.rotr'", 
+                                                            "'f32.abs'", 
+                                                            "'f32.neg'", 
+                                                            "'f32.ceil'", 
+                                                            "'f32.floor'", 
+                                                            "'f32.trunc'", 
+                                                            "'f32.nearest'", 
+                                                            "'f32.sqrt'", 
+                                                            "'f32.add'", 
+                                                            "'f32.sub'", 
+                                                            "'f32.mul'", 
+                                                            "'f32.div'", 
+                                                            "'f32.min'", 
+                                                            "'f32.max'", 
+                                                            "'f32.copysign'", 
+                                                            "'f64.abs'", 
+                                                            "'f64.neg'", 
+                                                            "'f64.ceil'", 
+                                                            "'f64.floor'", 
+                                                            "'f64.trunc'", 
+                                                            "'f64.nearest'", 
+                                                            "'f64.sqrt'", 
+                                                            "'f64.add'", 
+                                                            "'f64.sub'", 
+                                                            "'f64.mul'", 
+                                                            "'f64.div'", 
+                                                            "'f64.min'", 
+                                                            "'f64.max'", 
+                                                            "'f64.copysign'", 
+                                                            "'i32.wrap_i64'", 
+                                                            "'i32.trunc_f32_s'", 
+                                                            "'i32.trunc_f32_u'", 
+                                                            "'i32.trunc_f64_s'", 
+                                                            "'i32.trunc_f64_u'", 
+                                                            "'i64.extend_i32_s'", 
+                                                            "'i64.extend_i32_u'", 
+                                                            "'i64.trunc_f32_s'", 
+                                                            "'i64.trunc_f32_u'", 
+                                                            "'i64.trunc_f64_s'", 
+                                                            "'i64.trunc_f64_u'", 
+                                                            "'f32.convert_i32_s'", 
+                                                            "'f32.convert_i32_u'", 
+                                                            "'f32.convert_i64_s'", 
+                                                            "'f32.convert_i64_u'", 
+                                                            "'f32.demote_f64'", 
+                                                            "'f64.convert_i32_s'", 
+                                                            "'f64.convert_i32_u'", 
+                                                            "'f64.convert_i64_s'", 
+                                                            "'f64.convert_i64_u'", 
+                                                            "'f64.promote_f32'", 
+                                                            "'i32.reinterpret_f32'", 
+                                                            "'i64.reinterpret_f64'", 
+                                                            "'f32.reinterpret_i32'", 
+                                                            "'f64.reinterpret_i64'", 
+                                                            "'i32.extend8_s'", 
+                                                            "'i32.extend16_s'", 
+                                                            "'i64.extend8_s'", 
+                                                            "'i64.extend16_s'", 
+                                                            "'i64.extend32_s'", 
+                                                            "'ref.null'", 
+                                                            "'ref.is_null'", 
+                                                            "'ref.func'", 
+                                                            "'ref.eq'", 
+                                                            "'ref.as_non_null'", 
+                                                            "'br_on_null'", 
+                                                            "'br_on_non_null'", 
+                                                            "'struct.new'", 
+                                                            "'struct.new_default'", 
+                                                            "'struct.get'", 
+                                                            "'struct.gets'", 
+                                                            "'struct.getu'", 
+                                                            "'struct.set'", 
+                                                            "'array.new'", 
+                                                            "'array.newdefault'", 
+                                                            "'array.new_fixed'", 
+                                                            "'array.new_data'", 
+                                                            "'array.new_elem'", 
+                                                            "'array.get'", 
+                                                            "'array.gets'", 
+                                                            "'array.getu'", 
+                                                            "'array.set'", 
+                                                            "'array.len'", 
+                                                            "'array.fill'", 
+                                                            "'array.copy'", 
+                                                            "'array.init_data'", 
+                                                            "'array.init_elem'", 
+                                                            "'ref.test'", 
+                                                            "'ref.cast'", 
+                                                            "'br_on_cast'", 
+                                                            "'br_on_cast_fail'", 
+                                                            "'any.convert_extern'", 
+                                                            "'extern.convert_any'", 
+                                                            "'ref.i31'", 
+                                                            "'i31gets'", 
+                                                            "'i31getu'", 
+                                                            "'i32.trunc_sat_f32_s'", 
+                                                            "'i32.trunc_sat_f32_u'", 
+                                                            "'i32.trunc_sat_f64_s'", 
+                                                            "'i32.trunc_sat_f64_u'", 
+                                                            "'i64.trunc_sat_f32_s'", 
+                                                            "'i64.trunc_sat_f32_u'", 
+                                                            "'i64.trunc_sat_f64_s'", 
+                                                            "'i64.trunc_sat_f64_u'", 
+                                                            "'memory.init'", 
+                                                            "'data.drop'", 
+                                                            "'memory.copy'", 
+                                                            "'memory.fill'", 
+                                                            "'table.init'", 
+                                                            "'elem.drop'", 
+                                                            "'table.copy'", 
+                                                            "'table.grow'", 
+                                                            "'table.size'", 
+                                                            "'table.fill'", 
+                                                            "'v128.load'", 
+                                                            "'v128.load8x8_s'", 
+                                                            "'v128.load8x8_u'", 
+                                                            "'v128.load16x4_s'", 
+                                                            "'v128.load16x4_u'", 
+                                                            "'v128.load32x2_s'", 
+                                                            "'v128.load32x2_u'", 
+                                                            "'v128.load8_splat'", 
+                                                            "'v128.load16_splat'", 
+                                                            "'v128.load32_splat'", 
+                                                            "'v128.load64_splat'", 
+                                                            "'v128.store'", 
+                                                            "'v128.const'", 
+                                                            "'i8x16.shuffle'", 
+                                                            "'i8x16.swizzle'", 
+                                                            "'i8x16.splat'", 
+                                                            "'i16x8.splat'", 
+                                                            "'i32x4.splat'", 
+                                                            "'i64x2.splat'", 
+                                                            "'f32x4.splat'", 
+                                                            "'f64x2.splat'", 
+                                                            "'i8x16.extract_lane_s'", 
+                                                            "'i8x16.extract_lane_u'", 
+                                                            "'i8x16.replace_lane'", 
+                                                            "'i16x8.extract_lane_s'", 
+                                                            "'i16x8.extract_lane_u'", 
+                                                            "'i16x8.replace_lane'", 
+                                                            "'i32x4.extract_lane'", 
+                                                            "'i32x4.replace_lane'", 
+                                                            "'i64x2.extract_lane'", 
+                                                            "'i64x2.replace_lane'", 
+                                                            "'f32x4.extract_lane'", 
+                                                            "'f32x4.replace_lane'", 
+                                                            "'f64x2.extract_lane'", 
+                                                            "'f64x2.replace_lane'", 
+                                                            "'i8x16.eq'", 
+                                                            "'i8x16.ne'", 
+                                                            "'i8x16.lt_s'", 
+                                                            "'i8x16.lt_u'", 
+                                                            "'i8x16.gt_s'", 
+                                                            "'i8x16.gt_u'", 
+                                                            "'i8x16.le_s'", 
+                                                            "'i8x16.le_u'", 
+                                                            "'i8x16.ge_s'", 
+                                                            "'i8x16.ge_u'", 
+                                                            "'i16x8.eq'", 
+                                                            "'i16x8.ne'", 
+                                                            "'i16x8.lt_s'", 
+                                                            "'i16x8.lt_u'", 
+                                                            "'i16x8.gt_s'", 
+                                                            "'i16x8.gt_u'", 
+                                                            "'i16x8.le_s'", 
+                                                            "'i16x8.le_u'", 
+                                                            "'i16x8.ge_s'", 
+                                                            "'i16x8.ge_u'", 
+                                                            "'i32x4.eq'", 
+                                                            "'i32x4.ne'", 
+                                                            "'i32x4.lt_s'", 
+                                                            "'i32x4.lt_u'", 
+                                                            "'i32x4.gt_s'", 
+                                                            "'i32x4.gt_u'", 
+                                                            "'i32x4.le_s'", 
+                                                            "'i32x4.le_u'", 
+                                                            "'i32x4.ge_s'", 
+                                                            "'i32x4.ge_u'", 
+                                                            "'f32x4.eq'", 
+                                                            "'f32x4.ne'", 
+                                                            "'f32x4.lt'", 
+                                                            "'f32x4.gt'", 
+                                                            "'f32x4.le'", 
+                                                            "'f32x4.ge'", 
+                                                            "'f64x2.eq'", 
+                                                            "'f64x2.ne'", 
+                                                            "'f64x2.lt'", 
+                                                            "'f64x2.gt'", 
+                                                            "'f64x2.le'", 
+                                                            "'f64x2.ge'", 
+                                                            "'v128.not'", 
+                                                            "'v128.and'", 
+                                                            "'v128.andnot'", 
+                                                            "'v128.or'", 
+                                                            "'v128.xor'", 
+                                                            "'v128.bitselect'", 
+                                                            "'v128.any_true'", 
+                                                            "'v128.load8_lane'", 
+                                                            "'v128.load16_lane'", 
+                                                            "'v128.load32_lane'", 
+                                                            "'v128.load64_lane'", 
+                                                            "'v128.store8_lane'", 
+                                                            "'v128.store16_lane'", 
+                                                            "'v128.store32_lane'", 
+                                                            "'v128.store64_lane'", 
+                                                            "'v128.load32_zero'", 
+                                                            "'v128.load64_zero'", 
+                                                            "'f32x4.demote_f64x2_zero'", 
+                                                            "'f64x2.promote_low_f32x4'", 
+                                                            "'i8x16.abs'", 
+                                                            "'i8x16.neg'", 
+                                                            "'i8x16.popcnt'", 
+                                                            "'i8x16.all_true'", 
+                                                            "'i8x16.bitmask'", 
+                                                            "'i8x16.narrow_i16x8_s'", 
+                                                            "'i8x16.narrow_i16x8_u'", 
+                                                            "'f32x4.ceil'", 
+                                                            "'f32x4.floor'", 
+                                                            "'f32x4.trunc'", 
+                                                            "'f32x4.nearest'", 
+                                                            "'i8x16.shl'", 
+                                                            "'i8x16.shr_s'", 
+                                                            "'i8x16.shr_u'", 
+                                                            "'i8x16.add'", 
+                                                            "'i8x16.add_sat_s'", 
+                                                            "'i8x16.add_sat_u'", 
+                                                            "'i8x16.sub'", 
+                                                            "'i8x16.sub_sat_s'", 
+                                                            "'i8x16.sub_sat_u'", 
+                                                            "'f64x2.ceil'", 
+                                                            "'f64x2.floor'", 
+                                                            "'i8x16.min_s'", 
+                                                            "'i8x16.min_u'", 
+                                                            "'i8x16.max_s'", 
+                                                            "'i8x16.max_u'", 
+                                                            "'f64x2.trunc'", 
+                                                            "'i8x16.avgr_u'", 
+                                                            "'i16x8.extadd_pairwise_i8x16_s'", 
+                                                            "'i16x8.extadd_pairwise_i8x16_u'", 
+                                                            "'i32x4.extadd_pairwise_i16x8_s'", 
+                                                            "'i32x4.extadd_pairwise_i16x8_u'", 
+                                                            "'i16x8.abs'", 
+                                                            "'i16x8.neg'", 
+                                                            "'i16x8.q15mulr_sat_s'", 
+                                                            "'i16x8.all_true'", 
+                                                            "'i16x8.bitmask'", 
+                                                            "'i16x8.narrow_i32x4_s'", 
+                                                            "'i16x8.narrow_i32x4_u'", 
+                                                            "'i16x8.extend_low_i8x16_s'", 
+                                                            "'i16x8.extend_high_i8x16_s'", 
+                                                            "'i16x8.extend_low_i8x16_u'", 
+                                                            "'i16x8.extend_high_i8x16_u'", 
+                                                            "'i16x8.shl'", 
+                                                            "'i16x8.shr_s'", 
+                                                            "'i16x8.shr_u'", 
+                                                            "'i16x8.add'", 
+                                                            "'i16x8.add_sat_s'", 
+                                                            "'i16x8.add_sat_u'", 
+                                                            "'i16x8.sub'", 
+                                                            "'i16x8.sub_sat_s'", 
+                                                            "'i16x8.sub_sat_u'", 
+                                                            "'f64x2.nearest'", 
+                                                            "'i16x8.mul'", 
+                                                            "'i16x8.min_s'", 
+                                                            "'i16x8.min_u'", 
+                                                            "'i16x8.max_s'", 
+                                                            "'i16x8.max_u'", 
+                                                            "'i16x8.avgr_u'", 
+                                                            "'i16x8.extmul_low_i8x16_s'", 
+                                                            "'i16x8.extmul_high_i8x16_s'", 
+                                                            "'i16x8.extmul_low_i8x16_u'", 
+                                                            "'i16x8.extmul_high_i8x16_u'", 
+                                                            "'i32x4.abs'", 
+                                                            "'i32x4.neg'", 
+                                                            "'i32x4.all_true'", 
+                                                            "'i32x4.bitmask'", 
+                                                            "'i32x4.extend_low_i16x8_s'", 
+                                                            "'i32x4.extend_high_i16x8_s'", 
+                                                            "'i32x4.extend_low_i16x8_u'", 
+                                                            "'i32x4.extend_high_i16x8_u'", 
+                                                            "'i32x4.shl'", 
+                                                            "'i32x4.shr_s'", 
+                                                            "'i32x4.shr_u'", 
+                                                            "'i32x4.add'", 
+                                                            "'i32x4.sub'", 
+                                                            "'i32x4.mul'", 
+                                                            "'i32x4.min_s'", 
+                                                            "'i32x4.min_u'", 
+                                                            "'i32x4.max_s'", 
+                                                            "'i32x4.max_u'", 
+                                                            "'i32x4.dot_i16x8_s'", 
+                                                            "'i32x4.extmul_low_i16x8_s'", 
+                                                            "'i32x4.extmul_high_i16x8_s'", 
+                                                            "'i32x4.extmul_low_i16x8_u'", 
+                                                            "'i32x4.extmul_high_i16x8_u'", 
+                                                            "'i64x2.abs'", 
+                                                            "'i64x2.neg'", 
+                                                            "'i64x2.all_true'", 
+                                                            "'i64x2.bitmask'", 
+                                                            "'i64x2.extend_low_i32x4_s'", 
+                                                            "'i64x2.extend_high_i32x4_s'", 
+                                                            "'i64x2.extend_low_i32x4_u'", 
+                                                            "'i64x2.extend_high_i32x4_u'", 
+                                                            "'i64x2.shl'", 
+                                                            "'i64x2.shr_s'", 
+                                                            "'i64x2.shr_u'", 
+                                                            "'i64x2.add'", 
+                                                            "'i64x2.sub'", 
+                                                            "'i64x2.mul'", 
+                                                            "'i64x2.eq'", 
+                                                            "'i64x2.ne'", 
+                                                            "'i64x2.lt_s'", 
+                                                            "'i64x2.gt_s'", 
+                                                            "'i64x2.le_s'", 
+                                                            "'i64x2.ge_s'", 
+                                                            "'i64x2.extmul_low_i32x4_s'", 
+                                                            "'i64x2.extmul_high_i32x4_s'", 
+                                                            "'i64x2.extmul_low_i32x4_u'", 
+                                                            "'i64x2.extmul_high_i32x4_u'", 
+                                                            "'f32x4.abs'", 
+                                                            "'f32x4.neg'", 
+                                                            "'f32x4.sqrt'", 
+                                                            "'f32x4.add'", 
+                                                            "'f32x4.sub'", 
+                                                            "'f32x4.mul'", 
+                                                            "'f32x4.div'", 
+                                                            "'f32x4.min'", 
+                                                            "'f32x4.max'", 
+                                                            "'f32x4.pmin'", 
+                                                            "'f32x4.pmax'", 
+                                                            "'f64x2.abs'", 
+                                                            "'f64x2.neg'", 
+                                                            "'f64x2.sqrt'", 
+                                                            "'f64x2.add'", 
+                                                            "'f64x2.sub'", 
+                                                            "'f64x2.mul'", 
+                                                            "'f64x2.div'", 
+                                                            "'f64x2.min'", 
+                                                            "'f64x2.max'", 
+                                                            "'f64x2.pmin'", 
+                                                            "'f64x2.pmax'", 
+                                                            "'i32x4.trunc_sat_f32x4_s'", 
+                                                            "'i32x4.trunc_sat_f32x4_u'", 
+                                                            "'f32x4.convert_i32x4_s'", 
+                                                            "'f32x4.convert_i32x4_u'", 
+                                                            "'i32x4.trunc_sat_f64x2_s_zero'", 
+                                                            "'i32x4.trunc_sat_f64x2_u_zero'", 
+                                                            "'f64x2.convert_low_i32x4_s'", 
+                                                            "'f64x2.convert_low_i32x4_u'", 
+                                                            "'try'", "'catch'", 
+                                                            "'throw'" ];
+	public static readonly symbolicNames: (string | null)[] = [ null, "SELECT_T", 
+                                                             "I32", "I64", 
+                                                             "ISIZE", "U32", 
+                                                             "U64", "USIZE", 
+                                                             "F32", "F64", 
+                                                             "V128", "STRING", 
+                                                             "BOOLEAN", 
+                                                             "ANY", "VOID", 
+                                                             "ATTRIBUTE", 
+                                                             "CLASS", "ENUM", 
+                                                             "EXTENDS", 
+                                                             "FUNCTION", 
+                                                             "STATIC", "ABSTRACT", 
+                                                             "NATIVE", "PUBLIC", 
+                                                             "PROTECTED", 
+                                                             "PRIVATE", 
+                                                             "CONST", "LET", 
+                                                             "NEW", "GET", 
+                                                             "SET", "FROM", 
+                                                             "SWITCH", "CASE", 
+                                                             "FOR", "DO", 
+                                                             "WHILE", "BREAK", 
+                                                             "FINALLY", 
+                                                             "THIS", "SUPER", 
+                                                             "TYPE_OF", 
+                                                             "INSTANCE_OF", 
+                                                             "SIZE_OF", 
+                                                             "ALIGN_OF", 
+                                                             "OFFSET_OF", 
+                                                             "EXPORT", "IMPORT", 
+                                                             "DEFAULT", 
+                                                             "IN", "AS", 
+                                                             "LPAR", "RPAR", 
+                                                             "LBRAK", "RBRAK", 
+                                                             "LCURL", "RCURL", 
+                                                             "ARROW", "GT", 
+                                                             "LT", "LTE", 
+                                                             "GTE", "EQUALS", 
+                                                             "NOT_EQUALS", 
+                                                             "NOT", "AND", 
+                                                             "OR", "QUESTION", 
+                                                             "SEMI", "COLON", 
+                                                             "COMMA", "ETC", 
+                                                             "DOT", "AT", 
+                                                             "INC", "DEC", 
+                                                             "PLUS", "MINUS", 
+                                                             "STAR", "SLASH", 
+                                                             "BSLASH", "PERCENT", 
+                                                             "CARET", "TILDE", 
+                                                             "AMP", "PIPE", 
+                                                             "LSHIFT", "RSHIFT", 
+                                                             "URSHIFT", 
+                                                             "ASSIGN", "ADD_ASSIGN", 
+                                                             "SUB_ASSIGN", 
+                                                             "MUL_ASSIGN", 
+                                                             "DIV_ASSIGN", 
+                                                             "AND_ASSIGN", 
+                                                             "OR_ASSIGN", 
+                                                             "XOR_ASSIGN", 
+                                                             "MOD_ASSIGN", 
+                                                             "LSHIFT_ASSIGN", 
+                                                             "RSHIFT_ASSIGN", 
+                                                             "URSHIFT_ASSIGN", 
+                                                             "INTEGER_LITERAL", 
+                                                             "DECIMAL_LITERAL", 
+                                                             "BOOLEAN_LITERAL", 
+                                                             "CHAR_LITERAL", 
+                                                             "STRING_LITERAL", 
+                                                             "NULL_LITERAL", 
+                                                             "ANNOTATION", 
+                                                             "WS", "COMMENT", 
+                                                             "LINE_COMMENT", 
+                                                             "UNREACHABLE", 
+                                                             "NOP", "BLOCK", 
+                                                             "LOOP", "IF", 
+                                                             "ELSE", "END", 
+                                                             "BR", "BR_IF", 
+                                                             "BR_TABLE", 
+                                                             "RETURN", "CALL", 
+                                                             "CALL_INDIRECT", 
+                                                             "RETURN_CALL", 
+                                                             "RETURN_CALL_INDIRECT", 
+                                                             "CALL_REF", 
+                                                             "RETURN_CALL_REF", 
+                                                             "DROP", "SELECT", 
+                                                             "LOCAL_GET", 
+                                                             "LOCAL_SET", 
+                                                             "LOCAL_TEE", 
+                                                             "GLOBAL_GET", 
+                                                             "GLOBAL_SET", 
+                                                             "TABLE_GET", 
+                                                             "TABLE_SET", 
+                                                             "I32_LOAD", 
+                                                             "I64_LOAD", 
+                                                             "F32_LOAD", 
+                                                             "F64_LOAD", 
+                                                             "I32_LOAD8_S", 
+                                                             "I32_LOAD8_U", 
+                                                             "I32_LOAD16_S", 
+                                                             "I32_LOAD16_U", 
+                                                             "I64_LOAD8_S", 
+                                                             "I64_LOAD8_U", 
+                                                             "I64_LOAD16_S", 
+                                                             "I64_LOAD16_U", 
+                                                             "I64_LOAD32_S", 
+                                                             "I64_LOAD32_U", 
+                                                             "I32_STORE", 
+                                                             "I64_STORE", 
+                                                             "F32_STORE", 
+                                                             "F64_STORE", 
+                                                             "I32_STORE8", 
+                                                             "I32_STORE16", 
+                                                             "I64_STORE8", 
+                                                             "I64_STORE16", 
+                                                             "I64_STORE32", 
+                                                             "MEMORY_SIZE", 
+                                                             "MEMORY_GROW", 
+                                                             "I32_CONST", 
+                                                             "I64_CONST", 
+                                                             "F32_CONST", 
+                                                             "F64_CONST", 
+                                                             "I32_EQZ", 
+                                                             "I32_EQ", "I32_NE", 
+                                                             "I32_LT_S", 
+                                                             "I32_LT_U", 
+                                                             "I32_GT_S", 
+                                                             "I32_GT_U", 
+                                                             "I32_LE_S", 
+                                                             "I32_LE_U", 
+                                                             "I32_GE_S", 
+                                                             "I32_GE_U", 
+                                                             "I64_EQZ", 
+                                                             "I64_EQ", "I64_NE", 
+                                                             "I64_LT_S", 
+                                                             "I64_LT_U", 
+                                                             "I64_GT_S", 
+                                                             "I64_GT_U", 
+                                                             "I64_LE_S", 
+                                                             "I64_LE_U", 
+                                                             "I64_GE_S", 
+                                                             "I64_GE_U", 
+                                                             "F32_EQ", "F32_NE", 
+                                                             "F32_LT", "F32_GT", 
+                                                             "F32_LE", "F32_GE", 
+                                                             "F64_EQ", "F64_NE", 
+                                                             "F64_LT", "F64_GT", 
+                                                             "F64_LE", "F64_GE", 
+                                                             "I32_CLZ", 
+                                                             "I32_CTZ", 
+                                                             "I32_POPCNT", 
+                                                             "I32_ADD", 
+                                                             "I32_SUB", 
+                                                             "I32_MUL", 
+                                                             "I32_DIV_S", 
+                                                             "I32_DIV_U", 
+                                                             "I32_REM_S", 
+                                                             "I32_REM_U", 
+                                                             "I32_AND", 
+                                                             "I32_OR", "I32_XOR", 
+                                                             "I32_SHL", 
+                                                             "I32_SHR_S", 
+                                                             "I32_SHR_U", 
+                                                             "I32_ROTL", 
+                                                             "I32_ROTR", 
+                                                             "I64_CLZ", 
+                                                             "I64_CTZ", 
+                                                             "I64_POPCNT", 
+                                                             "I64_ADD", 
+                                                             "I64_SUB", 
+                                                             "I64_MUL", 
+                                                             "I64_DIV_S", 
+                                                             "I64_DIV_U", 
+                                                             "I64_REM_S", 
+                                                             "I64_REM_U", 
+                                                             "I64_AND", 
+                                                             "I64_OR", "I64_XOR", 
+                                                             "I64_SHL", 
+                                                             "I64_SHR_S", 
+                                                             "I64_SHR_U", 
+                                                             "I64_ROTL", 
+                                                             "I64_ROTR", 
+                                                             "F32_ABS", 
+                                                             "F32_NEG", 
+                                                             "F32_CEIL", 
+                                                             "F32_FLOOR", 
+                                                             "F32_TRUNC", 
+                                                             "F32_NEAREST", 
+                                                             "F32_SQRT", 
+                                                             "F32_ADD", 
+                                                             "F32_SUB", 
+                                                             "F32_MUL", 
+                                                             "F32_DIV", 
+                                                             "F32_MIN", 
+                                                             "F32_MAX", 
+                                                             "F32_COPYSIGN", 
+                                                             "F64_ABS", 
+                                                             "F64_NEG", 
+                                                             "F64_CEIL", 
+                                                             "F64_FLOOR", 
+                                                             "F64_TRUNC", 
+                                                             "F64_NEAREST", 
+                                                             "F64_SQRT", 
+                                                             "F64_ADD", 
+                                                             "F64_SUB", 
+                                                             "F64_MUL", 
+                                                             "F64_DIV", 
+                                                             "F64_MIN", 
+                                                             "F64_MAX", 
+                                                             "F64_COPYSIGN", 
+                                                             "I32_WRAP_I64", 
+                                                             "I32_TRUNC_F32_S", 
+                                                             "I32_TRUNC_F32_U", 
+                                                             "I32_TRUNC_F64_S", 
+                                                             "I32_TRUNC_F64_U", 
+                                                             "I64_EXTEND_I32_S", 
+                                                             "I64_EXTEND_I32_U", 
+                                                             "I64_TRUNC_F32_S", 
+                                                             "I64_TRUNC_F32_U", 
+                                                             "I64_TRUNC_F64_S", 
+                                                             "I64_TRUNC_F64_U", 
+                                                             "F32_CONVERT_I32_S", 
+                                                             "F32_CONVERT_I32_U", 
+                                                             "F32_CONVERT_I64_S", 
+                                                             "F32_CONVERT_I64_U", 
+                                                             "F32_DEMOTE_F64", 
+                                                             "F64_CONVERT_I32_S", 
+                                                             "F64_CONVERT_I32_U", 
+                                                             "F64_CONVERT_I64_S", 
+                                                             "F64_CONVERT_I64_U", 
+                                                             "F64_PROMOTE_F32", 
+                                                             "I32_REINTERPRET_F32", 
+                                                             "I64_REINTERPRET_F64", 
+                                                             "F32_REINTERPRET_I32", 
+                                                             "F64_REINTERPRET_I64", 
+                                                             "I32_EXTEND8_S", 
+                                                             "I32_EXTEND16_S", 
+                                                             "I64_EXTEND8_S", 
+                                                             "I64_EXTEND16_S", 
+                                                             "I64_EXTEND32_S", 
+                                                             "REF_NULL", 
+                                                             "REF_IS_NULL", 
+                                                             "REF_FUNC", 
+                                                             "REF_EQ", "REF_AS_NON_NULL", 
+                                                             "BR_ON_NULL", 
+                                                             "BR_ON_NON_NULL", 
+                                                             "STRUCT_NEW", 
+                                                             "STRUCT_NEW_DEFAULT", 
+                                                             "STRUCT_GET", 
+                                                             "STRUCT_GETS", 
+                                                             "STRUCT_GETU", 
+                                                             "STRUCT_SET", 
+                                                             "ARRAY_NEW", 
+                                                             "ARRAY_NEWDEFAULT", 
+                                                             "ARRAY_NEW_FIXED", 
+                                                             "ARRAY_NEW_DATA", 
+                                                             "ARRAY_NEW_ELEM", 
+                                                             "ARRAY_GET", 
+                                                             "ARRAY_GETS", 
+                                                             "ARRAY_GETU", 
+                                                             "ARRAY_SET", 
+                                                             "ARRAY_LEN", 
+                                                             "ARRAY_FILL", 
+                                                             "ARRAY_COPY", 
+                                                             "ARRAY_INIT_DATA", 
+                                                             "ARRAY_INIT_ELEM", 
+                                                             "REF_TEST", 
+                                                             "REFCAST_NULL", 
+                                                             "BR_ON_CAST", 
+                                                             "BR_ON_CAST_FAIL", 
+                                                             "ANY_CONVERT_EXTERN", 
+                                                             "EXTERN_CONVERT_ANY", 
+                                                             "REF_I31", 
+                                                             "I31GETS", 
+                                                             "I31GETU", 
+                                                             "I32_TRUNC_SAT_F32_S", 
+                                                             "I32_TRUNC_SAT_F32_U", 
+                                                             "I32_TRUNC_SAT_F64_S", 
+                                                             "I32_TRUNC_SAT_F64_U", 
+                                                             "I64_TRUNC_SAT_F32_S", 
+                                                             "I64_TRUNC_SAT_F32_U", 
+                                                             "I64_TRUNC_SAT_F64_S", 
+                                                             "I64_TRUNC_SAT_F64_U", 
+                                                             "MEMORY_INIT", 
+                                                             "DATA_DROP", 
+                                                             "MEMORY_COPY", 
+                                                             "MEMORY_FILL", 
+                                                             "TABLE_INIT", 
+                                                             "ELEM_DROP", 
+                                                             "TABLE_COPY", 
+                                                             "TABLE_GROW", 
+                                                             "TABLE_SIZE", 
+                                                             "TABLE_FILL", 
+                                                             "V128_LOAD", 
+                                                             "V128_LOAD8X8_S", 
+                                                             "V128_LOAD8X8_U", 
+                                                             "V128_LOAD16X4_S", 
+                                                             "V128_LOAD16X4_U", 
+                                                             "V128_LOAD32X2_S", 
+                                                             "V128_LOAD32X2_U", 
+                                                             "V128_LOAD8_SPLAT", 
+                                                             "V128_LOAD16_SPLAT", 
+                                                             "V128_LOAD32_SPLAT", 
+                                                             "V128_LOAD64_SPLAT", 
+                                                             "V128_STORE", 
+                                                             "V128_CONST", 
+                                                             "I8X16_SHUFFLE", 
+                                                             "I8X16_SWIZZLE", 
+                                                             "I8X16_SPLAT", 
+                                                             "I16X8_SPLAT", 
+                                                             "I32X4_SPLAT", 
+                                                             "I64X2_SPLAT", 
+                                                             "F32X4_SPLAT", 
+                                                             "F64X2_SPLAT", 
+                                                             "I8X16_EXTRACT_LANE_S", 
+                                                             "I8X16_EXTRACT_LANE_U", 
+                                                             "I8X16_REPLACE_LANE", 
+                                                             "I16X8_EXTRACT_LANE_S", 
+                                                             "I16X8_EXTRACT_LANE_U", 
+                                                             "I16X8_REPLACE_LANE", 
+                                                             "I32X4_EXTRACT_LANE", 
+                                                             "I32X4_REPLACE_LANE", 
+                                                             "I64X2_EXTRACT_LANE", 
+                                                             "I64X2_REPLACE_LANE", 
+                                                             "F32X4_EXTRACT_LANE", 
+                                                             "F32X4_REPLACE_LANE", 
+                                                             "F64X2_EXTRACT_LANE", 
+                                                             "F64X2_REPLACE_LANE", 
+                                                             "I8X16_EQ", 
+                                                             "I8X16_NE", 
+                                                             "I8X16_LT_S", 
+                                                             "I8X16_LT_U", 
+                                                             "I8X16_GT_S", 
+                                                             "I8X16_GT_U", 
+                                                             "I8X16_LE_S", 
+                                                             "I8X16_LE_U", 
+                                                             "I8X16_GE_S", 
+                                                             "I8X16_GE_U", 
+                                                             "I16X8_EQ", 
+                                                             "I16X8_NE", 
+                                                             "I16X8_LT_S", 
+                                                             "I16X8_LT_U", 
+                                                             "I16X8_GT_S", 
+                                                             "I16X8_GT_U", 
+                                                             "I16X8_LE_S", 
+                                                             "I16X8_LE_U", 
+                                                             "I16X8_GE_S", 
+                                                             "I16X8_GE_U", 
+                                                             "I32X4_EQ", 
+                                                             "I32X4_NE", 
+                                                             "I32X4_LT_S", 
+                                                             "I32X4_LT_U", 
+                                                             "I32X4_GT_S", 
+                                                             "I32X4_GT_U", 
+                                                             "I32X4_LE_S", 
+                                                             "I32X4_LE_U", 
+                                                             "I32X4_GE_S", 
+                                                             "I32X4_GE_U", 
+                                                             "F32X4_EQ", 
+                                                             "F32X4_NE", 
+                                                             "F32X4_LT", 
+                                                             "F32X4_GT", 
+                                                             "F32X4_LE", 
+                                                             "F32X4_GE", 
+                                                             "F64X2_EQ", 
+                                                             "F64X2_NE", 
+                                                             "F64X2_LT", 
+                                                             "F64X2_GT", 
+                                                             "F64X2_LE", 
+                                                             "F64X2_GE", 
+                                                             "V128_NOT", 
+                                                             "V128_AND", 
+                                                             "V128_ANDNOT", 
+                                                             "V128_OR", 
+                                                             "V128_XOR", 
+                                                             "V128_BITSELECT", 
+                                                             "V128_ANY_TRUE", 
+                                                             "V128_LOAD8_LANE", 
+                                                             "V128_LOAD16_LANE", 
+                                                             "V128_LOAD32_LANE", 
+                                                             "V128_LOAD64_LANE", 
+                                                             "V128_STORE8_LANE", 
+                                                             "V128_STORE16_LANE", 
+                                                             "V128_STORE32_LANE", 
+                                                             "V128_STORE64_LANE", 
+                                                             "V128_LOAD32_ZERO", 
+                                                             "V128_LOAD64_ZERO", 
+                                                             "F32X4_DEMOTE_F64X2_ZERO", 
+                                                             "F64X2_PROMOTE_LOW_F32X4", 
+                                                             "I8X16_ABS", 
+                                                             "I8X16_NEG", 
+                                                             "I8X16_POPCNT", 
+                                                             "I8X16_ALL_TRUE", 
+                                                             "I8X16_BITMASK", 
+                                                             "I8X16_NARROW_I16X8_S", 
+                                                             "I8X16_NARROW_I16X8_U", 
+                                                             "F32X4_CEIL", 
+                                                             "F32X4_FLOOR", 
+                                                             "F32X4_TRUNC", 
+                                                             "F32X4_NEAREST", 
+                                                             "I8X16_SHL", 
+                                                             "I8X16_SHR_S", 
+                                                             "I8X16_SHR_U", 
+                                                             "I8X16_ADD", 
+                                                             "I8X16_ADD_SAT_S", 
+                                                             "I8X16_ADD_SAT_U", 
+                                                             "I8X16_SUB", 
+                                                             "I8X16_SUB_SAT_S", 
+                                                             "I8X16_SUB_SAT_U", 
+                                                             "F64X2_CEIL", 
+                                                             "F64X2_FLOOR", 
+                                                             "I8X16_MIN_S", 
+                                                             "I8X16_MIN_U", 
+                                                             "I8X16_MAX_S", 
+                                                             "I8X16_MAX_U", 
+                                                             "F64X2_TRUNC", 
+                                                             "I8X16_AVGR_U", 
+                                                             "I16X8_EXTADD_PAIRWISE_I8X16_S", 
+                                                             "I16X8_EXTADD_PAIRWISE_I8X16_U", 
+                                                             "I32X4_EXTADD_PAIRWISE_I16X8_S", 
+                                                             "I32X4_EXTADD_PAIRWISE_I16X8_U", 
+                                                             "I16X8_ABS", 
+                                                             "I16X8_NEG", 
+                                                             "I16X8_Q15MULR_SAT_S", 
+                                                             "I16X8_ALL_TRUE", 
+                                                             "I16X8_BITMASK", 
+                                                             "I16X8_NARROW_I32X4_S", 
+                                                             "I16X8_NARROW_I32X4_U", 
+                                                             "I16X8_EXTEND_LOW_I8X16_S", 
+                                                             "I16X8_EXTEND_HIGH_I8X16_S", 
+                                                             "I16X8_EXTEND_LOW_I8X16_U", 
+                                                             "I16X8_EXTEND_HIGH_I8X16_U", 
+                                                             "I16X8_SHL", 
+                                                             "I16X8_SHR_S", 
+                                                             "I16X8_SHR_U", 
+                                                             "I16X8_ADD", 
+                                                             "I16X8_ADD_SAT_S", 
+                                                             "I16X8_ADD_SAT_U", 
+                                                             "I16X8_SUB", 
+                                                             "I16X8_SUB_SAT_S", 
+                                                             "I16X8_SUB_SAT_U", 
+                                                             "F64X2_NEAREST", 
+                                                             "I16X8_MUL", 
+                                                             "I16X8_MIN_S", 
+                                                             "I16X8_MIN_U", 
+                                                             "I16X8_MAX_S", 
+                                                             "I16X8_MAX_U", 
+                                                             "I16X8_AVGR_U", 
+                                                             "I16X8_EXTMUL_LOW_I8X16_S", 
+                                                             "I16X8_EXTMUL_HIGH_I8X16_S", 
+                                                             "I16X8_EXTMUL_LOW_I8X16_U", 
+                                                             "I16X8_EXTMUL_HIGH_I8X16_U", 
+                                                             "I32X4_ABS", 
+                                                             "I32X4_NEG", 
+                                                             "I32X4_ALL_TRUE", 
+                                                             "I32X4_BITMASK", 
+                                                             "I32X4_EXTEND_LOW_I16X8_S", 
+                                                             "I32X4_EXTEND_HIGH_I16X8_S", 
+                                                             "I32X4_EXTEND_LOW_I16X8_U", 
+                                                             "I32X4_EXTEND_HIGH_I16X8_U", 
+                                                             "I32X4_SHL", 
+                                                             "I32X4_SHR_S", 
+                                                             "I32X4_SHR_U", 
+                                                             "I32X4_ADD", 
+                                                             "I32X4_SUB", 
+                                                             "I32X4_MUL", 
+                                                             "I32X4_MIN_S", 
+                                                             "I32X4_MIN_U", 
+                                                             "I32X4_MAX_S", 
+                                                             "I32X4_MAX_U", 
+                                                             "I32X4_DOT_I16X8_S", 
+                                                             "I32X4_EXTMUL_LOW_I16X8_S", 
+                                                             "I32X4_EXTMUL_HIGH_I16X8_S", 
+                                                             "I32X4_EXTMUL_LOW_I16X8_U", 
+                                                             "I32X4_EXTMUL_HIGH_I16X8_U", 
+                                                             "I64X2_ABS", 
+                                                             "I64X2_NEG", 
+                                                             "I64X2_ALL_TRUE", 
+                                                             "I64X2_BITMASK", 
+                                                             "I64X2_EXTEND_LOW_I32X4_S", 
+                                                             "I64X2_EXTEND_HIGH_I32X4_S", 
+                                                             "I64X2_EXTEND_LOW_I32X4_U", 
+                                                             "I64X2_EXTEND_HIGH_I32X4_U", 
+                                                             "I64X2_SHL", 
+                                                             "I64X2_SHR_S", 
+                                                             "I64X2_SHR_U", 
+                                                             "I64X2_ADD", 
+                                                             "I64X2_SUB", 
+                                                             "I64X2_MUL", 
+                                                             "I64X2_EQ", 
+                                                             "I64X2_NE", 
+                                                             "I64X2_LT_S", 
+                                                             "I64X2_GT_S", 
+                                                             "I64X2_LE_S", 
+                                                             "I64X2_GE_S", 
+                                                             "I64X2_EXTMUL_LOW_I32X4_S", 
+                                                             "I64X2_EXTMUL_HIGH_I32X4_S", 
+                                                             "I64X2_EXTMUL_LOW_I32X4_U", 
+                                                             "I64X2_EXTMUL_HIGH_I32X4_U", 
+                                                             "F32X4_ABS", 
+                                                             "F32X4_NEG", 
+                                                             "F32X4_SQRT", 
+                                                             "F32X4_ADD", 
+                                                             "F32X4_SUB", 
+                                                             "F32X4_MUL", 
+                                                             "F32X4_DIV", 
+                                                             "F32X4_MIN", 
+                                                             "F32X4_MAX", 
+                                                             "F32X4_PMIN", 
+                                                             "F32X4_PMAX", 
+                                                             "F64X2_ABS", 
+                                                             "F64X2_NEG", 
+                                                             "F64X2_SQRT", 
+                                                             "F64X2_ADD", 
+                                                             "F64X2_SUB", 
+                                                             "F64X2_MUL", 
+                                                             "F64X2_DIV", 
+                                                             "F64X2_MIN", 
+                                                             "F64X2_MAX", 
+                                                             "F64X2_PMIN", 
+                                                             "F64X2_PMAX", 
+                                                             "I32X4_TRUNC_SAT_F32X4_S", 
+                                                             "I32X4_TRUNC_SAT_F32X4_U", 
+                                                             "F32X4_CONVERT_I32X4_S", 
+                                                             "F32X4_CONVERT_I32X4_U", 
+                                                             "I32X4_TRUNC_SAT_F64X2_S_ZERO", 
+                                                             "I32X4_TRUNC_SAT_F64X2_U_ZERO", 
+                                                             "F64X2_CONVERT_LOW_I32X4_S", 
+                                                             "F64X2_CONVERT_LOW_I32X4_U", 
+                                                             "TRY", "CATCH", 
+                                                             "THROW", "IDENTIFIER" ];
 	// tslint:disable:no-trailing-whitespace
 	public static readonly ruleNames: string[] = [
 		"compilation_unit", "preamble", "import_statement", "import_source", "compilation_atom", 
@@ -1404,27 +1883,27 @@ export default class ComposeParser extends BaseParser {
 			this.state = 202;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
-			case 110:
+			case 1:
 			case 111:
 			case 112:
 			case 113:
+			case 114:
+			case 117:
+			case 118:
+			case 119:
 			case 120:
-			case 121:
 			case 122:
 			case 123:
-			case 125:
-			case 126:
-			case 127:
 			case 128:
 			case 129:
-			case 551:
+			case 587:
 				{
 				this.state = 176;
 				localctx._main = this.identifier();
 				this.state = 189;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				if (_la===69) {
+				if (_la===70) {
 					{
 					this.state = 177;
 					this.match(ComposeParser.COMMA);
@@ -1435,7 +1914,7 @@ export default class ComposeParser extends BaseParser {
 					this.state = 184;
 					this._errHandler.sync(this);
 					_la = this._input.LA(1);
-					while (_la===69) {
+					while (_la===70) {
 						{
 						{
 						this.state = 180;
@@ -1455,7 +1934,7 @@ export default class ComposeParser extends BaseParser {
 
 				}
 				break;
-			case 54:
+			case 55:
 				{
 				this.state = 191;
 				this.match(ComposeParser.LCURL);
@@ -1464,7 +1943,7 @@ export default class ComposeParser extends BaseParser {
 				this.state = 197;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				while (_la===69) {
+				while (_la===70) {
 					{
 					{
 					this.state = 193;
@@ -1580,7 +2059,7 @@ export default class ComposeParser extends BaseParser {
 			this.state = 217;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			while (_la===106) {
+			while (_la===107) {
 				{
 				{
 				this.state = 214;
@@ -1594,14 +2073,14 @@ export default class ComposeParser extends BaseParser {
 			this.state = 224;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			if (_la===45) {
+			if (_la===46) {
 				{
 				this.state = 220;
 				this.match(ComposeParser.EXPORT);
 				this.state = 222;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				if (_la===47) {
+				if (_la===48) {
 					{
 					this.state = 221;
 					this.match(ComposeParser.DEFAULT);
@@ -1738,7 +2217,7 @@ export default class ComposeParser extends BaseParser {
 			this.state = 255;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			while (_la===69) {
+			while (_la===70) {
 				{
 				{
 				this.state = 251;
@@ -1839,24 +2318,24 @@ export default class ComposeParser extends BaseParser {
 			this.state = 272;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
-			case 551:
+			case 587:
 				this.enterOuterAlt(localctx, 1);
 				{
 				this.state = 270;
 				this.match(ComposeParser.IDENTIFIER);
 				}
 				break;
-			case 110:
+			case 1:
 			case 111:
 			case 112:
 			case 113:
+			case 114:
+			case 117:
+			case 118:
+			case 119:
 			case 120:
-			case 121:
 			case 122:
 			case 123:
-			case 125:
-			case 126:
-			case 127:
 			case 128:
 			case 129:
 				this.enterOuterAlt(localctx, 2);
@@ -2074,14 +2553,13 @@ export default class ComposeParser extends BaseParser {
 			this.state = 306;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
-			case 11:
+			case 12:
 				this.enterOuterAlt(localctx, 1);
 				{
 				this.state = 302;
 				this.boolean_type();
 				}
 				break;
-			case 1:
 			case 2:
 			case 3:
 			case 4:
@@ -2089,20 +2567,21 @@ export default class ComposeParser extends BaseParser {
 			case 6:
 			case 7:
 			case 8:
+			case 9:
 				this.enterOuterAlt(localctx, 2);
 				{
 				this.state = 303;
 				this.number_type();
 				}
 				break;
-			case 10:
+			case 11:
 				this.enterOuterAlt(localctx, 3);
 				{
 				this.state = 304;
 				this.string_type();
 				}
 				break;
-			case 12:
+			case 13:
 				this.enterOuterAlt(localctx, 4);
 				{
 				this.state = 305;
@@ -2185,20 +2664,20 @@ export default class ComposeParser extends BaseParser {
 			this.state = 314;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
-			case 1:
 			case 2:
 			case 3:
 			case 4:
 			case 5:
 			case 6:
+			case 7:
 				this.enterOuterAlt(localctx, 1);
 				{
 				this.state = 312;
 				this.integer_type();
 				}
 				break;
-			case 7:
 			case 8:
+			case 9:
 				this.enterOuterAlt(localctx, 2);
 				{
 				this.state = 313;
@@ -2231,42 +2710,42 @@ export default class ComposeParser extends BaseParser {
 			this.state = 322;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
-			case 1:
+			case 2:
 				this.enterOuterAlt(localctx, 1);
 				{
 				this.state = 316;
 				this.i32_type();
 				}
 				break;
-			case 2:
+			case 3:
 				this.enterOuterAlt(localctx, 2);
 				{
 				this.state = 317;
 				this.i64_type();
 				}
 				break;
-			case 3:
+			case 4:
 				this.enterOuterAlt(localctx, 3);
 				{
 				this.state = 318;
 				this.isize_type();
 				}
 				break;
-			case 4:
+			case 5:
 				this.enterOuterAlt(localctx, 4);
 				{
 				this.state = 319;
 				this.u32_type();
 				}
 				break;
-			case 5:
+			case 6:
 				this.enterOuterAlt(localctx, 5);
 				{
 				this.state = 320;
 				this.u64_type();
 				}
 				break;
-			case 6:
+			case 7:
 				this.enterOuterAlt(localctx, 6);
 				{
 				this.state = 321;
@@ -2299,14 +2778,14 @@ export default class ComposeParser extends BaseParser {
 			this.state = 326;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
-			case 7:
+			case 8:
 				this.enterOuterAlt(localctx, 1);
 				{
 				this.state = 324;
 				this.f32_type();
 				}
 				break;
-			case 8:
+			case 9:
 				this.enterOuterAlt(localctx, 2);
 				{
 				this.state = 325;
@@ -2770,7 +3249,7 @@ export default class ComposeParser extends BaseParser {
 					this.state = 372;
 					this._errHandler.sync(this);
 					_la = this._input.LA(1);
-					while (_la===69) {
+					while (_la===70) {
 						{
 						{
 						this.state = 368;
@@ -2989,7 +3468,7 @@ export default class ComposeParser extends BaseParser {
 				this.state = 411;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				if (_la===70) {
+				if (_la===71) {
 					{
 					this.state = 410;
 					this.match(ComposeParser.ETC);
@@ -3044,7 +3523,7 @@ export default class ComposeParser extends BaseParser {
 			this.state = 424;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			if ((((_la) & ~0x1F) === 0 && ((1 << _la) & 29360128) !== 0)) {
+			if ((((_la) & ~0x1F) === 0 && ((1 << _la) & 58720256) !== 0)) {
 				{
 				this.state = 423;
 				this.accessibility();
@@ -3054,7 +3533,7 @@ export default class ComposeParser extends BaseParser {
 			this.state = 427;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			if (_la===20) {
+			if (_la===21) {
 				{
 				this.state = 426;
 				this.match(ComposeParser.ABSTRACT);
@@ -3068,7 +3547,7 @@ export default class ComposeParser extends BaseParser {
 			this.state = 442;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			if (_la===50) {
+			if (_la===51) {
 				{
 				this.state = 431;
 				this.match(ComposeParser.LPAR);
@@ -3077,7 +3556,7 @@ export default class ComposeParser extends BaseParser {
 				this.state = 437;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				while (_la===69) {
+				while (_la===70) {
 					{
 					{
 					this.state = 433;
@@ -3098,7 +3577,7 @@ export default class ComposeParser extends BaseParser {
 			this.state = 453;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			if (_la===17) {
+			if (_la===18) {
 				{
 				this.state = 444;
 				this.match(ComposeParser.EXTENDS);
@@ -3107,7 +3586,7 @@ export default class ComposeParser extends BaseParser {
 				this.state = 450;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				while (_la===69) {
+				while (_la===70) {
 					{
 					{
 					this.state = 446;
@@ -3185,7 +3664,7 @@ export default class ComposeParser extends BaseParser {
 			{
 			this.state = 470;
 			_la = this._input.LA(1);
-			if(!((((_la) & ~0x1F) === 0 && ((1 << _la) & 29360128) !== 0))) {
+			if(!((((_la) & ~0x1F) === 0 && ((1 << _la) & 58720256) !== 0))) {
 			this._errHandler.recoverInline(this);
 			}
 			else {
@@ -3219,7 +3698,7 @@ export default class ComposeParser extends BaseParser {
 			this.state = 473;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			if ((((_la) & ~0x1F) === 0 && ((1 << _la) & 29360128) !== 0)) {
+			if ((((_la) & ~0x1F) === 0 && ((1 << _la) & 58720256) !== 0)) {
 				{
 				this.state = 472;
 				this.accessibility();
@@ -3229,7 +3708,7 @@ export default class ComposeParser extends BaseParser {
 			this.state = 476;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			if (_la===19) {
+			if (_la===20) {
 				{
 				this.state = 475;
 				this.match(ComposeParser.STATIC);
@@ -3324,7 +3803,7 @@ export default class ComposeParser extends BaseParser {
 				this.state = 490;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				if ((((_la) & ~0x1F) === 0 && ((1 << _la) & 29360128) !== 0)) {
+				if ((((_la) & ~0x1F) === 0 && ((1 << _la) & 58720256) !== 0)) {
 					{
 					this.state = 489;
 					this.accessibility();
@@ -3391,7 +3870,7 @@ export default class ComposeParser extends BaseParser {
 				this.state = 506;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				if ((((_la) & ~0x1F) === 0 && ((1 << _la) & 29360128) !== 0)) {
+				if ((((_la) & ~0x1F) === 0 && ((1 << _la) & 58720256) !== 0)) {
 					{
 					this.state = 505;
 					this.accessibility();
@@ -3401,7 +3880,7 @@ export default class ComposeParser extends BaseParser {
 				this.state = 509;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				if (_la===19) {
+				if (_la===20) {
 					{
 					this.state = 508;
 					this.match(ComposeParser.STATIC);
@@ -3415,7 +3894,7 @@ export default class ComposeParser extends BaseParser {
 				this.state = 516;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				while (((((_la - 25)) & ~0x1F) === 0 && ((1 << (_la - 25)) & 705620231) !== 0) || ((((_la - 58)) & ~0x1F) === 0 && ((1 << (_la - 58)) & 17268769) !== 0) || ((((_la - 100)) & ~0x1F) === 0 && ((1 << (_la - 100)) & 1073052799) !== 0) || _la===551) {
+				while ((((_la) & ~0x1F) === 0 && ((1 << _la) & 469762050) !== 0) || ((((_la - 34)) & ~0x1F) === 0 && ((1 << (_la - 34)) & 1110052585) !== 0) || ((((_la - 74)) & ~0x1F) === 0 && ((1 << (_la - 74)) & 4160750095) !== 0) || ((((_la - 106)) & ~0x1F) === 0 && ((1 << (_la - 106)) & 12844003) !== 0) || ((((_la - 584)) & ~0x1F) === 0 && ((1 << (_la - 584)) & 13) !== 0)) {
 					{
 					{
 					this.state = 513;
@@ -3446,7 +3925,7 @@ export default class ComposeParser extends BaseParser {
 				this.state = 528;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				while (((((_la - 25)) & ~0x1F) === 0 && ((1 << (_la - 25)) & 705620231) !== 0) || ((((_la - 58)) & ~0x1F) === 0 && ((1 << (_la - 58)) & 17268769) !== 0) || ((((_la - 100)) & ~0x1F) === 0 && ((1 << (_la - 100)) & 1073052799) !== 0) || _la===551) {
+				while ((((_la) & ~0x1F) === 0 && ((1 << _la) & 469762050) !== 0) || ((((_la - 34)) & ~0x1F) === 0 && ((1 << (_la - 34)) & 1110052585) !== 0) || ((((_la - 74)) & ~0x1F) === 0 && ((1 << (_la - 74)) & 4160750095) !== 0) || ((((_la - 106)) & ~0x1F) === 0 && ((1 << (_la - 106)) & 12844003) !== 0) || ((((_la - 584)) & ~0x1F) === 0 && ((1 << (_la - 584)) & 13) !== 0)) {
 					{
 					{
 					this.state = 525;
@@ -3496,7 +3975,7 @@ export default class ComposeParser extends BaseParser {
 				this.state = 537;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				if ((((_la) & ~0x1F) === 0 && ((1 << _la) & 29360128) !== 0)) {
+				if ((((_la) & ~0x1F) === 0 && ((1 << _la) & 58720256) !== 0)) {
 					{
 					this.state = 536;
 					this.accessibility();
@@ -3514,7 +3993,7 @@ export default class ComposeParser extends BaseParser {
 				this.state = 546;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				while (_la===27 || ((((_la - 38)) & ~0x1F) === 0 && ((1 << (_la - 38)) & 34689143) !== 0) || ((((_la - 73)) & ~0x1F) === 0 && ((1 << (_la - 73)) & 4160750095) !== 0) || ((((_la - 105)) & ~0x1F) === 0 && ((1 << (_la - 105)) & 4294967265) !== 0) || ((((_la - 137)) & ~0x1F) === 0 && ((1 << (_la - 137)) & 4294967295) !== 0) || ((((_la - 169)) & ~0x1F) === 0 && ((1 << (_la - 169)) & 4294967295) !== 0) || ((((_la - 201)) & ~0x1F) === 0 && ((1 << (_la - 201)) & 4294967295) !== 0) || ((((_la - 233)) & ~0x1F) === 0 && ((1 << (_la - 233)) & 4294967295) !== 0) || ((((_la - 265)) & ~0x1F) === 0 && ((1 << (_la - 265)) & 4294967295) !== 0) || ((((_la - 297)) & ~0x1F) === 0 && ((1 << (_la - 297)) & 4294967295) !== 0) || ((((_la - 329)) & ~0x1F) === 0 && ((1 << (_la - 329)) & 4294967295) !== 0) || ((((_la - 361)) & ~0x1F) === 0 && ((1 << (_la - 361)) & 4294967295) !== 0) || ((((_la - 393)) & ~0x1F) === 0 && ((1 << (_la - 393)) & 4294967295) !== 0) || ((((_la - 425)) & ~0x1F) === 0 && ((1 << (_la - 425)) & 4294967295) !== 0) || ((((_la - 457)) & ~0x1F) === 0 && ((1 << (_la - 457)) & 4294967295) !== 0) || ((((_la - 489)) & ~0x1F) === 0 && ((1 << (_la - 489)) & 4294967295) !== 0) || ((((_la - 521)) & ~0x1F) === 0 && ((1 << (_la - 521)) & 2147483647) !== 0)) {
+				while (_la===1 || _la===28 || ((((_la - 39)) & ~0x1F) === 0 && ((1 << (_la - 39)) & 34689143) !== 0) || ((((_la - 74)) & ~0x1F) === 0 && ((1 << (_la - 74)) & 4160750095) !== 0) || ((((_la - 106)) & ~0x1F) === 0 && ((1 << (_la - 106)) & 4291035105) !== 0) || ((((_la - 138)) & ~0x1F) === 0 && ((1 << (_la - 138)) & 4294967295) !== 0) || ((((_la - 170)) & ~0x1F) === 0 && ((1 << (_la - 170)) & 4294967295) !== 0) || ((((_la - 202)) & ~0x1F) === 0 && ((1 << (_la - 202)) & 4294967295) !== 0) || ((((_la - 234)) & ~0x1F) === 0 && ((1 << (_la - 234)) & 4294967295) !== 0) || ((((_la - 266)) & ~0x1F) === 0 && ((1 << (_la - 266)) & 2147483647) !== 0) || ((((_la - 330)) & ~0x1F) === 0 && ((1 << (_la - 330)) & 4294967295) !== 0) || ((((_la - 362)) & ~0x1F) === 0 && ((1 << (_la - 362)) & 4294967295) !== 0) || ((((_la - 394)) & ~0x1F) === 0 && ((1 << (_la - 394)) & 4294967295) !== 0) || ((((_la - 426)) & ~0x1F) === 0 && ((1 << (_la - 426)) & 4294967295) !== 0) || ((((_la - 458)) & ~0x1F) === 0 && ((1 << (_la - 458)) & 4294967295) !== 0) || ((((_la - 490)) & ~0x1F) === 0 && ((1 << (_la - 490)) & 4294967295) !== 0) || ((((_la - 522)) & ~0x1F) === 0 && ((1 << (_la - 522)) & 4294967295) !== 0) || ((((_la - 554)) & ~0x1F) === 0 && ((1 << (_la - 554)) & 4294967295) !== 0) || _la===586 || _la===587) {
 					{
 					{
 					this.state = 543;
@@ -3547,7 +4026,7 @@ export default class ComposeParser extends BaseParser {
 				this.state = 559;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				while (_la===27 || ((((_la - 38)) & ~0x1F) === 0 && ((1 << (_la - 38)) & 34689143) !== 0) || ((((_la - 73)) & ~0x1F) === 0 && ((1 << (_la - 73)) & 4160750095) !== 0) || ((((_la - 105)) & ~0x1F) === 0 && ((1 << (_la - 105)) & 4294967265) !== 0) || ((((_la - 137)) & ~0x1F) === 0 && ((1 << (_la - 137)) & 4294967295) !== 0) || ((((_la - 169)) & ~0x1F) === 0 && ((1 << (_la - 169)) & 4294967295) !== 0) || ((((_la - 201)) & ~0x1F) === 0 && ((1 << (_la - 201)) & 4294967295) !== 0) || ((((_la - 233)) & ~0x1F) === 0 && ((1 << (_la - 233)) & 4294967295) !== 0) || ((((_la - 265)) & ~0x1F) === 0 && ((1 << (_la - 265)) & 4294967295) !== 0) || ((((_la - 297)) & ~0x1F) === 0 && ((1 << (_la - 297)) & 4294967295) !== 0) || ((((_la - 329)) & ~0x1F) === 0 && ((1 << (_la - 329)) & 4294967295) !== 0) || ((((_la - 361)) & ~0x1F) === 0 && ((1 << (_la - 361)) & 4294967295) !== 0) || ((((_la - 393)) & ~0x1F) === 0 && ((1 << (_la - 393)) & 4294967295) !== 0) || ((((_la - 425)) & ~0x1F) === 0 && ((1 << (_la - 425)) & 4294967295) !== 0) || ((((_la - 457)) & ~0x1F) === 0 && ((1 << (_la - 457)) & 4294967295) !== 0) || ((((_la - 489)) & ~0x1F) === 0 && ((1 << (_la - 489)) & 4294967295) !== 0) || ((((_la - 521)) & ~0x1F) === 0 && ((1 << (_la - 521)) & 2147483647) !== 0)) {
+				while (_la===1 || _la===28 || ((((_la - 39)) & ~0x1F) === 0 && ((1 << (_la - 39)) & 34689143) !== 0) || ((((_la - 74)) & ~0x1F) === 0 && ((1 << (_la - 74)) & 4160750095) !== 0) || ((((_la - 106)) & ~0x1F) === 0 && ((1 << (_la - 106)) & 4291035105) !== 0) || ((((_la - 138)) & ~0x1F) === 0 && ((1 << (_la - 138)) & 4294967295) !== 0) || ((((_la - 170)) & ~0x1F) === 0 && ((1 << (_la - 170)) & 4294967295) !== 0) || ((((_la - 202)) & ~0x1F) === 0 && ((1 << (_la - 202)) & 4294967295) !== 0) || ((((_la - 234)) & ~0x1F) === 0 && ((1 << (_la - 234)) & 4294967295) !== 0) || ((((_la - 266)) & ~0x1F) === 0 && ((1 << (_la - 266)) & 2147483647) !== 0) || ((((_la - 330)) & ~0x1F) === 0 && ((1 << (_la - 330)) & 4294967295) !== 0) || ((((_la - 362)) & ~0x1F) === 0 && ((1 << (_la - 362)) & 4294967295) !== 0) || ((((_la - 394)) & ~0x1F) === 0 && ((1 << (_la - 394)) & 4294967295) !== 0) || ((((_la - 426)) & ~0x1F) === 0 && ((1 << (_la - 426)) & 4294967295) !== 0) || ((((_la - 458)) & ~0x1F) === 0 && ((1 << (_la - 458)) & 4294967295) !== 0) || ((((_la - 490)) & ~0x1F) === 0 && ((1 << (_la - 490)) & 4294967295) !== 0) || ((((_la - 522)) & ~0x1F) === 0 && ((1 << (_la - 522)) & 4294967295) !== 0) || ((((_la - 554)) & ~0x1F) === 0 && ((1 << (_la - 554)) & 4294967295) !== 0) || _la===586 || _la===587) {
 					{
 					{
 					this.state = 556;
@@ -3591,7 +4070,7 @@ export default class ComposeParser extends BaseParser {
 			this.state = 578;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			if (_la===58) {
+			if (_la===59) {
 				{
 				this.state = 567;
 				this.match(ComposeParser.LT);
@@ -3600,7 +4079,7 @@ export default class ComposeParser extends BaseParser {
 				this.state = 573;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				while (_la===69) {
+				while (_la===70) {
 					{
 					{
 					this.state = 569;
@@ -3630,7 +4109,7 @@ export default class ComposeParser extends BaseParser {
 				this.state = 586;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				while (_la===69) {
+				while (_la===70) {
 					{
 					{
 					this.state = 582;
@@ -3672,7 +4151,7 @@ export default class ComposeParser extends BaseParser {
 				this.state = 598;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				if (_la===68) {
+				if (_la===69) {
 					{
 					this.state = 596;
 					this.match(ComposeParser.COLON);
@@ -3713,7 +4192,7 @@ export default class ComposeParser extends BaseParser {
 			this.state = 605;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			if (_la===17) {
+			if (_la===18) {
 				{
 				this.state = 603;
 				this.match(ComposeParser.EXTENDS);
@@ -3749,7 +4228,7 @@ export default class ComposeParser extends BaseParser {
 			this.state = 610;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			while (_la===106) {
+			while (_la===107) {
 				{
 				{
 				this.state = 607;
@@ -3763,45 +4242,45 @@ export default class ComposeParser extends BaseParser {
 			this.state = 617;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
-			case 25:
+			case 1:
 			case 26:
 			case 27:
-			case 38:
+			case 28:
 			case 39:
 			case 40:
-			case 42:
+			case 41:
 			case 43:
 			case 44:
-			case 50:
-			case 52:
-			case 54:
-			case 58:
-			case 63:
-			case 73:
+			case 45:
+			case 51:
+			case 53:
+			case 55:
+			case 59:
+			case 64:
 			case 74:
 			case 75:
 			case 76:
-			case 82:
-			case 100:
+			case 77:
+			case 83:
 			case 101:
 			case 102:
 			case 103:
 			case 104:
 			case 105:
-			case 110:
+			case 106:
 			case 111:
 			case 112:
 			case 113:
+			case 114:
+			case 117:
+			case 118:
+			case 119:
 			case 120:
-			case 121:
 			case 122:
 			case 123:
-			case 125:
-			case 126:
-			case 127:
 			case 128:
 			case 129:
-			case 551:
+			case 587:
 				{
 				this.state = 613;
 				this.embeddable_statement();
@@ -3809,12 +4288,12 @@ export default class ComposeParser extends BaseParser {
 				this.match(ComposeParser.SEMI);
 				}
 				break;
-			case 33:
-			case 36:
-			case 114:
-			case 116:
-			case 118:
-			case 124:
+			case 34:
+			case 37:
+			case 115:
+			case 121:
+			case 584:
+			case 586:
 				{
 				this.state = 616;
 				this.standalone_statement();
@@ -3906,42 +4385,42 @@ export default class ComposeParser extends BaseParser {
 			this.state = 632;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
-			case 114:
+			case 115:
 				this.enterOuterAlt(localctx, 1);
 				{
 				this.state = 626;
 				this.if_statement();
 				}
 				break;
-			case 33:
+			case 34:
 				this.enterOuterAlt(localctx, 2);
 				{
 				this.state = 627;
 				this.for_statement();
 				}
 				break;
-			case 116:
+			case 584:
 				this.enterOuterAlt(localctx, 3);
 				{
 				this.state = 628;
 				this.try_statement();
 				}
 				break;
-			case 118:
+			case 586:
 				this.enterOuterAlt(localctx, 4);
 				{
 				this.state = 629;
 				this.throw_statement();
 				}
 				break;
-			case 36:
+			case 37:
 				this.enterOuterAlt(localctx, 5);
 				{
 				this.state = 630;
 				this.break_statement();
 				}
 				break;
-			case 124:
+			case 121:
 				this.enterOuterAlt(localctx, 6);
 				{
 				this.state = 631;
@@ -4073,7 +4552,7 @@ export default class ComposeParser extends BaseParser {
 			this.state = 657;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			while (((((_la - 25)) & ~0x1F) === 0 && ((1 << (_la - 25)) & 705620231) !== 0) || ((((_la - 58)) & ~0x1F) === 0 && ((1 << (_la - 58)) & 17268769) !== 0) || ((((_la - 100)) & ~0x1F) === 0 && ((1 << (_la - 100)) & 1073052799) !== 0) || _la===551) {
+			while ((((_la) & ~0x1F) === 0 && ((1 << _la) & 469762050) !== 0) || ((((_la - 34)) & ~0x1F) === 0 && ((1 << (_la - 34)) & 1110052585) !== 0) || ((((_la - 74)) & ~0x1F) === 0 && ((1 << (_la - 74)) & 4160750095) !== 0) || ((((_la - 106)) & ~0x1F) === 0 && ((1 << (_la - 106)) & 12844003) !== 0) || ((((_la - 584)) & ~0x1F) === 0 && ((1 << (_la - 584)) & 13) !== 0)) {
 				{
 				{
 				this.state = 654;
@@ -4105,7 +4584,7 @@ export default class ComposeParser extends BaseParser {
 			this.state = 668;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			if (_la===117) {
+			if (_la===585) {
 				{
 				this.state = 667;
 				this.catch_all_clause();
@@ -4115,7 +4594,7 @@ export default class ComposeParser extends BaseParser {
 			this.state = 671;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			if (_la===37) {
+			if (_la===38) {
 				{
 				this.state = 670;
 				this.finally_clause();
@@ -4159,7 +4638,7 @@ export default class ComposeParser extends BaseParser {
 			this.state = 682;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			while (_la===84) {
+			while (_la===85) {
 				{
 				{
 				this.state = 678;
@@ -4179,7 +4658,7 @@ export default class ComposeParser extends BaseParser {
 			this.state = 690;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			while (((((_la - 25)) & ~0x1F) === 0 && ((1 << (_la - 25)) & 705620231) !== 0) || ((((_la - 58)) & ~0x1F) === 0 && ((1 << (_la - 58)) & 17268769) !== 0) || ((((_la - 100)) & ~0x1F) === 0 && ((1 << (_la - 100)) & 1073052799) !== 0) || _la===551) {
+			while ((((_la) & ~0x1F) === 0 && ((1 << _la) & 469762050) !== 0) || ((((_la - 34)) & ~0x1F) === 0 && ((1 << (_la - 34)) & 1110052585) !== 0) || ((((_la - 74)) & ~0x1F) === 0 && ((1 << (_la - 74)) & 4160750095) !== 0) || ((((_la - 106)) & ~0x1F) === 0 && ((1 << (_la - 106)) & 12844003) !== 0) || ((((_la - 584)) & ~0x1F) === 0 && ((1 << (_la - 584)) & 13) !== 0)) {
 				{
 				{
 				this.state = 687;
@@ -4229,7 +4708,7 @@ export default class ComposeParser extends BaseParser {
 			this.state = 703;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			while (((((_la - 25)) & ~0x1F) === 0 && ((1 << (_la - 25)) & 705620231) !== 0) || ((((_la - 58)) & ~0x1F) === 0 && ((1 << (_la - 58)) & 17268769) !== 0) || ((((_la - 100)) & ~0x1F) === 0 && ((1 << (_la - 100)) & 1073052799) !== 0) || _la===551) {
+			while ((((_la) & ~0x1F) === 0 && ((1 << _la) & 469762050) !== 0) || ((((_la - 34)) & ~0x1F) === 0 && ((1 << (_la - 34)) & 1110052585) !== 0) || ((((_la - 74)) & ~0x1F) === 0 && ((1 << (_la - 74)) & 4160750095) !== 0) || ((((_la - 106)) & ~0x1F) === 0 && ((1 << (_la - 106)) & 12844003) !== 0) || ((((_la - 584)) & ~0x1F) === 0 && ((1 << (_la - 584)) & 13) !== 0)) {
 				{
 				{
 				this.state = 700;
@@ -4273,7 +4752,7 @@ export default class ComposeParser extends BaseParser {
 			this.state = 713;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			while (((((_la - 25)) & ~0x1F) === 0 && ((1 << (_la - 25)) & 705620231) !== 0) || ((((_la - 58)) & ~0x1F) === 0 && ((1 << (_la - 58)) & 17268769) !== 0) || ((((_la - 100)) & ~0x1F) === 0 && ((1 << (_la - 100)) & 1073052799) !== 0) || _la===551) {
+			while ((((_la) & ~0x1F) === 0 && ((1 << _la) & 469762050) !== 0) || ((((_la - 34)) & ~0x1F) === 0 && ((1 << (_la - 34)) & 1110052585) !== 0) || ((((_la - 74)) & ~0x1F) === 0 && ((1 << (_la - 74)) & 4160750095) !== 0) || ((((_la - 106)) & ~0x1F) === 0 && ((1 << (_la - 106)) & 12844003) !== 0) || ((((_la - 584)) & ~0x1F) === 0 && ((1 << (_la - 584)) & 13) !== 0)) {
 				{
 				{
 				this.state = 710;
@@ -4344,7 +4823,7 @@ export default class ComposeParser extends BaseParser {
 			this.state = 732;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			if (_la===26) {
+			if (_la===27) {
 				{
 				this.state = 723;
 				this.match(ComposeParser.LET);
@@ -4353,7 +4832,7 @@ export default class ComposeParser extends BaseParser {
 				this.state = 729;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				while (_la===69) {
+				while (_la===70) {
 					{
 					{
 					this.state = 725;
@@ -4374,14 +4853,14 @@ export default class ComposeParser extends BaseParser {
 			this.state = 743;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			if (((((_la - 27)) & ~0x1F) === 0 && ((1 << (_la - 27)) & 2323888129) !== 0) || ((((_la - 63)) & ~0x1F) === 0 && ((1 << (_la - 63)) & 539649) !== 0) || ((((_la - 100)) & ~0x1F) === 0 && ((1 << (_la - 100)) & 1055931455) !== 0) || _la===551) {
+			if (_la===1 || _la===28 || ((((_la - 39)) & ~0x1F) === 0 && ((1 << (_la - 39)) & 34689143) !== 0) || ((((_la - 74)) & ~0x1F) === 0 && ((1 << (_la - 74)) & 4160750095) !== 0) || ((((_la - 106)) & ~0x1F) === 0 && ((1 << (_la - 106)) & 12810721) !== 0) || _la===587) {
 				{
 				this.state = 735;
 				this.expression(0);
 				this.state = 740;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				while (_la===69) {
+				while (_la===70) {
 					{
 					{
 					this.state = 736;
@@ -4402,14 +4881,14 @@ export default class ComposeParser extends BaseParser {
 			this.state = 754;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			if (((((_la - 25)) & ~0x1F) === 0 && ((1 << (_la - 25)) & 705617927) !== 0) || ((((_la - 58)) & ~0x1F) === 0 && ((1 << (_la - 58)) & 17268769) !== 0) || ((((_la - 100)) & ~0x1F) === 0 && ((1 << (_la - 100)) & 1055931455) !== 0) || _la===551) {
+			if ((((_la) & ~0x1F) === 0 && ((1 << _la) & 469762050) !== 0) || ((((_la - 39)) & ~0x1F) === 0 && ((1 << (_la - 39)) & 34689143) !== 0) || ((((_la - 74)) & ~0x1F) === 0 && ((1 << (_la - 74)) & 4160750095) !== 0) || ((((_la - 106)) & ~0x1F) === 0 && ((1 << (_la - 106)) & 12810721) !== 0) || _la===587) {
 				{
 				this.state = 746;
 				this.embeddable_statement();
 				this.state = 751;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				while (_la===69) {
+				while (_la===70) {
 					{
 					{
 					this.state = 747;
@@ -4547,7 +5026,7 @@ export default class ComposeParser extends BaseParser {
 				this.state = 788;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				while (((((_la - 25)) & ~0x1F) === 0 && ((1 << (_la - 25)) & 705620231) !== 0) || ((((_la - 58)) & ~0x1F) === 0 && ((1 << (_la - 58)) & 17268769) !== 0) || ((((_la - 100)) & ~0x1F) === 0 && ((1 << (_la - 100)) & 1073052799) !== 0) || _la===551) {
+				while ((((_la) & ~0x1F) === 0 && ((1 << _la) & 469762050) !== 0) || ((((_la - 34)) & ~0x1F) === 0 && ((1 << (_la - 34)) & 1110052585) !== 0) || ((((_la - 74)) & ~0x1F) === 0 && ((1 << (_la - 74)) & 4160750095) !== 0) || ((((_la - 106)) & ~0x1F) === 0 && ((1 << (_la - 106)) & 12844003) !== 0) || ((((_la - 584)) & ~0x1F) === 0 && ((1 << (_la - 584)) & 13) !== 0)) {
 					{
 					{
 					this.state = 785;
@@ -4626,7 +5105,7 @@ export default class ComposeParser extends BaseParser {
 			{
 			this.state = 801;
 			_la = this._input.LA(1);
-			if(!(_la===25 || _la===26)) {
+			if(!(_la===26 || _la===27)) {
 			this._errHandler.recoverInline(this);
 			}
 			else {
@@ -4700,7 +5179,7 @@ export default class ComposeParser extends BaseParser {
 			this.state = 818;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			if (_la===88) {
+			if (_la===89) {
 				{
 				this.state = 816;
 				this.match(ComposeParser.ASSIGN);
@@ -4776,7 +5255,7 @@ export default class ComposeParser extends BaseParser {
 			{
 			this.state = 829;
 			_la = this._input.LA(1);
-			if(!(((((_la - 88)) & ~0x1F) === 0 && ((1 << (_la - 88)) & 4095) !== 0))) {
+			if(!(((((_la - 89)) & ~0x1F) === 0 && ((1 << (_la - 89)) & 4095) !== 0))) {
 			this._errHandler.recoverInline(this);
 			}
 			else {
@@ -4847,7 +5326,7 @@ export default class ComposeParser extends BaseParser {
 			this.state = 840;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			if (((((_la - 27)) & ~0x1F) === 0 && ((1 << (_la - 27)) & 2323888129) !== 0) || ((((_la - 63)) & ~0x1F) === 0 && ((1 << (_la - 63)) & 539649) !== 0) || ((((_la - 100)) & ~0x1F) === 0 && ((1 << (_la - 100)) & 1055931455) !== 0) || _la===551) {
+			if (_la===1 || _la===28 || ((((_la - 39)) & ~0x1F) === 0 && ((1 << (_la - 39)) & 34689143) !== 0) || ((((_la - 74)) & ~0x1F) === 0 && ((1 << (_la - 74)) & 4160750095) !== 0) || ((((_la - 106)) & ~0x1F) === 0 && ((1 << (_la - 106)) & 12810721) !== 0) || _la===587) {
 				{
 				this.state = 839;
 				this.expression(0);
@@ -4951,7 +5430,7 @@ export default class ComposeParser extends BaseParser {
 				this.state = 862;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				if (_la===69) {
+				if (_la===70) {
 					{
 					this.state = 860;
 					this.match(ComposeParser.COMMA);
@@ -4983,7 +5462,7 @@ export default class ComposeParser extends BaseParser {
 				this.state = 874;
 				this._errHandler.sync(this);
 				switch (this._input.LA(1)) {
-				case 50:
+				case 51:
 					{
 					{
 					this.state = 868;
@@ -4995,7 +5474,7 @@ export default class ComposeParser extends BaseParser {
 					}
 					}
 					break;
-				case 40:
+				case 41:
 					{
 					this.state = 872;
 					this.match(ComposeParser.TYPE_OF);
@@ -5191,7 +5670,7 @@ export default class ComposeParser extends BaseParser {
 						}
 						this.state = 914;
 						_la = this._input.LA(1);
-						if(!(((((_la - 77)) & ~0x1F) === 0 && ((1 << (_la - 77)) & 11) !== 0))) {
+						if(!(((((_la - 78)) & ~0x1F) === 0 && ((1 << (_la - 78)) & 11) !== 0))) {
 						this._errHandler.recoverInline(this);
 						}
 						else {
@@ -5213,7 +5692,7 @@ export default class ComposeParser extends BaseParser {
 						}
 						this.state = 917;
 						_la = this._input.LA(1);
-						if(!(_la===75 || _la===76)) {
+						if(!(_la===76 || _la===77)) {
 						this._errHandler.recoverInline(this);
 						}
 						else {
@@ -5235,7 +5714,7 @@ export default class ComposeParser extends BaseParser {
 						}
 						this.state = 920;
 						_la = this._input.LA(1);
-						if(!(((((_la - 85)) & ~0x1F) === 0 && ((1 << (_la - 85)) & 7) !== 0))) {
+						if(!(((((_la - 86)) & ~0x1F) === 0 && ((1 << (_la - 86)) & 7) !== 0))) {
 						this._errHandler.recoverInline(this);
 						}
 						else {
@@ -5257,7 +5736,7 @@ export default class ComposeParser extends BaseParser {
 						}
 						this.state = 923;
 						_la = this._input.LA(1);
-						if(!(((((_la - 57)) & ~0x1F) === 0 && ((1 << (_la - 57)) & 15) !== 0))) {
+						if(!(((((_la - 58)) & ~0x1F) === 0 && ((1 << (_la - 58)) & 15) !== 0))) {
 						this._errHandler.recoverInline(this);
 						}
 						else {
@@ -5309,7 +5788,7 @@ export default class ComposeParser extends BaseParser {
 						}
 						this.state = 932;
 						_la = this._input.LA(1);
-						if(!(_la===61 || _la===62)) {
+						if(!(_la===62 || _la===63)) {
 						this._errHandler.recoverInline(this);
 						}
 						else {
@@ -5536,7 +6015,7 @@ export default class ComposeParser extends BaseParser {
 			this.state = 992;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			if (_la===58) {
+			if (_la===59) {
 				{
 				this.state = 981;
 				this.match(ComposeParser.LT);
@@ -5545,7 +6024,7 @@ export default class ComposeParser extends BaseParser {
 				this.state = 987;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				while (_la===69) {
+				while (_la===70) {
 					{
 					{
 					this.state = 983;
@@ -5568,14 +6047,14 @@ export default class ComposeParser extends BaseParser {
 			this.state = 1003;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			if (((((_la - 27)) & ~0x1F) === 0 && ((1 << (_la - 27)) & 2323888129) !== 0) || ((((_la - 63)) & ~0x1F) === 0 && ((1 << (_la - 63)) & 539649) !== 0) || ((((_la - 100)) & ~0x1F) === 0 && ((1 << (_la - 100)) & 1055931455) !== 0) || _la===551) {
+			if (_la===1 || _la===28 || ((((_la - 39)) & ~0x1F) === 0 && ((1 << (_la - 39)) & 34689143) !== 0) || ((((_la - 74)) & ~0x1F) === 0 && ((1 << (_la - 74)) & 4160750095) !== 0) || ((((_la - 106)) & ~0x1F) === 0 && ((1 << (_la - 106)) & 12810721) !== 0) || _la===587) {
 				{
 				this.state = 995;
 				this.expression(0);
 				this.state = 1000;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				while (_la===69) {
+				while (_la===70) {
 					{
 					{
 					this.state = 996;
@@ -5617,7 +6096,7 @@ export default class ComposeParser extends BaseParser {
 			this.state = 1016;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
-			case 105:
+			case 106:
 				localctx = new NullLiteralContext(this, localctx);
 				this.enterOuterAlt(localctx, 1);
 				{
@@ -5625,7 +6104,7 @@ export default class ComposeParser extends BaseParser {
 				this.match(ComposeParser.NULL_LITERAL);
 				}
 				break;
-			case 102:
+			case 103:
 				localctx = new BooleanLiteralContext(this, localctx);
 				this.enterOuterAlt(localctx, 2);
 				{
@@ -5633,7 +6112,7 @@ export default class ComposeParser extends BaseParser {
 				this.match(ComposeParser.BOOLEAN_LITERAL);
 				}
 				break;
-			case 100:
+			case 101:
 				localctx = new IntegerLiteralContext(this, localctx);
 				this.enterOuterAlt(localctx, 3);
 				{
@@ -5641,7 +6120,7 @@ export default class ComposeParser extends BaseParser {
 				this.match(ComposeParser.INTEGER_LITERAL);
 				}
 				break;
-			case 101:
+			case 102:
 				localctx = new DecimalLiteralContext(this, localctx);
 				this.enterOuterAlt(localctx, 4);
 				{
@@ -5649,7 +6128,7 @@ export default class ComposeParser extends BaseParser {
 				this.match(ComposeParser.DECIMAL_LITERAL);
 				}
 				break;
-			case 103:
+			case 104:
 				localctx = new CharLiteralContext(this, localctx);
 				this.enterOuterAlt(localctx, 5);
 				{
@@ -5657,7 +6136,7 @@ export default class ComposeParser extends BaseParser {
 				this.match(ComposeParser.CHAR_LITERAL);
 				}
 				break;
-			case 104:
+			case 105:
 				localctx = new StringLiteralContext(this, localctx);
 				this.enterOuterAlt(localctx, 6);
 				{
@@ -5665,7 +6144,7 @@ export default class ComposeParser extends BaseParser {
 				this.match(ComposeParser.STRING_LITERAL);
 				}
 				break;
-			case 52:
+			case 53:
 				localctx = new ListLiteralContext(this, localctx);
 				this.enterOuterAlt(localctx, 7);
 				{
@@ -5673,7 +6152,7 @@ export default class ComposeParser extends BaseParser {
 				this.list_literal();
 				}
 				break;
-			case 58:
+			case 59:
 				localctx = new SetLiteralContext(this, localctx);
 				this.enterOuterAlt(localctx, 8);
 				{
@@ -5681,7 +6160,7 @@ export default class ComposeParser extends BaseParser {
 				this.set_literal();
 				}
 				break;
-			case 54:
+			case 55:
 				localctx = new MapLiteralContext(this, localctx);
 				this.enterOuterAlt(localctx, 9);
 				{
@@ -5720,14 +6199,14 @@ export default class ComposeParser extends BaseParser {
 			this.state = 1027;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			if (((((_la - 27)) & ~0x1F) === 0 && ((1 << (_la - 27)) & 2323888129) !== 0) || ((((_la - 63)) & ~0x1F) === 0 && ((1 << (_la - 63)) & 539649) !== 0) || ((((_la - 100)) & ~0x1F) === 0 && ((1 << (_la - 100)) & 1055931455) !== 0) || _la===551) {
+			if (_la===1 || _la===28 || ((((_la - 39)) & ~0x1F) === 0 && ((1 << (_la - 39)) & 34689143) !== 0) || ((((_la - 74)) & ~0x1F) === 0 && ((1 << (_la - 74)) & 4160750095) !== 0) || ((((_la - 106)) & ~0x1F) === 0 && ((1 << (_la - 106)) & 12810721) !== 0) || _la===587) {
 				{
 				this.state = 1019;
 				localctx._exp = this.expression(0);
 				this.state = 1024;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				while (_la===69) {
+				while (_la===70) {
 					{
 					{
 					this.state = 1020;
@@ -5774,14 +6253,14 @@ export default class ComposeParser extends BaseParser {
 			this.state = 1040;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			if (((((_la - 27)) & ~0x1F) === 0 && ((1 << (_la - 27)) & 2323888129) !== 0) || ((((_la - 63)) & ~0x1F) === 0 && ((1 << (_la - 63)) & 539649) !== 0) || ((((_la - 100)) & ~0x1F) === 0 && ((1 << (_la - 100)) & 1055931455) !== 0) || _la===551) {
+			if (_la===1 || _la===28 || ((((_la - 39)) & ~0x1F) === 0 && ((1 << (_la - 39)) & 34689143) !== 0) || ((((_la - 74)) & ~0x1F) === 0 && ((1 << (_la - 74)) & 4160750095) !== 0) || ((((_la - 106)) & ~0x1F) === 0 && ((1 << (_la - 106)) & 12810721) !== 0) || _la===587) {
 				{
 				this.state = 1032;
 				localctx._exp = this.expression(0);
 				this.state = 1037;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				while (_la===69) {
+				while (_la===70) {
 					{
 					{
 					this.state = 1033;
@@ -5828,14 +6307,14 @@ export default class ComposeParser extends BaseParser {
 			this.state = 1053;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			if (((((_la - 110)) & ~0x1F) === 0 && ((1 << (_la - 110)) & 1031183) !== 0) || _la===551) {
+			if (_la===1 || ((((_la - 111)) & ~0x1F) === 0 && ((1 << (_la - 111)) & 400335) !== 0) || _la===587) {
 				{
 				this.state = 1045;
 				localctx._entry = this.map_entry();
 				this.state = 1050;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				while (_la===69) {
+				while (_la===70) {
 					{
 					{
 					this.state = 1046;
@@ -5928,7 +6407,7 @@ export default class ComposeParser extends BaseParser {
 			this.state = 1071;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			while (_la===100) {
+			while (_la===101) {
 				{
 				{
 				this.state = 1068;
@@ -5965,17 +6444,17 @@ export default class ComposeParser extends BaseParser {
 			this.state = 1079;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
-			case 110:
+			case 1:
 			case 111:
 			case 112:
 			case 113:
+			case 114:
+			case 117:
+			case 118:
+			case 119:
 			case 120:
-			case 121:
 			case 122:
 			case 123:
-			case 125:
-			case 126:
-			case 127:
 			case 128:
 			case 129:
 				this.enterOuterAlt(localctx, 1);
@@ -5984,13 +6463,12 @@ export default class ComposeParser extends BaseParser {
 				this.plain_opcode();
 				}
 				break;
-			case 114:
 			case 115:
 			case 116:
-			case 117:
-			case 118:
-			case 119:
-			case 124:
+			case 121:
+			case 584:
+			case 585:
+			case 586:
 				this.enterOuterAlt(localctx, 2);
 				{
 				this.state = 1077;
@@ -6164,39 +6642,6 @@ export default class ComposeParser extends BaseParser {
 			case 294:
 			case 295:
 			case 296:
-			case 297:
-			case 298:
-			case 299:
-			case 300:
-			case 301:
-			case 302:
-			case 303:
-			case 304:
-			case 305:
-			case 306:
-			case 307:
-			case 308:
-			case 309:
-			case 310:
-			case 311:
-			case 312:
-			case 313:
-			case 314:
-			case 315:
-			case 316:
-			case 317:
-			case 318:
-			case 319:
-			case 320:
-			case 321:
-			case 322:
-			case 323:
-			case 324:
-			case 325:
-			case 326:
-			case 327:
-			case 328:
-			case 329:
 			case 330:
 			case 331:
 			case 332:
@@ -6418,6 +6863,39 @@ export default class ComposeParser extends BaseParser {
 			case 548:
 			case 549:
 			case 550:
+			case 551:
+			case 552:
+			case 553:
+			case 554:
+			case 555:
+			case 556:
+			case 557:
+			case 558:
+			case 559:
+			case 560:
+			case 561:
+			case 562:
+			case 563:
+			case 564:
+			case 565:
+			case 566:
+			case 567:
+			case 568:
+			case 569:
+			case 570:
+			case 571:
+			case 572:
+			case 573:
+			case 574:
+			case 575:
+			case 576:
+			case 577:
+			case 578:
+			case 579:
+			case 580:
+			case 581:
+			case 582:
+			case 583:
 				this.enterOuterAlt(localctx, 3);
 				{
 				this.state = 1078;
@@ -6452,7 +6930,7 @@ export default class ComposeParser extends BaseParser {
 			{
 			this.state = 1081;
 			_la = this._input.LA(1);
-			if(!(((((_la - 110)) & ~0x1F) === 0 && ((1 << (_la - 110)) & 1031183) !== 0))) {
+			if(!(_la===1 || ((((_la - 111)) & ~0x1F) === 0 && ((1 << (_la - 111)) & 400335) !== 0))) {
 			this._errHandler.recoverInline(this);
 			}
 			else {
@@ -6485,7 +6963,7 @@ export default class ComposeParser extends BaseParser {
 			{
 			this.state = 1083;
 			_la = this._input.LA(1);
-			if(!(((((_la - 114)) & ~0x1F) === 0 && ((1 << (_la - 114)) & 1087) !== 0))) {
+			if(!(((((_la - 115)) & ~0x1F) === 0 && ((1 << (_la - 115)) & 67) !== 0) || ((((_la - 584)) & ~0x1F) === 0 && ((1 << (_la - 584)) & 7) !== 0))) {
 			this._errHandler.recoverInline(this);
 			}
 			else {
@@ -6518,7 +6996,7 @@ export default class ComposeParser extends BaseParser {
 			{
 			this.state = 1085;
 			_la = this._input.LA(1);
-			if(!(((((_la - 130)) & ~0x1F) === 0 && ((1 << (_la - 130)) & 4294967295) !== 0) || ((((_la - 162)) & ~0x1F) === 0 && ((1 << (_la - 162)) & 4294967295) !== 0) || ((((_la - 194)) & ~0x1F) === 0 && ((1 << (_la - 194)) & 4294967295) !== 0) || ((((_la - 226)) & ~0x1F) === 0 && ((1 << (_la - 226)) & 4294967295) !== 0) || ((((_la - 258)) & ~0x1F) === 0 && ((1 << (_la - 258)) & 4294967295) !== 0) || ((((_la - 290)) & ~0x1F) === 0 && ((1 << (_la - 290)) & 4294967295) !== 0) || ((((_la - 322)) & ~0x1F) === 0 && ((1 << (_la - 322)) & 4294967295) !== 0) || ((((_la - 354)) & ~0x1F) === 0 && ((1 << (_la - 354)) & 4294967295) !== 0) || ((((_la - 386)) & ~0x1F) === 0 && ((1 << (_la - 386)) & 4294967295) !== 0) || ((((_la - 418)) & ~0x1F) === 0 && ((1 << (_la - 418)) & 4294967295) !== 0) || ((((_la - 450)) & ~0x1F) === 0 && ((1 << (_la - 450)) & 4294967295) !== 0) || ((((_la - 482)) & ~0x1F) === 0 && ((1 << (_la - 482)) & 4294967295) !== 0) || ((((_la - 514)) & ~0x1F) === 0 && ((1 << (_la - 514)) & 4294967295) !== 0) || ((((_la - 546)) & ~0x1F) === 0 && ((1 << (_la - 546)) & 31) !== 0))) {
+			if(!(((((_la - 130)) & ~0x1F) === 0 && ((1 << (_la - 130)) & 4294967295) !== 0) || ((((_la - 162)) & ~0x1F) === 0 && ((1 << (_la - 162)) & 4294967295) !== 0) || ((((_la - 194)) & ~0x1F) === 0 && ((1 << (_la - 194)) & 4294967295) !== 0) || ((((_la - 226)) & ~0x1F) === 0 && ((1 << (_la - 226)) & 4294967295) !== 0) || ((((_la - 258)) & ~0x1F) === 0 && ((1 << (_la - 258)) & 4294967295) !== 0) || ((((_la - 290)) & ~0x1F) === 0 && ((1 << (_la - 290)) & 127) !== 0) || ((((_la - 330)) & ~0x1F) === 0 && ((1 << (_la - 330)) & 4294967295) !== 0) || ((((_la - 362)) & ~0x1F) === 0 && ((1 << (_la - 362)) & 4294967295) !== 0) || ((((_la - 394)) & ~0x1F) === 0 && ((1 << (_la - 394)) & 4294967295) !== 0) || ((((_la - 426)) & ~0x1F) === 0 && ((1 << (_la - 426)) & 4294967295) !== 0) || ((((_la - 458)) & ~0x1F) === 0 && ((1 << (_la - 458)) & 4294967295) !== 0) || ((((_la - 490)) & ~0x1F) === 0 && ((1 << (_la - 490)) & 4294967295) !== 0) || ((((_la - 522)) & ~0x1F) === 0 && ((1 << (_la - 522)) & 4294967295) !== 0) || ((((_la - 554)) & ~0x1F) === 0 && ((1 << (_la - 554)) & 1073741823) !== 0))) {
 			this._errHandler.recoverInline(this);
 			}
 			else {
@@ -6675,7 +7153,7 @@ export default class ComposeParser extends BaseParser {
 		return true;
 	}
 
-	public static readonly _serializedATN: number[] = [4,1,551,1088,2,0,7,0,
+	public static readonly _serializedATN: number[] = [4,1,587,1088,2,0,7,0,
 	2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,7,7,2,8,7,8,2,9,7,9,
 	2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,2,14,7,14,2,15,7,15,2,16,7,16,2,
 	17,7,17,2,18,7,18,2,19,7,19,2,20,7,20,2,21,7,21,2,22,7,22,2,23,7,23,2,24,
@@ -6763,292 +7241,292 @@ export default class ComposeParser extends BaseParser {
 	16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,
 	64,66,68,70,72,74,76,78,80,82,84,86,88,90,92,94,96,98,100,102,104,106,108,
 	110,112,114,116,118,120,122,124,126,128,130,132,134,136,138,140,142,144,
-	146,148,150,152,154,156,158,160,0,11,1,0,22,24,1,0,25,26,1,0,88,99,2,0,
-	77,78,80,80,1,0,75,76,1,0,85,87,1,0,57,60,1,0,61,62,3,0,110,113,120,123,
-	125,129,2,0,114,119,124,124,1,0,130,550,1184,0,162,1,0,0,0,2,172,1,0,0,
-	0,4,175,1,0,0,0,6,208,1,0,0,0,8,212,1,0,0,0,10,217,1,0,0,0,12,232,1,0,0,
-	0,14,247,1,0,0,0,16,260,1,0,0,0,18,264,1,0,0,0,20,272,1,0,0,0,22,274,1,
-	0,0,0,24,284,1,0,0,0,26,297,1,0,0,0,28,306,1,0,0,0,30,308,1,0,0,0,32,310,
-	1,0,0,0,34,314,1,0,0,0,36,322,1,0,0,0,38,326,1,0,0,0,40,328,1,0,0,0,42,
-	330,1,0,0,0,44,332,1,0,0,0,46,334,1,0,0,0,48,336,1,0,0,0,50,338,1,0,0,0,
-	52,340,1,0,0,0,54,342,1,0,0,0,56,344,1,0,0,0,58,346,1,0,0,0,60,348,1,0,
-	0,0,62,350,1,0,0,0,64,358,1,0,0,0,66,360,1,0,0,0,68,362,1,0,0,0,70,378,
-	1,0,0,0,72,383,1,0,0,0,74,396,1,0,0,0,76,407,1,0,0,0,78,421,1,0,0,0,80,
-	424,1,0,0,0,82,470,1,0,0,0,84,473,1,0,0,0,86,486,1,0,0,0,88,502,1,0,0,0,
-	90,533,1,0,0,0,92,564,1,0,0,0,94,566,1,0,0,0,96,602,1,0,0,0,98,610,1,0,
-	0,0,100,624,1,0,0,0,102,632,1,0,0,0,104,646,1,0,0,0,106,648,1,0,0,0,108,
-	652,1,0,0,0,110,673,1,0,0,0,112,695,1,0,0,0,114,708,1,0,0,0,116,718,1,0,
-	0,0,118,721,1,0,0,0,120,759,1,0,0,0,122,792,1,0,0,0,124,797,1,0,0,0,126,
-	801,1,0,0,0,128,810,1,0,0,0,130,823,1,0,0,0,132,829,1,0,0,0,134,831,1,0,
-	0,0,136,838,1,0,0,0,138,911,1,0,0,0,140,980,1,0,0,0,142,1016,1,0,0,0,144,
-	1018,1,0,0,0,146,1031,1,0,0,0,148,1044,1,0,0,0,150,1057,1,0,0,0,152,1064,
-	1,0,0,0,154,1079,1,0,0,0,156,1081,1,0,0,0,158,1083,1,0,0,0,160,1085,1,0,
-	0,0,162,166,3,2,1,0,163,165,3,8,4,0,164,163,1,0,0,0,165,168,1,0,0,0,166,
-	164,1,0,0,0,166,167,1,0,0,0,167,1,1,0,0,0,168,166,1,0,0,0,169,171,3,4,2,
-	0,170,169,1,0,0,0,171,174,1,0,0,0,172,170,1,0,0,0,172,173,1,0,0,0,173,3,
-	1,0,0,0,174,172,1,0,0,0,175,202,5,46,0,0,176,189,3,20,10,0,177,178,5,69,
-	0,0,178,179,5,54,0,0,179,184,3,20,10,0,180,181,5,69,0,0,181,183,3,20,10,
-	0,182,180,1,0,0,0,183,186,1,0,0,0,184,182,1,0,0,0,184,185,1,0,0,0,185,187,
-	1,0,0,0,186,184,1,0,0,0,187,188,5,55,0,0,188,190,1,0,0,0,189,177,1,0,0,
-	0,189,190,1,0,0,0,190,203,1,0,0,0,191,192,5,54,0,0,192,197,3,20,10,0,193,
-	194,5,69,0,0,194,196,3,20,10,0,195,193,1,0,0,0,196,199,1,0,0,0,197,195,
-	1,0,0,0,197,198,1,0,0,0,198,200,1,0,0,0,199,197,1,0,0,0,200,201,5,55,0,
-	0,201,203,1,0,0,0,202,176,1,0,0,0,202,191,1,0,0,0,203,204,1,0,0,0,204,205,
-	5,30,0,0,205,206,3,6,3,0,206,207,5,67,0,0,207,5,1,0,0,0,208,209,5,104,0,
-	0,209,7,1,0,0,0,210,213,3,12,6,0,211,213,3,10,5,0,212,210,1,0,0,0,212,211,
-	1,0,0,0,213,9,1,0,0,0,214,216,3,22,11,0,215,214,1,0,0,0,216,219,1,0,0,0,
-	217,215,1,0,0,0,217,218,1,0,0,0,218,224,1,0,0,0,219,217,1,0,0,0,220,222,
-	5,45,0,0,221,223,5,47,0,0,222,221,1,0,0,0,222,223,1,0,0,0,223,225,1,0,0,
-	0,224,220,1,0,0,0,224,225,1,0,0,0,225,226,1,0,0,0,226,227,3,126,63,0,227,
-	228,5,67,0,0,228,11,1,0,0,0,229,231,3,22,11,0,230,229,1,0,0,0,231,234,1,
-	0,0,0,232,230,1,0,0,0,232,233,1,0,0,0,233,239,1,0,0,0,234,232,1,0,0,0,235,
-	237,5,45,0,0,236,238,5,47,0,0,237,236,1,0,0,0,237,238,1,0,0,0,238,240,1,
-	0,0,0,239,235,1,0,0,0,239,240,1,0,0,0,240,245,1,0,0,0,241,246,3,18,9,0,
-	242,246,3,80,40,0,243,246,3,86,43,0,244,246,3,14,7,0,245,241,1,0,0,0,245,
-	242,1,0,0,0,245,243,1,0,0,0,245,244,1,0,0,0,246,13,1,0,0,0,247,248,5,16,
-	0,0,248,249,3,20,10,0,249,250,5,54,0,0,250,255,3,16,8,0,251,252,5,69,0,
-	0,252,254,3,16,8,0,253,251,1,0,0,0,254,257,1,0,0,0,255,253,1,0,0,0,255,
-	256,1,0,0,0,256,258,1,0,0,0,257,255,1,0,0,0,258,259,5,55,0,0,259,15,1,0,
-	0,0,260,261,3,20,10,0,261,262,5,88,0,0,262,263,3,138,69,0,263,17,1,0,0,
-	0,264,265,5,14,0,0,265,266,3,20,10,0,266,267,5,68,0,0,267,268,3,26,13,0,
-	268,269,5,67,0,0,269,19,1,0,0,0,270,273,5,551,0,0,271,273,3,156,78,0,272,
-	270,1,0,0,0,272,271,1,0,0,0,273,21,1,0,0,0,274,279,5,106,0,0,275,276,5,
-	50,0,0,276,277,3,142,71,0,277,278,5,51,0,0,278,280,1,0,0,0,279,275,1,0,
-	0,0,279,280,1,0,0,0,280,23,1,0,0,0,281,282,6,12,-1,0,282,285,3,28,14,0,
-	283,285,3,66,33,0,284,281,1,0,0,0,284,283,1,0,0,0,285,294,1,0,0,0,286,287,
-	10,2,0,0,287,288,5,52,0,0,288,293,5,53,0,0,289,290,10,1,0,0,290,291,5,58,
-	0,0,291,293,5,57,0,0,292,286,1,0,0,0,292,289,1,0,0,0,293,296,1,0,0,0,294,
-	292,1,0,0,0,294,295,1,0,0,0,295,25,1,0,0,0,296,294,1,0,0,0,297,300,3,24,
-	12,0,298,299,5,84,0,0,299,301,5,105,0,0,300,298,1,0,0,0,300,301,1,0,0,0,
-	301,27,1,0,0,0,302,307,3,32,16,0,303,307,3,34,17,0,304,307,3,56,28,0,305,
-	307,3,30,15,0,306,302,1,0,0,0,306,303,1,0,0,0,306,304,1,0,0,0,306,305,1,
-	0,0,0,307,29,1,0,0,0,308,309,5,12,0,0,309,31,1,0,0,0,310,311,5,11,0,0,311,
-	33,1,0,0,0,312,315,3,36,18,0,313,315,3,38,19,0,314,312,1,0,0,0,314,313,
-	1,0,0,0,315,35,1,0,0,0,316,323,3,40,20,0,317,323,3,42,21,0,318,323,3,44,
-	22,0,319,323,3,46,23,0,320,323,3,48,24,0,321,323,3,50,25,0,322,316,1,0,
-	0,0,322,317,1,0,0,0,322,318,1,0,0,0,322,319,1,0,0,0,322,320,1,0,0,0,322,
-	321,1,0,0,0,323,37,1,0,0,0,324,327,3,52,26,0,325,327,3,54,27,0,326,324,
-	1,0,0,0,326,325,1,0,0,0,327,39,1,0,0,0,328,329,5,1,0,0,329,41,1,0,0,0,330,
-	331,5,2,0,0,331,43,1,0,0,0,332,333,5,3,0,0,333,45,1,0,0,0,334,335,5,4,0,
-	0,335,47,1,0,0,0,336,337,5,5,0,0,337,49,1,0,0,0,338,339,5,6,0,0,339,51,
-	1,0,0,0,340,341,5,7,0,0,341,53,1,0,0,0,342,343,5,8,0,0,343,55,1,0,0,0,344,
-	345,5,10,0,0,345,57,1,0,0,0,346,347,5,13,0,0,347,59,1,0,0,0,348,349,3,64,
-	32,0,349,61,1,0,0,0,350,353,3,60,30,0,351,352,5,84,0,0,352,354,5,105,0,
-	0,353,351,1,0,0,0,353,354,1,0,0,0,354,63,1,0,0,0,355,356,4,32,2,0,356,359,
-	5,551,0,0,357,359,3,156,78,0,358,355,1,0,0,0,358,357,1,0,0,0,359,65,1,0,
-	0,0,360,361,3,68,34,0,361,67,1,0,0,0,362,363,4,34,3,0,363,364,5,551,0,0,
-	364,69,1,0,0,0,365,379,3,60,30,0,366,375,5,50,0,0,367,372,3,78,39,0,368,
-	369,5,69,0,0,369,371,3,78,39,0,370,368,1,0,0,0,371,374,1,0,0,0,372,370,
-	1,0,0,0,372,373,1,0,0,0,373,376,1,0,0,0,374,372,1,0,0,0,375,367,1,0,0,0,
-	375,376,1,0,0,0,376,377,1,0,0,0,377,379,5,51,0,0,378,365,1,0,0,0,378,366,
-	1,0,0,0,379,380,1,0,0,0,380,381,5,56,0,0,381,382,3,76,38,0,382,71,1,0,0,
-	0,383,386,3,70,35,0,384,385,5,84,0,0,385,387,5,105,0,0,386,384,1,0,0,0,
-	386,387,1,0,0,0,387,73,1,0,0,0,388,397,3,26,13,0,389,397,3,62,31,0,390,
-	391,4,37,4,1,391,397,3,72,36,0,392,393,5,50,0,0,393,394,3,72,36,0,394,395,
-	5,51,0,0,395,397,1,0,0,0,396,388,1,0,0,0,396,389,1,0,0,0,396,390,1,0,0,
-	0,396,392,1,0,0,0,397,75,1,0,0,0,398,408,3,58,29,0,399,404,3,74,37,0,400,
-	401,5,69,0,0,401,403,3,74,37,0,402,400,1,0,0,0,403,406,1,0,0,0,404,402,
-	1,0,0,0,404,405,1,0,0,0,405,408,1,0,0,0,406,404,1,0,0,0,407,398,1,0,0,0,
-	407,399,1,0,0,0,408,77,1,0,0,0,409,422,3,62,31,0,410,412,5,70,0,0,411,410,
-	1,0,0,0,411,412,1,0,0,0,412,413,1,0,0,0,413,414,3,20,10,0,414,415,5,68,
-	0,0,415,416,3,26,13,0,416,422,1,0,0,0,417,418,3,20,10,0,418,419,5,68,0,
-	0,419,420,3,72,36,0,420,422,1,0,0,0,421,409,1,0,0,0,421,411,1,0,0,0,421,
-	417,1,0,0,0,422,79,1,0,0,0,423,425,3,82,41,0,424,423,1,0,0,0,424,425,1,
-	0,0,0,425,427,1,0,0,0,426,428,5,20,0,0,427,426,1,0,0,0,427,428,1,0,0,0,
-	428,429,1,0,0,0,429,430,5,15,0,0,430,442,3,68,34,0,431,432,5,50,0,0,432,
-	437,3,64,32,0,433,434,5,69,0,0,434,436,3,64,32,0,435,433,1,0,0,0,436,439,
-	1,0,0,0,437,435,1,0,0,0,437,438,1,0,0,0,438,440,1,0,0,0,439,437,1,0,0,0,
-	440,441,5,51,0,0,441,443,1,0,0,0,442,431,1,0,0,0,442,443,1,0,0,0,443,453,
-	1,0,0,0,444,445,5,17,0,0,445,450,3,68,34,0,446,447,5,69,0,0,447,449,3,68,
-	34,0,448,446,1,0,0,0,449,452,1,0,0,0,450,448,1,0,0,0,450,451,1,0,0,0,451,
-	454,1,0,0,0,452,450,1,0,0,0,453,444,1,0,0,0,453,454,1,0,0,0,454,455,1,0,
-	0,0,455,459,5,54,0,0,456,458,3,84,42,0,457,456,1,0,0,0,458,461,1,0,0,0,
-	459,457,1,0,0,0,459,460,1,0,0,0,460,465,1,0,0,0,461,459,1,0,0,0,462,464,
-	3,86,43,0,463,462,1,0,0,0,464,467,1,0,0,0,465,463,1,0,0,0,465,466,1,0,0,
-	0,466,468,1,0,0,0,467,465,1,0,0,0,468,469,5,55,0,0,469,81,1,0,0,0,470,471,
-	7,0,0,0,471,83,1,0,0,0,472,474,3,82,41,0,473,472,1,0,0,0,473,474,1,0,0,
-	0,474,476,1,0,0,0,475,477,5,19,0,0,476,475,1,0,0,0,476,477,1,0,0,0,477,
-	478,1,0,0,0,478,479,3,20,10,0,479,480,5,68,0,0,480,481,3,26,13,0,481,482,
-	5,67,0,0,482,85,1,0,0,0,483,487,3,88,44,0,484,487,3,90,45,0,485,487,3,92,
-	46,0,486,483,1,0,0,0,486,484,1,0,0,0,486,485,1,0,0,0,487,87,1,0,0,0,488,
-	490,4,44,5,1,489,491,3,82,41,0,490,489,1,0,0,0,490,491,1,0,0,0,491,492,
-	1,0,0,0,492,493,5,20,0,0,493,494,3,94,47,0,494,495,5,67,0,0,495,503,1,0,
-	0,0,496,497,4,44,6,1,497,498,5,20,0,0,498,499,5,18,0,0,499,500,3,94,47,
-	0,500,501,5,67,0,0,501,503,1,0,0,0,502,488,1,0,0,0,502,496,1,0,0,0,503,
-	89,1,0,0,0,504,506,4,45,7,1,505,507,3,82,41,0,506,505,1,0,0,0,506,507,1,
-	0,0,0,507,509,1,0,0,0,508,510,5,19,0,0,509,508,1,0,0,0,509,510,1,0,0,0,
-	510,511,1,0,0,0,511,512,3,94,47,0,512,516,5,54,0,0,513,515,3,98,49,0,514,
-	513,1,0,0,0,515,518,1,0,0,0,516,514,1,0,0,0,516,517,1,0,0,0,517,519,1,0,
-	0,0,518,516,1,0,0,0,519,520,5,55,0,0,520,534,1,0,0,0,521,522,4,45,8,1,522,
-	523,5,18,0,0,523,524,3,94,47,0,524,528,5,54,0,0,525,527,3,98,49,0,526,525,
-	1,0,0,0,527,530,1,0,0,0,528,526,1,0,0,0,528,529,1,0,0,0,529,531,1,0,0,0,
-	530,528,1,0,0,0,531,532,5,55,0,0,532,534,1,0,0,0,533,504,1,0,0,0,533,521,
-	1,0,0,0,534,91,1,0,0,0,535,537,4,46,9,1,536,538,3,82,41,0,537,536,1,0,0,
-	0,537,538,1,0,0,0,538,539,1,0,0,0,539,540,5,19,0,0,540,541,5,21,0,0,541,
-	542,3,94,47,0,542,546,5,54,0,0,543,545,3,152,76,0,544,543,1,0,0,0,545,548,
-	1,0,0,0,546,544,1,0,0,0,546,547,1,0,0,0,547,549,1,0,0,0,548,546,1,0,0,0,
-	549,550,5,55,0,0,550,565,1,0,0,0,551,552,4,46,10,1,552,553,5,21,0,0,553,
-	554,5,18,0,0,554,555,3,94,47,0,555,559,5,54,0,0,556,558,3,152,76,0,557,
-	556,1,0,0,0,558,561,1,0,0,0,559,557,1,0,0,0,559,560,1,0,0,0,560,562,1,0,
-	0,0,561,559,1,0,0,0,562,563,5,55,0,0,563,565,1,0,0,0,564,535,1,0,0,0,564,
-	551,1,0,0,0,565,93,1,0,0,0,566,578,3,20,10,0,567,568,5,58,0,0,568,573,3,
-	96,48,0,569,570,5,69,0,0,570,572,3,96,48,0,571,569,1,0,0,0,572,575,1,0,
-	0,0,573,571,1,0,0,0,573,574,1,0,0,0,574,576,1,0,0,0,575,573,1,0,0,0,576,
-	577,5,57,0,0,577,579,1,0,0,0,578,567,1,0,0,0,578,579,1,0,0,0,579,580,1,
-	0,0,0,580,589,5,50,0,0,581,586,3,78,39,0,582,583,5,69,0,0,583,585,3,78,
-	39,0,584,582,1,0,0,0,585,588,1,0,0,0,586,584,1,0,0,0,586,587,1,0,0,0,587,
-	590,1,0,0,0,588,586,1,0,0,0,589,581,1,0,0,0,589,590,1,0,0,0,590,591,1,0,
-	0,0,591,600,5,51,0,0,592,593,4,47,11,1,593,594,5,68,0,0,594,601,3,76,38,
-	0,595,598,4,47,12,1,596,597,5,68,0,0,597,599,3,76,38,0,598,596,1,0,0,0,
-	598,599,1,0,0,0,599,601,1,0,0,0,600,592,1,0,0,0,600,595,1,0,0,0,601,95,
-	1,0,0,0,602,605,3,68,34,0,603,604,5,17,0,0,604,606,3,24,12,0,605,603,1,
-	0,0,0,605,606,1,0,0,0,606,97,1,0,0,0,607,609,3,22,11,0,608,607,1,0,0,0,
-	609,612,1,0,0,0,610,608,1,0,0,0,610,611,1,0,0,0,611,617,1,0,0,0,612,610,
-	1,0,0,0,613,614,3,100,50,0,614,615,5,67,0,0,615,618,1,0,0,0,616,618,3,102,
-	51,0,617,613,1,0,0,0,617,616,1,0,0,0,618,99,1,0,0,0,619,625,3,126,63,0,
-	620,625,3,130,65,0,621,625,3,134,67,0,622,625,3,104,52,0,623,625,3,124,
-	62,0,624,619,1,0,0,0,624,620,1,0,0,0,624,621,1,0,0,0,624,622,1,0,0,0,624,
-	623,1,0,0,0,625,101,1,0,0,0,626,633,3,120,60,0,627,633,3,118,59,0,628,633,
-	3,108,54,0,629,633,3,106,53,0,630,633,3,116,58,0,631,633,3,136,68,0,632,
-	626,1,0,0,0,632,627,1,0,0,0,632,628,1,0,0,0,632,629,1,0,0,0,632,630,1,0,
-	0,0,632,631,1,0,0,0,633,103,1,0,0,0,634,635,3,138,69,0,635,636,6,52,-1,
-	0,636,637,5,73,0,0,637,647,1,0,0,0,638,639,3,138,69,0,639,640,6,52,-1,0,
-	640,641,5,74,0,0,641,647,1,0,0,0,642,643,5,73,0,0,643,647,3,138,69,0,644,
-	645,5,74,0,0,645,647,3,138,69,0,646,634,1,0,0,0,646,638,1,0,0,0,646,642,
-	1,0,0,0,646,644,1,0,0,0,647,105,1,0,0,0,648,649,5,118,0,0,649,650,3,138,
-	69,0,650,651,5,67,0,0,651,107,1,0,0,0,652,653,5,116,0,0,653,657,5,54,0,
-	0,654,656,3,98,49,0,655,654,1,0,0,0,656,659,1,0,0,0,657,655,1,0,0,0,657,
-	658,1,0,0,0,658,660,1,0,0,0,659,657,1,0,0,0,660,664,5,55,0,0,661,663,3,
-	110,55,0,662,661,1,0,0,0,663,666,1,0,0,0,664,662,1,0,0,0,664,665,1,0,0,
-	0,665,668,1,0,0,0,666,664,1,0,0,0,667,669,3,112,56,0,668,667,1,0,0,0,668,
-	669,1,0,0,0,669,671,1,0,0,0,670,672,3,114,57,0,671,670,1,0,0,0,671,672,
-	1,0,0,0,672,109,1,0,0,0,673,674,5,117,0,0,674,675,5,50,0,0,675,676,3,20,
-	10,0,676,677,5,68,0,0,677,682,3,24,12,0,678,679,5,84,0,0,679,681,3,24,12,
-	0,680,678,1,0,0,0,681,684,1,0,0,0,682,680,1,0,0,0,682,683,1,0,0,0,683,685,
-	1,0,0,0,684,682,1,0,0,0,685,686,5,51,0,0,686,690,5,54,0,0,687,689,3,98,
-	49,0,688,687,1,0,0,0,689,692,1,0,0,0,690,688,1,0,0,0,690,691,1,0,0,0,691,
-	693,1,0,0,0,692,690,1,0,0,0,693,694,5,55,0,0,694,111,1,0,0,0,695,696,5,
-	117,0,0,696,697,5,50,0,0,697,698,5,70,0,0,698,699,5,51,0,0,699,703,5,54,
-	0,0,700,702,3,98,49,0,701,700,1,0,0,0,702,705,1,0,0,0,703,701,1,0,0,0,703,
-	704,1,0,0,0,704,706,1,0,0,0,705,703,1,0,0,0,706,707,5,55,0,0,707,113,1,
-	0,0,0,708,709,5,37,0,0,709,713,5,54,0,0,710,712,3,98,49,0,711,710,1,0,0,
-	0,712,715,1,0,0,0,713,711,1,0,0,0,713,714,1,0,0,0,714,716,1,0,0,0,715,713,
-	1,0,0,0,716,717,5,55,0,0,717,115,1,0,0,0,718,719,5,36,0,0,719,720,5,67,
-	0,0,720,117,1,0,0,0,721,722,5,33,0,0,722,732,5,50,0,0,723,724,5,26,0,0,
-	724,729,3,128,64,0,725,726,5,69,0,0,726,728,3,128,64,0,727,725,1,0,0,0,
-	728,731,1,0,0,0,729,727,1,0,0,0,729,730,1,0,0,0,730,733,1,0,0,0,731,729,
-	1,0,0,0,732,723,1,0,0,0,732,733,1,0,0,0,733,734,1,0,0,0,734,743,5,67,0,
-	0,735,740,3,138,69,0,736,737,5,69,0,0,737,739,3,138,69,0,738,736,1,0,0,
-	0,739,742,1,0,0,0,740,738,1,0,0,0,740,741,1,0,0,0,741,744,1,0,0,0,742,740,
-	1,0,0,0,743,735,1,0,0,0,743,744,1,0,0,0,744,745,1,0,0,0,745,754,5,67,0,
-	0,746,751,3,100,50,0,747,748,5,69,0,0,748,750,3,100,50,0,749,747,1,0,0,
-	0,750,753,1,0,0,0,751,749,1,0,0,0,751,752,1,0,0,0,752,755,1,0,0,0,753,751,
-	1,0,0,0,754,746,1,0,0,0,754,755,1,0,0,0,755,756,1,0,0,0,756,757,5,51,0,
-	0,757,758,3,122,61,0,758,119,1,0,0,0,759,760,5,114,0,0,760,761,5,50,0,0,
-	761,762,3,138,69,0,762,763,5,51,0,0,763,773,3,122,61,0,764,765,5,115,0,
-	0,765,766,5,114,0,0,766,767,5,50,0,0,767,768,3,138,69,0,768,769,5,51,0,
-	0,769,770,3,122,61,0,770,772,1,0,0,0,771,764,1,0,0,0,772,775,1,0,0,0,773,
-	771,1,0,0,0,773,774,1,0,0,0,774,780,1,0,0,0,775,773,1,0,0,0,776,777,5,115,
-	0,0,777,779,3,122,61,0,778,776,1,0,0,0,779,782,1,0,0,0,780,778,1,0,0,0,
-	780,781,1,0,0,0,781,121,1,0,0,0,782,780,1,0,0,0,783,793,3,98,49,0,784,788,
-	5,54,0,0,785,787,3,98,49,0,786,785,1,0,0,0,787,790,1,0,0,0,788,786,1,0,
-	0,0,788,789,1,0,0,0,789,791,1,0,0,0,790,788,1,0,0,0,791,793,5,55,0,0,792,
-	783,1,0,0,0,792,784,1,0,0,0,793,123,1,0,0,0,794,795,3,138,69,0,795,796,
-	5,71,0,0,796,798,1,0,0,0,797,794,1,0,0,0,797,798,1,0,0,0,798,799,1,0,0,
-	0,799,800,3,140,70,0,800,125,1,0,0,0,801,802,7,1,0,0,802,807,3,128,64,0,
-	803,804,5,69,0,0,804,806,3,128,64,0,805,803,1,0,0,0,806,809,1,0,0,0,807,
-	805,1,0,0,0,807,808,1,0,0,0,808,127,1,0,0,0,809,807,1,0,0,0,810,814,3,20,
-	10,0,811,812,5,68,0,0,812,815,3,26,13,0,813,815,3,72,36,0,814,811,1,0,0,
-	0,814,813,1,0,0,0,814,815,1,0,0,0,815,818,1,0,0,0,816,817,5,88,0,0,817,
-	819,3,138,69,0,818,816,1,0,0,0,818,819,1,0,0,0,819,129,1,0,0,0,820,821,
-	3,138,69,0,821,822,5,71,0,0,822,824,1,0,0,0,823,820,1,0,0,0,823,824,1,0,
-	0,0,824,825,1,0,0,0,825,826,3,20,10,0,826,827,3,132,66,0,827,828,3,138,
-	69,0,828,131,1,0,0,0,829,830,7,2,0,0,830,133,1,0,0,0,831,832,3,138,69,0,
-	832,833,5,50,0,0,833,834,3,138,69,0,834,835,5,51,0,0,835,836,3,132,66,0,
-	836,837,3,138,69,0,837,135,1,0,0,0,838,840,5,124,0,0,839,841,3,138,69,0,
-	840,839,1,0,0,0,840,841,1,0,0,0,841,842,1,0,0,0,842,843,5,67,0,0,843,137,
-	1,0,0,0,844,845,6,69,-1,0,845,846,5,27,0,0,846,912,3,140,70,0,847,848,5,
-	42,0,0,848,849,5,50,0,0,849,850,3,24,12,0,850,851,5,51,0,0,851,912,1,0,
-	0,0,852,853,5,43,0,0,853,854,5,50,0,0,854,855,3,24,12,0,855,856,5,51,0,
-	0,856,912,1,0,0,0,857,858,5,44,0,0,858,859,5,50,0,0,859,862,3,66,33,0,860,
-	861,5,69,0,0,861,863,3,64,32,0,862,860,1,0,0,0,862,863,1,0,0,0,863,864,
-	1,0,0,0,864,865,5,51,0,0,865,912,1,0,0,0,866,912,3,140,70,0,867,874,5,40,
-	0,0,868,869,5,50,0,0,869,870,3,138,69,0,870,871,5,51,0,0,871,875,1,0,0,
-	0,872,873,5,40,0,0,873,875,3,138,69,0,874,868,1,0,0,0,874,872,1,0,0,0,875,
-	912,1,0,0,0,876,877,5,73,0,0,877,912,3,138,69,27,878,879,5,74,0,0,879,912,
-	3,138,69,26,880,881,5,75,0,0,881,912,3,138,69,25,882,883,5,76,0,0,883,912,
-	3,138,69,24,884,885,5,82,0,0,885,912,3,138,69,23,886,887,5,63,0,0,887,912,
-	3,138,69,22,888,912,5,38,0,0,889,912,3,20,10,0,890,895,5,39,0,0,891,892,
-	5,58,0,0,892,893,3,20,10,0,893,894,5,57,0,0,894,896,1,0,0,0,895,891,1,0,
-	0,0,895,896,1,0,0,0,896,912,1,0,0,0,897,912,3,142,71,0,898,899,5,50,0,0,
-	899,900,3,138,69,0,900,901,5,51,0,0,901,912,1,0,0,0,902,903,5,58,0,0,903,
-	904,3,24,12,0,904,905,5,57,0,0,905,906,3,138,69,3,906,912,1,0,0,0,907,908,
-	3,20,10,0,908,909,3,132,66,0,909,910,3,138,69,1,910,912,1,0,0,0,911,844,
-	1,0,0,0,911,847,1,0,0,0,911,852,1,0,0,0,911,857,1,0,0,0,911,866,1,0,0,0,
-	911,867,1,0,0,0,911,876,1,0,0,0,911,878,1,0,0,0,911,880,1,0,0,0,911,882,
-	1,0,0,0,911,884,1,0,0,0,911,886,1,0,0,0,911,888,1,0,0,0,911,889,1,0,0,0,
-	911,890,1,0,0,0,911,897,1,0,0,0,911,898,1,0,0,0,911,902,1,0,0,0,911,907,
-	1,0,0,0,912,977,1,0,0,0,913,914,10,21,0,0,914,915,7,3,0,0,915,976,3,138,
-	69,22,916,917,10,20,0,0,917,918,7,4,0,0,918,976,3,138,69,21,919,920,10,
-	19,0,0,920,921,7,5,0,0,921,976,3,138,69,20,922,923,10,18,0,0,923,924,7,
-	6,0,0,924,976,3,138,69,19,925,926,10,17,0,0,926,927,5,41,0,0,927,976,3,
-	138,69,18,928,929,10,16,0,0,929,930,5,48,0,0,930,976,3,138,69,17,931,932,
-	10,15,0,0,932,933,7,7,0,0,933,976,3,138,69,16,934,935,10,14,0,0,935,936,
-	5,83,0,0,936,976,3,138,69,15,937,938,10,13,0,0,938,939,5,81,0,0,939,976,
-	3,138,69,14,940,941,10,12,0,0,941,942,5,84,0,0,942,976,3,138,69,13,943,
-	944,10,11,0,0,944,945,5,64,0,0,945,976,3,138,69,12,946,947,10,10,0,0,947,
-	948,5,65,0,0,948,976,3,138,69,11,949,950,10,9,0,0,950,951,5,66,0,0,951,
-	952,3,138,69,0,952,953,5,68,0,0,953,954,3,138,69,10,954,976,1,0,0,0,955,
-	956,10,38,0,0,956,957,5,52,0,0,957,958,3,138,69,0,958,959,5,53,0,0,959,
-	976,1,0,0,0,960,961,10,37,0,0,961,962,5,71,0,0,962,976,3,20,10,0,963,964,
-	10,31,0,0,964,965,5,71,0,0,965,976,3,140,70,0,966,967,10,30,0,0,967,968,
-	6,69,-1,0,968,976,5,73,0,0,969,970,10,29,0,0,970,971,6,69,-1,0,971,976,
-	5,74,0,0,972,973,10,2,0,0,973,974,5,49,0,0,974,976,3,24,12,0,975,913,1,
-	0,0,0,975,916,1,0,0,0,975,919,1,0,0,0,975,922,1,0,0,0,975,925,1,0,0,0,975,
-	928,1,0,0,0,975,931,1,0,0,0,975,934,1,0,0,0,975,937,1,0,0,0,975,940,1,0,
-	0,0,975,943,1,0,0,0,975,946,1,0,0,0,975,949,1,0,0,0,975,955,1,0,0,0,975,
-	960,1,0,0,0,975,963,1,0,0,0,975,966,1,0,0,0,975,969,1,0,0,0,975,972,1,0,
-	0,0,976,979,1,0,0,0,977,975,1,0,0,0,977,978,1,0,0,0,978,139,1,0,0,0,979,
-	977,1,0,0,0,980,992,3,20,10,0,981,982,5,58,0,0,982,987,3,26,13,0,983,984,
-	5,69,0,0,984,986,3,26,13,0,985,983,1,0,0,0,986,989,1,0,0,0,987,985,1,0,
-	0,0,987,988,1,0,0,0,988,990,1,0,0,0,989,987,1,0,0,0,990,991,5,57,0,0,991,
-	993,1,0,0,0,992,981,1,0,0,0,992,993,1,0,0,0,993,994,1,0,0,0,994,1003,5,
-	50,0,0,995,1000,3,138,69,0,996,997,5,69,0,0,997,999,3,138,69,0,998,996,
-	1,0,0,0,999,1002,1,0,0,0,1000,998,1,0,0,0,1000,1001,1,0,0,0,1001,1004,1,
-	0,0,0,1002,1000,1,0,0,0,1003,995,1,0,0,0,1003,1004,1,0,0,0,1004,1005,1,
-	0,0,0,1005,1006,5,51,0,0,1006,141,1,0,0,0,1007,1017,5,105,0,0,1008,1017,
-	5,102,0,0,1009,1017,5,100,0,0,1010,1017,5,101,0,0,1011,1017,5,103,0,0,1012,
-	1017,5,104,0,0,1013,1017,3,144,72,0,1014,1017,3,146,73,0,1015,1017,3,148,
-	74,0,1016,1007,1,0,0,0,1016,1008,1,0,0,0,1016,1009,1,0,0,0,1016,1010,1,
-	0,0,0,1016,1011,1,0,0,0,1016,1012,1,0,0,0,1016,1013,1,0,0,0,1016,1014,1,
-	0,0,0,1016,1015,1,0,0,0,1017,143,1,0,0,0,1018,1027,5,52,0,0,1019,1024,3,
-	138,69,0,1020,1021,5,69,0,0,1021,1023,3,138,69,0,1022,1020,1,0,0,0,1023,
-	1026,1,0,0,0,1024,1022,1,0,0,0,1024,1025,1,0,0,0,1025,1028,1,0,0,0,1026,
-	1024,1,0,0,0,1027,1019,1,0,0,0,1027,1028,1,0,0,0,1028,1029,1,0,0,0,1029,
-	1030,5,53,0,0,1030,145,1,0,0,0,1031,1040,5,58,0,0,1032,1037,3,138,69,0,
-	1033,1034,5,69,0,0,1034,1036,3,138,69,0,1035,1033,1,0,0,0,1036,1039,1,0,
-	0,0,1037,1035,1,0,0,0,1037,1038,1,0,0,0,1038,1041,1,0,0,0,1039,1037,1,0,
-	0,0,1040,1032,1,0,0,0,1040,1041,1,0,0,0,1041,1042,1,0,0,0,1042,1043,5,57,
-	0,0,1043,147,1,0,0,0,1044,1053,5,54,0,0,1045,1050,3,150,75,0,1046,1047,
-	5,69,0,0,1047,1049,3,150,75,0,1048,1046,1,0,0,0,1049,1052,1,0,0,0,1050,
-	1048,1,0,0,0,1050,1051,1,0,0,0,1051,1054,1,0,0,0,1052,1050,1,0,0,0,1053,
-	1045,1,0,0,0,1053,1054,1,0,0,0,1054,1055,1,0,0,0,1055,1056,5,55,0,0,1056,
-	149,1,0,0,0,1057,1058,3,20,10,0,1058,1059,5,68,0,0,1059,1060,3,138,69,0,
-	1060,151,1,0,0,0,1061,1063,3,138,69,0,1062,1061,1,0,0,0,1063,1066,1,0,0,
-	0,1064,1062,1,0,0,0,1064,1065,1,0,0,0,1065,1067,1,0,0,0,1066,1064,1,0,0,
-	0,1067,1071,3,154,77,0,1068,1070,5,100,0,0,1069,1068,1,0,0,0,1070,1073,
-	1,0,0,0,1071,1069,1,0,0,0,1071,1072,1,0,0,0,1072,1074,1,0,0,0,1073,1071,
-	1,0,0,0,1074,1075,5,67,0,0,1075,153,1,0,0,0,1076,1080,3,156,78,0,1077,1080,
-	3,158,79,0,1078,1080,3,160,80,0,1079,1076,1,0,0,0,1079,1077,1,0,0,0,1079,
-	1078,1,0,0,0,1080,155,1,0,0,0,1081,1082,7,8,0,0,1082,157,1,0,0,0,1083,1084,
-	7,9,0,0,1084,159,1,0,0,0,1085,1086,7,10,0,0,1086,161,1,0,0,0,114,166,172,
-	184,189,197,202,212,217,222,224,232,237,239,245,255,272,279,284,292,294,
-	300,306,314,322,326,353,358,372,375,378,386,396,404,407,411,421,424,427,
-	437,442,450,453,459,465,473,476,486,490,502,506,509,516,528,533,537,546,
-	559,564,573,578,586,589,598,600,605,610,617,624,632,646,657,664,668,671,
-	682,690,703,713,729,732,740,743,751,754,773,780,788,792,797,807,814,818,
-	823,840,862,874,895,911,975,977,987,992,1000,1003,1016,1024,1027,1037,1040,
-	1050,1053,1064,1071,1079];
+	146,148,150,152,154,156,158,160,0,11,1,0,23,25,1,0,26,27,1,0,89,100,2,0,
+	78,79,81,81,1,0,76,77,1,0,86,88,1,0,58,61,1,0,62,63,5,0,1,1,111,114,117,
+	120,122,123,128,129,3,0,115,116,121,121,584,586,2,0,130,296,330,583,1184,
+	0,162,1,0,0,0,2,172,1,0,0,0,4,175,1,0,0,0,6,208,1,0,0,0,8,212,1,0,0,0,10,
+	217,1,0,0,0,12,232,1,0,0,0,14,247,1,0,0,0,16,260,1,0,0,0,18,264,1,0,0,0,
+	20,272,1,0,0,0,22,274,1,0,0,0,24,284,1,0,0,0,26,297,1,0,0,0,28,306,1,0,
+	0,0,30,308,1,0,0,0,32,310,1,0,0,0,34,314,1,0,0,0,36,322,1,0,0,0,38,326,
+	1,0,0,0,40,328,1,0,0,0,42,330,1,0,0,0,44,332,1,0,0,0,46,334,1,0,0,0,48,
+	336,1,0,0,0,50,338,1,0,0,0,52,340,1,0,0,0,54,342,1,0,0,0,56,344,1,0,0,0,
+	58,346,1,0,0,0,60,348,1,0,0,0,62,350,1,0,0,0,64,358,1,0,0,0,66,360,1,0,
+	0,0,68,362,1,0,0,0,70,378,1,0,0,0,72,383,1,0,0,0,74,396,1,0,0,0,76,407,
+	1,0,0,0,78,421,1,0,0,0,80,424,1,0,0,0,82,470,1,0,0,0,84,473,1,0,0,0,86,
+	486,1,0,0,0,88,502,1,0,0,0,90,533,1,0,0,0,92,564,1,0,0,0,94,566,1,0,0,0,
+	96,602,1,0,0,0,98,610,1,0,0,0,100,624,1,0,0,0,102,632,1,0,0,0,104,646,1,
+	0,0,0,106,648,1,0,0,0,108,652,1,0,0,0,110,673,1,0,0,0,112,695,1,0,0,0,114,
+	708,1,0,0,0,116,718,1,0,0,0,118,721,1,0,0,0,120,759,1,0,0,0,122,792,1,0,
+	0,0,124,797,1,0,0,0,126,801,1,0,0,0,128,810,1,0,0,0,130,823,1,0,0,0,132,
+	829,1,0,0,0,134,831,1,0,0,0,136,838,1,0,0,0,138,911,1,0,0,0,140,980,1,0,
+	0,0,142,1016,1,0,0,0,144,1018,1,0,0,0,146,1031,1,0,0,0,148,1044,1,0,0,0,
+	150,1057,1,0,0,0,152,1064,1,0,0,0,154,1079,1,0,0,0,156,1081,1,0,0,0,158,
+	1083,1,0,0,0,160,1085,1,0,0,0,162,166,3,2,1,0,163,165,3,8,4,0,164,163,1,
+	0,0,0,165,168,1,0,0,0,166,164,1,0,0,0,166,167,1,0,0,0,167,1,1,0,0,0,168,
+	166,1,0,0,0,169,171,3,4,2,0,170,169,1,0,0,0,171,174,1,0,0,0,172,170,1,0,
+	0,0,172,173,1,0,0,0,173,3,1,0,0,0,174,172,1,0,0,0,175,202,5,47,0,0,176,
+	189,3,20,10,0,177,178,5,70,0,0,178,179,5,55,0,0,179,184,3,20,10,0,180,181,
+	5,70,0,0,181,183,3,20,10,0,182,180,1,0,0,0,183,186,1,0,0,0,184,182,1,0,
+	0,0,184,185,1,0,0,0,185,187,1,0,0,0,186,184,1,0,0,0,187,188,5,56,0,0,188,
+	190,1,0,0,0,189,177,1,0,0,0,189,190,1,0,0,0,190,203,1,0,0,0,191,192,5,55,
+	0,0,192,197,3,20,10,0,193,194,5,70,0,0,194,196,3,20,10,0,195,193,1,0,0,
+	0,196,199,1,0,0,0,197,195,1,0,0,0,197,198,1,0,0,0,198,200,1,0,0,0,199,197,
+	1,0,0,0,200,201,5,56,0,0,201,203,1,0,0,0,202,176,1,0,0,0,202,191,1,0,0,
+	0,203,204,1,0,0,0,204,205,5,31,0,0,205,206,3,6,3,0,206,207,5,68,0,0,207,
+	5,1,0,0,0,208,209,5,105,0,0,209,7,1,0,0,0,210,213,3,12,6,0,211,213,3,10,
+	5,0,212,210,1,0,0,0,212,211,1,0,0,0,213,9,1,0,0,0,214,216,3,22,11,0,215,
+	214,1,0,0,0,216,219,1,0,0,0,217,215,1,0,0,0,217,218,1,0,0,0,218,224,1,0,
+	0,0,219,217,1,0,0,0,220,222,5,46,0,0,221,223,5,48,0,0,222,221,1,0,0,0,222,
+	223,1,0,0,0,223,225,1,0,0,0,224,220,1,0,0,0,224,225,1,0,0,0,225,226,1,0,
+	0,0,226,227,3,126,63,0,227,228,5,68,0,0,228,11,1,0,0,0,229,231,3,22,11,
+	0,230,229,1,0,0,0,231,234,1,0,0,0,232,230,1,0,0,0,232,233,1,0,0,0,233,239,
+	1,0,0,0,234,232,1,0,0,0,235,237,5,46,0,0,236,238,5,48,0,0,237,236,1,0,0,
+	0,237,238,1,0,0,0,238,240,1,0,0,0,239,235,1,0,0,0,239,240,1,0,0,0,240,245,
+	1,0,0,0,241,246,3,18,9,0,242,246,3,80,40,0,243,246,3,86,43,0,244,246,3,
+	14,7,0,245,241,1,0,0,0,245,242,1,0,0,0,245,243,1,0,0,0,245,244,1,0,0,0,
+	246,13,1,0,0,0,247,248,5,17,0,0,248,249,3,20,10,0,249,250,5,55,0,0,250,
+	255,3,16,8,0,251,252,5,70,0,0,252,254,3,16,8,0,253,251,1,0,0,0,254,257,
+	1,0,0,0,255,253,1,0,0,0,255,256,1,0,0,0,256,258,1,0,0,0,257,255,1,0,0,0,
+	258,259,5,56,0,0,259,15,1,0,0,0,260,261,3,20,10,0,261,262,5,89,0,0,262,
+	263,3,138,69,0,263,17,1,0,0,0,264,265,5,15,0,0,265,266,3,20,10,0,266,267,
+	5,69,0,0,267,268,3,26,13,0,268,269,5,68,0,0,269,19,1,0,0,0,270,273,5,587,
+	0,0,271,273,3,156,78,0,272,270,1,0,0,0,272,271,1,0,0,0,273,21,1,0,0,0,274,
+	279,5,107,0,0,275,276,5,51,0,0,276,277,3,142,71,0,277,278,5,52,0,0,278,
+	280,1,0,0,0,279,275,1,0,0,0,279,280,1,0,0,0,280,23,1,0,0,0,281,282,6,12,
+	-1,0,282,285,3,28,14,0,283,285,3,66,33,0,284,281,1,0,0,0,284,283,1,0,0,
+	0,285,294,1,0,0,0,286,287,10,2,0,0,287,288,5,53,0,0,288,293,5,54,0,0,289,
+	290,10,1,0,0,290,291,5,59,0,0,291,293,5,58,0,0,292,286,1,0,0,0,292,289,
+	1,0,0,0,293,296,1,0,0,0,294,292,1,0,0,0,294,295,1,0,0,0,295,25,1,0,0,0,
+	296,294,1,0,0,0,297,300,3,24,12,0,298,299,5,85,0,0,299,301,5,106,0,0,300,
+	298,1,0,0,0,300,301,1,0,0,0,301,27,1,0,0,0,302,307,3,32,16,0,303,307,3,
+	34,17,0,304,307,3,56,28,0,305,307,3,30,15,0,306,302,1,0,0,0,306,303,1,0,
+	0,0,306,304,1,0,0,0,306,305,1,0,0,0,307,29,1,0,0,0,308,309,5,13,0,0,309,
+	31,1,0,0,0,310,311,5,12,0,0,311,33,1,0,0,0,312,315,3,36,18,0,313,315,3,
+	38,19,0,314,312,1,0,0,0,314,313,1,0,0,0,315,35,1,0,0,0,316,323,3,40,20,
+	0,317,323,3,42,21,0,318,323,3,44,22,0,319,323,3,46,23,0,320,323,3,48,24,
+	0,321,323,3,50,25,0,322,316,1,0,0,0,322,317,1,0,0,0,322,318,1,0,0,0,322,
+	319,1,0,0,0,322,320,1,0,0,0,322,321,1,0,0,0,323,37,1,0,0,0,324,327,3,52,
+	26,0,325,327,3,54,27,0,326,324,1,0,0,0,326,325,1,0,0,0,327,39,1,0,0,0,328,
+	329,5,2,0,0,329,41,1,0,0,0,330,331,5,3,0,0,331,43,1,0,0,0,332,333,5,4,0,
+	0,333,45,1,0,0,0,334,335,5,5,0,0,335,47,1,0,0,0,336,337,5,6,0,0,337,49,
+	1,0,0,0,338,339,5,7,0,0,339,51,1,0,0,0,340,341,5,8,0,0,341,53,1,0,0,0,342,
+	343,5,9,0,0,343,55,1,0,0,0,344,345,5,11,0,0,345,57,1,0,0,0,346,347,5,14,
+	0,0,347,59,1,0,0,0,348,349,3,64,32,0,349,61,1,0,0,0,350,353,3,60,30,0,351,
+	352,5,85,0,0,352,354,5,106,0,0,353,351,1,0,0,0,353,354,1,0,0,0,354,63,1,
+	0,0,0,355,356,4,32,2,0,356,359,5,587,0,0,357,359,3,156,78,0,358,355,1,0,
+	0,0,358,357,1,0,0,0,359,65,1,0,0,0,360,361,3,68,34,0,361,67,1,0,0,0,362,
+	363,4,34,3,0,363,364,5,587,0,0,364,69,1,0,0,0,365,379,3,60,30,0,366,375,
+	5,51,0,0,367,372,3,78,39,0,368,369,5,70,0,0,369,371,3,78,39,0,370,368,1,
+	0,0,0,371,374,1,0,0,0,372,370,1,0,0,0,372,373,1,0,0,0,373,376,1,0,0,0,374,
+	372,1,0,0,0,375,367,1,0,0,0,375,376,1,0,0,0,376,377,1,0,0,0,377,379,5,52,
+	0,0,378,365,1,0,0,0,378,366,1,0,0,0,379,380,1,0,0,0,380,381,5,57,0,0,381,
+	382,3,76,38,0,382,71,1,0,0,0,383,386,3,70,35,0,384,385,5,85,0,0,385,387,
+	5,106,0,0,386,384,1,0,0,0,386,387,1,0,0,0,387,73,1,0,0,0,388,397,3,26,13,
+	0,389,397,3,62,31,0,390,391,4,37,4,1,391,397,3,72,36,0,392,393,5,51,0,0,
+	393,394,3,72,36,0,394,395,5,52,0,0,395,397,1,0,0,0,396,388,1,0,0,0,396,
+	389,1,0,0,0,396,390,1,0,0,0,396,392,1,0,0,0,397,75,1,0,0,0,398,408,3,58,
+	29,0,399,404,3,74,37,0,400,401,5,70,0,0,401,403,3,74,37,0,402,400,1,0,0,
+	0,403,406,1,0,0,0,404,402,1,0,0,0,404,405,1,0,0,0,405,408,1,0,0,0,406,404,
+	1,0,0,0,407,398,1,0,0,0,407,399,1,0,0,0,408,77,1,0,0,0,409,422,3,62,31,
+	0,410,412,5,71,0,0,411,410,1,0,0,0,411,412,1,0,0,0,412,413,1,0,0,0,413,
+	414,3,20,10,0,414,415,5,69,0,0,415,416,3,26,13,0,416,422,1,0,0,0,417,418,
+	3,20,10,0,418,419,5,69,0,0,419,420,3,72,36,0,420,422,1,0,0,0,421,409,1,
+	0,0,0,421,411,1,0,0,0,421,417,1,0,0,0,422,79,1,0,0,0,423,425,3,82,41,0,
+	424,423,1,0,0,0,424,425,1,0,0,0,425,427,1,0,0,0,426,428,5,21,0,0,427,426,
+	1,0,0,0,427,428,1,0,0,0,428,429,1,0,0,0,429,430,5,16,0,0,430,442,3,68,34,
+	0,431,432,5,51,0,0,432,437,3,64,32,0,433,434,5,70,0,0,434,436,3,64,32,0,
+	435,433,1,0,0,0,436,439,1,0,0,0,437,435,1,0,0,0,437,438,1,0,0,0,438,440,
+	1,0,0,0,439,437,1,0,0,0,440,441,5,52,0,0,441,443,1,0,0,0,442,431,1,0,0,
+	0,442,443,1,0,0,0,443,453,1,0,0,0,444,445,5,18,0,0,445,450,3,68,34,0,446,
+	447,5,70,0,0,447,449,3,68,34,0,448,446,1,0,0,0,449,452,1,0,0,0,450,448,
+	1,0,0,0,450,451,1,0,0,0,451,454,1,0,0,0,452,450,1,0,0,0,453,444,1,0,0,0,
+	453,454,1,0,0,0,454,455,1,0,0,0,455,459,5,55,0,0,456,458,3,84,42,0,457,
+	456,1,0,0,0,458,461,1,0,0,0,459,457,1,0,0,0,459,460,1,0,0,0,460,465,1,0,
+	0,0,461,459,1,0,0,0,462,464,3,86,43,0,463,462,1,0,0,0,464,467,1,0,0,0,465,
+	463,1,0,0,0,465,466,1,0,0,0,466,468,1,0,0,0,467,465,1,0,0,0,468,469,5,56,
+	0,0,469,81,1,0,0,0,470,471,7,0,0,0,471,83,1,0,0,0,472,474,3,82,41,0,473,
+	472,1,0,0,0,473,474,1,0,0,0,474,476,1,0,0,0,475,477,5,20,0,0,476,475,1,
+	0,0,0,476,477,1,0,0,0,477,478,1,0,0,0,478,479,3,20,10,0,479,480,5,69,0,
+	0,480,481,3,26,13,0,481,482,5,68,0,0,482,85,1,0,0,0,483,487,3,88,44,0,484,
+	487,3,90,45,0,485,487,3,92,46,0,486,483,1,0,0,0,486,484,1,0,0,0,486,485,
+	1,0,0,0,487,87,1,0,0,0,488,490,4,44,5,1,489,491,3,82,41,0,490,489,1,0,0,
+	0,490,491,1,0,0,0,491,492,1,0,0,0,492,493,5,21,0,0,493,494,3,94,47,0,494,
+	495,5,68,0,0,495,503,1,0,0,0,496,497,4,44,6,1,497,498,5,21,0,0,498,499,
+	5,19,0,0,499,500,3,94,47,0,500,501,5,68,0,0,501,503,1,0,0,0,502,488,1,0,
+	0,0,502,496,1,0,0,0,503,89,1,0,0,0,504,506,4,45,7,1,505,507,3,82,41,0,506,
+	505,1,0,0,0,506,507,1,0,0,0,507,509,1,0,0,0,508,510,5,20,0,0,509,508,1,
+	0,0,0,509,510,1,0,0,0,510,511,1,0,0,0,511,512,3,94,47,0,512,516,5,55,0,
+	0,513,515,3,98,49,0,514,513,1,0,0,0,515,518,1,0,0,0,516,514,1,0,0,0,516,
+	517,1,0,0,0,517,519,1,0,0,0,518,516,1,0,0,0,519,520,5,56,0,0,520,534,1,
+	0,0,0,521,522,4,45,8,1,522,523,5,19,0,0,523,524,3,94,47,0,524,528,5,55,
+	0,0,525,527,3,98,49,0,526,525,1,0,0,0,527,530,1,0,0,0,528,526,1,0,0,0,528,
+	529,1,0,0,0,529,531,1,0,0,0,530,528,1,0,0,0,531,532,5,56,0,0,532,534,1,
+	0,0,0,533,504,1,0,0,0,533,521,1,0,0,0,534,91,1,0,0,0,535,537,4,46,9,1,536,
+	538,3,82,41,0,537,536,1,0,0,0,537,538,1,0,0,0,538,539,1,0,0,0,539,540,5,
+	20,0,0,540,541,5,22,0,0,541,542,3,94,47,0,542,546,5,55,0,0,543,545,3,152,
+	76,0,544,543,1,0,0,0,545,548,1,0,0,0,546,544,1,0,0,0,546,547,1,0,0,0,547,
+	549,1,0,0,0,548,546,1,0,0,0,549,550,5,56,0,0,550,565,1,0,0,0,551,552,4,
+	46,10,1,552,553,5,22,0,0,553,554,5,19,0,0,554,555,3,94,47,0,555,559,5,55,
+	0,0,556,558,3,152,76,0,557,556,1,0,0,0,558,561,1,0,0,0,559,557,1,0,0,0,
+	559,560,1,0,0,0,560,562,1,0,0,0,561,559,1,0,0,0,562,563,5,56,0,0,563,565,
+	1,0,0,0,564,535,1,0,0,0,564,551,1,0,0,0,565,93,1,0,0,0,566,578,3,20,10,
+	0,567,568,5,59,0,0,568,573,3,96,48,0,569,570,5,70,0,0,570,572,3,96,48,0,
+	571,569,1,0,0,0,572,575,1,0,0,0,573,571,1,0,0,0,573,574,1,0,0,0,574,576,
+	1,0,0,0,575,573,1,0,0,0,576,577,5,58,0,0,577,579,1,0,0,0,578,567,1,0,0,
+	0,578,579,1,0,0,0,579,580,1,0,0,0,580,589,5,51,0,0,581,586,3,78,39,0,582,
+	583,5,70,0,0,583,585,3,78,39,0,584,582,1,0,0,0,585,588,1,0,0,0,586,584,
+	1,0,0,0,586,587,1,0,0,0,587,590,1,0,0,0,588,586,1,0,0,0,589,581,1,0,0,0,
+	589,590,1,0,0,0,590,591,1,0,0,0,591,600,5,52,0,0,592,593,4,47,11,1,593,
+	594,5,69,0,0,594,601,3,76,38,0,595,598,4,47,12,1,596,597,5,69,0,0,597,599,
+	3,76,38,0,598,596,1,0,0,0,598,599,1,0,0,0,599,601,1,0,0,0,600,592,1,0,0,
+	0,600,595,1,0,0,0,601,95,1,0,0,0,602,605,3,68,34,0,603,604,5,18,0,0,604,
+	606,3,24,12,0,605,603,1,0,0,0,605,606,1,0,0,0,606,97,1,0,0,0,607,609,3,
+	22,11,0,608,607,1,0,0,0,609,612,1,0,0,0,610,608,1,0,0,0,610,611,1,0,0,0,
+	611,617,1,0,0,0,612,610,1,0,0,0,613,614,3,100,50,0,614,615,5,68,0,0,615,
+	618,1,0,0,0,616,618,3,102,51,0,617,613,1,0,0,0,617,616,1,0,0,0,618,99,1,
+	0,0,0,619,625,3,126,63,0,620,625,3,130,65,0,621,625,3,134,67,0,622,625,
+	3,104,52,0,623,625,3,124,62,0,624,619,1,0,0,0,624,620,1,0,0,0,624,621,1,
+	0,0,0,624,622,1,0,0,0,624,623,1,0,0,0,625,101,1,0,0,0,626,633,3,120,60,
+	0,627,633,3,118,59,0,628,633,3,108,54,0,629,633,3,106,53,0,630,633,3,116,
+	58,0,631,633,3,136,68,0,632,626,1,0,0,0,632,627,1,0,0,0,632,628,1,0,0,0,
+	632,629,1,0,0,0,632,630,1,0,0,0,632,631,1,0,0,0,633,103,1,0,0,0,634,635,
+	3,138,69,0,635,636,6,52,-1,0,636,637,5,74,0,0,637,647,1,0,0,0,638,639,3,
+	138,69,0,639,640,6,52,-1,0,640,641,5,75,0,0,641,647,1,0,0,0,642,643,5,74,
+	0,0,643,647,3,138,69,0,644,645,5,75,0,0,645,647,3,138,69,0,646,634,1,0,
+	0,0,646,638,1,0,0,0,646,642,1,0,0,0,646,644,1,0,0,0,647,105,1,0,0,0,648,
+	649,5,586,0,0,649,650,3,138,69,0,650,651,5,68,0,0,651,107,1,0,0,0,652,653,
+	5,584,0,0,653,657,5,55,0,0,654,656,3,98,49,0,655,654,1,0,0,0,656,659,1,
+	0,0,0,657,655,1,0,0,0,657,658,1,0,0,0,658,660,1,0,0,0,659,657,1,0,0,0,660,
+	664,5,56,0,0,661,663,3,110,55,0,662,661,1,0,0,0,663,666,1,0,0,0,664,662,
+	1,0,0,0,664,665,1,0,0,0,665,668,1,0,0,0,666,664,1,0,0,0,667,669,3,112,56,
+	0,668,667,1,0,0,0,668,669,1,0,0,0,669,671,1,0,0,0,670,672,3,114,57,0,671,
+	670,1,0,0,0,671,672,1,0,0,0,672,109,1,0,0,0,673,674,5,585,0,0,674,675,5,
+	51,0,0,675,676,3,20,10,0,676,677,5,69,0,0,677,682,3,24,12,0,678,679,5,85,
+	0,0,679,681,3,24,12,0,680,678,1,0,0,0,681,684,1,0,0,0,682,680,1,0,0,0,682,
+	683,1,0,0,0,683,685,1,0,0,0,684,682,1,0,0,0,685,686,5,52,0,0,686,690,5,
+	55,0,0,687,689,3,98,49,0,688,687,1,0,0,0,689,692,1,0,0,0,690,688,1,0,0,
+	0,690,691,1,0,0,0,691,693,1,0,0,0,692,690,1,0,0,0,693,694,5,56,0,0,694,
+	111,1,0,0,0,695,696,5,585,0,0,696,697,5,51,0,0,697,698,5,71,0,0,698,699,
+	5,52,0,0,699,703,5,55,0,0,700,702,3,98,49,0,701,700,1,0,0,0,702,705,1,0,
+	0,0,703,701,1,0,0,0,703,704,1,0,0,0,704,706,1,0,0,0,705,703,1,0,0,0,706,
+	707,5,56,0,0,707,113,1,0,0,0,708,709,5,38,0,0,709,713,5,55,0,0,710,712,
+	3,98,49,0,711,710,1,0,0,0,712,715,1,0,0,0,713,711,1,0,0,0,713,714,1,0,0,
+	0,714,716,1,0,0,0,715,713,1,0,0,0,716,717,5,56,0,0,717,115,1,0,0,0,718,
+	719,5,37,0,0,719,720,5,68,0,0,720,117,1,0,0,0,721,722,5,34,0,0,722,732,
+	5,51,0,0,723,724,5,27,0,0,724,729,3,128,64,0,725,726,5,70,0,0,726,728,3,
+	128,64,0,727,725,1,0,0,0,728,731,1,0,0,0,729,727,1,0,0,0,729,730,1,0,0,
+	0,730,733,1,0,0,0,731,729,1,0,0,0,732,723,1,0,0,0,732,733,1,0,0,0,733,734,
+	1,0,0,0,734,743,5,68,0,0,735,740,3,138,69,0,736,737,5,70,0,0,737,739,3,
+	138,69,0,738,736,1,0,0,0,739,742,1,0,0,0,740,738,1,0,0,0,740,741,1,0,0,
+	0,741,744,1,0,0,0,742,740,1,0,0,0,743,735,1,0,0,0,743,744,1,0,0,0,744,745,
+	1,0,0,0,745,754,5,68,0,0,746,751,3,100,50,0,747,748,5,70,0,0,748,750,3,
+	100,50,0,749,747,1,0,0,0,750,753,1,0,0,0,751,749,1,0,0,0,751,752,1,0,0,
+	0,752,755,1,0,0,0,753,751,1,0,0,0,754,746,1,0,0,0,754,755,1,0,0,0,755,756,
+	1,0,0,0,756,757,5,52,0,0,757,758,3,122,61,0,758,119,1,0,0,0,759,760,5,115,
+	0,0,760,761,5,51,0,0,761,762,3,138,69,0,762,763,5,52,0,0,763,773,3,122,
+	61,0,764,765,5,116,0,0,765,766,5,115,0,0,766,767,5,51,0,0,767,768,3,138,
+	69,0,768,769,5,52,0,0,769,770,3,122,61,0,770,772,1,0,0,0,771,764,1,0,0,
+	0,772,775,1,0,0,0,773,771,1,0,0,0,773,774,1,0,0,0,774,780,1,0,0,0,775,773,
+	1,0,0,0,776,777,5,116,0,0,777,779,3,122,61,0,778,776,1,0,0,0,779,782,1,
+	0,0,0,780,778,1,0,0,0,780,781,1,0,0,0,781,121,1,0,0,0,782,780,1,0,0,0,783,
+	793,3,98,49,0,784,788,5,55,0,0,785,787,3,98,49,0,786,785,1,0,0,0,787,790,
+	1,0,0,0,788,786,1,0,0,0,788,789,1,0,0,0,789,791,1,0,0,0,790,788,1,0,0,0,
+	791,793,5,56,0,0,792,783,1,0,0,0,792,784,1,0,0,0,793,123,1,0,0,0,794,795,
+	3,138,69,0,795,796,5,72,0,0,796,798,1,0,0,0,797,794,1,0,0,0,797,798,1,0,
+	0,0,798,799,1,0,0,0,799,800,3,140,70,0,800,125,1,0,0,0,801,802,7,1,0,0,
+	802,807,3,128,64,0,803,804,5,70,0,0,804,806,3,128,64,0,805,803,1,0,0,0,
+	806,809,1,0,0,0,807,805,1,0,0,0,807,808,1,0,0,0,808,127,1,0,0,0,809,807,
+	1,0,0,0,810,814,3,20,10,0,811,812,5,69,0,0,812,815,3,26,13,0,813,815,3,
+	72,36,0,814,811,1,0,0,0,814,813,1,0,0,0,814,815,1,0,0,0,815,818,1,0,0,0,
+	816,817,5,89,0,0,817,819,3,138,69,0,818,816,1,0,0,0,818,819,1,0,0,0,819,
+	129,1,0,0,0,820,821,3,138,69,0,821,822,5,72,0,0,822,824,1,0,0,0,823,820,
+	1,0,0,0,823,824,1,0,0,0,824,825,1,0,0,0,825,826,3,20,10,0,826,827,3,132,
+	66,0,827,828,3,138,69,0,828,131,1,0,0,0,829,830,7,2,0,0,830,133,1,0,0,0,
+	831,832,3,138,69,0,832,833,5,51,0,0,833,834,3,138,69,0,834,835,5,52,0,0,
+	835,836,3,132,66,0,836,837,3,138,69,0,837,135,1,0,0,0,838,840,5,121,0,0,
+	839,841,3,138,69,0,840,839,1,0,0,0,840,841,1,0,0,0,841,842,1,0,0,0,842,
+	843,5,68,0,0,843,137,1,0,0,0,844,845,6,69,-1,0,845,846,5,28,0,0,846,912,
+	3,140,70,0,847,848,5,43,0,0,848,849,5,51,0,0,849,850,3,24,12,0,850,851,
+	5,52,0,0,851,912,1,0,0,0,852,853,5,44,0,0,853,854,5,51,0,0,854,855,3,24,
+	12,0,855,856,5,52,0,0,856,912,1,0,0,0,857,858,5,45,0,0,858,859,5,51,0,0,
+	859,862,3,66,33,0,860,861,5,70,0,0,861,863,3,64,32,0,862,860,1,0,0,0,862,
+	863,1,0,0,0,863,864,1,0,0,0,864,865,5,52,0,0,865,912,1,0,0,0,866,912,3,
+	140,70,0,867,874,5,41,0,0,868,869,5,51,0,0,869,870,3,138,69,0,870,871,5,
+	52,0,0,871,875,1,0,0,0,872,873,5,41,0,0,873,875,3,138,69,0,874,868,1,0,
+	0,0,874,872,1,0,0,0,875,912,1,0,0,0,876,877,5,74,0,0,877,912,3,138,69,27,
+	878,879,5,75,0,0,879,912,3,138,69,26,880,881,5,76,0,0,881,912,3,138,69,
+	25,882,883,5,77,0,0,883,912,3,138,69,24,884,885,5,83,0,0,885,912,3,138,
+	69,23,886,887,5,64,0,0,887,912,3,138,69,22,888,912,5,39,0,0,889,912,3,20,
+	10,0,890,895,5,40,0,0,891,892,5,59,0,0,892,893,3,20,10,0,893,894,5,58,0,
+	0,894,896,1,0,0,0,895,891,1,0,0,0,895,896,1,0,0,0,896,912,1,0,0,0,897,912,
+	3,142,71,0,898,899,5,51,0,0,899,900,3,138,69,0,900,901,5,52,0,0,901,912,
+	1,0,0,0,902,903,5,59,0,0,903,904,3,24,12,0,904,905,5,58,0,0,905,906,3,138,
+	69,3,906,912,1,0,0,0,907,908,3,20,10,0,908,909,3,132,66,0,909,910,3,138,
+	69,1,910,912,1,0,0,0,911,844,1,0,0,0,911,847,1,0,0,0,911,852,1,0,0,0,911,
+	857,1,0,0,0,911,866,1,0,0,0,911,867,1,0,0,0,911,876,1,0,0,0,911,878,1,0,
+	0,0,911,880,1,0,0,0,911,882,1,0,0,0,911,884,1,0,0,0,911,886,1,0,0,0,911,
+	888,1,0,0,0,911,889,1,0,0,0,911,890,1,0,0,0,911,897,1,0,0,0,911,898,1,0,
+	0,0,911,902,1,0,0,0,911,907,1,0,0,0,912,977,1,0,0,0,913,914,10,21,0,0,914,
+	915,7,3,0,0,915,976,3,138,69,22,916,917,10,20,0,0,917,918,7,4,0,0,918,976,
+	3,138,69,21,919,920,10,19,0,0,920,921,7,5,0,0,921,976,3,138,69,20,922,923,
+	10,18,0,0,923,924,7,6,0,0,924,976,3,138,69,19,925,926,10,17,0,0,926,927,
+	5,42,0,0,927,976,3,138,69,18,928,929,10,16,0,0,929,930,5,49,0,0,930,976,
+	3,138,69,17,931,932,10,15,0,0,932,933,7,7,0,0,933,976,3,138,69,16,934,935,
+	10,14,0,0,935,936,5,84,0,0,936,976,3,138,69,15,937,938,10,13,0,0,938,939,
+	5,82,0,0,939,976,3,138,69,14,940,941,10,12,0,0,941,942,5,85,0,0,942,976,
+	3,138,69,13,943,944,10,11,0,0,944,945,5,65,0,0,945,976,3,138,69,12,946,
+	947,10,10,0,0,947,948,5,66,0,0,948,976,3,138,69,11,949,950,10,9,0,0,950,
+	951,5,67,0,0,951,952,3,138,69,0,952,953,5,69,0,0,953,954,3,138,69,10,954,
+	976,1,0,0,0,955,956,10,38,0,0,956,957,5,53,0,0,957,958,3,138,69,0,958,959,
+	5,54,0,0,959,976,1,0,0,0,960,961,10,37,0,0,961,962,5,72,0,0,962,976,3,20,
+	10,0,963,964,10,31,0,0,964,965,5,72,0,0,965,976,3,140,70,0,966,967,10,30,
+	0,0,967,968,6,69,-1,0,968,976,5,74,0,0,969,970,10,29,0,0,970,971,6,69,-1,
+	0,971,976,5,75,0,0,972,973,10,2,0,0,973,974,5,50,0,0,974,976,3,24,12,0,
+	975,913,1,0,0,0,975,916,1,0,0,0,975,919,1,0,0,0,975,922,1,0,0,0,975,925,
+	1,0,0,0,975,928,1,0,0,0,975,931,1,0,0,0,975,934,1,0,0,0,975,937,1,0,0,0,
+	975,940,1,0,0,0,975,943,1,0,0,0,975,946,1,0,0,0,975,949,1,0,0,0,975,955,
+	1,0,0,0,975,960,1,0,0,0,975,963,1,0,0,0,975,966,1,0,0,0,975,969,1,0,0,0,
+	975,972,1,0,0,0,976,979,1,0,0,0,977,975,1,0,0,0,977,978,1,0,0,0,978,139,
+	1,0,0,0,979,977,1,0,0,0,980,992,3,20,10,0,981,982,5,59,0,0,982,987,3,26,
+	13,0,983,984,5,70,0,0,984,986,3,26,13,0,985,983,1,0,0,0,986,989,1,0,0,0,
+	987,985,1,0,0,0,987,988,1,0,0,0,988,990,1,0,0,0,989,987,1,0,0,0,990,991,
+	5,58,0,0,991,993,1,0,0,0,992,981,1,0,0,0,992,993,1,0,0,0,993,994,1,0,0,
+	0,994,1003,5,51,0,0,995,1000,3,138,69,0,996,997,5,70,0,0,997,999,3,138,
+	69,0,998,996,1,0,0,0,999,1002,1,0,0,0,1000,998,1,0,0,0,1000,1001,1,0,0,
+	0,1001,1004,1,0,0,0,1002,1000,1,0,0,0,1003,995,1,0,0,0,1003,1004,1,0,0,
+	0,1004,1005,1,0,0,0,1005,1006,5,52,0,0,1006,141,1,0,0,0,1007,1017,5,106,
+	0,0,1008,1017,5,103,0,0,1009,1017,5,101,0,0,1010,1017,5,102,0,0,1011,1017,
+	5,104,0,0,1012,1017,5,105,0,0,1013,1017,3,144,72,0,1014,1017,3,146,73,0,
+	1015,1017,3,148,74,0,1016,1007,1,0,0,0,1016,1008,1,0,0,0,1016,1009,1,0,
+	0,0,1016,1010,1,0,0,0,1016,1011,1,0,0,0,1016,1012,1,0,0,0,1016,1013,1,0,
+	0,0,1016,1014,1,0,0,0,1016,1015,1,0,0,0,1017,143,1,0,0,0,1018,1027,5,53,
+	0,0,1019,1024,3,138,69,0,1020,1021,5,70,0,0,1021,1023,3,138,69,0,1022,1020,
+	1,0,0,0,1023,1026,1,0,0,0,1024,1022,1,0,0,0,1024,1025,1,0,0,0,1025,1028,
+	1,0,0,0,1026,1024,1,0,0,0,1027,1019,1,0,0,0,1027,1028,1,0,0,0,1028,1029,
+	1,0,0,0,1029,1030,5,54,0,0,1030,145,1,0,0,0,1031,1040,5,59,0,0,1032,1037,
+	3,138,69,0,1033,1034,5,70,0,0,1034,1036,3,138,69,0,1035,1033,1,0,0,0,1036,
+	1039,1,0,0,0,1037,1035,1,0,0,0,1037,1038,1,0,0,0,1038,1041,1,0,0,0,1039,
+	1037,1,0,0,0,1040,1032,1,0,0,0,1040,1041,1,0,0,0,1041,1042,1,0,0,0,1042,
+	1043,5,58,0,0,1043,147,1,0,0,0,1044,1053,5,55,0,0,1045,1050,3,150,75,0,
+	1046,1047,5,70,0,0,1047,1049,3,150,75,0,1048,1046,1,0,0,0,1049,1052,1,0,
+	0,0,1050,1048,1,0,0,0,1050,1051,1,0,0,0,1051,1054,1,0,0,0,1052,1050,1,0,
+	0,0,1053,1045,1,0,0,0,1053,1054,1,0,0,0,1054,1055,1,0,0,0,1055,1056,5,56,
+	0,0,1056,149,1,0,0,0,1057,1058,3,20,10,0,1058,1059,5,69,0,0,1059,1060,3,
+	138,69,0,1060,151,1,0,0,0,1061,1063,3,138,69,0,1062,1061,1,0,0,0,1063,1066,
+	1,0,0,0,1064,1062,1,0,0,0,1064,1065,1,0,0,0,1065,1067,1,0,0,0,1066,1064,
+	1,0,0,0,1067,1071,3,154,77,0,1068,1070,5,101,0,0,1069,1068,1,0,0,0,1070,
+	1073,1,0,0,0,1071,1069,1,0,0,0,1071,1072,1,0,0,0,1072,1074,1,0,0,0,1073,
+	1071,1,0,0,0,1074,1075,5,68,0,0,1075,153,1,0,0,0,1076,1080,3,156,78,0,1077,
+	1080,3,158,79,0,1078,1080,3,160,80,0,1079,1076,1,0,0,0,1079,1077,1,0,0,
+	0,1079,1078,1,0,0,0,1080,155,1,0,0,0,1081,1082,7,8,0,0,1082,157,1,0,0,0,
+	1083,1084,7,9,0,0,1084,159,1,0,0,0,1085,1086,7,10,0,0,1086,161,1,0,0,0,
+	114,166,172,184,189,197,202,212,217,222,224,232,237,239,245,255,272,279,
+	284,292,294,300,306,314,322,326,353,358,372,375,378,386,396,404,407,411,
+	421,424,427,437,442,450,453,459,465,473,476,486,490,502,506,509,516,528,
+	533,537,546,559,564,573,578,586,589,598,600,605,610,617,624,632,646,657,
+	664,668,671,682,690,703,713,729,732,740,743,751,754,773,780,788,792,797,
+	807,814,818,823,840,862,874,895,911,975,977,987,992,1000,1003,1016,1024,
+	1027,1037,1040,1050,1053,1064,1071,1079];
 
 	private static __ATN: ATN;
 	public static get _ATN(): ATN {
@@ -11112,8 +11590,8 @@ export class Plain_opcodeContext extends ParserRuleContext {
 	public SELECT(): TerminalNode {
 		return this.getToken(ComposeParser.SELECT, 0);
 	}
-	public SELECT_TYPE(): TerminalNode {
-		return this.getToken(ComposeParser.SELECT_TYPE, 0);
+	public SELECT_T(): TerminalNode {
+		return this.getToken(ComposeParser.SELECT_T, 0);
 	}
     public get ruleIndex(): number {
     	return ComposeParser.RULE_plain_opcode;
@@ -11153,9 +11631,6 @@ export class Keyword_opcodeContext extends ParserRuleContext {
 	}
 	public THROW(): TerminalNode {
 		return this.getToken(ComposeParser.THROW, 0);
-	}
-	public RETHROW(): TerminalNode {
-		return this.getToken(ComposeParser.RETHROW, 0);
 	}
     public get ruleIndex(): number {
     	return ComposeParser.RULE_keyword_opcode;

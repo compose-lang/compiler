@@ -18,6 +18,7 @@ enum OpCode {
     RETURN_CALL_REF = 0x15,
     DROP = 0x1a,
     SELECT = 0x1b,
+    SELECT_T = 0x1c,
     LOCAL_GET = 0x20,
     LOCAL_SET = 0x21,
     LOCAL_TEE = 0x22,
