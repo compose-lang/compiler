@@ -5,6 +5,8 @@ import Runner from "../../src/runner/Runner";
 import * as assert from "assert";
 import {fileURLToPath} from "url";
 import {dirname} from "path";
+import * as os from "os";
+import DwarfFileTarget from "../../src/compiler/DwarfFileTarget";
 
 it('compiles and runs a function using imported globals',  () => {
     const __filename = fileURLToPath(import.meta.url);
@@ -12,9 +14,11 @@ it('compiles and runs a function using imported globals',  () => {
     const path = __dirname + "/samples/import-export/importing.cots";
     const unit = ComposeBuilder.parse_unit(path);
     const compiler = new Compiler();
-    const target = new WasmBufferTarget();
-    compiler.buildOne(unit, target);
-    const runner = Runner.of(target.asWasmSource());
+    const wamTarget = new WasmBufferTarget();
+    const dwarfPath = os.tmpdir() + "/" + "importing.dwarf"
+    const dwarfTarget = new DwarfFileTarget(dwarfPath, path);
+    compiler.buildOne(unit, wamTarget, dwarfTarget);
+    const runner = Runner.of(wamTarget.asWasmSource());
     const result = runner.runFunction<number>("useImports");
     assert.equal(result, 31);
 });

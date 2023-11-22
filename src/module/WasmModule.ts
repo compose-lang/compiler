@@ -15,19 +15,28 @@ import MemorySection from "./MemorySection";
 import CompilationUnit from "../compiler/CompilationUnit";
 import ImportsSection from "./ImportsSection";
 import * as assert from "assert";
+import CustomSection from "./CustomSection";
+import IDwarfTarget from "../compiler/IDwarfTarget";
 
 export default class WasmModule {
 
-    sections = new Map<SectionType, ISection>();
+    standardSections = new Map<SectionType, ISection>();
+    customSections = new Map<string, CustomSection>();
     functions: ICompilable[] = [];
     globals: Global[] = [];
 
-    writeTo(target: IWasmTarget) {
-        WasmModule.writeMagicBytes(target);
-        WasmModule.writeVersion(target);
+    writeTo(wasmTarget: IWasmTarget, dwarfTarget: IDwarfTarget | null) {
+        WasmModule.writeMagicBytes(wasmTarget);
+        WasmModule.writeVersion(wasmTarget);
         Object.values(SectionType).forEach((s: SectionType) => {
-            if(this.sections.has(s))
-                this.sections.get(s).writeTo(target);
+            if(s==SectionType.CUSTOM) {
+                this.customSections.forEach(s => {
+                    s.writeTo(wasmTarget);
+                })
+            }
+
+            if(this.standardSections.has(s))
+                this.standardSections.get(s).writeTo(wasmTarget);
         })
     }
 
@@ -57,7 +66,7 @@ export default class WasmModule {
     }
 
     declareImportedFunction(decl: IFunctionDeclaration) {
-        assert.ok(!this.sections.has(SectionType.FUNCTIONS));
+        assert.ok(!this.standardSections.has(SectionType.FUNCTIONS));
         const typeIndex = this.getTypesSection().addType(decl.functionType());
         const functionIndex = this.getImportsSection().importFunction(decl, typeIndex);
         this.functions[functionIndex] = decl as unknown as ICompilable;
@@ -66,7 +75,7 @@ export default class WasmModule {
     declareConcreteFunction(decl: IFunctionDeclaration, exported: boolean) {
         const typeIndex = this.getTypesSection().addType(decl.functionType());
         let functionIndex = this.getFunctionsSection().addFunction(typeIndex);
-        if(this.sections.has(SectionType.IMPORTS))
+        if(this.standardSections.has(SectionType.IMPORTS))
             functionIndex += this.getImportsSection().countFunctions();
         this.functions[functionIndex] = decl as unknown as ICompilable;
         if(exported) {
@@ -110,11 +119,15 @@ export default class WasmModule {
     }
 
     private getOrCreateSection<T extends ISection>(section: { new(): T; }, type: SectionType): T {
-        if(!this.sections.has(type))
-            this.sections.set(type, new section());
-        return this.sections.get(type) as T;
+        if(!this.standardSections.has(type))
+            this.standardSections.set(type, new section());
+        return this.standardSections.get(type) as T;
     }
 
-
+    getOrCreateCustomSection<T extends CustomSection>(name: string, ctor: () => T): T {
+        if(!this.customSections.has(name))
+            this.customSections.set(name, ctor())
+        return this.customSections.get(name) as T;
+    }
 
 }
