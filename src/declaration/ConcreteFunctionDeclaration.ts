@@ -12,6 +12,7 @@ import Accessibility from "./Accessibility";
 import StatementList from "../statement/StatementList";
 import CompilationUnit from "../compiler/CompilationUnit";
 import AnyType from "../type/AnyType";
+import ParameterList from "../parameter/ParameterList";
 
 export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase implements ICompilable {
 
@@ -60,10 +61,10 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
         const section = module.getCodeSection();
         const body = section.createFunctionCode();
         const local = context.newLocalContext();
-        this.parameters.forEach(param => param.rehearse(local, module, body));
-        this.statements.forEach(stmt => stmt.rehearse(local, module, body));
+        this.parameters.rehearse(local, module, body);
+        this.statements.rehearse(local, module, body);
         // parameters are compiled by function call
-        this.statements.forEach(stmt => stmt.compile(local, module, body), this);
+        this.statements.compile(local, module, body);
         body.addOpCode(OpCode.END);
     }
 
@@ -77,7 +78,7 @@ class GenericFunctionInstance extends ConcreteFunctionDeclaration {
 
     static instantiate(decl: ConcreteFunctionDeclaration, typeArguments: IType[]) {
         const name = decl.name + typeArguments.map(t => "$" + t.typeName).join("");
-        const parameters = decl.parameters.map(param => param.withType(decl.resolveGenericType(param.type, typeArguments)));
+        const parameters = ParameterList.from(decl.parameters.map(param => param.withType(decl.resolveGenericType(param.type, typeArguments))));
         const returnType = decl.resolveGenericType(decl.returnType, typeArguments);
         const proto = new Prototype(new Identifier(name), [], parameters, returnType);
         const typeMap = new Map<string, IType>();

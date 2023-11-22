@@ -5,6 +5,7 @@ import VoidType from "../type/VoidType";
 import * as assert from "assert";
 import TypeMap from "../type/TypeMap";
 import WasmModule from "../module/WasmModule";
+import FunctionBody from "../module/FunctionBody";
 
 export default class StatementList extends Array<IStatement> {
 
@@ -37,5 +38,19 @@ export default class StatementList extends Array<IStatement> {
 
     declare(context: Context, module: WasmModule) {
         this.forEach(stmt => stmt.declare(context, module), this);
+    }
+
+    rehearse(context: Context, module: WasmModule, body: FunctionBody) {
+        this.forEach(stmt => stmt.rehearse(context, module, body), this);
+    }
+
+    compile(context: Context, module: WasmModule, body: FunctionBody): IType {
+        const typeMap = new TypeMap();
+        this.forEach(stmt => {
+            const type = stmt.compile(context, module, body) || null;
+            if(type && type!=VoidType.instance)
+                typeMap.add(type);
+        }, this);
+        return typeMap.inferType(context);
     }
 }

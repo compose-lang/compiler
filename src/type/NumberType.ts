@@ -41,12 +41,12 @@ export default abstract class NumberType extends NativeType implements IValueTyp
             return super.checkAdd(context, rightType, tryReverse);
     }
 
-    compileAdd(context: Context, module: WasmModule, body: FunctionBody, rightType: IType, tryReverse: boolean): IType {
+    compileAdd(context: Context, module: WasmModule, body: FunctionBody, leftType: IType, rightType: IType, tryReverse: boolean): IType {
         if(rightType instanceof NumberType) {
             const resultType = NumberType.bestType(this, rightType);
-            return resultType.compileAdd(context, module, body, rightType, tryReverse);
+            return resultType.compileAdd(context, module, body, leftType, rightType, tryReverse);
         } else
-            return super.compileAdd(context, module, body, rightType, tryReverse);
+            return super.compileAdd(context, module, body, leftType, rightType, tryReverse);
     }
 
     checkSubtract(context: Context, rightType: IType): IType {
@@ -63,7 +63,7 @@ export default abstract class NumberType extends NativeType implements IValueTyp
             return super.checkMultiply(context, rightType, tryReverse);
     }
 
-    static bestType(type1: NumberType, type2: NumberType): IType {
+    static bestType(type1: NumberType, type2: NumberType): NumberType {
         const prec1 = type1.precedence;
         const prec2 = type2.precedence;
         return prec1 >= prec2 ? type1 : type2;

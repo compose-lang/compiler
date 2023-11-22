@@ -72,7 +72,7 @@ export default class BinaryExpression extends ExpressionBase {
         const rightType = this.right.compile(context, module, body);
         switch(this.operator) {
             case BinaryOperator.PLUS:
-                return leftType.compileAdd(context, module, body, rightType,true);
+                return leftType.compileAdd(context, module, body, leftType, rightType, true);
             case BinaryOperator.LSHIFT:
             case BinaryOperator.RSHIFT:
             case BinaryOperator.BIT_AND:

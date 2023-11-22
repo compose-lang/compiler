@@ -29,7 +29,7 @@ export default interface IType {
 
     checkAdd(context: Context, rightType: IType, tryReverse: boolean): IType;
 
-    compileAdd(context: Context, module: WasmModule, body: FunctionBody, rightType: IType, tryReverse: boolean): IType;
+    compileAdd(context: Context, module: WasmModule, body: FunctionBody, leftType: IType, rightType: IType, tryReverse: boolean): IType;
 
     checkSubtract(context: Context, rightType: IType): IType;
 

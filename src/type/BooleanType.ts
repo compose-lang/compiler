@@ -3,7 +3,6 @@ import IWasmTarget from "../compiler/IWasmTarget";
 import IValueType from "./IValueType";
 import BooleanLiteral from "../literal/BooleanLiteral";
 import IExpression from "../expression/IExpression";
-import assert from "assert";
 
 export default class BooleanType extends NativeType implements IValueType {
 

@@ -9,6 +9,7 @@ import TypedParameter from "../parameter/TypedParameter";
 import AnyType from "../type/AnyType";
 import ClassType from "../type/ClassType";
 import CompilationUnit from "../compiler/CompilationUnit";
+import ParameterList from "../parameter/ParameterList";
 
 export default class ChangeTypeFunction extends ConcreteFunctionDeclaration {
 
@@ -17,7 +18,7 @@ export default class ChangeTypeFunction extends ConcreteFunctionDeclaration {
         const genericId = new Identifier("T");
         const generics = [new GenericParameter(genericId, null)];
         const params = [new TypedParameter(new Identifier("value"), AnyType.instance)]
-        const proto = new Prototype(functionId, generics, params, new ClassType(genericId));
+        const proto = new Prototype(functionId, generics, ParameterList.from(params), new ClassType(genericId));
         const stmts = new StatementList();
         super(Accessibility.PUBLIC, false, proto, stmts);
         this.unit = unit;

@@ -63,9 +63,9 @@ export default abstract class TypeBase extends CodeFragment implements IType {
             assert.ok(false);
     }
 
-    compileAdd(context: Context, module: WasmModule, body: FunctionBody, rightType: IType, tryReverse: boolean): IType {
+    compileAdd(context: Context, module: WasmModule, body: FunctionBody, leftType: IType, rightType: IType, tryReverse: boolean): IType {
         if (tryReverse)
-            return rightType.compileAdd(context, module, body, this, false);
+            return rightType.compileAdd(context, module, body, leftType, rightType, false);
         else
             assert.ok(false);
     }

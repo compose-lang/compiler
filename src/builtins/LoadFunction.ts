@@ -11,6 +11,7 @@ import IntegerLiteral from "../literal/IntegerLiteral";
 import IFunctionDeclaration from "../declaration/IFunctionDeclaration";
 import IType from "../type/IType";
 import CompilationUnit from "../compiler/CompilationUnit";
+import ParameterList from "../parameter/ParameterList";
 
 export default class LoadFunction extends NativeFunctionDeclaration {
 
@@ -22,7 +23,7 @@ export default class LoadFunction extends NativeFunctionDeclaration {
             new TypedParameter(new Identifier("immOffset"), USizeType.instance, new IntegerLiteral("0")),
             new TypedParameter(new Identifier("immAlign"), USizeType.instance, new IntegerLiteral("0"))
         ]
-        const proto = new Prototype(functionId, generics, params, new ClassType(genericId));
+        const proto = new Prototype(functionId, generics, ParameterList.from(params), new ClassType(genericId));
         const instructions: Instruction[] = [];
         super(Accessibility.PUBLIC, proto, instructions);
         this.unit = unit;
@@ -44,7 +45,7 @@ class SpecificLoadFunction extends NativeFunctionDeclaration {
             new TypedParameter(new Identifier("immOffset"), USizeType.instance, new IntegerLiteral("0")),
             new TypedParameter(new Identifier("immAlign"), USizeType.instance, new IntegerLiteral("0"))
         ]
-        const proto = new Prototype(functionId, null, params, type);
+        const proto = new Prototype(functionId, null, ParameterList.from(params), type);
         const instructions: Instruction[] = [];
         super(Accessibility.PUBLIC, proto, instructions);
     }

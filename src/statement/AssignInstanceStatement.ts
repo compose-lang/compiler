@@ -70,7 +70,7 @@ export default class AssignInstanceStatement extends StatementBase {
     compile(context: Context, module: WasmModule, body: FunctionBody): IType {
         this.expression.compile(context, module, body);
         let index = body.getRegisteredLocalIndex(this.name);
-        if(index) {
+        if(index >= 0) {
             // TODO compile operator
             body.addOpCode(OpCode.LOCAL_SET, [index]); // TODO encode if index > 0x7F
         } else {

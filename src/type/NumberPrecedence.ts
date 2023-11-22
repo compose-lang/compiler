@@ -1,8 +1,8 @@
 enum NumberPrecedence {
-    Int32,
-    Int64,
     UInt32,
+    Int32,
     UInt64,
+    Int64,
     Float32,
     Float64
 }

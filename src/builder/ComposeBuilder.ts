@@ -206,6 +206,7 @@ import UnaryStatement from "../statement/UnaryStatement";
 import RestParameter from "../parameter/RestParameter";
 import ArrayType from "../type/ArrayType";
 import SetType from "../type/SetType";
+import ParameterList from "../parameter/ParameterList";
 
 interface IndexedNode {
     __id?: number;
@@ -441,7 +442,7 @@ export default class ComposeBuilder extends ComposeParserListener {
             returnType = returnTypes[0];
         else if(returnTypes.length > 1)
             returnType = new MultiType(returnTypes);
-        this.setNodeValue(ctx, new FunctionType(parameters, returnType));
+        this.setNodeValue(ctx, new FunctionType(ParameterList.from(parameters), returnType));
     }
 
     exitFunction_type_or_null = (ctx: Function_type_or_nullContext) => {
@@ -529,7 +530,7 @@ export default class ComposeBuilder extends ComposeParserListener {
             returnType = returnTypes[0];
         else if(returnTypes.length > 1)
             returnType = new MultiType(returnTypes);
-        this.setNodeValue(ctx, new Prototype(id, generics, params, returnType));
+        this.setNodeValue(ctx, new Prototype(id, generics, ParameterList.from(params), returnType));
     }
 
     exitGeneric_parameter = (ctx: Generic_parameterContext) => {

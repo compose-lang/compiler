@@ -2,6 +2,9 @@ import LiteralBase from "./LiteralBase";
 import BooleanType from "../type/BooleanType";
 import IType from "../type/IType";
 import Context from "../context/Context";
+import WasmModule from "../module/WasmModule";
+import FunctionBody from "../module/FunctionBody";
+import OpCode from "../compiler/OpCode";
 
 export default class BooleanLiteral extends LiteralBase<boolean> {
 
@@ -14,6 +17,11 @@ export default class BooleanLiteral extends LiteralBase<boolean> {
     }
 
     check(context: Context): IType {
+        return BooleanType.instance;
+    }
+
+    compile(context: Context, module: WasmModule, body: FunctionBody): IType {
+        body.addOpCode(OpCode.I32_CONST, [ 0x01 ]);
         return BooleanType.instance;
     }
 }

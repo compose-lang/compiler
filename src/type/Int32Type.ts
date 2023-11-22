@@ -10,6 +10,7 @@ import UnaryOperator from "../expression/UnaryOperator";
 import IExpression from "../expression/IExpression";
 import BinaryOperator from "../expression/BinaryOperator";
 import LEB128 from "../utils/LEB128";
+import UInt32Type from "./UInt32Type";
 
 export default class Int32Type extends IntegerType {
 
@@ -31,12 +32,12 @@ export default class Int32Type extends IntegerType {
         target.writeUInts(0x7F);
     }
 
-    compileAdd(context: Context, module: WasmModule, body: FunctionBody, rightType: IType, tryReverse: boolean): IType {
-        if(rightType instanceof Int32Type) {
+    compileAdd(context: Context, module: WasmModule, body: FunctionBody, leftType: IType, rightType: IType, tryReverse: boolean): IType {
+        if(rightType instanceof Int32Type || rightType instanceof UInt32Type) {
             body.addOpCode(OpCode.I32_ADD);
             return this;
         } else
-            return super.compileAdd(context, module, body, rightType, tryReverse);
+            return super.compileAdd(context, module, body, leftType, rightType, tryReverse);
     }
 
     compileBinaryBitsOperator(context: Context, module: WasmModule, body: FunctionBody, rightType: IType, operator: BinaryOperator): IType {
