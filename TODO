@@ -1,0 +1,34 @@
+consider transpiling to wabt and use https://webassembly.github.io/wabt/demo/libwabt.js to convert to wasm
+demo at https://webassembly.github.io/wabt/demo/wat2wasm/
+sample code from  https://webassembly.github.io/wabt/demo/wat2wasm/demo.js:
+function compile() {
+  outputLog = '';
+  outputBase64 = 'Error occured, base64 output is not available';
+
+  var binaryOutput;
+  try {
+    var module = wabt.parseWat('test.wast', watEditor.getValue(), features);
+    module.resolveNames();
+    module.validate(features);
+    var binaryOutput = module.toBinary({log: true, write_debug_names:true});
+    outputLog = binaryOutput.log;
+    binaryBuffer = binaryOutput.buffer;
+    // binaryBuffer is a Uint8Array, so we need to convert it to a string to use btoa
+    // https://stackoverflow.com/questions/12710001/how-to-convert-uint8-array-to-base64-encoded-string
+    outputBase64 = btoa(String.fromCharCode.apply(null, binaryBuffer));
+
+    var blob = new Blob([binaryOutput.buffer]);
+    if (binaryBlobUrl) {
+      URL.revokeObjectURL(binaryBlobUrl);
+    }
+    binaryBlobUrl = URL.createObjectURL(blob);
+    downloadLink.setAttribute('href', binaryBlobUrl);
+    downloadEl.classList.remove('disabled');
+  } catch (e) {
+    outputLog += e.toString();
+    downloadEl.classList.add('disabled');
+  } finally {
+    if (module) module.destroy();
+    outputEl.textContent = outputShowBase64 ? outputBase64 : outputLog;
+  }
+}
