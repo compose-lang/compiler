@@ -1,7 +1,7 @@
 import ComposeBuilder from "../../src/builder/ComposeBuilder";
 import * as assert from "assert";
 import FunctionType from "../../src/type/FunctionType";
-import MultiType from "../../src/type/MultiType";
+import TupleType from "../../src/type/TupleType";
 
 it('parses prototype: () => void',  () => {
     const type = ComposeBuilder.parse_function_type("() => void");
@@ -64,7 +64,7 @@ it('parses prototype: () => string, (a => b)',  () => {
     const type = ComposeBuilder.parse_function_type("() => string, (a => b)");
     assert.equal(type.parameters.length, 0);
     const multi = type.returnType;
-    assert.ok(multi instanceof MultiType);
+    assert.ok(multi instanceof TupleType);
     const type2 = multi.types[1];
     assert.ok(type2 instanceof FunctionType);
     assert.equal(type2.parameters.length, 1);
@@ -76,7 +76,7 @@ it('parses prototype: () => string, a => b',  () => {
     const type = ComposeBuilder.parse_function_type("() => string, a => b");
     assert.equal(type.parameters.length, 0);
     const multi = type.returnType;
-    assert.ok(multi instanceof MultiType);
+    assert.ok(multi instanceof TupleType);
     const type2 = multi.types[1];
     assert.ok(type2 instanceof FunctionType);
     assert.equal(type2.parameters.length, 1);

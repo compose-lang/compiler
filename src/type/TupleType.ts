@@ -6,10 +6,10 @@ import FunctionType from "./FunctionType";
 import UserType from "./UserType";
 import assert from "assert";
 
-export default class MultiType extends UserType {
+export default class TupleType extends UserType {
 
     nullable = false;
-    typeName = "Multi";
+    typeName = "Tuple";
     types: TypeList;
 
     constructor(types: TypeList) {

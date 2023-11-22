@@ -6,7 +6,7 @@ import AbstractFunctionDeclaration from "../../src/declaration/AbstractFunctionD
 import ConcreteFunctionDeclaration from "../../src/declaration/ConcreteFunctionDeclaration";
 import ReturnStatement from "../../src/statement/ReturnStatement";
 import IntegerLiteral from "../../src/literal/IntegerLiteral";
-import MultiType from "../../src/type/MultiType";
+import TupleType from "../../src/type/TupleType";
 import NativeFunctionDeclaration from "../../src/declaration/NativeFunctionDeclaration";
 import FunctionCall from "../../src/expression/FunctionCall";
 import Accessibility from "../../src/declaration/Accessibility";
@@ -64,7 +64,7 @@ it('parses an abstract function declaration without param and multiple return ty
     assert.ok(func instanceof AbstractFunctionDeclaration);
     assert.equal(func.name, "Thing");
     assert.equal(func.parameters.length, 0);
-    assert.ok(func.returnType instanceof MultiType);
+    assert.ok(func.returnType instanceof TupleType);
     assert.deepEqual(func.returnType.types.map(t => t.typeName), ["string", "boolean"]);
 });
 

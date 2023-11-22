@@ -163,7 +163,7 @@ import DeclareInstanceStatement from "../statement/DeclareInstanceStatement";
 import AssignOperator from "../statement/AssignOperator";
 import AssignInstanceStatement from "../statement/AssignInstanceStatement";
 import * as assert from "assert";
-import MultiType from "../type/MultiType";
+import TupleType from "../type/TupleType";
 import FunctionCallStatement from "../statement/FunctionCallStatement";
 import GenericParameter from "../declaration/GenericParameter";
 import BinaryOperator from "../expression/BinaryOperator";
@@ -441,7 +441,7 @@ export default class ComposeBuilder extends ComposeParserListener {
         if(returnTypes.length == 1)
             returnType = returnTypes[0];
         else if(returnTypes.length > 1)
-            returnType = new MultiType(returnTypes);
+            returnType = new TupleType(returnTypes);
         this.setNodeValue(ctx, new FunctionType(ParameterList.from(parameters), returnType));
     }
 
@@ -529,7 +529,7 @@ export default class ComposeBuilder extends ComposeParserListener {
         if(returnTypes.length == 1)
             returnType = returnTypes[0];
         else if(returnTypes.length > 1)
-            returnType = new MultiType(returnTypes);
+            returnType = new TupleType(returnTypes);
         this.setNodeValue(ctx, new Prototype(id, generics, ParameterList.from(params), returnType));
     }
 
