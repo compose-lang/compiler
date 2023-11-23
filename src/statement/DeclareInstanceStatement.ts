@@ -11,6 +11,7 @@ import InstanceModifier from "./InstanceModifier";
 import * as assert from "assert";
 import VoidType from "../type/VoidType";
 import IGlobalStatement from "./IGlobalStatement";
+import CompilerFlags from "../compiler/CompilerFlags";
 
 export default class DeclareInstanceStatement extends StatementBase implements IGlobalStatement {
 
@@ -71,8 +72,8 @@ export default class DeclareInstanceStatement extends StatementBase implements I
         body.registerLocal(this.name, variable.type);
     }
 
-    compile(context: Context, module: WasmModule, body: FunctionBody): IType {
-        this.expression.compile(context, module, body);
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
+        this.expression.compile(context, module, flags, body);
         const index = body.getRegisteredLocalIndex(this.name);
         body.addOpCode(OpCode.LOCAL_SET, [index]); // TODO encode if index > 0x7F
         return null;

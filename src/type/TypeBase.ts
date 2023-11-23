@@ -9,6 +9,7 @@ import FunctionBody from "../module/FunctionBody";
 import BinaryOperator from "../expression/BinaryOperator";
 import UnaryOperator from "../expression/UnaryOperator";
 import CodeFragment from "../builder/CodeFragment";
+import CompilerFlags from "../compiler/CompilerFlags";
 
 export default abstract class TypeBase extends CodeFragment implements IType {
 
@@ -85,7 +86,7 @@ export default abstract class TypeBase extends CodeFragment implements IType {
         assert.ok(false);
     }
 
-    compileBinaryBitsOperator(context: Context, module: WasmModule, body: FunctionBody, rightType: IType, operator: BinaryOperator): IType {
+    compileBinaryBitsOperator(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, rightType: IType, operator: BinaryOperator): IType {
         assert.ok(false);
     }
 
@@ -93,7 +94,7 @@ export default abstract class TypeBase extends CodeFragment implements IType {
         assert.ok(false);
     }
 
-    compileUnaryOperator(context: Context, module: WasmModule, body: FunctionBody, expression: IExpression, operator: UnaryOperator): IType {
+    compileUnaryOperator(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, expression: IExpression, operator: UnaryOperator): IType {
         assert.ok(false);
     }
 

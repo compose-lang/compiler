@@ -10,6 +10,7 @@ import InstanceModifier from "../statement/InstanceModifier";
 import ImportsType from "../type/ImportsType";
 import * as assert from "assert";
 import ICompilable from "../compiler/ICompilable";
+import CompilerFlags from "../compiler/CompilerFlags";
 
 export default class AbstractFunctionDeclaration extends FunctionDeclarationBase implements ICompilable {
 
@@ -46,7 +47,7 @@ export default class AbstractFunctionDeclaration extends FunctionDeclarationBase
             module.declareImportedFunction(this);
     }
 
-    compile(context: Context, module: WasmModule): void {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags): void {
         // nothing to do
     }
 

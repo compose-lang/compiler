@@ -5,6 +5,7 @@ import IType from "../type/IType";
 import Annotation from "../builder/Annotation";
 import ExportType from "../compiler/ExportType";
 import CompilationUnit from "../compiler/CompilationUnit";
+import CompilerFlags from "../compiler/CompilerFlags";
 
 export default interface IStatement {
 
@@ -16,6 +17,7 @@ export default interface IStatement {
     isConst(context: Context): boolean;
     declare(context: Context, module: WasmModule): void;
     rehearse(context: Context, module: WasmModule, body: FunctionBody): void;
-    compile(context: Context, module: WasmModule, body: FunctionBody): IType;
+
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType;
 
 }

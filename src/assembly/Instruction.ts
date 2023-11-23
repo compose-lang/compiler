@@ -3,6 +3,7 @@ import IExpression from "../expression/IExpression";
 import Context from "../context/Context";
 import WasmModule from "../module/WasmModule";
 import FunctionBody from "../module/FunctionBody";
+import CompilerFlags from "../compiler/CompilerFlags";
 
 export default class Instruction {
 
@@ -28,8 +29,8 @@ export default class Instruction {
         this.expressions.forEach(e => e.rehearse(context, module, body), this);
     }
 
-    compile(context: Context, module: WasmModule, body: FunctionBody) {
-        this.expressions.forEach(e => e.compile(context, module, body), this);
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody) {
+        this.expressions.forEach(e => e.compile(context, module, flags, body), this);
         body.addOpCode(this.opcode, this.variants);
     }
 }

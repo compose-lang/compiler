@@ -6,6 +6,7 @@ import FunctionBody from "../module/FunctionBody";
 import OpCode from "../compiler/OpCode";
 import IType from "../type/IType";
 import VoidType from "../type/VoidType";
+import CompilerFlags from "../compiler/CompilerFlags";
 
 export default class ReturnStatement extends StatementBase {
 
@@ -40,10 +41,10 @@ export default class ReturnStatement extends StatementBase {
             this.expression.rehearse(context, module, body);
     }
 
-    compile(context: Context, module: WasmModule, body: FunctionBody): IType {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
         let type: IType = null;
         if(this.expression)
-            type = this.expression.compile(context, module, body);
+            type = this.expression.compile(context, module, flags, body);
         body.addOpCode(OpCode.RETURN);
         return type;
     }

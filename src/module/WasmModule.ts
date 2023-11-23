@@ -16,16 +16,18 @@ import CompilationUnit from "../compiler/CompilationUnit";
 import ImportsSection from "./ImportsSection";
 import * as assert from "assert";
 import CustomSection from "./CustomSection";
-import IDwarfTarget from "../compiler/IDwarfTarget";
+import DebugInfo from "../debug/DebugInfo";
 
 export default class WasmModule {
 
     standardSections = new Map<SectionType, ISection>();
     customSections = new Map<string, CustomSection>();
+    debugInfo = new DebugInfo(this);
     functions: ICompilable[] = [];
     globals: Global[] = [];
 
-    writeTo(wasmTarget: IWasmTarget, dwarfTarget: IDwarfTarget | null) {
+    writeTo(wasmTarget: IWasmTarget) {
+        wasmTarget.open();
         WasmModule.writeMagicBytes(wasmTarget);
         WasmModule.writeVersion(wasmTarget);
         Object.values(SectionType).forEach((s: SectionType) => {
@@ -34,10 +36,10 @@ export default class WasmModule {
                     s.writeTo(wasmTarget);
                 })
             }
-
             if(this.standardSections.has(s))
                 this.standardSections.get(s).writeTo(wasmTarget);
         })
+        wasmTarget.close();
     }
 
     private static writeMagicBytes(target: IWasmTarget) {

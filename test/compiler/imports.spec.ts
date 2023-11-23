@@ -6,7 +6,7 @@ import * as assert from "assert";
 import {fileURLToPath} from "url";
 import {dirname} from "path";
 import * as os from "os";
-import DwarfFileTarget from "../../src/compiler/DwarfFileTarget";
+import DwarfExternalTarget from "../../src/debug/DwarfExternalTarget";
 
 it('compiles and runs a function using imported globals',  () => {
     const __filename = fileURLToPath(import.meta.url);
@@ -16,8 +16,7 @@ it('compiles and runs a function using imported globals',  () => {
     const compiler = new Compiler();
     const wamTarget = new WasmBufferTarget();
     const dwarfPath = os.tmpdir() + "/" + "importing.dwarf"
-    const dwarfTarget = new DwarfFileTarget(dwarfPath, path);
-    compiler.buildOne(unit, wamTarget, dwarfTarget);
+    compiler.buildOne(unit, wamTarget);
     const runner = Runner.of(wamTarget.asWasmSource());
     const result = runner.runFunction<number>("useImports");
     assert.equal(result, 31);

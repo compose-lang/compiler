@@ -7,6 +7,7 @@ import IType from "../type/IType";
 import Annotation from "../builder/Annotation";
 import ExportType from "../compiler/ExportType";
 import CompilationUnit from "../compiler/CompilationUnit";
+import CompilerFlags from "../compiler/CompilerFlags";
 
 export default abstract class StatementBase extends CodeFragment implements IStatement {
 
@@ -32,6 +33,6 @@ export default abstract class StatementBase extends CodeFragment implements ISta
     }
     abstract declare(context: Context, module: WasmModule): void;
     abstract rehearse(context: Context, module: WasmModule, body: FunctionBody): void;
-    abstract compile(context: Context, module: WasmModule, body: FunctionBody): IType;
+    abstract compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType;
 
 }

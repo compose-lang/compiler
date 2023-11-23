@@ -9,6 +9,7 @@ import OpCode from "../compiler/OpCode";
 import * as assert from "assert";
 import AssignOperator from "./AssignOperator";
 import VoidType from "../type/VoidType";
+import CompilerFlags from "../compiler/CompilerFlags";
 
 export default class AssignInstanceStatement extends StatementBase {
 
@@ -67,8 +68,8 @@ export default class AssignInstanceStatement extends StatementBase {
         this.expression.rehearse(context, module, body);
     }
 
-    compile(context: Context, module: WasmModule, body: FunctionBody): IType {
-        this.expression.compile(context, module, body);
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
+        this.expression.compile(context, module, flags, body);
         let index = body.getRegisteredLocalIndex(this.name);
         if(index >= 0) {
             // TODO compile operator

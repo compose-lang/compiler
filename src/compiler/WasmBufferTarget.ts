@@ -6,6 +6,14 @@ export default class WasmBufferTarget extends WasmTargetBase {
 
     buffers: Uint8Array[] = [];
 
+    open(): void {
+        // nothing to do
+    }
+
+    close(): void {
+        // nothing to do
+    }
+
     asWasmBuffer(): Uint8Array {
         const length = this.buffers.map(b => b.length).reduce((p,v) => p + v, 0);
         const buffer = new Uint8Array(length);
@@ -22,12 +30,8 @@ export default class WasmBufferTarget extends WasmTargetBase {
         return new WasmBufferSource(buffer);
     }
 
-    writeBytesArray(bytes: number[]): void {
-        this.buffers.push(new Uint8Array(bytes));
-    }
-
-    writeUint8Array(bytes: Uint8Array): void {
-        this.buffers.push(bytes);
+    writeUint8Array(uint8s: Uint8Array): void {
+        this.buffers.push(uint8s);
     }
 
 

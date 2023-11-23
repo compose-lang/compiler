@@ -11,6 +11,7 @@ import OpCode from "../compiler/OpCode";
 import IFunctionDeclaration from "../declaration/IFunctionDeclaration";
 import RestParameter from "../parameter/RestParameter";
 import IntegerLiteral from "../literal/IntegerLiteral";
+import CompilerFlags from "../compiler/CompilerFlags";
 
 export default class FunctionCall extends ExpressionBase {
 
@@ -55,11 +56,11 @@ export default class FunctionCall extends ExpressionBase {
         this.args.forEach(arg => arg.rehearse(context, module, body));
     }
 
-    compile(context: Context, module: WasmModule, body: FunctionBody): IType {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
         const decl = FunctionFinder.findDeclaration(context, this);
         assert.ok(decl);
         const args = this.makeArgs(context, decl);
-        args.forEach(arg => arg.compile(context, module, body));
+        args.forEach(arg => arg.compile(context, module, flags, body));
         const index = module.getFunctionIndex(decl);
         assert.ok(index >= 0);
         body.addOpCode(OpCode.CALL, [index]); // TODO encode if index > 0x7F

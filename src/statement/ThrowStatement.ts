@@ -6,6 +6,7 @@ import IType from "../type/IType";
 import Context from "../context/Context";
 import * as assert from "assert";
 import ErrorType from "../type/ErrorType";
+import CompilerFlags from "../compiler/CompilerFlags";
 
 export default class ThrowStatement extends StatementBase {
 
@@ -30,7 +31,7 @@ export default class ThrowStatement extends StatementBase {
         assert.ok(false); // TODO
     }
 
-    compile(context: Context, module: WasmModule, body: FunctionBody): IType {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
         assert.ok(false); // TODO
     }
 

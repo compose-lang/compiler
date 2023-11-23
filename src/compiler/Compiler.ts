@@ -7,8 +7,9 @@ import ComposeBuilder from "../builder/ComposeBuilder";
 import {fileURLToPath} from "url";
 import {dirname} from "path";
 import CompilerOptions from "./CompilerOptions";
-import IDwarfTarget from "./IDwarfTarget";
-import ExternalDebugSection from "../module/ExternalDebugSection";
+import IDwarfTarget from "../debug/IDwarfTarget";
+import ExternalDebugSection from "../debug/ExternalDebugSection";
+import CompilerFlags from "./CompilerFlags";
 
 export default class Compiler {
 
@@ -21,14 +22,13 @@ export default class Compiler {
 
     buildOne(unit: CompilationUnit, wasmTarget: IWasmTarget, dwarfTarget: IDwarfTarget = null, options = CompilerOptions.DEFAULTS) {
         assert.ok(this.units.length == 0);
-        if(dwarfTarget!=null)
-            dwarfTarget.createCustomSections(this.module);
         if(options.parseAndCheck) {
             this.addUnit(unit);
             if (options.declare) {
                 this.declareUnits();
                 if (options.compile) {
-                    this.compileAtoms(dwarfTarget != null);
+                    const flags = dwarfTarget != null ? CompilerFlags.DEBUG : CompilerFlags.DEFAULTS;
+                    this.compileAtoms(flags);
                     if (options.assemble) {
                          this.assembleModule(wasmTarget, dwarfTarget);
                     }
@@ -68,15 +68,17 @@ export default class Compiler {
         this.units.forEach(unit => unit.statements.forEach(stmt => stmt.declare(unit.context, this.module), this), this);
     }
 
-    private compileAtoms(debugInfo: boolean) {
+    private compileAtoms(flags: CompilerFlags) {
         // compile globals in the order of their registration in the globals section
-        this.module.globals.forEach(glob => glob.compile(glob.unit.context, this.module));
+        this.module.globals.forEach(glob => glob.compile(glob.unit.context, this.module, flags));
         // compile functions in the order of their registration in the functions section
-        this.module.functions.forEach(decl => decl.compile(decl.unit.context, this.module));
+        this.module.functions.forEach(decl => decl.compile(decl.unit.context, this.module, flags));
     }
 
     assembleModule(wasmTarget: IWasmTarget, dwarfTarget: IDwarfTarget | null) {
-        this.module.writeTo(wasmTarget, dwarfTarget);
+        if (dwarfTarget != null)
+            this.module.debugInfo.writeTo(dwarfTarget, this.module);
+        this.module.writeTo(wasmTarget);
     }
 
     private static parseAndRegisterBuiltins(context: Context) {

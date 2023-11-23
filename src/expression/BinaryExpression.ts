@@ -7,6 +7,7 @@ import IExpression from "./IExpression";
 import * as assert from "assert";
 import FunctionBody from "../module/FunctionBody";
 import {BINARY_CONSTIFIERS} from "../compiler/Constifiers";
+import CompilerFlags from "../compiler/CompilerFlags";
 
 export default class BinaryExpression extends ExpressionBase {
 
@@ -67,9 +68,9 @@ export default class BinaryExpression extends ExpressionBase {
         this.right.rehearse(context, module, body);
     }
 
-    compile(context: Context, module: WasmModule, body: FunctionBody): IType {
-        const leftType = this.left.compile(context, module, body);
-        const rightType = this.right.compile(context, module, body);
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
+        const leftType = this.left.compile(context, module, flags, body);
+        const rightType = this.right.compile(context, module, flags, body);
         switch(this.operator) {
             case BinaryOperator.PLUS:
                 return leftType.compileAdd(context, module, body, leftType, rightType, true);
@@ -78,7 +79,7 @@ export default class BinaryExpression extends ExpressionBase {
             case BinaryOperator.BIT_AND:
             case BinaryOperator.BIT_OR:
             case BinaryOperator.BIT_XOR:
-                return leftType.compileBinaryBitsOperator(context, module, body, rightType, this.operator);
+                return leftType.compileBinaryBitsOperator(context, module, flags, body, rightType, this.operator);
             default:
                 assert.ok(false, "Not implemented: " + BinaryOperator[this.operator]);
         }

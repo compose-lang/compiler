@@ -11,6 +11,7 @@ import IExpression from "../expression/IExpression";
 import UnaryOperator from "../expression/UnaryOperator";
 import LEB128 from "../utils/LEB128";
 import Int32Type from "./Int32Type";
+import CompilerFlags from "../compiler/CompilerFlags";
 
 export default class UInt32Type extends IntegerType {
 
@@ -43,7 +44,7 @@ export default class UInt32Type extends IntegerType {
             return super.compileAdd(context, module, body, leftType, rightType, tryReverse);
     }
 
-    compileBinaryBitsOperator(context: Context, module: WasmModule, body: FunctionBody, rightType: IType, operator: BinaryOperator): IType {
+    compileBinaryBitsOperator(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, rightType: IType, operator: BinaryOperator): IType {
         if(rightType instanceof UInt32Type) {
             switch(operator) {
                 case BinaryOperator.RSHIFT:
@@ -60,10 +61,10 @@ export default class UInt32Type extends IntegerType {
                     return this;
             }
         }
-        return super.compileBinaryBitsOperator(context, module, body, rightType, operator);
+        return super.compileBinaryBitsOperator(context, module, flags, body, rightType, operator);
     }
 
-    compileUnaryOperator(context: Context, module: WasmModule, body: FunctionBody, expression: IExpression, operator: UnaryOperator): IType {
+    compileUnaryOperator(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, expression: IExpression, operator: UnaryOperator): IType {
         let bytes: number[] = null;
         switch(operator) {
             /*
@@ -97,14 +98,14 @@ export default class UInt32Type extends IntegerType {
                 return this;
              */
             case UnaryOperator.BIT_NOT:
-                expression.compile(context, module, body);
+                expression.compile(context, module, flags, body);
                 bytes = [];
                 LEB128.emitSigned(-1, byte => bytes.push(byte))
                 body.addOpCode(OpCode.I32_CONST, bytes);
                 body.addOpCode(OpCode.I32_XOR);
                 return this;
             default:
-                return super.compileUnaryOperator(context, module, body, expression, operator);
+                return super.compileUnaryOperator(context, module, flags, body, expression, operator);
         }
     }
 

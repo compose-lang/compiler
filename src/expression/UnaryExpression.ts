@@ -5,6 +5,7 @@ import ExpressionBase from "./ExpressionBase";
 import IExpression from "./IExpression";
 import UnaryOperator from "./UnaryOperator";
 import FunctionBody from "../module/FunctionBody";
+import CompilerFlags from "../compiler/CompilerFlags";
 
 export default class UnaryExpression extends ExpressionBase {
 
@@ -30,9 +31,9 @@ export default class UnaryExpression extends ExpressionBase {
         this.expression.rehearse(context, module, body);
     }
 
-    compile(context: Context, module: WasmModule, body: FunctionBody): IType {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
         const type = this.expression.check(context);
-        return type.compileUnaryOperator(context, module, body, this.expression, this.operator);
+        return type.compileUnaryOperator(context, module, flags, body, this.expression, this.operator);
     }
 
 }

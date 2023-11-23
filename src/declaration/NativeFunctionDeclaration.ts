@@ -6,6 +6,7 @@ import Instruction from "../assembly/Instruction";
 import WasmModule from "../module/WasmModule";
 import Context from "../context/Context";
 import IType from "../type/IType";
+import CompilerFlags from "../compiler/CompilerFlags";
 
 export default class NativeFunctionDeclaration extends FunctionDeclarationBase implements ICompilable {
 
@@ -35,14 +36,14 @@ export default class NativeFunctionDeclaration extends FunctionDeclarationBase i
         this.instructions.forEach(i => i.declare(local, module));
     }
 
-    compile(context: Context, module: WasmModule): void {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags): void {
         const section = module.getCodeSection();
         const body = section.createFunctionCode();
         const local = context.newLocalContext();
         this.parameters.forEach(param => param.rehearse(local, module, body));
         this.instructions.forEach(i => i.rehearse(local, module, body));
         // parameters are compiled by function call
-        this.instructions.forEach(i => i.compile(local, module, body), this);
+        this.instructions.forEach(i => i.compile(local, module, flags, body), this);
     }
 
 }

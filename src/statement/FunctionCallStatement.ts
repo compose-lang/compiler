@@ -6,6 +6,7 @@ import Context from "../context/Context";
 import FunctionCall from "../expression/FunctionCall";
 import VoidType from "../type/VoidType";
 import OpCode from "../compiler/OpCode";
+import CompilerFlags from "../compiler/CompilerFlags";
 
 export default class FunctionCallStatement extends StatementBase {
 
@@ -33,8 +34,8 @@ export default class FunctionCallStatement extends StatementBase {
         this.call.rehearse(context, module, body);
     }
 
-    compile(context: Context, module: WasmModule, body: FunctionBody): IType {
-        const pushed = this.call.compile(context, module, body);
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
+        const pushed = this.call.compile(context, module, flags, body);
         if(pushed) {
             let count = pushed.count();
             while(count--)

@@ -10,6 +10,7 @@ import TypeMap from "../type/TypeMap";
 import BooleanType from "../type/BooleanType";
 import VoidType from "../type/VoidType";
 import OpCode from "../compiler/OpCode";
+import CompilerFlags from "../compiler/CompilerFlags";
 
 export interface IfBlock {
     condition: IExpression;
@@ -64,30 +65,30 @@ export default class IfStatement extends StatementBase {
         })
     }
 
-    compile(context: Context, module: WasmModule, body: FunctionBody): IType {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
         const typeMap = new TypeMap();
         const blocks = Array.from(this.blocks) as IfBlock[];
         const block = blocks.splice(0, 1)[0];
-        this.compileBlock(context, module, body, typeMap, block, blocks)
+        this.compileBlock(context, module, flags, body, typeMap, block, blocks)
         const result = typeMap.inferType(context);
         return result == VoidType.instance ? null : result;
     }
 
-    private compileBlock(context: Context, module: WasmModule, body: FunctionBody, typeMap: TypeMap, block: IfBlock, remaining: IfBlock[]) {
+    private compileBlock(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, typeMap: TypeMap, block: IfBlock, remaining: IfBlock[]) {
         if(block.condition) {
-            block.condition.compile(context, module, body);
+            block.condition.compile(context, module, flags, body);
             body.addOpCode(OpCode.IF, [ 0x40 ]); // 0x40 == void
-            const type = block.statements.compile(context, module, body) || null;
+            const type = block.statements.compile(context, module, flags, body) || null;
             if(type && type!=VoidType.instance)
                 typeMap.add(type);
             if (remaining.length) {
                 body.addOpCode(OpCode.ELSE, null);
                 const block = remaining.splice(0, 1)[0];
-                this.compileBlock(context, module, body, typeMap, block, remaining);
+                this.compileBlock(context, module, flags, body, typeMap, block, remaining);
             }
             body.addOpCode(OpCode.END);
         } else { // final else
-            const type = block.statements.compile(context, module, body) || null;
+            const type = block.statements.compile(context, module, flags, body) || null;
             if(type && type!=VoidType.instance)
                 typeMap.add(type);
         }

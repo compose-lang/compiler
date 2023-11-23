@@ -13,6 +13,7 @@ import StatementList from "../statement/StatementList";
 import CompilationUnit from "../compiler/CompilationUnit";
 import AnyType from "../type/AnyType";
 import ParameterList from "../parameter/ParameterList";
+import CompilerFlags from "../compiler/CompilerFlags";
 
 export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase implements ICompilable {
 
@@ -54,7 +55,7 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
         this.statements.declare(local, module);
     }
 
-    compile(context: Context, module: WasmModule): void {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags): void {
         if(this.isGeneric())
             return;
         context = this._unit.context;
@@ -64,7 +65,7 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
         this.parameters.rehearse(local, module, body);
         this.statements.rehearse(local, module, body);
         // parameters are compiled by function call
-        this.statements.compile(local, module, body);
+        this.statements.compile(local, module, flags, body);
         body.addOpCode(OpCode.END);
     }
 
@@ -108,7 +109,7 @@ class GenericFunctionInstance extends ConcreteFunctionDeclaration {
         super.declare(context.withTypeMap(this.typeMap), module);
     }
 
-    compile(context: Context, module: WasmModule): void {
-        super.compile(context.withTypeMap(this.typeMap), module);
+    compile(context: Context, module: WasmModule, flags: CompilerFlags): void {
+        super.compile(context.withTypeMap(this.typeMap), module, flags);
     }
 }

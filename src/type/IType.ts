@@ -6,6 +6,7 @@ import IExpression from "../expression/IExpression";
 import Identifier from "../builder/Identifier";
 import UnaryOperator from "../expression/UnaryOperator";
 import BinaryOperator from "../expression/BinaryOperator";
+import CompilerFlags from "../compiler/CompilerFlags";
 
 export default interface IType {
 
@@ -36,10 +37,12 @@ export default interface IType {
     checkMultiply(context: Context, rightType: IType, tryReverse: boolean): IType;
 
     checkBinaryBitsOperator(context: Context, operator: BinaryOperator, rightType: IType): IType;
-    compileBinaryBitsOperator(context: Context, module: WasmModule, body: FunctionBody, rightType: IType, operator: BinaryOperator): IType;
+
+    compileBinaryBitsOperator(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, rightType: IType, operator: BinaryOperator): IType;
 
     checkUnaryOperator(context: Context, operator: UnaryOperator): IType;
-    compileUnaryOperator(context: Context, module: WasmModule, body: FunctionBody, expression: IExpression, operator: UnaryOperator): IType;
+
+    compileUnaryOperator(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, expression: IExpression, operator: UnaryOperator): IType;
 
     convertExpression(context: Context, expression: IExpression): IExpression;
 

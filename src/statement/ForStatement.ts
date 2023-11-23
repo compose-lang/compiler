@@ -8,6 +8,7 @@ import IExpression from "../expression/IExpression";
 import DeclareInstanceStatement from "./DeclareInstanceStatement";
 import StatementList from "./StatementList";
 import VoidType from "../type/VoidType";
+import CompilerFlags from "../compiler/CompilerFlags";
 
 export default class ForStatement extends StatementBase {
 
@@ -45,7 +46,7 @@ export default class ForStatement extends StatementBase {
         assert.ok(false); // TODO
     }
 
-    compile(context: Context, module: WasmModule, body: FunctionBody): IType {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
         assert.ok(false); // TODO
     }
 

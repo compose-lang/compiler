@@ -7,6 +7,7 @@ import IValueType from "../type/IValueType";
 import UInt32Type from "../type/UInt32Type";
 import OpCode from "../compiler/OpCode";
 import LEB128 from "../utils/LEB128";
+import CompilerFlags from "../compiler/CompilerFlags";
 
 export default class SizeofExpression extends ExpressionBase {
 
@@ -33,7 +34,7 @@ export default class SizeofExpression extends ExpressionBase {
         // nothing to do
     }
 
-    compile(context: Context, module: WasmModule, body: FunctionBody): IType {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
         const bytes: number[] = [];
         LEB128.emitUnsigned(this.type.sizeof(), b => bytes.push(b));
         body.addOpCode(OpCode.I32_CONST, bytes);

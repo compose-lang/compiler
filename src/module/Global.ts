@@ -8,6 +8,7 @@ import FunctionBody from "./FunctionBody";
 import OpCode from "../compiler/OpCode";
 import InstanceModifier from "../statement/InstanceModifier";
 import CompilationUnit from "../compiler/CompilationUnit";
+import CompilerFlags from "../compiler/CompilerFlags";
 
 export default class Global implements ICompilable {
 
@@ -38,9 +39,9 @@ export default class Global implements ICompilable {
         this.value.declare(context, module);
     }
 
-    compile(context: Context, module: WasmModule): void {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags): void {
         const value = this.value.constify(context);
-        value.compile(context, module, this.body);
+        value.compile(context, module, flags, this.body);
         this.body.addOpCode(OpCode.END);
     }
 

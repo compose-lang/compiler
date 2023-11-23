@@ -9,6 +9,7 @@ import IFunctionDeclaration from "../declaration/IFunctionDeclaration";
 import IExpression from "../expression/IExpression";
 import BinaryOperator from "../expression/BinaryOperator";
 import UnaryOperator from "../expression/UnaryOperator";
+import CompilerFlags from "../compiler/CompilerFlags";
 
 export default class ImportsType extends Map<string, IFunctionDeclaration> implements IType {
 
@@ -80,7 +81,7 @@ export default class ImportsType extends Map<string, IFunctionDeclaration> imple
         assert.ok(false, "Should never get there!");
     }
 
-    compileBinaryBitsOperator(context: Context, module: WasmModule, body: FunctionBody, rightType: IType, operator: BinaryOperator): IType {
+    compileBinaryBitsOperator(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, rightType: IType, operator: BinaryOperator): IType {
         assert.ok(false, "Should never get there!");
     }
 
@@ -88,7 +89,7 @@ export default class ImportsType extends Map<string, IFunctionDeclaration> imple
         assert.ok(false, "Should never get there!");
     }
 
-    compileUnaryOperator(context: Context, module: WasmModule, body: FunctionBody, expression: IExpression, operator: UnaryOperator): IType {
+    compileUnaryOperator(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, expression: IExpression, operator: UnaryOperator): IType {
         assert.ok(false, "Should never get there!");
     }
 

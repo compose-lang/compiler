@@ -6,7 +6,7 @@ import {fileURLToPath} from "url";
 import {dirname} from "path";
 import CompilerOptions from "../../src/compiler/CompilerOptions";
 
-it('parses and checks tlfs.cots',  (done) => {
+it('parses and checks memory.cots',  (done) => {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = dirname(dirname(dirname(__filename)));
     const path = __dirname + "/runtime/rt/memory.cots";
