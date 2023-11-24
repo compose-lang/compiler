@@ -2,13 +2,13 @@ import IntegerType from "./IntegerType";
 import IWasmTarget from "../compiler/IWasmTarget";
 import NumberPrecedence from "./NumberPrecedence";
 import Context from "../context/Context";
+import IType from "./IType";
 import WasmModule from "../module/WasmModule";
 import FunctionBody from "../module/FunctionBody";
-import IType from "./IType";
-import BinaryOperator from "../expression/BinaryOperator";
 import OpCode from "../compiler/OpCode";
 import IExpression from "../expression/IExpression";
 import UnaryOperator from "../expression/UnaryOperator";
+import BinaryOperator from "../expression/BinaryOperator";
 import LEB128 from "../utils/LEB128";
 import Int32Type from "./Int32Type";
 import CompilerFlags from "../compiler/CompilerFlags";
@@ -47,6 +47,9 @@ export default class UInt32Type extends IntegerType {
     compileBinaryBitsOperator(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, rightType: IType, operator: BinaryOperator): IType {
         if(rightType instanceof UInt32Type) {
             switch(operator) {
+                case BinaryOperator.LSHIFT:
+                    body.addOpCode(OpCode.I32_SHL);
+                    return this;
                 case BinaryOperator.RSHIFT:
                     body.addOpCode(OpCode.I32_SHR_U);
                     return this;
