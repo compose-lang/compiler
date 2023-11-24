@@ -8,7 +8,6 @@ import {fileURLToPath} from "url";
 import {dirname} from "path";
 import CompilerOptions from "./CompilerOptions";
 import IDwarfTarget from "../debug/IDwarfTarget";
-import ExternalDebugSection from "../debug/ExternalDebugSection";
 import CompilerFlags from "./CompilerFlags";
 
 export default class Compiler {
@@ -38,6 +37,7 @@ export default class Compiler {
     }
 
     addUnit(unit: CompilationUnit) {
+        this.module.debugInfo.addUnit(unit);
         this.units.push(unit);
         unit.context = Context.newGlobalsContext();
         this.processUnitImports(unit);

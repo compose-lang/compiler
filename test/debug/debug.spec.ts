@@ -5,10 +5,10 @@ import Runner from "../../src/runner/Runner";
 import * as assert from "assert";
 import {fileURLToPath} from "url";
 import {dirname} from "path";
-import * as os from "os";
 import DwarfExternalTarget from "../../src/debug/DwarfExternalTarget";
 import ExternalDebugSection from "../../src/debug/ExternalDebugSection";
 import WasmFileSource from "../../src/runner/WasmFileSource";
+import tempfile from "tempfile";
 
 it('generates file dwarf',  () => {
     const __filename = fileURLToPath(import.meta.url);
@@ -17,7 +17,8 @@ it('generates file dwarf',  () => {
     const unit = ComposeBuilder.parse_unit(path);
     const compiler = new Compiler();
     const wamTarget = new WasmBufferTarget();
-    const dwarfPath = os.tmpdir() + "/" + "importing.debug.wasm"
+    const dwarfPath = tempfile({ extension: ".wasm"});
+    console.log("dwarfPath: " + dwarfPath);
     const dwarfTarget = new DwarfExternalTarget(dwarfPath);
     compiler.buildOne(unit, wamTarget, dwarfTarget);
     const wasmSource = wamTarget.asWasmSource();

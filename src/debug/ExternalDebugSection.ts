@@ -21,13 +21,6 @@ export default class ExternalDebugSection extends CustomSection {
         return LEB128.unsignedLength(this.name.length) + this.name.length + LEB128.unsignedLength(this.dwarfPath.length) + this.dwarfPath.length;
     }
 
-    /*
-    writeTo(target: IWasmTarget): void {
-        super.writeTo(target);
-        // TODO
-    }
-    */
-
     writeContentsTo(target: IWasmTarget): void {
         target.writeString(this.name);
         target.writeString(this.dwarfPath);
