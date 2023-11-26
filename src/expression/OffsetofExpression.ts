@@ -2,8 +2,8 @@ import ExpressionBase from "./ExpressionBase";
 import Context from "../context/Context";
 import IType from "../type/IType";
 import UInt32Type from "../type/UInt32Type";
-import WasmModule from "../module/WasmModule";
-import FunctionBody from "../module/FunctionBody";
+import Module from "../module/WasmModule";
+import FunctionBody from "../module/wasm/FunctionBody";
 import LEB128 from "../utils/LEB128";
 import OpCode from "../compiler/OpCode";
 import ClassType from "../type/ClassType";
@@ -29,15 +29,15 @@ export default class OffsetofExpression extends ExpressionBase {
         return true;
     }
 
-    declare(context: Context, module: WasmModule): void {
+    declare(context: Context, module: Module): void {
         // nothing to do
     }
 
-    rehearse(context: Context, module: WasmModule, body: FunctionBody) {
+    rehearse(context: Context, module: Module, body: FunctionBody) {
         // nothing to do
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
+    compile(context: Context, module: Module, flags: CompilerFlags, body: FunctionBody): IType {
         const bytes: number[] = [];
         LEB128.emitUnsigned(this.type.offsetof(this.member), b => bytes.push(b));
         body.addOpCode(OpCode.I32_CONST, bytes);

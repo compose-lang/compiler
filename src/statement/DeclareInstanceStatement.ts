@@ -2,8 +2,8 @@ import StatementBase from "./StatementBase";
 import Identifier from "../builder/Identifier";
 import IType from "../type/IType";
 import IExpression from "../expression/IExpression";
-import WasmModule from "../module/WasmModule";
-import FunctionBody from "../module/FunctionBody";
+import Module from "../module/WasmModule";
+import FunctionBody from "../module/wasm/FunctionBody";
 import Context from "../context/Context";
 import OpCode from "../compiler/OpCode";
 import Variable from "../context/Variable";
@@ -55,7 +55,7 @@ export default class DeclareInstanceStatement extends StatementBase implements I
         return type;
     }
 
-    declare(context: Context, module: WasmModule): void {
+    declare(context: Context, module: Module): void {
         if(context.isGlobal()) {
             const variable = context.getRegisteredLocal(this.id);
             assert.ok(variable !== null);
@@ -65,14 +65,14 @@ export default class DeclareInstanceStatement extends StatementBase implements I
         this.expression.declare(context, module);
     }
 
-    rehearse(context: Context, module: WasmModule, body: FunctionBody): void {
+    rehearse(context: Context, module: Module, body: FunctionBody): void {
         this.expression.rehearse(context, module, body);
         const type = this._check(context);
         const variable = this.asVariable(context, type);
         body.registerLocal(this.name, variable.type);
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
+    compile(context: Context, module: Module, flags: CompilerFlags, body: FunctionBody): IType {
         this.expression.compile(context, module, flags, body);
         const index = body.getRegisteredLocalIndex(this.name);
         body.addOpCode(OpCode.LOCAL_SET, [index]); // TODO encode if index > 0x7F

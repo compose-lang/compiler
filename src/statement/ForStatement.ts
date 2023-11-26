@@ -1,6 +1,6 @@
 import StatementBase from "./StatementBase";
-import WasmModule from "../module/WasmModule";
-import FunctionBody from "../module/FunctionBody";
+import Module from "../module/WasmModule";
+import FunctionBody from "../module/wasm/FunctionBody";
 import IType from "../type/IType";
 import Context from "../context/Context";
 import * as assert from "assert";
@@ -34,7 +34,7 @@ export default class ForStatement extends StatementBase {
         return returnType == VoidType.instance ? null : returnType;
     }
 
-    declare(context: Context, module: WasmModule): void {
+    declare(context: Context, module: Module): void {
         context = context.newChildContext();
         this.locals.forEach(local => local.declare(context, module), this);
         this.checkExpressions.forEach(exp => exp.declare(context, module), this);
@@ -42,11 +42,11 @@ export default class ForStatement extends StatementBase {
         this.statements.declare(context, module);
     }
 
-    rehearse(context: Context, module: WasmModule, body: FunctionBody): void {
+    rehearse(context: Context, module: Module, body: FunctionBody): void {
         assert.ok(false); // TODO
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
+    compile(context: Context, module: Module, flags: CompilerFlags, body: FunctionBody): IType {
         assert.ok(false); // TODO
     }
 

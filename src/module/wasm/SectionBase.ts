@@ -1,6 +1,6 @@
 import ISection from "./ISection";
 import SectionType from "./SectionType";
-import IWasmTarget from "../compiler/IWasmTarget";
+import IWasmTarget from "../../compiler/IWasmTarget";
 
 export default abstract class SectionBase implements ISection {
 

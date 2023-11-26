@@ -1,9 +1,9 @@
 import SectionType from "./SectionType";
-import FunctionType from "../type/FunctionType";
-import IType from "../type/IType";
-import LEB128 from "../utils/LEB128";
+import FunctionType from "../../type/FunctionType";
+import IType from "../../type/IType";
+import LEB128 from "../../utils/LEB128";
 import SectionBase from "./SectionBase";
-import IWasmTarget from "../compiler/IWasmTarget";
+import IWasmTarget from "../../compiler/IWasmTarget";
 
 export default class TypesSection extends SectionBase {
 

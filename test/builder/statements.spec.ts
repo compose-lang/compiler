@@ -7,7 +7,7 @@ import DeclareInstanceStatement from "../../src/statement/DeclareInstanceStateme
 import Int64Type from "../../src/type/Int64Type";
 import FunctionCallStatement from "../../src/statement/FunctionCallStatement";
 import OpCode from "../../src/compiler/OpCode";
-import ImportStatement from "../../src/module/ImportStatement";
+import ImportStatement from "../../src/module/wasm/ImportStatement";
 import IfStatement from "../../src/statement/IfStatement";
 
 it('parses a declare statement',  () => {

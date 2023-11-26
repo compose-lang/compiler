@@ -3,8 +3,8 @@ import CodeFragment from "../builder/CodeFragment";
 import AttributeType from "../type/AttributeType";
 import ILiteralExpression from "../literal/ILiteralExpression";
 import Context from "../context/Context";
-import WasmModule from "../module/WasmModule";
-import FunctionBody from "../module/FunctionBody";
+import Module from "../module/WasmModule";
+import FunctionBody from "../module/wasm/FunctionBody";
 import IType from "../type/IType";
 import IValueType from "../type/IValueType";
 import TypedParameter from "./TypedParameter";
@@ -50,11 +50,11 @@ export default class AttributeParameter extends CodeFragment implements IParamet
         context.registerLocal(new Variable(InstanceModifier.LET, this.type.id, decl.type));*/
     }
 
-    declare(local: Context, module: WasmModule): void {
+    declare(local: Context, module: Module): void {
         // TODO
     }
 
-    rehearse(context: Context, module: WasmModule, body: FunctionBody): void {
+    rehearse(context: Context, module: Module, body: FunctionBody): void {
         // TODO
     }
 

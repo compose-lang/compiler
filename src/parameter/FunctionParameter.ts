@@ -4,8 +4,8 @@ import Identifier from "../builder/Identifier";
 import FunctionType from "../type/FunctionType";
 import ILiteralExpression from "../literal/ILiteralExpression";
 import Context from "../context/Context";
-import WasmModule from "../module/WasmModule";
-import FunctionBody from "../module/FunctionBody";
+import Module from "../module/WasmModule";
+import FunctionBody from "../module/wasm/FunctionBody";
 import IType from "../type/IType";
 
 export default class FunctionParameter extends CodeFragment implements IParameter {
@@ -48,11 +48,11 @@ export default class FunctionParameter extends CodeFragment implements IParamete
         // TODO
     }
 
-    declare(local: Context, module: WasmModule): void {
+    declare(local: Context, module: Module): void {
         // TODO
     }
 
-    rehearse(context: Context, module: WasmModule, body: FunctionBody): void {
+    rehearse(context: Context, module: Module, body: FunctionBody): void {
         // TODO
     }
 

@@ -4,7 +4,7 @@ import Context from "../context/Context";
 import IType from "../type/IType";
 import assert from "assert";
 import BooleanType from "../type/BooleanType";
-import WasmModule from "../module/WasmModule";
+import Module from "../module/WasmModule";
 
 export default class LogicalNotExpression extends ExpressionBase {
 
@@ -21,7 +21,7 @@ export default class LogicalNotExpression extends ExpressionBase {
         return BooleanType.instance;
     }
 
-    declare(context: Context, module: WasmModule): void {
+    declare(context: Context, module: Module): void {
         assert.ok(false); // TODO
     }
 

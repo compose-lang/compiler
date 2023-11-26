@@ -3,7 +3,7 @@ import ICompilable from "../compiler/ICompilable";
 import Accessibility from "./Accessibility";
 import Prototype from "./Prototype";
 import Instruction from "../assembly/Instruction";
-import WasmModule from "../module/WasmModule";
+import Module from "../module/WasmModule";
 import Context from "../context/Context";
 import IType from "../type/IType";
 import CompilerFlags from "../compiler/CompilerFlags";
@@ -29,14 +29,14 @@ export default class NativeFunctionDeclaration extends FunctionDeclarationBase i
         return this.returnType;
     }
 
-    declare(context: Context, module: WasmModule): void {
+    declare(context: Context, module: Module): void {
         module.declareConcreteFunction(this, this.isModuleExport());
         const local = context.newLocalContext();
         this.parameters.forEach(param => param.declare(local, module));
         this.instructions.forEach(i => i.declare(local, module));
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags): void {
+    compile(context: Context, module: Module, flags: CompilerFlags): void {
         const section = module.getCodeSection();
         const body = section.createFunctionCode();
         const local = context.newLocalContext();

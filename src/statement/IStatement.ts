@@ -1,6 +1,6 @@
-import WasmModule from "../module/WasmModule";
+import Module from "../module/WasmModule";
 import Context from "../context/Context";
-import FunctionBody from "../module/FunctionBody";
+import FunctionBody from "../module/wasm/FunctionBody";
 import IType from "../type/IType";
 import Annotation from "../builder/Annotation";
 import ExportType from "../compiler/ExportType";
@@ -15,9 +15,9 @@ export default interface IStatement {
 
     check(context: Context): IType;
     isConst(context: Context): boolean;
-    declare(context: Context, module: WasmModule): void;
-    rehearse(context: Context, module: WasmModule, body: FunctionBody): void;
+    declare(context: Context, module: Module): void;
+    rehearse(context: Context, module: Module, body: FunctionBody): void;
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType;
+    compile(context: Context, module: Module, flags: CompilerFlags, body: FunctionBody): IType;
 
 }

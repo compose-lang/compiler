@@ -3,7 +3,7 @@ import IDeclaration from "./IDeclaration";
 import Identifier from "../builder/Identifier";
 import Context from "../context/Context";
 import Annotation from "../builder/Annotation";
-import WasmModule from "../module/WasmModule";
+import Module from "../module/WasmModule";
 import IType from "../type/IType";
 import ExportType from "../compiler/ExportType";
 import CompilationUnit from "../compiler/CompilationUnit";
@@ -48,7 +48,7 @@ export default abstract class DeclarationBase extends CodeFragment implements ID
     abstract register(context: Context): void;
     abstract check(context: Context): IType;
 
-    declare(context: Context, module: WasmModule): void {
+    declare(context: Context, module: Module): void {
         // nothing to do
     }
 

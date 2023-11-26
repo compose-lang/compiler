@@ -1,24 +1,24 @@
-import IWasmTarget from "../compiler/IWasmTarget";
+import IWasmTarget from "../../compiler/IWasmTarget";
 import ISection from "./ISection";
 import SectionType from "./SectionType";
 import TypesSection from "./TypesSection";
 import FunctionsSection from "./FunctionsSection";
 import ExportsSection from "./ExportsSection";
 import CodeSection from "./CodeSection";
-import IFunctionDeclaration from "../declaration/IFunctionDeclaration";
-import ICompilable from "../compiler/ICompilable";
-import IExpression from "../expression/IExpression";
+import IFunctionDeclaration from "../../declaration/IFunctionDeclaration";
+import ICompilable from "../../compiler/ICompilable";
+import IExpression from "../../expression/IExpression";
 import GlobalsSection from "./GlobalsSection";
-import Variable from "../context/Variable";
+import Variable from "../../context/Variable";
 import Global from "./Global";
 import MemorySection from "./MemorySection";
-import CompilationUnit from "../compiler/CompilationUnit";
+import CompilationUnit from "../../compiler/CompilationUnit";
 import ImportsSection from "./ImportsSection";
 import * as assert from "assert";
 import CustomSection from "./CustomSection";
-import DebugInfo from "../debug/DebugInfo";
+import DebugInfo from "../../debug/DebugInfo";
 
-export default class WasmModule {
+export default class Module {
 
     standardSections = new Map<SectionType, ISection>();
     customSections = new Map<string, CustomSection>();
@@ -28,8 +28,8 @@ export default class WasmModule {
 
     writeTo(wasmTarget: IWasmTarget) {
         wasmTarget.open();
-        WasmModule.writeMagicBytes(wasmTarget);
-        WasmModule.writeVersion(wasmTarget);
+        Module.writeMagicBytes(wasmTarget);
+        Module.writeVersion(wasmTarget);
         Object.values(SectionType).forEach((s: SectionType) => {
             if(s==SectionType.CUSTOM) {
                 this.customSections.forEach(s => {

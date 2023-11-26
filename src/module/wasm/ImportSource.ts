@@ -1,6 +1,6 @@
-import CodeFragment from "../builder/CodeFragment";
+import CodeFragment from "../../builder/CodeFragment";
 import { dirname } from "path";
-import {fileExists} from "../utils/FileUtils";
+import {fileExists} from "../../utils/FileUtils";
 
 export default class ImportSource extends CodeFragment {
 

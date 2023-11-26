@@ -1,8 +1,8 @@
 import ExpressionBase from "../expression/ExpressionBase";
-import WasmModule from "../module/WasmModule";
+import Module from "../module/WasmModule";
 import Context from "../context/Context";
 import ILiteralExpression from "./ILiteralExpression";
-import FunctionBody from "../module/FunctionBody";
+import FunctionBody from "../module/wasm/FunctionBody";
 import IExpression from "../expression/IExpression";
 
 export default abstract class LiteralBase<T> extends ExpressionBase implements ILiteralExpression {
@@ -24,11 +24,11 @@ export default abstract class LiteralBase<T> extends ExpressionBase implements I
         return this;
     }
 
-    declare(context: Context, module: WasmModule): void {
+    declare(context: Context, module: Module): void {
         // nothing to do
     }
 
-    rehearse(context: Context, module: WasmModule, body: FunctionBody) {
+    rehearse(context: Context, module: Module, body: FunctionBody) {
         return this.check(context);
     }
 

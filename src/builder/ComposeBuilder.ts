@@ -175,8 +175,8 @@ import NativeFunctionDeclaration from "../declaration/NativeFunctionDeclaration"
 import StatementList from "../statement/StatementList";
 import SizeofExpression from "../expression/SizeofExpression";
 import AlignofExpression from "../expression/AlignofExpression";
-import ImportStatement from "../module/ImportStatement";
-import ImportSource from "../module/ImportSource";
+import ImportStatement from "../module/wasm/ImportStatement";
+import ImportSource from "../module/wasm/ImportSource";
 import ExportType from "../compiler/ExportType";
 import EnumDeclaration from "../declaration/EnumDeclaration";
 import ILiteralExpression from "../literal/ILiteralExpression";

@@ -1,11 +1,11 @@
 import ExpressionBase from "./ExpressionBase";
-import WasmModule from "../module/WasmModule";
+import Module from "../module/WasmModule";
 import IType from "../type/IType";
 import Context from "../context/Context";
 import BinaryOperator from "./BinaryOperator";
 import IExpression from "./IExpression";
 import * as assert from "assert";
-import FunctionBody from "../module/FunctionBody";
+import FunctionBody from "../module/wasm/FunctionBody";
 import {BINARY_CONSTIFIERS} from "../compiler/Constifiers";
 import CompilerFlags from "../compiler/CompilerFlags";
 
@@ -58,17 +58,17 @@ export default class BinaryExpression extends ExpressionBase {
         return constifier(left, right);
     }
 
-    declare(context: Context, module: WasmModule): void {
+    declare(context: Context, module: Module): void {
         this.left.declare(context, module);
         this.right.declare(context, module);
     }
 
-    rehearse(context: Context, module: WasmModule, body: FunctionBody) {
+    rehearse(context: Context, module: Module, body: FunctionBody) {
         this.left.rehearse(context, module, body);
         this.right.rehearse(context, module, body);
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
+    compile(context: Context, module: Module, flags: CompilerFlags, body: FunctionBody): IType {
         const leftType = this.left.compile(context, module, flags, body);
         const rightType = this.right.compile(context, module, flags, body);
         switch(this.operator) {

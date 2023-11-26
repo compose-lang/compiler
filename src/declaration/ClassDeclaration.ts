@@ -8,7 +8,7 @@ import Accessibility from "./Accessibility";
 import IType from "../type/IType";
 import ClassType from "../type/ClassType";
 import IFunctionDeclaration from "./IFunctionDeclaration";
-import WasmModule from "../module/WasmModule";
+import Module from "../module/WasmModule";
 import CompilationUnit from "../compiler/CompilationUnit";
 import FieldList from "../builder/FieldList";
 import IClassMember from "./IClassMember";
@@ -60,7 +60,7 @@ export default class ClassDeclaration extends DeclarationBase implements IDeclar
         return new ClassType(this.id, this);
     }
 
-    declare(context: Context, module: WasmModule): void {
+    declare(context: Context, module: Module): void {
         this.functions.forEach(f => f.declare(context, module));
     }
 

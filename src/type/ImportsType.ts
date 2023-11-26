@@ -1,7 +1,7 @@
 import IType from "./IType";
-import WasmModule from "../module/WasmModule";
+import Module from "../module/WasmModule";
 import IWasmTarget from "../compiler/IWasmTarget";
-import FunctionBody from "../module/FunctionBody";
+import FunctionBody from "../module/wasm/FunctionBody";
 import * as assert from "assert";
 import Context from "../context/Context";
 import Identifier from "../builder/Identifier";
@@ -73,7 +73,7 @@ export default class ImportsType extends Map<string, IFunctionDeclaration> imple
         assert.ok(false, "Should never get there!");
     }
 
-    compileAdd(context: Context, module: WasmModule, body: FunctionBody, leftType: IType, rightType: IType, tryReverse: boolean): IType {
+    compileAdd(context: Context, module: Module, body: FunctionBody, leftType: IType, rightType: IType, tryReverse: boolean): IType {
         assert.ok(false, "Should never get there!");
     }
 
@@ -81,7 +81,7 @@ export default class ImportsType extends Map<string, IFunctionDeclaration> imple
         assert.ok(false, "Should never get there!");
     }
 
-    compileBinaryBitsOperator(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, rightType: IType, operator: BinaryOperator): IType {
+    compileBinaryBitsOperator(context: Context, module: Module, flags: CompilerFlags, body: FunctionBody, rightType: IType, operator: BinaryOperator): IType {
         assert.ok(false, "Should never get there!");
     }
 
@@ -89,7 +89,7 @@ export default class ImportsType extends Map<string, IFunctionDeclaration> imple
         assert.ok(false, "Should never get there!");
     }
 
-    compileUnaryOperator(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, expression: IExpression, operator: UnaryOperator): IType {
+    compileUnaryOperator(context: Context, module: Module, flags: CompilerFlags, body: FunctionBody, expression: IExpression, operator: UnaryOperator): IType {
         assert.ok(false, "Should never get there!");
     }
 

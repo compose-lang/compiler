@@ -3,8 +3,8 @@ import IType from "./IType";
 import Context from "../context/Context";
 import IValueType from "./IValueType";
 import NumberPrecedence from "./NumberPrecedence";
-import WasmModule from "../module/WasmModule";
-import FunctionBody from "../module/FunctionBody";
+import Module from "../module/WasmModule";
+import FunctionBody from "../module/wasm/FunctionBody";
 import BooleanType from "./BooleanType";
 
 export default abstract class NumberType extends NativeType implements IValueType {
@@ -41,7 +41,7 @@ export default abstract class NumberType extends NativeType implements IValueTyp
             return super.checkAdd(context, rightType, tryReverse);
     }
 
-    compileAdd(context: Context, module: WasmModule, body: FunctionBody, leftType: IType, rightType: IType, tryReverse: boolean): IType {
+    compileAdd(context: Context, module: Module, body: FunctionBody, leftType: IType, rightType: IType, tryReverse: boolean): IType {
         if(rightType instanceof NumberType) {
             const resultType = NumberType.bestType(this, rightType);
             return resultType.compileAdd(context, module, body, leftType, rightType, tryReverse);

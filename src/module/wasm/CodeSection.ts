@@ -1,8 +1,8 @@
 import SectionType from "./SectionType";
 import SectionBase from "./SectionBase";
-import IWasmTarget from "../compiler/IWasmTarget";
+import IWasmTarget from "../../compiler/IWasmTarget";
 import FunctionBody from "./FunctionBody";
-import LEB128 from "../utils/LEB128";
+import LEB128 from "../../utils/LEB128";
 
 export default class CodeSection extends SectionBase {
 

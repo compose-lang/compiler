@@ -2,8 +2,8 @@ import ICodeFragment from "../builder/ICodeFragment";
 import IType from "../type/IType";
 import ILiteralExpression from "../literal/ILiteralExpression";
 import Context from "../context/Context";
-import WasmModule from "../module/WasmModule";
-import FunctionBody from "../module/FunctionBody";
+import Module from "../module/WasmModule";
+import FunctionBody from "../module/wasm/FunctionBody";
 
 export default interface IParameter extends ICodeFragment {
 
@@ -15,7 +15,7 @@ export default interface IParameter extends ICodeFragment {
     withType(iType: IType): IParameter;
 
     register(context: Context): void;
-    declare(local: Context, module: WasmModule): void;
-    rehearse(context: Context, module: WasmModule, body: FunctionBody): void;
+    declare(local: Context, module: Module): void;
+    rehearse(context: Context, module: Module, body: FunctionBody): void;
     // compile(context: Context, module: WasmModule, body: FunctionBody): void;
 }

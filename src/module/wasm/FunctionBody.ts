@@ -1,8 +1,8 @@
-import OpCode from "../compiler/OpCode";
-import LEB128 from "../utils/LEB128";
-import IWasmTarget from "../compiler/IWasmTarget";
-import IType from "../type/IType";
-import IValueType from "../type/IValueType";
+import OpCode from "../../compiler/OpCode";
+import LEB128 from "../../utils/LEB128";
+import IWasmTarget from "../../compiler/IWasmTarget";
+import IType from "../../type/IType";
+import IValueType from "../../type/IValueType";
 
 interface Local {
 

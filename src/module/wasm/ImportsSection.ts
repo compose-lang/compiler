@@ -1,8 +1,8 @@
 import SectionBase from "./SectionBase";
 import SectionType from "./SectionType";
-import LEB128 from "../utils/LEB128";
-import IWasmTarget from "../compiler/IWasmTarget";
-import IFunctionDeclaration from "../declaration/IFunctionDeclaration";
+import LEB128 from "../../utils/LEB128";
+import IWasmTarget from "../../compiler/IWasmTarget";
+import IFunctionDeclaration from "../../declaration/IFunctionDeclaration";
 
 enum ImportType {
     FUNCTION,

@@ -1,10 +1,10 @@
 import ExpressionBase from "./ExpressionBase";
 import Identifier from "../builder/Identifier";
-import WasmModule from "../module/WasmModule";
+import Module from "../module/WasmModule";
 import IType from "../type/IType";
 import Context from "../context/Context";
 import IExpression from "./IExpression";
-import FunctionBody from "../module/FunctionBody";
+import FunctionBody from "../module/wasm/FunctionBody";
 import * as assert from "assert";
 import FunctionFinder from "../finder/FunctionFinder";
 import OpCode from "../compiler/OpCode";
@@ -46,17 +46,17 @@ export default class FunctionCall extends ExpressionBase {
         return decl.isConst(context);
     }
 
-    declare(context: Context, module: WasmModule): void {
+    declare(context: Context, module: Module): void {
         const decl = this.findDeclaration(context);
         if(this.isGeneric())
             decl.declare(context, module);
     }
 
-    rehearse(context: Context, module: WasmModule, body: FunctionBody) {
+    rehearse(context: Context, module: Module, body: FunctionBody) {
         this.args.forEach(arg => arg.rehearse(context, module, body));
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
+    compile(context: Context, module: Module, flags: CompilerFlags, body: FunctionBody): IType {
         const decl = FunctionFinder.findDeclaration(context, this);
         assert.ok(decl);
         const args = this.makeArgs(context, decl);

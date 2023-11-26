@@ -2,8 +2,8 @@ import StatementBase from "./StatementBase";
 import Identifier from "../builder/Identifier";
 import IType from "../type/IType";
 import IExpression from "../expression/IExpression";
-import WasmModule from "../module/WasmModule";
-import FunctionBody from "../module/FunctionBody";
+import Module from "../module/WasmModule";
+import FunctionBody from "../module/wasm/FunctionBody";
 import Context from "../context/Context";
 import OpCode from "../compiler/OpCode";
 import * as assert from "assert";
@@ -60,15 +60,15 @@ export default class AssignInstanceStatement extends StatementBase {
         return registered.type;
     }
 
-    declare(context: Context, module: WasmModule): void {
+    declare(context: Context, module: Module): void {
         this.expression.declare(context, module);
     }
 
-    rehearse(context: Context, module: WasmModule, body: FunctionBody): void {
+    rehearse(context: Context, module: Module, body: FunctionBody): void {
         this.expression.rehearse(context, module, body);
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
+    compile(context: Context, module: Module, flags: CompilerFlags, body: FunctionBody): IType {
         this.expression.compile(context, module, flags, body);
         let index = body.getRegisteredLocalIndex(this.name);
         if(index >= 0) {

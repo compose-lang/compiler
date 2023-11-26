@@ -1,6 +1,6 @@
 import CompilationUnit from "./CompilationUnit";
 import IWasmTarget from "./IWasmTarget";
-import WasmModule from "../module/WasmModule";
+import Module from "../module/WasmModule";
 import Context from "../context/Context";
 import * as assert from "assert";
 import ComposeBuilder from "../builder/ComposeBuilder";
@@ -12,7 +12,7 @@ import CompilerFlags from "./CompilerFlags";
 
 export default class Compiler {
 
-    module = new WasmModule();
+    module = new Module();
     units: CompilationUnit[] = [];
 
     addMemory(minPages: number, maxPages?: number) {

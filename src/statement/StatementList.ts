@@ -4,8 +4,8 @@ import Context from "../context/Context";
 import VoidType from "../type/VoidType";
 import * as assert from "assert";
 import TypeMap from "../type/TypeMap";
-import WasmModule from "../module/WasmModule";
-import FunctionBody from "../module/FunctionBody";
+import Module from "../module/WasmModule";
+import FunctionBody from "../module/wasm/FunctionBody";
 import CompilerFlags from "../compiler/CompilerFlags";
 
 export default class StatementList extends Array<IStatement> {
@@ -37,15 +37,15 @@ export default class StatementList extends Array<IStatement> {
         }
     }
 
-    declare(context: Context, module: WasmModule) {
+    declare(context: Context, module: Module) {
         this.forEach(stmt => stmt.declare(context, module), this);
     }
 
-    rehearse(context: Context, module: WasmModule, body: FunctionBody) {
+    rehearse(context: Context, module: Module, body: FunctionBody) {
         this.forEach(stmt => stmt.rehearse(context, module, body), this);
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
+    compile(context: Context, module: Module, flags: CompilerFlags, body: FunctionBody): IType {
         const typeMap = new TypeMap();
         this.forEach(stmt => {
             const type = stmt.compile(context, module, flags, body) || null;

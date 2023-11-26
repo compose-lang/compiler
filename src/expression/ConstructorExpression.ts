@@ -4,7 +4,7 @@ import Identifier from "../builder/Identifier";
 import IType from "../type/IType";
 import Context from "../context/Context";
 import ClassType from "../type/ClassType";
-import WasmModule from "../module/WasmModule";
+import Module from "../module/WasmModule";
 import * as assert from "assert";
 
 export default class ConstructorExpression extends ExpressionBase {
@@ -33,7 +33,7 @@ export default class ConstructorExpression extends ExpressionBase {
         return new ClassType(this.id, klass);
     }
 
-    declare(context: Context, module: WasmModule): void {
+    declare(context: Context, module: Module): void {
         const klass = context.getRegisteredClass(this.id);
         klass.declare(context, module);
         this.args.forEach(arg => arg.declare(context, module));

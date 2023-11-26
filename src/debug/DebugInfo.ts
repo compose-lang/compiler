@@ -1,4 +1,4 @@
-import WasmModule from "../module/WasmModule";
+import Module from "../module/WasmModule";
 import ExternalDebugSection from "./ExternalDebugSection";
 import IDwarfTarget from "./IDwarfTarget";
 import DwarfInternalTarget from "./DwarfInternalTarget";
@@ -14,28 +14,28 @@ import DebugStringSection from "./DebugStringSection";
 
 export default class DebugInfo {
 
-    readonly sourceModule: WasmModule;
+    readonly sourceModule: Module;
     readonly dies: Dwarf_DIE[] = [];
 
-    constructor(sourceModule: WasmModule) {
+    constructor(sourceModule: Module) {
         this.sourceModule = sourceModule;
     }
 
-    writeTo(target: IDwarfTarget, module: WasmModule) {
+    writeTo(target: IDwarfTarget, module: Module) {
         if (target.isExternal())
             this.writeToExternalTarget(target, module);
         else
             this.writeToInternalTarget(target, module);
     }
 
-    writeToExternalTarget(target: IDwarfTarget, module: WasmModule) {
+    writeToExternalTarget(target: IDwarfTarget, module: Module) {
         module.getOrCreateCustomSection(ExternalDebugSection.NAME, () => new ExternalDebugSection(target.externalPath()))
-        const dwarfModule = new WasmModule();
+        const dwarfModule = new Module();
         this.writeToInternalTarget(new DwarfInternalTarget(), dwarfModule);
         dwarfModule.writeTo(new WasmFileTarget(target.externalPath()));
     }
 
-    writeToInternalTarget(target: IDwarfTarget, module: WasmModule) {
+    writeToInternalTarget(target: IDwarfTarget, module: Module) {
         const sections: DebugSection = {
             infoSection: module.getOrCreateCustomSection(DebugInfoSection.NAME, () => new DebugInfoSection()),
             abbreviationSection: module.getOrCreateCustomSection(DebugAbbreviationSection.NAME, () => new DebugAbbreviationSection()),

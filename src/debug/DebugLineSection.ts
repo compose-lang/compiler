@@ -1,4 +1,4 @@
-import CustomSection from "../module/CustomSection";
+import CustomSection from "../module/wasm/CustomSection";
 import LEB128 from "../utils/LEB128";
 import IWasmTarget from "../compiler/IWasmTarget";
 

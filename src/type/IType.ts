@@ -1,7 +1,7 @@
 import IWasmTarget from "../compiler/IWasmTarget";
 import Context from "../context/Context";
-import WasmModule from "../module/WasmModule";
-import FunctionBody from "../module/FunctionBody";
+import Module from "../module/WasmModule";
+import FunctionBody from "../module/wasm/FunctionBody";
 import IExpression from "../expression/IExpression";
 import Identifier from "../builder/Identifier";
 import UnaryOperator from "../expression/UnaryOperator";
@@ -30,7 +30,7 @@ export default interface IType {
 
     checkAdd(context: Context, rightType: IType, tryReverse: boolean): IType;
 
-    compileAdd(context: Context, module: WasmModule, body: FunctionBody, leftType: IType, rightType: IType, tryReverse: boolean): IType;
+    compileAdd(context: Context, module: Module, body: FunctionBody, leftType: IType, rightType: IType, tryReverse: boolean): IType;
 
     checkSubtract(context: Context, rightType: IType): IType;
 
@@ -38,11 +38,11 @@ export default interface IType {
 
     checkBinaryBitsOperator(context: Context, operator: BinaryOperator, rightType: IType): IType;
 
-    compileBinaryBitsOperator(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, rightType: IType, operator: BinaryOperator): IType;
+    compileBinaryBitsOperator(context: Context, module: Module, flags: CompilerFlags, body: FunctionBody, rightType: IType, operator: BinaryOperator): IType;
 
     checkUnaryOperator(context: Context, operator: UnaryOperator): IType;
 
-    compileUnaryOperator(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, expression: IExpression, operator: UnaryOperator): IType;
+    compileUnaryOperator(context: Context, module: Module, flags: CompilerFlags, body: FunctionBody, expression: IExpression, operator: UnaryOperator): IType;
 
     convertExpression(context: Context, expression: IExpression): IExpression;
 

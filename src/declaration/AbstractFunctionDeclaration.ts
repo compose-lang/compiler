@@ -3,7 +3,7 @@ import Prototype from "./Prototype";
 import Context from "../context/Context";
 import Accessibility from "./Accessibility";
 import IType from "../type/IType";
-import WasmModule from "../module/WasmModule";
+import Module from "../module/WasmModule";
 import Identifier from "../builder/Identifier";
 import Variable from "../context/Variable";
 import InstanceModifier from "../statement/InstanceModifier";
@@ -42,12 +42,12 @@ export default class AbstractFunctionDeclaration extends FunctionDeclarationBase
         return this.returnType;
     }
 
-    declare(context: Context, module: WasmModule) {
+    declare(context: Context, module: Module) {
         if(this.isModuleImport())
             module.declareImportedFunction(this);
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags): void {
+    compile(context: Context, module: Module, flags: CompilerFlags): void {
         // nothing to do
     }
 
