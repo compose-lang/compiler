@@ -1,6 +1,6 @@
 import StatementBase from "./StatementBase";
 import IExpression from "../expression/IExpression";
-import Module from "../module/WasmModule";
+import WasmModule from "../module/wasm/WasmModule";
 import Context from "../context/Context";
 import FunctionBody from "../module/wasm/FunctionBody";
 import OpCode from "../compiler/OpCode";
@@ -31,17 +31,17 @@ export default class ReturnStatement extends StatementBase {
             return false; // void is not const
     }
 
-    declare(context: Context, module: Module): void {
+    declare(context: Context, module: WasmModule): void {
         if(this.expression)
             this.expression.declare(context, module);
     }
 
-    rehearse(context: Context, module: Module, body: FunctionBody): void {
+    rehearse(context: Context, module: WasmModule, body: FunctionBody): void {
         if(this.expression)
             this.expression.rehearse(context, module, body);
     }
 
-    compile(context: Context, module: Module, flags: CompilerFlags, body: FunctionBody): IType {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
         let type: IType = null;
         if(this.expression)
             type = this.expression.compile(context, module, flags, body);

@@ -2,7 +2,7 @@ import Variable from "../../context/Variable";
 import IExpression from "../../expression/IExpression";
 import IWasmTarget from "../../compiler/IWasmTarget";
 import ICompilable from "../../compiler/ICompilable";
-import Module from "./WasmModule";
+import WasmModule from "./WasmModule";
 import Context from "../../context/Context";
 import FunctionBody from "./FunctionBody";
 import OpCode from "../../compiler/OpCode";
@@ -35,11 +35,11 @@ export default class Global implements ICompilable {
         this.body.writeInstructionsTo(target);
     }
 
-    declare(context: Context, module: Module): void {
+    declare(context: Context, module: WasmModule): void {
         this.value.declare(context, module);
     }
 
-    compile(context: Context, module: Module, flags: CompilerFlags): void {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags): void {
         const value = this.value.constify(context);
         value.compile(context, module, flags, this.body);
         this.body.addOpCode(OpCode.END);

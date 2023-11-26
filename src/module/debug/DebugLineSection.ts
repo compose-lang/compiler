@@ -1,6 +1,6 @@
-import CustomSection from "../module/wasm/CustomSection";
-import LEB128 from "../utils/LEB128";
-import IWasmTarget from "../compiler/IWasmTarget";
+import CustomSection from "../wasm/CustomSection";
+import LEB128 from "../../utils/LEB128";
+import IWasmTarget from "../../compiler/IWasmTarget";
 
 export default class DebugLineSection extends CustomSection {
 

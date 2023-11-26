@@ -1,5 +1,5 @@
 import StatementBase from "./StatementBase";
-import Module from "../module/WasmModule";
+import WasmModule from "../module/wasm/WasmModule";
 import FunctionBody from "../module/wasm/FunctionBody";
 import IType from "../type/IType";
 import Context from "../context/Context";
@@ -26,15 +26,15 @@ export default class UnaryStatement extends StatementBase {
         return null;
     }
 
-    declare(context: Context, module: Module): void {
+    declare(context: Context, module: WasmModule): void {
         this.expression.declare(context, module);
     }
 
-    rehearse(context: Context, module: Module, body: FunctionBody): void {
+    rehearse(context: Context, module: WasmModule, body: FunctionBody): void {
         this.expression.rehearse(context, module, body);
     }
 
-    compile(context: Context, module: Module, flags: CompilerFlags, body: FunctionBody): IType {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
         const type = this.expression.check(context);
         type.compileUnaryOperator(context, module, flags, body, this.expression, this.operator);
         body.addOpCode(OpCode.DROP); // let optimizer do the job

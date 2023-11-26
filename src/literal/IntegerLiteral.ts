@@ -1,6 +1,6 @@
 import LiteralBase from "./LiteralBase";
 import Context from "../context/Context";
-import Module from "../module/WasmModule";
+import WasmModule from "../module/wasm/WasmModule";
 import FunctionBody from "../module/wasm/FunctionBody";
 import OpCode from "../compiler/OpCode";
 import LEB128 from "../utils/LEB128";
@@ -44,7 +44,7 @@ export default class IntegerLiteral extends LiteralBase<number> {
             return Int32Type.instance;
     }
 
-    compile(context: Context, module: Module, flags: CompilerFlags, body: FunctionBody): IType {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
         const bytes: number[] = [];
         LEB128.emitSigned(this.value, byte => bytes.push(byte));
         if(this.isI64()) {

@@ -1,6 +1,6 @@
 import CodeFragment from "../builder/CodeFragment";
 import IExpression from "./IExpression";
-import Module from "../module/WasmModule";
+import WasmModule from "../module/wasm/WasmModule";
 import Context from "../context/Context";
 import FunctionBody from "../module/wasm/FunctionBody";
 import IType from "../type/IType";
@@ -19,17 +19,17 @@ export default abstract class ExpressionBase extends CodeFragment implements IEx
         assert.ok(false); // must override if isConst returns true
     }
 
-    abstract declare(context: Context, module: Module): void;
+    abstract declare(context: Context, module: WasmModule): void;
 
-    rehearse(context: Context, module: Module, body: FunctionBody): void {
+    rehearse(context: Context, module: WasmModule, body: FunctionBody): void {
         assert.ok(false, "Missing rehearse method for " + Object.getPrototypeOf(this).constructor.name);
     }
 
-    compile(context: Context, module: Module, flags: CompilerFlags, body: FunctionBody): IType {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
         assert.ok(false,  "Missing compile method for " + Object.getPrototypeOf(this).constructor.name);
     }
 
-    compileAssign(context: Context, module: Module, flags: CompilerFlags, body: FunctionBody): void {
+    compileAssign(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): void {
         assert.ok(false,  "Missing compileAssign method for " + Object.getPrototypeOf(this).constructor.name);
     }
 

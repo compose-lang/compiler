@@ -1,5 +1,5 @@
 import ExpressionBase from "./ExpressionBase";
-import Module from "../module/WasmModule";
+import WasmModule from "../module/wasm/WasmModule";
 import IType from "../type/IType";
 import * as assert from "assert";
 import Context from "../context/Context";
@@ -25,7 +25,7 @@ export default abstract class LogicalExpression extends ExpressionBase {
         return BooleanType.instance;
     }
 
-    declare(context: Context, module: Module): void {
+    declare(context: Context, module: WasmModule): void {
         this.left.declare(context, module);
         this.right.declare(context, module);
     }

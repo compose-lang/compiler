@@ -1,5 +1,5 @@
 import ExpressionBase from "./ExpressionBase";
-import Module from "../module/WasmModule";
+import WasmModule from "../module/wasm/WasmModule";
 import IType from "../type/IType";
 import Context from "../context/Context";
 import * as assert from "assert";
@@ -22,7 +22,7 @@ export default class MemberExpression extends ExpressionBase {
         return parentType.checkMember(context, this.id);
     }
 
-    declare(context: Context, module: Module): void {
+    declare(context: Context, module: WasmModule): void {
         this.parent.declare(context, module);
     }
 

@@ -1,7 +1,7 @@
 import OpCode from "../compiler/OpCode";
 import IExpression from "../expression/IExpression";
 import Context from "../context/Context";
-import Module from "../module/WasmModule";
+import WasmModule from "../module/wasm/WasmModule";
 import FunctionBody from "../module/wasm/FunctionBody";
 import CompilerFlags from "../compiler/CompilerFlags";
 
@@ -21,15 +21,15 @@ export default class Instruction {
         this.expressions.forEach(e => e.check(context), this);
     }
 
-    declare(context: Context, module: Module): void {
+    declare(context: Context, module: WasmModule): void {
         this.expressions.forEach(e => e.declare(context, module), this);
     }
 
-    rehearse(context: Context, module: Module, body: FunctionBody) {
+    rehearse(context: Context, module: WasmModule, body: FunctionBody) {
         this.expressions.forEach(e => e.rehearse(context, module, body), this);
     }
 
-    compile(context: Context, module: Module, flags: CompilerFlags, body: FunctionBody) {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody) {
         this.expressions.forEach(e => e.compile(context, module, flags, body), this);
         body.addOpCode(this.opcode, this.variants);
     }

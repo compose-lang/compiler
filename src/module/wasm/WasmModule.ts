@@ -16,9 +16,9 @@ import CompilationUnit from "../../compiler/CompilationUnit";
 import ImportsSection from "./ImportsSection";
 import * as assert from "assert";
 import CustomSection from "./CustomSection";
-import DebugInfo from "../../debug/DebugInfo";
+import DebugInfo from "../debug/DebugInfo";
 
-export default class Module {
+export default class WasmModule {
 
     standardSections = new Map<SectionType, ISection>();
     customSections = new Map<string, CustomSection>();
@@ -28,8 +28,8 @@ export default class Module {
 
     writeTo(wasmTarget: IWasmTarget) {
         wasmTarget.open();
-        Module.writeMagicBytes(wasmTarget);
-        Module.writeVersion(wasmTarget);
+        WasmModule.writeMagicBytes(wasmTarget);
+        WasmModule.writeVersion(wasmTarget);
         Object.values(SectionType).forEach((s: SectionType) => {
             if(s==SectionType.CUSTOM) {
                 this.customSections.forEach(s => {

@@ -1,7 +1,7 @@
 import ExpressionBase from "./ExpressionBase";
 import Context from "../context/Context";
 import IType from "../type/IType";
-import Module from "../module/WasmModule";
+import WasmModule from "../module/wasm/WasmModule";
 import FunctionBody from "../module/wasm/FunctionBody";
 import IValueType from "../type/IValueType";
 import UInt32Type from "../type/UInt32Type";
@@ -26,15 +26,15 @@ export default class AlignofExpression extends ExpressionBase {
         return true;
     }
 
-    declare(context: Context, module: Module): void {
+    declare(context: Context, module: WasmModule): void {
         // nothing to do
     }
 
-    rehearse(context: Context, module: Module, body: FunctionBody) {
+    rehearse(context: Context, module: WasmModule, body: FunctionBody) {
         // nothing to do
     }
 
-    compile(context: Context, module: Module, flags: CompilerFlags, body: FunctionBody): IType {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
         const bytes: number[] = [];
         LEB128.emitUnsigned(this.type.alignof(), b => bytes.push(b));
         body.addOpCode(OpCode.I32_CONST, bytes);

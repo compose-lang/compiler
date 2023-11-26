@@ -3,7 +3,7 @@ import IWasmTarget from "../compiler/IWasmTarget";
 import NumberPrecedence from "./NumberPrecedence";
 import Context from "../context/Context";
 import IType from "./IType";
-import Module from "../module/WasmModule";
+import WasmModule from "../module/wasm/WasmModule";
 import FunctionBody from "../module/wasm/FunctionBody";
 import OpCode from "../compiler/OpCode";
 import IExpression from "../expression/IExpression";
@@ -33,7 +33,7 @@ export default class Int32Type extends IntegerType {
         target.writeUInts(0x7F);
     }
 
-    compileAdd(context: Context, module: Module, body: FunctionBody, leftType: IType, rightType: IType, tryReverse: boolean): IType {
+    compileAdd(context: Context, module: WasmModule, body: FunctionBody, leftType: IType, rightType: IType, tryReverse: boolean): IType {
         if(rightType instanceof Int32Type || rightType instanceof UInt32Type) {
             body.addOpCode(OpCode.I32_ADD);
             return this;
@@ -41,7 +41,7 @@ export default class Int32Type extends IntegerType {
             return super.compileAdd(context, module, body, leftType, rightType, tryReverse);
     }
 
-    compileBinaryBitsOperator(context: Context, module: Module, flags: CompilerFlags, body: FunctionBody, rightType: IType, operator: BinaryOperator): IType {
+    compileBinaryBitsOperator(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, rightType: IType, operator: BinaryOperator): IType {
         if(rightType instanceof Int32Type) {
             switch(operator) {
                 case BinaryOperator.LSHIFT:
@@ -64,7 +64,7 @@ export default class Int32Type extends IntegerType {
         return super.compileBinaryBitsOperator(context, module, flags, body, rightType, operator);
     }
 
-    compileUnaryOperator(context: Context, module: Module, flags: CompilerFlags, body: FunctionBody, expression: IExpression, operator: UnaryOperator): IType {
+    compileUnaryOperator(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, expression: IExpression, operator: UnaryOperator): IType {
         let bytes: number[] = null;
         switch(operator) {
             case UnaryOperator.PRE_INC:

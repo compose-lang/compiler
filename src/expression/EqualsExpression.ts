@@ -3,7 +3,7 @@ import IExpression from "./IExpression";
 import Comparator from "./Comparator";
 import Context from "../context/Context";
 import IType from "../type/IType";
-import Module from "../module/WasmModule";
+import WasmModule from "../module/wasm/WasmModule";
 import assert from "assert";
 
 export default class EqualsExpression extends ExpressionBase {
@@ -25,7 +25,7 @@ export default class EqualsExpression extends ExpressionBase {
         return leftType.checkEquals(context, rightType);
     }
 
-    declare(context: Context, module: Module): void {
+    declare(context: Context, module: WasmModule): void {
         this.left.declare(context, module);
         this.right.declare(context, module);
     }

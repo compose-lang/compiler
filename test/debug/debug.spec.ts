@@ -5,8 +5,8 @@ import Runner from "../../src/runner/Runner";
 import * as assert from "assert";
 import {fileURLToPath} from "url";
 import {dirname} from "path";
-import DwarfExternalTarget from "../../src/debug/DwarfExternalTarget";
-import ExternalDebugSection from "../../src/debug/ExternalDebugSection";
+import DwarfExternalTarget from "../../src/module/debug/DwarfExternalTarget";
+import ExternalDebugSection from "../../src/module/debug/ExternalDebugSection";
 import WasmFileSource from "../../src/runner/WasmFileSource";
 import tempfile from "tempfile";
 

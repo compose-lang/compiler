@@ -1,18 +1,18 @@
 import CompilationUnit from "./CompilationUnit";
 import IWasmTarget from "./IWasmTarget";
-import Module from "../module/WasmModule";
+import WasmModule from "../module/wasm/WasmModule";
 import Context from "../context/Context";
 import * as assert from "assert";
 import ComposeBuilder from "../builder/ComposeBuilder";
 import {fileURLToPath} from "url";
 import {dirname} from "path";
 import CompilerOptions from "./CompilerOptions";
-import IDwarfTarget from "../debug/IDwarfTarget";
+import IDwarfTarget from "../module/debug/IDwarfTarget";
 import CompilerFlags from "./CompilerFlags";
 
 export default class Compiler {
 
-    module = new Module();
+    module = new WasmModule();
     units: CompilationUnit[] = [];
 
     addMemory(minPages: number, maxPages?: number) {

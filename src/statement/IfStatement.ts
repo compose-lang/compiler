@@ -1,7 +1,7 @@
 import StatementBase from "./StatementBase";
 import StatementList from "./StatementList";
 import IExpression from "../expression/IExpression";
-import Module from "../module/WasmModule";
+import WasmModule from "../module/wasm/WasmModule";
 import FunctionBody from "../module/wasm/FunctionBody";
 import IType from "../type/IType";
 import * as assert from "assert";
@@ -49,7 +49,7 @@ export default class IfStatement extends StatementBase {
         return block.statements.check(context.newChildContext(), null);
     }
 
-    declare(context: Context, module: Module): void {
+    declare(context: Context, module: WasmModule): void {
         this.blocks.forEach(block => {
             if(block.condition)
                 block.condition.declare(context, module);
@@ -57,7 +57,7 @@ export default class IfStatement extends StatementBase {
         })
     }
 
-    rehearse(context: Context, module: Module, body: FunctionBody): void {
+    rehearse(context: Context, module: WasmModule, body: FunctionBody): void {
         this.blocks.forEach(block => {
             if(block.condition)
                 block.condition.rehearse(context, module, body);
@@ -65,7 +65,7 @@ export default class IfStatement extends StatementBase {
         })
     }
 
-    compile(context: Context, module: Module, flags: CompilerFlags, body: FunctionBody): IType {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
         const typeMap = new TypeMap();
         const blocks = Array.from(this.blocks) as IfBlock[];
         const block = blocks.splice(0, 1)[0];
@@ -74,7 +74,7 @@ export default class IfStatement extends StatementBase {
         return result == VoidType.instance ? null : result;
     }
 
-    private compileBlock(context: Context, module: Module, flags: CompilerFlags, body: FunctionBody, typeMap: TypeMap, block: IfBlock, remaining: IfBlock[]) {
+    private compileBlock(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, typeMap: TypeMap, block: IfBlock, remaining: IfBlock[]) {
         if(block.condition) {
             block.condition.compile(context, module, flags, body);
             body.addOpCode(OpCode.IF, [ 0x40 ]); // 0x40 == void

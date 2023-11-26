@@ -1,5 +1,5 @@
 import ExpressionBase from "../expression/ExpressionBase";
-import Module from "../module/WasmModule";
+import WasmModule from "../module/wasm/WasmModule";
 import Context from "../context/Context";
 import ILiteralExpression from "./ILiteralExpression";
 import FunctionBody from "../module/wasm/FunctionBody";
@@ -24,11 +24,11 @@ export default abstract class LiteralBase<T> extends ExpressionBase implements I
         return this;
     }
 
-    declare(context: Context, module: Module): void {
+    declare(context: Context, module: WasmModule): void {
         // nothing to do
     }
 
-    rehearse(context: Context, module: Module, body: FunctionBody) {
+    rehearse(context: Context, module: WasmModule, body: FunctionBody) {
         return this.check(context);
     }
 

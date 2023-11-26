@@ -1,6 +1,6 @@
 import ExpressionBase from "./ExpressionBase";
 import assert from "assert";
-import Module from "../module/WasmModule";
+import WasmModule from "../module/wasm/WasmModule";
 import IType from "../type/IType";
 import Context from "../context/Context";
 import IExpression from "./IExpression";
@@ -27,7 +27,7 @@ export default class ParenthesisExpression extends ExpressionBase {
         return this.expression.constify(context);
     }
 
-    declare(context: Context, module: Module): void {
+    declare(context: Context, module: WasmModule): void {
         this.expression.declare(context, module);
     }
 

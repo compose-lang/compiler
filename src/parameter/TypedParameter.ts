@@ -6,7 +6,7 @@ import ILiteralExpression from "../literal/ILiteralExpression";
 import Context from "../context/Context";
 import Variable from "../context/Variable";
 import InstanceModifier from "../statement/InstanceModifier";
-import Module from "../module/WasmModule";
+import WasmModule from "../module/wasm/WasmModule";
 import FunctionBody from "../module/wasm/FunctionBody";
 import IType from "../type/IType";
 
@@ -50,11 +50,11 @@ export default class TypedParameter extends CodeFragment implements IParameter {
         context.registerLocal(this.asVariable());
     }
 
-    declare(context: Context, module: Module): void {
+    declare(context: Context, module: WasmModule): void {
         this.register(context);
     }
 
-    rehearse(context: Context, module: Module, body: FunctionBody): void {
+    rehearse(context: Context, module: WasmModule, body: FunctionBody): void {
         this.register(context);
         body.registerParameter(this.name, this.type);
     }

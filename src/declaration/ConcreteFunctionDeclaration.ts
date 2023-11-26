@@ -1,7 +1,7 @@
 import FunctionDeclarationBase from "./FunctionDeclarationBase";
 import Prototype from "./Prototype";
 import Context from "../context/Context";
-import Module from "../module/WasmModule";
+import WasmModule from "../module/wasm/WasmModule";
 import ICompilable from "../compiler/ICompilable";
 import OpCode from "../compiler/OpCode";
 import IType from "../type/IType";
@@ -45,7 +45,7 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
         return this.statements.every(stmt => stmt.isConst(context));
     }
 
-    declare(context: Context, module: Module): void {
+    declare(context: Context, module: WasmModule): void {
         if(this.isGeneric())
             return;
         context = this._unit.context;
@@ -55,7 +55,7 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
         this.statements.declare(local, module);
     }
 
-    compile(context: Context, module: Module, flags: CompilerFlags): void {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags): void {
         if(this.isGeneric())
             return;
         context = this._unit.context;
@@ -105,11 +105,11 @@ class GenericFunctionInstance extends ConcreteFunctionDeclaration {
         return super.check(context.withTypeMap(this.typeMap));
     }
 
-    declare(context: Context, module: Module): void {
+    declare(context: Context, module: WasmModule): void {
         super.declare(context.withTypeMap(this.typeMap), module);
     }
 
-    compile(context: Context, module: Module, flags: CompilerFlags): void {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags): void {
         super.compile(context.withTypeMap(this.typeMap), module, flags);
     }
 }

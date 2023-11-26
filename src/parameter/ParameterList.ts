@@ -1,6 +1,6 @@
 import IParameter from "./IParameter";
 import Context from "../context/Context";
-import Module from "../module/WasmModule";
+import WasmModule from "../module/wasm/WasmModule";
 import FunctionBody from "../module/wasm/FunctionBody";
 
 export default class ParameterList extends Array<IParameter> {
@@ -11,7 +11,7 @@ export default class ParameterList extends Array<IParameter> {
         return result as ParameterList;
     }
 
-    rehearse(context: Context, module: Module, body: FunctionBody) {
+    rehearse(context: Context, module: WasmModule, body: FunctionBody) {
         this.forEach(param => param.rehearse(context, module, body), this);
     }
 

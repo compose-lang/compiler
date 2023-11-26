@@ -1,6 +1,6 @@
 import ExpressionBase from "./ExpressionBase";
 import assert from "assert";
-import Module from "../module/WasmModule";
+import WasmModule from "../module/wasm/WasmModule";
 import IType from "../type/IType";
 import Context from "../context/Context";
 import IExpression from "./IExpression";
@@ -32,7 +32,7 @@ export default class TernaryExpression extends ExpressionBase {
         return typeMap.inferType(context);
     }
 
-    declare(context: Context, module: Module): void {
+    declare(context: Context, module: WasmModule): void {
         this.condition.declare(context, module);
         this.ifTrue.declare(context, module);
         this.ifFalse.declare(context, module);
