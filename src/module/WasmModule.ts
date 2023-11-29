@@ -61,6 +61,9 @@ export default class WasmModule extends binaryen.Module {
         assert.ok(!prototypes.has(prototype));
         prototypes.set(prototype, { index: this.functions.length, scope: exported ? Scope.EXPORTED : Scope.LOCAL });
         this.functions.push(decl);
+        if(exported) {
+            this.addFunctionExport(decl.name, decl.name); // TODO mangle name
+        }
     }
 
     getFunctionByDecl(decl: IFunctionDeclaration): number {
