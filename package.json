@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "antlr4": "4.13.1-patch-1",
-    "binaryen": "^111.0.0",
+    "binaryen": "116.0.0",
     "tempfile": "^5.0.0"
   }
 }
