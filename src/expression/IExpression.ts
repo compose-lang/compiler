@@ -4,7 +4,7 @@ import FunctionBody from "../module/FunctionBody";
 import IType from "../type/IType";
 import CompilerFlags from "../compiler/CompilerFlags";
 import IResult from "./IResult";
-import binaryen from "../../../../binaryen.js";
+import binaryen from "binaryen";
 import ExpressionRef = binaryen.ExpressionRef;
 
 export default interface IExpression {

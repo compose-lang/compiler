@@ -7,7 +7,7 @@ import IType from "../type/IType";
 import assert from "assert";
 import CompilerFlags from "../compiler/CompilerFlags";
 import IResult from "./IResult";
-import binaryen from "../../../../binaryen.js";
+import binaryen from "binaryen";
 import ExpressionRef = binaryen.ExpressionRef;
 
 export default abstract class ExpressionBase extends CodeFragment implements IExpression {

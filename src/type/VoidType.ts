@@ -1,7 +1,7 @@
 import NativeType from "./NativeType";
 import IExpression from "../expression/IExpression";
 import * as assert from "assert";
-import binaryen from "../../../../binaryen.js";
+import binaryen from "binaryen";
 
 export default class VoidType extends NativeType {
 
