@@ -1,5 +1,4 @@
 import FunctionDeclarationBase from "./FunctionDeclarationBase";
-import ICompilable from "../compiler/ICompilable";
 import Accessibility from "./Accessibility";
 import Prototype from "./Prototype";
 import Instruction from "../assembly/Instruction";
@@ -8,6 +7,8 @@ import Context from "../context/Context";
 import IType from "../type/IType";
 import CompilerFlags from "../compiler/CompilerFlags";
 import FunctionBody from "../module/FunctionBody";
+import binaryen from "binaryen";
+import OpCode from "../compiler/OpCode";
 
 export default class NativeFunctionDeclaration extends FunctionDeclarationBase {
 
@@ -42,8 +43,10 @@ export default class NativeFunctionDeclaration extends FunctionDeclarationBase {
         const body = new FunctionBody();
         this.parameters.forEach(param => param.rehearse(local, module, body));
         this.instructions.forEach(i => i.rehearse(local, module, body));
-        // parameters are compiled by function call
-        this.instructions.forEach(i => i.compile(local, module, flags, body), this);
+        // parameters are compiled by function call -- REALLY ? TODO
+        const refs = this.instructions.filter(i => i.opcode != OpCode.END).map(i => i.compile(local, module, flags), this);
+        const block = module.block(null, refs, binaryen.i32);
+        module.addFunction(this.name, 0, binaryen.i32, [], block);
     }
 
 }

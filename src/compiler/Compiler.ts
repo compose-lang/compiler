@@ -15,6 +15,7 @@ export default class Compiler {
     units: CompilationUnit[] = [];
 
     addMemory(minPages: number, maxPages?: number) {
+        maxPages = Math.max(minPages, maxPages || 0);
         this.module.setMemory(minPages, maxPages);
     }
 
@@ -73,7 +74,11 @@ export default class Compiler {
     }
 
     assembleModule(wasmTarget: IWasmTarget) {
-        this.module.writeTo(wasmTarget);
+        const wat = this.module.emitText();
+        const bytes = this.module.emitBinary();
+        wasmTarget.open();
+        wasmTarget.writeUint8Array(bytes);
+        wasmTarget.close();
     }
 
     private static parseAndRegisterBuiltins(context: Context) {

@@ -23,24 +23,6 @@ export default class WasmModule extends binaryen.Module {
     functions: IFunctionDeclaration[] = [];
     functionsByName = new Map<string, Map<Prototype,IFunctionScope>>();
 
-    writeTo(wasmTarget: IWasmTarget) {
-        wasmTarget.open();
-        /*
-        WasmModule.writeMagicBytes(wasmTarget);
-        WasmModule.writeVersion(wasmTarget);
-        Object.values(SectionType).forEach((s: SectionType) => {
-            if(s==SectionType.CUSTOM) {
-                this.customSections.forEach(s => {
-                    s.writeTo(wasmTarget);
-                })
-            }
-            if(this.standardSections.has(s))
-                this.standardSections.get(s).writeTo(wasmTarget);
-        })
-         */
-        wasmTarget.close();
-    }
-
     declareGlobal(unit: CompilationUnit, variable: Variable, value: IExpression, exported: boolean): number {
         assert.ok(!this.globalsByName.has(variable.name));
         const global = new Global(unit, this.globals.length, exported, variable, value);

@@ -4,8 +4,12 @@ import Context from "../context/Context";
 import WasmModule from "../module/WasmModule";
 import FunctionBody from "../module/FunctionBody";
 import CompilerFlags from "../compiler/CompilerFlags";
-import assert from "assert";
 import binaryen from "binaryen";
+import ComposeLexer from "../parser/ComposeLexer";
+
+export interface IIndexable {
+    [key: string]: any;
+}
 
 export default class Instruction {
 
@@ -31,9 +35,26 @@ export default class Instruction {
         this.expressions.forEach(e => e.rehearse(context, module, body), this);
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags): binaryen.ExpressionRef[] {
-        assert.ok(false)
-        /*this.expressions.forEach(e => e.compile(context, module, flags), this);
-        body.addOpCode(this.opcode, this.variants);*/
+    compile(context: Context, module: WasmModule, flags: CompilerFlags): binaryen.ExpressionRef {
+        const fn = this.locateModuleFunction(module);
+        const args = this.expressions.map(exp => exp.compile(context, module, flags)).map(res => res.ref);
+        return fn.apply(null, args);
+    }
+
+    locateModuleFunction(module: WasmModule): Function {
+        const name = OpCode[this.opcode];
+        const token = ComposeLexer[name as keyof typeof ComposeLexer] as number;
+        let literal = ComposeLexer.literalNames[token];
+        literal = literal.substring(1, literal.length - 1)
+        const parts = literal.split("\.");
+        let source = module as IIndexable;
+        for(;;) {
+            const part = parts.splice(0, 1)[0];
+            const member = source[part];
+            if(parts.length == 0)
+                return member as Function;
+            else
+                source = member as IIndexable;
+        }
     }
 }
