@@ -165,7 +165,7 @@ it('runs a post-increment expression',  () => {
     assert.equal(result, 7);
 });
 
-it('runs a post-increment expression',  () => {
+it('runs a post-decrement expression',  () => {
     const compiler = new Compiler();
     const target = new WasmBufferTarget();
     const unit = ComposeBuilder.parse_unit("" +

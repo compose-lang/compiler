@@ -35,8 +35,8 @@ export default class UnaryExpression extends ExpressionBase {
     }
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResult {
-        assert.ok(false) /*const type = this.expression.check(context);
-        return type.compileUnaryOperator(context, module, flags, this.expression, this.operator, body); */
+        const type = this.expression.check(context);
+        return type.compileUnaryOperator(context, module, flags, body, this.expression, this.operator);
     }
 
 }

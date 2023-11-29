@@ -7,6 +7,10 @@ import UInt32Type from "./UInt32Type";
 import CompilerFlags from "../compiler/CompilerFlags";
 import IResult from "../expression/IResult";
 import binaryen from "binaryen";
+import IExpression from "../expression/IExpression";
+import FunctionBody from "../module/FunctionBody";
+import UnaryOperator from "../expression/UnaryOperator";
+import ExpressionRef = binaryen.ExpressionRef;
 
 export default class Int32Type extends IntegerType {
 
@@ -49,50 +53,61 @@ export default class Int32Type extends IntegerType {
         return super.compileBinaryBitsOperator(context, module, flags, left, right, operator);
     }
 
-    /*
     compileUnaryOperator(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, expression: IExpression, operator: UnaryOperator): IResult {
-        switch(operator) {
-            case UnaryOperator.PRE_INC:
-            {
-                const value = expression.compile(context, module, flags);
-                const ref = module.i32.add(value.ref, module.i32.const(1));
-                expression.compileAssign(context, module, flags, body, { ref, type: this });
-                return expression.compile(context, module, flags);
+
+        switch (operator) {
+            case UnaryOperator.PRE_INC: {
+                const refs: number[] = [];
+                let value = expression.compile(context, module, flags, body);
+                const result = module.i32.add(value.ref, module.i32.const(1));
+                value = expression.compileAssign(context, module, flags, body, result);
+                refs.push(value.ref);
+                value = expression.compile(context, module, flags, body);
+                refs.push(value.ref);
+                return {ref: module.block(null, refs, value.type.asType()), type: value.type};
             }
-            case UnaryOperator.PRE_DEC:
-            {
-                const value = expression.compile(context, module, flags);
-                const ref = module.i32.sub(value.ref, module.i32.const(1));
-                expression.compileAssign(context, module, flags, body, { ref, type: this });
-                return expression.compile(context, module, flags);
+            case UnaryOperator.PRE_DEC: {
+                const refs: number[] = [];
+                let value = expression.compile(context, module, flags, body);
+                const result = module.i32.sub(value.ref, module.i32.const(1));
+                value = expression.compileAssign(context, module, flags, body, result);
+                refs.push(value.ref);
+                value = expression.compile(context, module, flags, body);
+                refs.push(value.ref);
+                return {ref: module.block(null, refs, value.type.asType()), type: value.type};
             }
-            case UnaryOperator.POST_INC:
-            {
-                const result = expression.compile(context, module, flags);
-                const value = expression.compile(context, module, flags);
-                const ref = module.i32.add(value.ref, module.i32.const(1));
-                expression.compileAssign(context, module, flags, body, {ref, type: this});
-                return result;
+            case UnaryOperator.POST_INC: {
+                const refs: number[] = [];
+                let value = expression.compile(context, module, flags, body);
+                const type = value.type;
+                refs.push(value.ref);
+                value = expression.compile(context, module, flags, body);
+                const result = module.i32.add(value.ref, module.i32.const(1));
+                value = expression.compileAssign(context, module, flags, body, result);
+                refs.push(value.ref);
+                return {ref: module.block(null, refs, value.type.asType()), type};
             }
-            case UnaryOperator.POST_DEC:
-            {
-                const result = expression.compile(context, module, flags);
-                const value = expression.compile(context, module, flags);
-                const ref = module.i32.sub(value.ref, module.i32.const(1));
-                expression.compileAssign(context, module, flags, body, {ref, type: this});
-                return result;
+            case UnaryOperator.POST_DEC: {
+                const refs: number[] = [];
+                let value = expression.compile(context, module, flags, body);
+                const type = value.type;
+                refs.push(value.ref);
+                value = expression.compile(context, module, flags, body);
+                const result = module.i32.sub(value.ref, module.i32.const(1));
+                value = expression.compileAssign(context, module, flags, body, result);
+                refs.push(value.ref);
+                return {ref: module.block(null, refs, value.type.asType()), type};
             }
-            case UnaryOperator.BIT_NOT:
-            {
-                const value = expression.compile(context, module, flags);
+            case UnaryOperator.BIT_NOT: {
+                const value = expression.compile(context, module, flags, body);
                 const ref = module.i32.xor(value.ref, module.i32.const(1));
-                return { ref, type: this };
+                return {ref, type: this};
             }
             default:
                 return super.compileUnaryOperator(context, module, flags, body, expression, operator);
         }
     }
-    */
+
 
 
 }

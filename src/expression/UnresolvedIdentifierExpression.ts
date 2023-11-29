@@ -59,10 +59,9 @@ export default class UnresolvedIdentifierExpression extends ExpressionBase {
         return this.resolved.compile(context, module, flags, body);
     }
 
-    compileAssign(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): void {
-        assert.ok(false)
-        /* this.resolve(context);
-        this.resolved.compileAssign(context, module, flags, body, value);*/
+    compileAssign(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, value: ExpressionRef): IResult {
+        this.resolve(context);
+        return this.resolved.compileAssign(context, module, flags, body, value);
     }
 
     private resolve(context: Context) {
@@ -160,9 +159,10 @@ class LocalVariableExpression extends ExpressionBase {
         return { ref: value, type: local.type };
     }
 
-    compileAssign(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): void {
-        assert.ok(false) /*const index = body.getRegisteredLocalIndex(this.id.value);
-        body.addOpCode(OpCode.LOCAL_SET, [index]); // TODO encode if index > 0x7F */
+    compileAssign(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, value: ExpressionRef): IResult {
+        const local = body.getRegisteredLocal(this.id.value);
+        const ref = module.local.set(local.index, value);
+        return { ref, type: local.type };
     }
 }
 

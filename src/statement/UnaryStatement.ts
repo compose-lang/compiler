@@ -20,7 +20,6 @@ export default class UnaryStatement extends StatementBase {
         this.operator = operator;
     }
 
-
     check(context: Context): IType {
         const type = this.expression.check(context);
         type.checkUnaryOperator(context, this.operator);
@@ -36,11 +35,9 @@ export default class UnaryStatement extends StatementBase {
     }
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults {
-        /*const type = this.expression.check(context);
+        const type = this.expression.check(context);
         const result = type.compileUnaryOperator(context, module, flags, body, this.expression, this.operator);
-
-        body.addStatementRef(module.drop(result.ref)); // let optimizer do the job */
-        return { refs: [], type: VoidType.instance };
+        return { refs: [ module.drop(result.ref) ], type: VoidType.instance };
     }
 
 }
