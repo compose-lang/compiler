@@ -18,11 +18,9 @@ export default abstract class TypeBase extends CodeFragment implements IType {
 
     abstract get typeName(): string;
 
-    abstract byteLength(): number;
-
     abstract count(): number;
 
-    abstract writeTo(target: IWasmTarget): void;
+    abstract asType(): number;
 
     isAssignableFrom(context: Context, type: IType): boolean {
         return type === this;

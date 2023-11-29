@@ -1,4 +1,3 @@
-import IWasmTarget from "../compiler/IWasmTarget";
 import IExpression from "../expression/IExpression";
 import TypeBase from "./TypeBase";
 
@@ -21,10 +20,6 @@ export default abstract class NativeType extends TypeBase {
         return 1;
     }
 
-    byteLength(): number {
-        return 1;
-    }
-
-    abstract writeTo(target: IWasmTarget): void;
+    abstract asType(): number;
 
 }

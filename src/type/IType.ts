@@ -18,8 +18,7 @@ export default interface IType {
     defaultValue(): IExpression;
 
     count(): number;
-    byteLength(): number;
-    writeTo(target: IWasmTarget): void;
+    asType(): number;
 
     prepareContext(context: Context): Context;
 

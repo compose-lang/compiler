@@ -15,6 +15,7 @@ import AnyType from "../type/AnyType";
 import ParameterList from "../parameter/ParameterList";
 import CompilerFlags from "../compiler/CompilerFlags";
 import FunctionBody from "../module/FunctionBody";
+import binaryen from "binaryen";
 
 export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase {
 
@@ -57,7 +58,6 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
     }
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags): void {
-        assert.ok(false) /*
         if(this.isGeneric())
             return;
         context = this._unit.context;
@@ -66,8 +66,9 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
         this.parameters.rehearse(local, module, body);
         this.statements.rehearse(local, module, body);
         // parameters are compiled by function call
-        this.statements.compile(local, module, flags, body);
-        body.addOpCode(OpCode.END); */
+        const results = this.statements.compile(local, module, flags, body);
+        const block = module.block(null, results.refs, results.type.asType());
+        module.addFunction(this.name, this.functionType().asType(), results.type.asType(), [], block);
     }
 
     instantiateGeneric(typeArguments: IType[]): IFunctionDeclaration {

@@ -5,11 +5,9 @@ import IExpression from "../expression/IExpression";
 import WasmModule from "../module/WasmModule";
 import FunctionBody from "../module/FunctionBody";
 import Context from "../context/Context";
-import OpCode from "../compiler/OpCode";
 import Variable from "../context/Variable";
 import InstanceModifier from "./InstanceModifier";
 import * as assert from "assert";
-import VoidType from "../type/VoidType";
 import IGlobalStatement from "./IGlobalStatement";
 import CompilerFlags from "../compiler/CompilerFlags";
 import IResults from "./IResults";
@@ -60,7 +58,7 @@ export default class DeclareInstanceStatement extends StatementBase implements I
         if(context.isGlobal()) {
             const variable = context.getRegisteredLocal(this.id);
             assert.ok(variable !== null);
-            module.declareGlobal(this.unit, variable, this.expression, this.isModuleExport());
+            module.declareGlobal(this.unit, variable, this.expression, this.modifier == InstanceModifier.LET, this.isModuleExport());
         } else
             this._check(context);
         this.expression.declare(context, module);

@@ -14,7 +14,7 @@ export default class ArrayType extends CollectionType {
         assert.ok(false); // TODO
     }
 
-    writeTo(target: IWasmTarget): void {
-        target.writeUInts(0x7F); // offset in data
+    asType(): number {
+        assert.ok(false); // TODO
     }
 }

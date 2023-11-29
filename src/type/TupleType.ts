@@ -22,16 +22,12 @@ export default class TupleType extends UserType {
         return FunctionType.flatten(returns);
     }
 
-    byteLength(): number {
-        return this.validTypes().map(type => type.byteLength()).reduce((p,v) => p + v, 0);
-    }
-
     count(): number {
         return this.validTypes().length;
     }
 
-    writeTo(target: IWasmTarget): void {
-        this.validTypes().forEach(type => type.writeTo(target));
+    asType(): number {
+       assert.ok(false)
     }
 
     isAssignableFrom(context: Context, type: IType): boolean {
@@ -43,7 +39,7 @@ export default class TupleType extends UserType {
     }
 
     private validTypes() {
-        return this.types.filter(type => type.byteLength() > 0);
+        return this.types.filter(type => type.asType() > 0);
     }
 }
 

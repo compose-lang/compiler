@@ -38,11 +38,7 @@ export default class ImportsType extends Map<string, IFunctionDeclaration> imple
         assert.ok(false, "Should never get there!");
     }
 
-    byteLength(): number {
-        assert.ok(false, "Should never get there!");
-    }
-
-    writeTo(target: IWasmTarget): void {
+    asType(): number {
         assert.ok(false, "Should never get there!");
     }
 

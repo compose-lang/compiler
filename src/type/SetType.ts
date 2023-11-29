@@ -14,7 +14,7 @@ export default class SetType extends CollectionType {
         assert.ok(false); // TODO
     }
 
-    writeTo(target: IWasmTarget): void {
+    asType(): number {
         assert.ok(false); // TODO
     }
 }

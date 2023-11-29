@@ -19,7 +19,7 @@ export default class ErrorType extends NativeType {
         return null;
     }
 
-    writeTo(target: IWasmTarget): void {
+    asType(): number {
         assert.ok(false); // TODO
     }
 

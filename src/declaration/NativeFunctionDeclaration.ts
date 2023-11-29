@@ -43,8 +43,9 @@ export default class NativeFunctionDeclaration extends FunctionDeclarationBase {
         const body = new FunctionBody();
         this.parameters.forEach(param => param.rehearse(local, module, body));
         this.instructions.forEach(i => i.rehearse(local, module, body));
-        // parameters are compiled by function call -- REALLY ? TODO
+        // parameters are compiled by function call
         const refs = this.instructions.filter(i => i.opcode != OpCode.END).map(i => i.compile(local, module, flags), this);
+        // TODO types
         const block = module.block(null, refs, binaryen.i32);
         module.addFunction(this.name, 0, binaryen.i32, [], block);
     }

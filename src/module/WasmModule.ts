@@ -23,9 +23,9 @@ export default class WasmModule extends binaryen.Module {
     functions: IFunctionDeclaration[] = [];
     functionsByName = new Map<string, Map<Prototype,IFunctionScope>>();
 
-    declareGlobal(unit: CompilationUnit, variable: Variable, value: IExpression, exported: boolean): number {
+    declareGlobal(unit: CompilationUnit, variable: Variable, value: IExpression, mutable: boolean, exported: boolean): number {
         assert.ok(!this.globalsByName.has(variable.name));
-        const global = new Global(unit, this.globals.length, exported, variable, value);
+        const global = new Global(unit, this.globals.length, mutable, exported, variable, value);
         this.globals.push(global);
         this.globalsByName.set(variable.name, global)
         return global.index
@@ -53,6 +53,7 @@ export default class WasmModule extends binaryen.Module {
         assert.ok(!prototypes.has(prototype));
         prototypes.set(prototype, { index: this.functions.length, scope: Scope.IMPORTED });
         this.functions.push(decl);
+        this.addFunctionImport(decl.name, decl.name, decl.getModuleImportName(), decl.functionType().asType(), decl.returnType.asType());
     }
 
     declareConcreteFunction(decl: IFunctionDeclaration, exported: boolean) {

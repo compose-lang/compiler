@@ -8,8 +8,8 @@ import UnaryOperator from "../expression/UnaryOperator";
 import BinaryOperator from "../expression/BinaryOperator";
 import Int32Type from "./Int32Type";
 import CompilerFlags from "../compiler/CompilerFlags";
-import FunctionBody from "../module/FunctionBody";
 import IResult from "../expression/IResult";
+import binaryen from "binaryen";
 
 export default class UInt32Type extends IntegerType {
 
@@ -23,12 +23,8 @@ export default class UInt32Type extends IntegerType {
         return NumberPrecedence.UInt32;
     }
 
-    sizeof(): number {
-        return 4;
-    }
-
-    writeTo(target: IWasmTarget): void {
-        target.writeUInts(0x7F);
+    asType(): number {
+        return binaryen.i32;
     }
 
     compileAdd(context: Context, module: WasmModule, flags: CompilerFlags, left: IResult, right: IResult, tryReverse: boolean): IResult {

@@ -14,12 +14,8 @@ export default class Int64Type extends IntegerType {
         return NumberPrecedence.Int64;
     }
 
-    sizeof(): number {
-        return 8;
-    }
-
-    writeTo(target: IWasmTarget): void {
-        target.writeUInts(0x7E);
+    asType(): number {
+        return 0x7E; // i64
     }
 
 }

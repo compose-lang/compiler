@@ -15,24 +15,19 @@ export default class Global implements ICompilable {
 
     readonly unit: CompilationUnit;
     readonly index: number;
+    readonly mutable: boolean;
     readonly exported: boolean;
     readonly variable: Variable;
     value: IExpression;
     readonly body: FunctionBody = new FunctionBody();
 
-    constructor(unit: CompilationUnit, index: number, exported: boolean, variable: Variable, value: IExpression) {
+    constructor(unit: CompilationUnit, index: number, mutable: boolean, exported: boolean, variable: Variable, value: IExpression) {
         this.unit = unit;
         this.index = index;
+        this.mutable = mutable;
+        this.exported = exported;
         this.variable = variable;
         this.value = value;
-        this.exported = exported;
-    }
-
-    writeTo(target: IWasmTarget) {
-        this.variable.type.writeTo(target);
-        target.writeUInts(this.variable.modifier == InstanceModifier.CONST ? 1 : 0);
-        assert.ok(false)
-        // this.body.writeInstructionsTo(target);
     }
 
     declare(context: Context, module: WasmModule): void {
@@ -40,10 +35,11 @@ export default class Global implements ICompilable {
     }
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags): void {
-        const value = this.value.constify(context);
-        value.compile(context, module, flags);
-        assert.ok(false)
-        // this.body.addOpCode(OpCode.END);
+        const expression = this.value.constify(context);
+        const value = expression.compile(context, module, flags);
+        module.addGlobal(this.variable.name, this.variable.type.asType(), this.mutable, value.ref);
+        if(this.exported)
+            module.addGlobalExport(this.variable.name, this.variable.name);
     }
 
 }
