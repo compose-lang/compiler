@@ -8,6 +8,7 @@ import CompilerFlags from "../compiler/CompilerFlags";
 import binaryen from "binaryen";
 import IResult from "../expression/IResult";
 import assert from "assert";
+import FunctionBody from "../module/FunctionBody";
 
 export default class IntegerLiteral extends LiteralBase<number> {
 
@@ -44,7 +45,7 @@ export default class IntegerLiteral extends LiteralBase<number> {
             return Int32Type.instance;
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags): IResult {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResult {
         if(this.isI64())
             return { type: Int64Type.instance, ref: module.i64.const(this.value & 0xFFFFFFFF, this.value >> 32)}; // TODO deal with i64 literals
         else

@@ -53,7 +53,7 @@ export default class WasmModule extends binaryen.Module {
         assert.ok(!prototypes.has(prototype));
         prototypes.set(prototype, { index: this.functions.length, scope: Scope.IMPORTED });
         this.functions.push(decl);
-        this.addFunctionImport(decl.name, decl.name, decl.getModuleImportName(), decl.functionType().asType(), decl.returnType.asType());
+        this.addFunctionImport(decl.name, decl.getModuleImportName(), decl.name, decl.functionType().asType(), decl.returnType.asType());
     }
 
     declareConcreteFunction(decl: IFunctionDeclaration, exported: boolean) {

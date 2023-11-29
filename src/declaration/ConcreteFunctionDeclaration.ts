@@ -66,9 +66,11 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
         this.parameters.rehearse(local, module, body);
         this.statements.rehearse(local, module, body);
         // parameters are compiled by function call
+        const locals = body.compileLocals();
         const results = this.statements.compile(local, module, flags, body);
         const block = module.block(null, results.refs, results.type.asType());
-        module.addFunction(this.name, this.functionType().asType(), results.type.asType(), [], block);
+        const ref = module.addFunction(this.name, this.functionType().asType(), results.type.asType(), locals, block);
+        body.setLocalNames(ref);
     }
 
     instantiateGeneric(typeArguments: IType[]): IFunctionDeclaration {

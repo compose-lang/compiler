@@ -54,9 +54,9 @@ export default class UnresolvedIdentifierExpression extends ExpressionBase {
         this.resolved.rehearse(context, module, body);
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags): IResult {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResult {
         this.resolve(context);
-        return this.resolved.compile(context, module, flags);
+        return this.resolved.compile(context, module, flags, body);
     }
 
     compileAssign(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): void {
@@ -154,10 +154,10 @@ class LocalVariableExpression extends ExpressionBase {
         // nothing to do
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags): IResult {
-        assert.ok(false) /*const index = body.getRegisteredLocalIndex(this.id.value);
-        body.addOpCode(OpCode.LOCAL_GET, [index]); // TODO encode if index > 0x7F
-        return context.getRegisteredLocal(this.id).type;*/
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResult {
+        const local = body.getRegisteredLocal(this.name);
+        const value = module.local.get(local.index, local.type.asType());
+        return { ref: value, type: local.type };
     }
 
     compileAssign(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): void {
@@ -212,11 +212,9 @@ class GlobalVariableExpression extends ExpressionBase {
         // nothing to do
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags): IResult {
-        assert.ok(false) /*const index = module.getGlobal(this.name);
-        assert.ok(index >= 0);
-        body.addOpCode(OpCode.GLOBAL_GET, [index]); // TODO encode if index > 0x7F
-        return context.getRegisteredGlobal(this.id).type;*/
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResult {
+        const global = context.getRegisteredGlobal(this.id);
+        return { ref: module.global.get(global.name, global.type.asType()), type: global.type };
     }
 }
 

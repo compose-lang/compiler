@@ -15,6 +15,6 @@ export default interface IExpression {
     declare(context: Context, module: WasmModule): void;
     rehearse(context: Context, module: WasmModule, body: FunctionBody): void;
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags): IResult;
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResult;
     compileAssign(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, value: IResult): void; // for unary operators
 }

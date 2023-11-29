@@ -82,6 +82,16 @@ it('runs a function call ignoring the result of another function',  () => {
     assert.equal(result, 12);
 });
 
+it('runs a void function call',  () => {
+    const compiler = new Compiler();
+    const target = new WasmBufferTarget();
+    const unit = ComposeBuilder.parse_unit("function inner(): void { } @ModuleExport function stuff(): i32 { inner(); return 12; }");
+    compiler.buildOne(unit, target);
+    const runner = Runner.of(target.asWasmSource());
+    const result = runner.runFunction<number>("stuff");
+    assert.equal(result, 12);
+});
+
 it('runs a function call with parameters',  () => {
     const compiler = new Compiler();
     const target = new WasmBufferTarget();

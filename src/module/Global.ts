@@ -34,9 +34,9 @@ export default class Global implements ICompilable {
         this.value.declare(context, module);
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags): void {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): void {
         const expression = this.value.constify(context);
-        const value = expression.compile(context, module, flags);
+        const value = expression.compile(context, module, flags, body);
         module.addGlobal(this.variable.name, this.variable.type.asType(), this.mutable, value.ref);
         if(this.exported)
             module.addGlobalExport(this.variable.name, this.variable.name);

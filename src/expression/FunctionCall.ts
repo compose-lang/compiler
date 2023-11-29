@@ -57,11 +57,11 @@ export default class FunctionCall extends ExpressionBase {
         this.args.forEach(arg => arg.rehearse(context, module, body));
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags): IResult {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResult {
         const decl = FunctionFinder.findDeclaration(context, this);
         assert.ok(decl);
         const args = this.makeArgs(context, decl);
-        const argRefs = args.map(arg => arg.compile(context, module, flags)).map(result => result.ref);
+        const argRefs = args.map(arg => arg.compile(context, module, flags, body)).map(result => result.ref);
         const result = module.call(decl.name, argRefs, decl.returnType.asType());
         return { ref: result, type: decl.returnType };
     }

@@ -37,9 +37,9 @@ export default class BitNotExpression extends ExpressionBase {
         this.expression.rehearse(context, module, body);
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags): IResult {
-        assert.ok(false) /* const type = this.expression.check(context);
-        return type.compileUnaryOperator(context, module, flags, this.expression, UnaryOperator.BIT_NOT, body); */
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResult {
+        const type = this.expression.check(context);
+        return type.compileUnaryOperator(context, module, flags, body, this.expression, UnaryOperator.BIT_NOT);
     }
 
 }

@@ -39,6 +39,7 @@ export default interface IType {
     compileBinaryBitsOperator(context: Context, module: WasmModule, flags: CompilerFlags, left: IResult, right: IResult, operator: BinaryOperator): IResult;
 
     checkUnaryOperator(context: Context, operator: UnaryOperator): IType;
+
     compileUnaryOperator(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, expression: IExpression, operator: UnaryOperator): IResult;
 
     convertExpression(context: Context, expression: IExpression): IExpression;

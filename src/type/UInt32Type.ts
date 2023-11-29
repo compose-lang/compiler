@@ -10,6 +10,8 @@ import Int32Type from "./Int32Type";
 import CompilerFlags from "../compiler/CompilerFlags";
 import IResult from "../expression/IResult";
 import binaryen from "binaryen";
+import FunctionBody from "../module/FunctionBody";
+import OpCode from "../compiler/OpCode";
 
 export default class UInt32Type extends IntegerType {
 
@@ -54,10 +56,9 @@ export default class UInt32Type extends IntegerType {
         return super.compileBinaryBitsOperator(context, module, flags, left, right, operator);
     }
 
-    /*
     compileUnaryOperator(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, expression: IExpression, operator: UnaryOperator): IResult {
         switch(operator) {
-            case UnaryOperator.PRE_INC:
+        /*    case UnaryOperator.PRE_INC:
                 expression.compile(context, module, body);
                 body.addOpCode(OpCode.I32_CONST, [1]);
                 body.addOpCode(OpCode.I32_ADD);
@@ -84,18 +85,17 @@ export default class UInt32Type extends IntegerType {
                 body.addOpCode(OpCode.I32_CONST, [1]);
                 body.addOpCode(OpCode.I32_SUB);
                 expression.compileAssign(context, module, body);
-                return this;
+                return this; */
             case UnaryOperator.BIT_NOT:
             {
-                const result = expression.compile(context, module, flags);
-                const ref = module.i32.xor(result.ref, module.i32.const(1));
+                const result = expression.compile(context, module, flags, body);
+                const ref = module.i32.xor(result.ref, module.i32.const(-1));
                 return { ref, type: this };
             }
             default:
                 return super.compileUnaryOperator(context, module, flags, body, expression, operator);
         }
     }
-    */
 
 
 

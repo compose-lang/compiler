@@ -15,6 +15,11 @@ interface Local {
     type: IType;
 }
 
+/* TODO remove once binaryen.js is upgraded */
+type IFunction = {
+    setLocalName(func: binaryen.ExpressionRef, index: number, name: string): void;
+};
+
 export default class FunctionBody {
 
     locals: Local[] = [];
@@ -34,11 +39,16 @@ export default class FunctionBody {
         return local.index;
     }
 
-    getRegisteredLocalIndex(name: string) {
-        if(this.localsMap.has(name))
-            return this.localsMap.get(name)
-        else
-            return -1;
+    getRegisteredLocal(name: string) {
+        return this.localsMap.get(name)
     }
 
+    compileLocals(): number[] {
+        return this.locals.map(local => local.type.asType());
+    }
+
+    setLocalNames(func: number) {
+        const funcs = binaryen["Function" as keyof typeof binaryen] as any as IFunction;
+        this.locals.forEach(local => funcs.setLocalName(func, local.index, local.name));
+    }
 }

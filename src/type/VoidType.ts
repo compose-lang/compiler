@@ -1,6 +1,7 @@
 import NativeType from "./NativeType";
 import IExpression from "../expression/IExpression";
 import * as assert from "assert";
+import binaryen from "../../../../binaryen.js";
 
 export default class VoidType extends NativeType {
 
@@ -19,6 +20,6 @@ export default class VoidType extends NativeType {
     }
 
     asType(): number {
-        assert.ok(false); // should never get there
+        return binaryen.none;
     }
 }

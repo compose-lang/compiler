@@ -35,9 +35,9 @@ export default class Instruction {
         this.expressions.forEach(e => e.rehearse(context, module, body), this);
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags): binaryen.ExpressionRef {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): binaryen.ExpressionRef {
         const fn = this.locateModuleFunction(module);
-        const args = this.expressions.map(exp => exp.compile(context, module, flags)).map(res => res.ref);
+        const args = this.expressions.map(exp => exp.compile(context, module, flags, body)).map(res => res.ref);
         return fn.apply(null, args);
     }
 

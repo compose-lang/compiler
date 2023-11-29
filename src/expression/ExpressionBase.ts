@@ -26,7 +26,7 @@ export default abstract class ExpressionBase extends CodeFragment implements IEx
         assert.ok(false, "Missing rehearse method for " + Object.getPrototypeOf(this).constructor.name);
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags): IResult {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResult {
         assert.ok(false,  "Missing compile method for " + Object.getPrototypeOf(this).constructor.name);
     }
 

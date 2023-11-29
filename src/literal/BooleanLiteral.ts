@@ -25,7 +25,7 @@ export default class BooleanLiteral extends LiteralBase<boolean> {
         return BooleanType.instance;
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags): IResult {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResult {
         assert.ok(false)
         /*body.addOpCode(OpCode.I32_CONST, [ 0x01 ]);
         return BooleanType.instance;*/

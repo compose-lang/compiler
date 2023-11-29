@@ -68,9 +68,9 @@ export default class Compiler {
 
     private compileAtoms(flags: CompilerFlags) {
         // compile globals in the order of their registration in the globals section
-        this.module.globals.forEach(glob => glob.compile(glob.unit.context, this.module, flags));
+        this.module.globals.forEach(glob => glob.compile(glob.unit.context, this.module, flags, null));
         // compile functions in the order of their registration in the functions section
-        this.module.functions.forEach(decl => decl.compile(decl.unit.context, this.module, flags));
+        this.module.functions.forEach(decl => decl.compile(decl.unit.context, this.module, flags, null));
     }
 
     assembleModule(wasmTarget: IWasmTarget) {

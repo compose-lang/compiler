@@ -43,7 +43,7 @@ export default class ReturnStatement extends StatementBase {
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults {
         if(this.expression) {
-            const result = this.expression.compile(context, module, flags);
+            const result = this.expression.compile(context, module, flags, body);
             return {refs: [ module.return(result.ref) ], type: result.type};
         } else
             return {refs: [ module.return() ], type: VoidType.instance};

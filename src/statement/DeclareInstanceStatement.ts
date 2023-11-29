@@ -11,6 +11,7 @@ import * as assert from "assert";
 import IGlobalStatement from "./IGlobalStatement";
 import CompilerFlags from "../compiler/CompilerFlags";
 import IResults from "./IResults";
+import VoidType from "../type/VoidType";
 
 export default class DeclareInstanceStatement extends StatementBase implements IGlobalStatement {
 
@@ -72,11 +73,10 @@ export default class DeclareInstanceStatement extends StatementBase implements I
     }
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults {
-        /*this.expression.compile(context, module, flags);
-        const index = body.getRegisteredLocalIndex(this.name);
-        body.addOpCode(OpCode.LOCAL_SET, [index]); // TODO encode if index > 0x7F
-        return null;*/
-        assert.ok(false)
+        const local = body.getRegisteredLocal(this.name);
+        const value = this.expression.compile(context, module, flags, body);
+        const result = module.local.set(local.index, value.ref);
+        return { refs: [result], type: VoidType.instance };
     }
 
     private asVariable(context: Context, type: IType) {

@@ -69,20 +69,20 @@ export default class BinaryExpression extends ExpressionBase {
         this.right.rehearse(context, module, body);
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags): IResult {
-        assert.ok(false) /*const leftType = this.left.compile(context, module, flags);
-        const rightType = this.right.compile(context, module, flags);
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResult {
+        const leftResult = this.left.compile(context, module, flags, body);
+        const rightResult = this.right.compile(context, module, flags, body);
         switch(this.operator) {
             case BinaryOperator.PLUS:
-                return leftType.compileAdd(context, module, body, leftType, rightType, true);
+                return leftResult.type.compileAdd(context, module, flags, leftResult, rightResult, true);
             case BinaryOperator.LSHIFT:
             case BinaryOperator.RSHIFT:
             case BinaryOperator.BIT_AND:
             case BinaryOperator.BIT_OR:
             case BinaryOperator.BIT_XOR:
-                return leftType.compileBinaryBitsOperator(context, module, flags, body, rightType, this.operator);
+                return leftResult.type.compileBinaryBitsOperator(context, module, flags, leftResult, rightResult, this.operator);
             default:
                 assert.ok(false, "Not implemented: " + BinaryOperator[this.operator]);
-        }*/
+        }
     }
 }
