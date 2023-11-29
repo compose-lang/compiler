@@ -3,6 +3,7 @@ import IType from "./IType";
 import IWasmTarget from "../compiler/IWasmTarget";
 import IExpression from "../expression/IExpression";
 import * as assert from "assert";
+import binaryen from "../../../../binaryen.js";
 
 export default class ArrayType extends CollectionType {
 
@@ -15,6 +16,6 @@ export default class ArrayType extends CollectionType {
     }
 
     asType(): number {
-        assert.ok(false); // TODO
+        return binaryen.i32; // as an offset of the data to the memory start
     }
 }

@@ -31,6 +31,10 @@ export default class WasmModule extends binaryen.Module {
         return global.index
     }
 
+    getRegisteredGlobal(name: string): Global {
+        return this.globalsByName.get(name) || null;
+    }
+
 
     setGlobalValue(variable: Variable, value: IExpression) {
         const global = this.globalsByName.get(variable.name);

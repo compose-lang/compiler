@@ -70,29 +70,32 @@ export default class IfStatement extends StatementBase {
         const typeMap = new TypeMap();
         const blocks = Array.from(this.blocks) as IfBlock[];
         const block = blocks.splice(0, 1)[0];
-        this.compileBlock(context, module, flags, body, typeMap, block, blocks)
-        const result = typeMap.inferType(context);
-        return result == VoidType.instance ? null : result;
+        const results = this.compileBlock(context, module, flags, body, typeMap, block, blocks)
+        const type = typeMap.inferType(context);
+        return { refs: results.refs, type };
     }
 
-    private compileBlock(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, typeMap: TypeMap, block: IfBlock, remaining: IfBlock[]) {
-        /*if(block.condition) {
-            block.condition.compile(context, module, flags);
-            body.addOpCode(OpCode.IF, [ 0x40 ]); // 0x40 == void
-            const type = block.statements.compile(context, module, flags, body) || null;
-            if(type && type!=VoidType.instance)
-                typeMap.add(type);
-            if (remaining.length) {
-                body.addOpCode(OpCode.ELSE, null);
+    private compileBlock(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, typeMap: TypeMap, block: IfBlock, remaining: IfBlock[]): IResults {
+        if(block.condition) {
+            const condition = block.condition.compile(context, module, flags, body);
+            const ifTrue = block.statements.compile(context, module, flags, body) || null;
+            let ifFalse: IResults = { refs: null, type: VoidType.instance };
+            if(remaining.length) {
                 const block = remaining.splice(0, 1)[0];
-                this.compileBlock(context, module, flags, body, typeMap, block, remaining);
+                ifFalse = this.compileBlock(context, module, flags, body, typeMap, block, remaining);
             }
-            body.addOpCode(OpCode.END);
+            const ref = module.if(condition.ref,
+                module.block(null, ifTrue.refs, ifTrue.type.asType()),
+                ifFalse.refs ? module.block(null, ifTrue.refs, ifTrue.type.asType()) : null
+                )
+            return { refs: [ref], type: typeMap.inferType(context) };
         } else { // final else
-            const type = block.statements.compile(context, module, flags, body) || null;
-            if(type && type!=VoidType.instance)
-                typeMap.add(type);
-        }*/
+            const results = block.statements.compile(context, module, flags, body) || null;
+            if(results && results.type && results.type!=VoidType.instance)
+                typeMap.add(results.type);
+            const ref = module.block(null, results.refs );
+            return { refs: [ ref ], type: results.type };
+        }
     }
 
 
