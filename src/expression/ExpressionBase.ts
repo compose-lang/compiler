@@ -1,11 +1,14 @@
 import CodeFragment from "../builder/CodeFragment";
 import IExpression from "./IExpression";
-import WasmModule from "../module/wasm/WasmModule";
+import WasmModule from "../module/WasmModule";
 import Context from "../context/Context";
-import FunctionBody from "../module/wasm/FunctionBody";
+import FunctionBody from "../module/FunctionBody";
 import IType from "../type/IType";
 import assert from "assert";
 import CompilerFlags from "../compiler/CompilerFlags";
+import IResult from "./IResult";
+import binaryen from "../../../../binaryen.js";
+import ExpressionRef = binaryen.ExpressionRef;
 
 export default abstract class ExpressionBase extends CodeFragment implements IExpression {
 
@@ -25,11 +28,11 @@ export default abstract class ExpressionBase extends CodeFragment implements IEx
         assert.ok(false, "Missing rehearse method for " + Object.getPrototypeOf(this).constructor.name);
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResult {
         assert.ok(false,  "Missing compile method for " + Object.getPrototypeOf(this).constructor.name);
     }
 
-    compileAssign(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): void {
+    compileAssign(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, value: ExpressionRef): IResult {
         assert.ok(false,  "Missing compileAssign method for " + Object.getPrototypeOf(this).constructor.name);
     }
 

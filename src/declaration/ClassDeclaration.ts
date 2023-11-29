@@ -8,7 +8,7 @@ import Accessibility from "./Accessibility";
 import IType from "../type/IType";
 import ClassType from "../type/ClassType";
 import IFunctionDeclaration from "./IFunctionDeclaration";
-import WasmModule from "../module/wasm/WasmModule";
+import WasmModule from "../module/WasmModule";
 import CompilationUnit from "../compiler/CompilationUnit";
 import FieldList from "../builder/FieldList";
 import IClassMember from "./IClassMember";

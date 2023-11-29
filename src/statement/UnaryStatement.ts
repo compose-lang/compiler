@@ -1,12 +1,13 @@
 import StatementBase from "./StatementBase";
-import WasmModule from "../module/wasm/WasmModule";
-import FunctionBody from "../module/wasm/FunctionBody";
+import WasmModule from "../module/WasmModule";
+import FunctionBody from "../module/FunctionBody";
 import IType from "../type/IType";
 import Context from "../context/Context";
 import IExpression from "../expression/IExpression";
 import UnaryOperator from "../expression/UnaryOperator";
-import OpCode from "../compiler/OpCode";
 import CompilerFlags from "../compiler/CompilerFlags";
+import IResults from "./IResults";
+import VoidType from "../type/VoidType";
 
 export default class UnaryStatement extends StatementBase {
 
@@ -18,7 +19,6 @@ export default class UnaryStatement extends StatementBase {
         this.expression = expression;
         this.operator = operator;
     }
-
 
     check(context: Context): IType {
         const type = this.expression.check(context);
@@ -34,11 +34,10 @@ export default class UnaryStatement extends StatementBase {
         this.expression.rehearse(context, module, body);
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults {
         const type = this.expression.check(context);
-        type.compileUnaryOperator(context, module, flags, body, this.expression, this.operator);
-        body.addOpCode(OpCode.DROP); // let optimizer do the job
-        return null;
+        const result = type.compileUnaryOperator(context, module, flags, body, this.expression, this.operator);
+        return { refs: [ module.drop(result.ref) ], type: VoidType.instance };
     }
 
 }

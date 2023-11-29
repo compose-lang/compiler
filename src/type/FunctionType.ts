@@ -8,6 +8,7 @@ import {equalArrays, equalObjects} from "../utils/ObjectUtils";
 import assert from "assert";
 import NullLiteral from "../literal/NullLiteral";
 import IExpression from "../expression/IExpression";
+import binaryen from "binaryen";
 
 export default class FunctionType extends UserType {
 
@@ -60,24 +61,9 @@ export default class FunctionType extends UserType {
         return 1;
     }
 
-    byteLength(): number {
-        const paramLength = this.parameters.map(param => param.type.byteLength()).reduce((p,v) => p + v, 0);
-        const returnLength = this.returnType ? this.returnType.byteLength() : 0;
-        return 1 // function type
-            + LEB128.unsignedLength(this.parameters.length)
-            + paramLength
-            + LEB128.unsignedLength(this.returnType ? this.returnType.count() : 0)
-            + returnLength;
-    }
-
-    writeTo(target: IWasmTarget) {
-        target.writeUInts(0x60, this.parameters.length);
-        this.parameters.map(param => param.type).forEach(type => type.writeTo(target));
-         if(this.returnType) {
-            target.writeUInts(this.returnType.count());
-            this.returnType.writeTo(target);
-        } else
-            target.writeUInts(0);
+    asType(): number {
+        const types = this.parameters.map(param => param.type.asType());
+        return binaryen.createType(types);
     }
 
     toString(): string {

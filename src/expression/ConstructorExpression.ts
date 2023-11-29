@@ -4,7 +4,7 @@ import Identifier from "../builder/Identifier";
 import IType from "../type/IType";
 import Context from "../context/Context";
 import ClassType from "../type/ClassType";
-import WasmModule from "../module/wasm/WasmModule";
+import WasmModule from "../module/WasmModule";
 import * as assert from "assert";
 
 export default class ConstructorExpression extends ExpressionBase {

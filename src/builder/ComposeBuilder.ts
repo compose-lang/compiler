@@ -12,7 +12,6 @@ import {fileExists} from "../utils/FileUtils";
 import ComposeParser, {
     Abstract_function_declarationContext,
     AddExpressionContext,
-    AlignofExpressionContext,
     AndExpressionContext,
     AnnotationContext,
     Any_typeContext, ArrayTypeContext,
@@ -68,7 +67,6 @@ import ComposeParser, {
     InstructionContext,
     Integer_typeContext,
     IntegerLiteralContext,
-    Isize_typeContext,
     List_literalContext,
     ListLiteralContext,
     LiteralExpressionContext,
@@ -81,7 +79,6 @@ import ComposeParser, {
     Native_typeContext, NativeTypeContext, NewExpressionContext,
     NullLiteralContext,
     Number_typeContext,
-    OffsetofExpressionContext,
     OrExpressionContext,
     ParenthesisExpressionContext, PostDecrementExpressionContext, PostIncrementExpressionContext,
     PreCastExpressionContext, PreDecrementExpressionContext, PreIncrementExpressionContext,
@@ -91,7 +88,7 @@ import ComposeParser, {
     Set_literalContext,
     SetLiteralContext, SetTypeContext,
     SimpleCallExpressionContext,
-    SizeofExpressionContext, Standalone_statementContext,
+    Standalone_statementContext,
     StatementContext,
     StatementsContext,
     String_typeContext,
@@ -103,7 +100,6 @@ import ComposeParser, {
     U64_typeContext, Unary_statementContext,
     UnaryBitNotExpressionContext,
     UnaryNotExpressionContext,
-    Usize_typeContext,
     Value_type_or_nullContext,
     Value_typeContext
 } from "../parser/ComposeParser";
@@ -155,8 +151,6 @@ import UInt32Type from "../type/UInt32Type";
 import InstanceModifier from "../statement/InstanceModifier";
 import Annotation from "./Annotation";
 import FunctionCall from "../expression/FunctionCall";
-import ISizeType from "../type/ISizeType";
-import USizeType from "../type/USizeType";
 import StatementBase from "../statement/StatementBase";
 import DeclarationBase from "../declaration/DeclarationBase";
 import DeclareInstanceStatement from "../statement/DeclareInstanceStatement";
@@ -173,10 +167,8 @@ import OpCode from "../compiler/OpCode";
 import Instruction from "../assembly/Instruction";
 import NativeFunctionDeclaration from "../declaration/NativeFunctionDeclaration";
 import StatementList from "../statement/StatementList";
-import SizeofExpression from "../expression/SizeofExpression";
-import AlignofExpression from "../expression/AlignofExpression";
-import ImportStatement from "../module/wasm/ImportStatement";
-import ImportSource from "../module/wasm/ImportSource";
+import ImportStatement from "../module/ImportStatement";
+import ImportSource from "../module/ImportSource";
 import ExportType from "../compiler/ExportType";
 import EnumDeclaration from "../declaration/EnumDeclaration";
 import ILiteralExpression from "../literal/ILiteralExpression";
@@ -188,7 +180,6 @@ import TernaryExpression from "../expression/TernaryExpression";
 import ParenthesisExpression from "../expression/ParenthesisExpression";
 import CastExpression from "../expression/CastExpression";
 import BitNotExpression from "../expression/BitNotExpression";
-import OffsetofExpression from "../expression/OffsetofExpression";
 import AnyType from "../type/AnyType";
 import IfStatement, {IfBlock} from "../statement/IfStatement";
 import CompareExpression from "../expression/CompareExpression";
@@ -687,22 +678,6 @@ export default class ComposeBuilder extends ComposeParserListener {
         this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
     }
 
-    exitSizeofExpression = (ctx: SizeofExpressionContext) => {
-        const type = this.getNodeValue<IValueType>(ctx.value_type());
-        this.setNodeValue(ctx, new SizeofExpression(type));
-    }
-
-    exitAlignofExpression = (ctx: AlignofExpressionContext) => {
-        const type = this.getNodeValue<IValueType>(ctx.value_type());
-        this.setNodeValue(ctx, new AlignofExpression(type));
-    }
-
-    exitOffsetofExpression = (ctx: OffsetofExpressionContext) => {
-        const type = this.getNodeValue<ClassType>(ctx.class_type());
-        const member = this.getNodeValue<Identifier>(ctx.attribute_ref());
-        this.setNodeValue(ctx, new OffsetofExpression(type, member));
-    }
-
     exitStatement = (ctx: StatementContext) => {
         const annotations = ctx.annotation_list().map(child => this.getNodeValue<Annotation>(child), this);
         const stmt = this.getNodeValue<IStatement>(ctx.getChild(annotations.length));
@@ -752,20 +727,12 @@ export default class ComposeBuilder extends ComposeParserListener {
         this.setNodeValue(ctx, Int64Type.instance);
     }
 
-    exitIsize_type = (ctx: Isize_typeContext) => {
-        this.setNodeValue(ctx, ISizeType.instance);
-    }
-
     exitU32_type = (ctx: U32_typeContext) => {
         this.setNodeValue(ctx, UInt32Type.instance);
     }
 
     exitU64_type = (ctx: U64_typeContext) => {
         this.setNodeValue(ctx, UInt64Type.instance);
-    }
-
-    exitUsize_type = (ctx: Usize_typeContext) => {
-        this.setNodeValue(ctx, USizeType.instance);
     }
 
     exitInteger_type = (ctx: Integer_typeContext) => {

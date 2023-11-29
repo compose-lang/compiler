@@ -30,27 +30,11 @@ export default class ClassType extends UserType implements IValueType {
         return this.klass;
     }
 
-    sizeof(): number {
-        assert.ok(false); // TODO
-    }
-
-    alignof(): number {
-        assert.ok(false); // TODO
-    }
-
-    offsetof(member: Identifier): number {
-        assert.ok(false); // TODO
-    }
-
     count(): number {
         assert.ok(false); // TODO
     }
 
-    byteLength(): number {
-        assert.ok(false); // TODO
-    }
-
-    writeTo(target: IWasmTarget): void {
+    asType(): number {
         assert.ok(false); // TODO
     }
 

@@ -1,14 +1,14 @@
-import Identifier from "../../builder/Identifier";
+import Identifier from "../builder/Identifier";
 import ImportSource from "./ImportSource";
-import Compiler from "../../compiler/Compiler";
-import CodeFragment from "../../builder/CodeFragment";
-import CompilationUnit from "../../compiler/CompilationUnit";
+import Compiler from "../compiler/Compiler";
+import CodeFragment from "../builder/CodeFragment";
+import CompilationUnit from "../compiler/CompilationUnit";
 import * as assert from "assert";
-import ComposeBuilder from "../../builder/ComposeBuilder";
-import IDeclaration from "../../declaration/IDeclaration";
-import IStatement from "../../statement/IStatement";
-import DeclarationBase from "../../declaration/DeclarationBase";
-import StatementBase from "../../statement/StatementBase";
+import ComposeBuilder from "../builder/ComposeBuilder";
+import IDeclaration from "../declaration/IDeclaration";
+import IStatement from "../statement/IStatement";
+import DeclarationBase from "../declaration/DeclarationBase";
+import StatementBase from "../statement/StatementBase";
 
 export default class ImportStatement extends CodeFragment {
 

@@ -1,13 +1,14 @@
 import ExpressionBase from "./ExpressionBase";
-import WasmModule from "../module/wasm/WasmModule";
+import WasmModule from "../module/WasmModule";
 import IType from "../type/IType";
 import Context from "../context/Context";
 import BinaryOperator from "./BinaryOperator";
 import IExpression from "./IExpression";
 import * as assert from "assert";
-import FunctionBody from "../module/wasm/FunctionBody";
+import FunctionBody from "../module/FunctionBody";
 import {BINARY_CONSTIFIERS} from "../compiler/Constifiers";
 import CompilerFlags from "../compiler/CompilerFlags";
+import IResult from "./IResult";
 
 export default class BinaryExpression extends ExpressionBase {
 
@@ -68,18 +69,18 @@ export default class BinaryExpression extends ExpressionBase {
         this.right.rehearse(context, module, body);
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
-        const leftType = this.left.compile(context, module, flags, body);
-        const rightType = this.right.compile(context, module, flags, body);
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResult {
+        const leftResult = this.left.compile(context, module, flags, body);
+        const rightResult = this.right.compile(context, module, flags, body);
         switch(this.operator) {
             case BinaryOperator.PLUS:
-                return leftType.compileAdd(context, module, body, leftType, rightType, true);
+                return leftResult.type.compileAdd(context, module, flags, leftResult, rightResult, true);
             case BinaryOperator.LSHIFT:
             case BinaryOperator.RSHIFT:
             case BinaryOperator.BIT_AND:
             case BinaryOperator.BIT_OR:
             case BinaryOperator.BIT_XOR:
-                return leftType.compileBinaryBitsOperator(context, module, flags, body, rightType, this.operator);
+                return leftResult.type.compileBinaryBitsOperator(context, module, flags, leftResult, rightResult, this.operator);
             default:
                 assert.ok(false, "Not implemented: " + BinaryOperator[this.operator]);
         }

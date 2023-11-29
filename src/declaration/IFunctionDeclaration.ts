@@ -5,8 +5,9 @@ import IType from "../type/IType";
 import Prototype from "./Prototype";
 import ClassDeclaration from "./ClassDeclaration";
 import Context from "../context/Context";
+import ICompilable from "../compiler/ICompilable";
 
-export default interface IFunctionDeclaration extends IDeclaration {
+export default interface IFunctionDeclaration extends IDeclaration, ICompilable {
 
     isStatic: boolean;
     parentClass: ClassDeclaration;

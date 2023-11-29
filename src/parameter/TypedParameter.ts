@@ -6,8 +6,8 @@ import ILiteralExpression from "../literal/ILiteralExpression";
 import Context from "../context/Context";
 import Variable from "../context/Variable";
 import InstanceModifier from "../statement/InstanceModifier";
-import WasmModule from "../module/wasm/WasmModule";
-import FunctionBody from "../module/wasm/FunctionBody";
+import WasmModule from "../module/WasmModule";
+import FunctionBody from "../module/FunctionBody";
 import IType from "../type/IType";
 
 export default class TypedParameter extends CodeFragment implements IParameter {

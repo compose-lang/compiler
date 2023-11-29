@@ -2,8 +2,8 @@ import LiteralBase from "./LiteralBase";
 import Context from "../context/Context";
 import IType from "../type/IType";
 import StringType from "../type/StringType";
-import WasmModule from "../module/wasm/WasmModule";
-import FunctionBody from "../module/wasm/FunctionBody";
+import WasmModule from "../module/WasmModule";
+import FunctionBody from "../module/FunctionBody";
 
 export default class StringLiteral extends LiteralBase<string> {
 

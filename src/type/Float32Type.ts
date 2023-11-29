@@ -14,12 +14,8 @@ export default class Float32Type extends DecimalType {
         return NumberPrecedence.Float32;
     }
 
-    sizeof(): number {
-        return 4;
-    }
-
-    writeTo(target: IWasmTarget): void {
-        target.writeUInts(0x7D);
+    asType(): number {
+        return 0x7D; // f32
     }
 
 }

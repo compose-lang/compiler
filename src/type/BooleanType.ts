@@ -16,16 +16,8 @@ export default class BooleanType extends NativeType implements IValueType {
         return new BooleanLiteral("false");
     }
 
-    sizeof(): number {
-        return 1;
-    }
-
-    alignof(): number {
-        return 1;
-    }
-
-    writeTo(target: IWasmTarget): void {
-        target.writeUInts(0x7F); // i32
+    asType(): number {
+        return 0x7F; // i32
     }
 
 }

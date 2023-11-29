@@ -3,6 +3,7 @@ import IWasmTarget from "../compiler/IWasmTarget";
 import IExpression from "../expression/IExpression";
 import DecimalLiteral from "../literal/DecimalLiteral";
 import NullLiteral from "../literal/NullLiteral";
+import assert from "assert";
 
 export default class StringType extends NativeType {
 
@@ -16,15 +17,7 @@ export default class StringType extends NativeType {
         return new NullLiteral();
     }
 
-    sizeof(): number {
-        return 0; // TODO
-    }
-
-    byteLength(): number {
-        return 0; // TODO
-    }
-
-    writeTo(target: IWasmTarget) {
-
+    asType(): number {
+        assert.ok(false);
     }
 }

@@ -26,19 +26,8 @@ export default class AnyType extends NativeType implements IValueType {
         assert.ok(false); // should never get there
     }
 
-    byteLength(): number {
+    asType(): number {
         assert.ok(false); // should never get there
     }
 
-    writeTo(target: IWasmTarget) {
-        assert.ok(false); // should never get there
-    }
-
-    alignof(): number {
-        assert.ok(false); // should never get there
-    }
-
-    sizeof(): number {
-        assert.ok(false); // should never get there
-    }
 }

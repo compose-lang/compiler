@@ -6,7 +6,6 @@ import * as assert from "assert";
 import {fileURLToPath} from "url";
 import {dirname} from "path";
 import * as os from "os";
-import DwarfExternalTarget from "../../src/module/debug/DwarfExternalTarget";
 
 it('compiles and runs a function using imported globals',  () => {
     const __filename = fileURLToPath(import.meta.url);

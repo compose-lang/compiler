@@ -3,18 +3,14 @@ import IType from "./IType";
 import Context from "../context/Context";
 import IValueType from "./IValueType";
 import NumberPrecedence from "./NumberPrecedence";
-import WasmModule from "../module/wasm/WasmModule";
-import FunctionBody from "../module/wasm/FunctionBody";
+import WasmModule from "../module/WasmModule";
 import BooleanType from "./BooleanType";
+import IResult from "../expression/IResult";
+import CompilerFlags from "../compiler/CompilerFlags";
 
 export default abstract class NumberType extends NativeType implements IValueType {
 
-    abstract sizeof(): number;
     abstract get precedence(): NumberPrecedence;
-
-    alignof(): number {
-        return 4;
-    }
 
     isAssignableFrom(context: Context, type: IType): boolean {
         return type instanceof NumberType;
@@ -41,12 +37,12 @@ export default abstract class NumberType extends NativeType implements IValueTyp
             return super.checkAdd(context, rightType, tryReverse);
     }
 
-    compileAdd(context: Context, module: WasmModule, body: FunctionBody, leftType: IType, rightType: IType, tryReverse: boolean): IType {
-        if(rightType instanceof NumberType) {
-            const resultType = NumberType.bestType(this, rightType);
-            return resultType.compileAdd(context, module, body, leftType, rightType, tryReverse);
+    compileAdd(context: Context, module: WasmModule, flags: CompilerFlags, left: IResult, right: IResult, tryReverse: boolean): IResult {
+        if(right instanceof NumberType) {
+            const resultType = NumberType.bestType(this, right);
+            return resultType.compileAdd(context, module, flags, left, right, tryReverse);
         } else
-            return super.compileAdd(context, module, body, leftType, rightType, tryReverse);
+            return super.compileAdd(context, module, flags, left, right, tryReverse);
     }
 
     checkSubtract(context: Context, rightType: IType): IType {

@@ -3,7 +3,7 @@ import IExpression from "./IExpression";
 import Comparator from "./Comparator";
 import Context from "../context/Context";
 import IType from "../type/IType";
-import WasmModule from "../module/wasm/WasmModule";
+import WasmModule from "../module/WasmModule";
 import assert from "assert";
 
 export default class EqualsExpression extends ExpressionBase {

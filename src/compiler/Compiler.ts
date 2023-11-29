@@ -1,13 +1,12 @@
 import CompilationUnit from "./CompilationUnit";
 import IWasmTarget from "./IWasmTarget";
-import WasmModule from "../module/wasm/WasmModule";
+import WasmModule from "../module/WasmModule";
 import Context from "../context/Context";
 import * as assert from "assert";
 import ComposeBuilder from "../builder/ComposeBuilder";
 import {fileURLToPath} from "url";
 import {dirname} from "path";
 import CompilerOptions from "./CompilerOptions";
-import IDwarfTarget from "../module/debug/IDwarfTarget";
 import CompilerFlags from "./CompilerFlags";
 
 export default class Compiler {
@@ -16,20 +15,20 @@ export default class Compiler {
     units: CompilationUnit[] = [];
 
     addMemory(minPages: number, maxPages?: number) {
-        this.module.getMemorySection().addMemory(minPages, maxPages);
+        maxPages = Math.max(minPages, maxPages || 0);
+        this.module.setMemory(minPages, maxPages);
     }
 
-    buildOne(unit: CompilationUnit, wasmTarget: IWasmTarget, dwarfTarget: IDwarfTarget = null, options = CompilerOptions.DEFAULTS) {
+    buildOne(unit: CompilationUnit, wasmTarget: IWasmTarget, flags = CompilerFlags.DEFAULTS, options = CompilerOptions.DEFAULTS) {
         assert.ok(this.units.length == 0);
         if(options.parseAndCheck) {
             this.addUnit(unit);
             if (options.declare) {
                 this.declareUnits();
                 if (options.compile) {
-                    const flags = dwarfTarget != null ? CompilerFlags.DEBUG : CompilerFlags.DEFAULTS;
                     this.compileAtoms(flags);
                     if (options.assemble) {
-                         this.assembleModule(wasmTarget, dwarfTarget);
+                         this.assembleModule(wasmTarget);
                     }
                 }
             }
@@ -37,7 +36,6 @@ export default class Compiler {
     }
 
     addUnit(unit: CompilationUnit) {
-        this.module.debugInfo.addUnit(unit);
         this.units.push(unit);
         unit.context = Context.newGlobalsContext();
         this.processUnitImports(unit);
@@ -70,15 +68,17 @@ export default class Compiler {
 
     private compileAtoms(flags: CompilerFlags) {
         // compile globals in the order of their registration in the globals section
-        this.module.globals.forEach(glob => glob.compile(glob.unit.context, this.module, flags));
+        this.module.globals.forEach(glob => glob.compile(glob.unit.context, this.module, flags, null));
         // compile functions in the order of their registration in the functions section
-        this.module.functions.forEach(decl => decl.compile(decl.unit.context, this.module, flags));
+        this.module.functions.forEach(decl => decl.compile(decl.unit.context, this.module, flags, null));
     }
 
-    assembleModule(wasmTarget: IWasmTarget, dwarfTarget: IDwarfTarget | null) {
-        if (dwarfTarget != null)
-            this.module.debugInfo.writeTo(dwarfTarget, this.module);
-        this.module.writeTo(wasmTarget);
+    assembleModule(wasmTarget: IWasmTarget) {
+        const wat = this.module.emitText();
+        const bytes = this.module.emitBinary();
+        wasmTarget.open();
+        wasmTarget.writeUint8Array(bytes);
+        wasmTarget.close();
     }
 
     private static parseAndRegisterBuiltins(context: Context) {

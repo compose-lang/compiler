@@ -4,10 +4,8 @@ import AssemblyLexer;
 
 I32: 'i32';
 I64: 'i64';
-ISIZE: 'isize'; // 32 or 64 bits depending on the web assembly target
 U32: 'u32';
 U64: 'u64';
-USIZE: 'usize'; // 32 or 64 bits depending on the web assembly target
 F32: 'f32';
 F64: 'f64';
 V128: 'v128';
@@ -62,9 +60,6 @@ THIS: 'this';
 SUPER: 'super';
 TYPE_OF: 'typeof';
 INSTANCE_OF: 'instanceof';
-SIZE_OF: 'sizeof';
-ALIGN_OF: 'alignof';
-OFFSET_OF: 'offsetof';
 
 EXPORT: 'export';
 IMPORT: 'import';

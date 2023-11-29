@@ -23,11 +23,7 @@ export default class AttributeType extends UserType {
         assert.ok(false); // TODO
     }
 
-    byteLength(): number {
-        assert.ok(false); // TODO
-    }
-
-    writeTo(target: IWasmTarget): void {
+    asType(): number {
         assert.ok(false); // TODO
     }
 

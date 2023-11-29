@@ -10,6 +10,8 @@ import Accessibility from "./Accessibility";
 import ClassDeclaration from "./ClassDeclaration";
 import Context from "../context/Context";
 import RestParameter from "../parameter/RestParameter";
+import WasmModule from "../module/WasmModule";
+import CompilerFlags from "../compiler/CompilerFlags";
 
 export default abstract class FunctionDeclarationBase extends DeclarationBase implements IFunctionDeclaration {
 
@@ -29,6 +31,7 @@ export default abstract class FunctionDeclarationBase extends DeclarationBase im
     }
 
     abstract get isStatic(): boolean;
+    abstract compile(context: Context, module: WasmModule, flags: CompilerFlags): void;
 
     isConst(context: Context): boolean {
         return false;

@@ -3,6 +3,7 @@ import IType from "./IType";
 import IWasmTarget from "../compiler/IWasmTarget";
 import IExpression from "../expression/IExpression";
 import * as assert from "assert";
+import binaryen from "../../../../binaryen.js";
 
 export default class ArrayType extends CollectionType {
 
@@ -14,7 +15,7 @@ export default class ArrayType extends CollectionType {
         assert.ok(false); // TODO
     }
 
-    writeTo(target: IWasmTarget): void {
-        target.writeUInts(0x7F); // offset in data
+    asType(): number {
+        return binaryen.i32; // as an offset of the data to the memory start
     }
 }

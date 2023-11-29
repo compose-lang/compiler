@@ -9,9 +9,6 @@ import ClassType from "../type/ClassType";
 import EnumDeclaration from "../declaration/EnumDeclaration";
 import ImportsType from "../type/ImportsType";
 import IExpression from "../expression/IExpression";
-import ChangeTypeFunction from "../builtins/ChangeTypeFunction";
-import LoadFunction from "../builtins/LoadFunction";
-import StoreFunction from "../builtins/StoreFunction";
 import AssertFunction from "../builtins/AssertFunction";
 import CompilationUnit from "../compiler/CompilationUnit";
 
@@ -78,10 +75,7 @@ export default class Context {
     registerBuiltins() {
         const unit = new CompilationUnit([], [], [], null, null);
         unit.context = this.globals;
-        new ChangeTypeFunction(unit).register(this);
         new AssertFunction(unit).register(this);
-        new LoadFunction(unit).register(this);
-        new StoreFunction(unit).register(this);
     }
 
     registerClass(klass: ClassDeclaration) {

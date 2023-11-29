@@ -4,9 +4,10 @@ import Context from "../context/Context";
 import VoidType from "../type/VoidType";
 import * as assert from "assert";
 import TypeMap from "../type/TypeMap";
-import WasmModule from "../module/wasm/WasmModule";
-import FunctionBody from "../module/wasm/FunctionBody";
+import WasmModule from "../module/WasmModule";
+import FunctionBody from "../module/FunctionBody";
 import CompilerFlags from "../compiler/CompilerFlags";
+import IResults from "./IResults";
 
 export default class StatementList extends Array<IStatement> {
 
@@ -45,13 +46,10 @@ export default class StatementList extends Array<IStatement> {
         this.forEach(stmt => stmt.rehearse(context, module, body), this);
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults {
+        const results = this.map(stmt => stmt.compile(context, module, flags, body));
         const typeMap = new TypeMap();
-        this.forEach(stmt => {
-            const type = stmt.compile(context, module, flags, body) || null;
-            if(type && type!=VoidType.instance)
-                typeMap.add(type);
-        }, this);
-        return typeMap.inferType(context);
+        results.filter(result => result && result.type!=VoidType.instance).forEach(result => typeMap.add(result.type));
+        return { type: typeMap.inferType(context), refs: results.filter(result => result).map(result => result.refs).flat() }
     }
 }

@@ -1,7 +1,7 @@
 import FunctionDeclarationBase from "./FunctionDeclarationBase";
 import Prototype from "./Prototype";
 import Context from "../context/Context";
-import WasmModule from "../module/wasm/WasmModule";
+import WasmModule from "../module/WasmModule";
 import ICompilable from "../compiler/ICompilable";
 import OpCode from "../compiler/OpCode";
 import IType from "../type/IType";
@@ -14,8 +14,10 @@ import CompilationUnit from "../compiler/CompilationUnit";
 import AnyType from "../type/AnyType";
 import ParameterList from "../parameter/ParameterList";
 import CompilerFlags from "../compiler/CompilerFlags";
+import FunctionBody from "../module/FunctionBody";
+import binaryen from "binaryen";
 
-export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase implements ICompilable {
+export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase {
 
     isStatic: boolean;
     statements: StatementList;
@@ -59,14 +61,16 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
         if(this.isGeneric())
             return;
         context = this._unit.context;
-        const section = module.getCodeSection();
-        const body = section.createFunctionCode();
+        const body = new FunctionBody();
         const local = context.newLocalContext();
         this.parameters.rehearse(local, module, body);
         this.statements.rehearse(local, module, body);
         // parameters are compiled by function call
-        this.statements.compile(local, module, flags, body);
-        body.addOpCode(OpCode.END);
+        const locals = body.compileLocals();
+        const results = this.statements.compile(local, module, flags, body);
+        const block = module.block(null, results.refs, results.type.asType());
+        const ref = module.addFunction(this.name, this.functionType().asType(), results.type.asType(), locals, block);
+        body.setLocalNames(ref);
     }
 
     instantiateGeneric(typeArguments: IType[]): IFunctionDeclaration {

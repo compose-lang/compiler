@@ -1,7 +1,7 @@
 import NativeType from "./NativeType";
-import IWasmTarget from "../compiler/IWasmTarget";
 import CharLiteral from "../literal/CharLiteral";
 import IExpression from "../expression/IExpression";
+import * as assert from "assert";
 
 export default class CharType extends NativeType {
 
@@ -15,11 +15,7 @@ export default class CharType extends NativeType {
         return new CharLiteral("\0");
     }
 
-    byteLength(): number {
-        return 0; // TODO
-    }
-
-    writeTo(target: IWasmTarget) {
-
+    asType(): number {
+        assert.ok(false)
     }
 }

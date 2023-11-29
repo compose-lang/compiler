@@ -1,8 +1,8 @@
 import StatementBase from "./StatementBase";
 import StatementList from "./StatementList";
 import IExpression from "../expression/IExpression";
-import WasmModule from "../module/wasm/WasmModule";
-import FunctionBody from "../module/wasm/FunctionBody";
+import WasmModule from "../module/WasmModule";
+import FunctionBody from "../module/FunctionBody";
 import IType from "../type/IType";
 import * as assert from "assert";
 import Context from "../context/Context";
@@ -11,6 +11,7 @@ import BooleanType from "../type/BooleanType";
 import VoidType from "../type/VoidType";
 import OpCode from "../compiler/OpCode";
 import CompilerFlags from "../compiler/CompilerFlags";
+import IResults from "./IResults";
 
 export interface IfBlock {
     condition: IExpression;
@@ -65,32 +66,35 @@ export default class IfStatement extends StatementBase {
         })
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults {
         const typeMap = new TypeMap();
         const blocks = Array.from(this.blocks) as IfBlock[];
         const block = blocks.splice(0, 1)[0];
-        this.compileBlock(context, module, flags, body, typeMap, block, blocks)
-        const result = typeMap.inferType(context);
-        return result == VoidType.instance ? null : result;
+        const results = this.compileBlock(context, module, flags, body, typeMap, block, blocks)
+        const type = typeMap.inferType(context);
+        return { refs: results.refs, type };
     }
 
-    private compileBlock(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, typeMap: TypeMap, block: IfBlock, remaining: IfBlock[]) {
+    private compileBlock(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, typeMap: TypeMap, block: IfBlock, remaining: IfBlock[]): IResults {
         if(block.condition) {
-            block.condition.compile(context, module, flags, body);
-            body.addOpCode(OpCode.IF, [ 0x40 ]); // 0x40 == void
-            const type = block.statements.compile(context, module, flags, body) || null;
-            if(type && type!=VoidType.instance)
-                typeMap.add(type);
-            if (remaining.length) {
-                body.addOpCode(OpCode.ELSE, null);
+            const condition = block.condition.compile(context, module, flags, body);
+            const ifTrue = block.statements.compile(context, module, flags, body) || null;
+            let ifFalse: IResults = { refs: null, type: VoidType.instance };
+            if(remaining.length) {
                 const block = remaining.splice(0, 1)[0];
-                this.compileBlock(context, module, flags, body, typeMap, block, remaining);
+                ifFalse = this.compileBlock(context, module, flags, body, typeMap, block, remaining);
             }
-            body.addOpCode(OpCode.END);
+            const ref = module.if(condition.ref,
+                module.block(null, ifTrue.refs, ifTrue.type.asType()),
+                ifFalse.refs ? module.block(null, ifTrue.refs, ifTrue.type.asType()) : null
+                )
+            return { refs: [ref], type: typeMap.inferType(context) };
         } else { // final else
-            const type = block.statements.compile(context, module, flags, body) || null;
-            if(type && type!=VoidType.instance)
-                typeMap.add(type);
+            const results = block.statements.compile(context, module, flags, body) || null;
+            if(results && results.type && results.type!=VoidType.instance)
+                typeMap.add(results.type);
+            const ref = module.block(null, results.refs );
+            return { refs: [ ref ], type: results.type };
         }
     }
 

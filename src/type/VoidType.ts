@@ -1,7 +1,7 @@
 import NativeType from "./NativeType";
-import IWasmTarget from "../compiler/IWasmTarget";
 import IExpression from "../expression/IExpression";
 import * as assert from "assert";
+import binaryen from "../../../../binaryen.js";
 
 export default class VoidType extends NativeType {
 
@@ -19,11 +19,7 @@ export default class VoidType extends NativeType {
         return 0;
     }
 
-    byteLength(): number {
-        return 0;
-    }
-
-    writeTo(target: IWasmTarget) {
-        // nothing to do
+    asType(): number {
+        return binaryen.none;
     }
 }

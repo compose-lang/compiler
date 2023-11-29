@@ -1,13 +1,14 @@
 import LiteralBase from "./LiteralBase";
 import Context from "../context/Context";
-import WasmModule from "../module/wasm/WasmModule";
-import FunctionBody from "../module/wasm/FunctionBody";
-import OpCode from "../compiler/OpCode";
-import LEB128 from "../utils/LEB128";
+import WasmModule from "../module/WasmModule";
 import IType from "../type/IType";
 import Int32Type from "../type/Int32Type";
 import Int64Type from "../type/Int64Type";
 import CompilerFlags from "../compiler/CompilerFlags";
+import binaryen from "binaryen";
+import IResult from "../expression/IResult";
+import assert from "assert";
+import FunctionBody from "../module/FunctionBody";
 
 export default class IntegerLiteral extends LiteralBase<number> {
 
@@ -44,16 +45,11 @@ export default class IntegerLiteral extends LiteralBase<number> {
             return Int32Type.instance;
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
-        const bytes: number[] = [];
-        LEB128.emitSigned(this.value, byte => bytes.push(byte));
-        if(this.isI64()) {
-            body.addOpCode(OpCode.I64_CONST, bytes);
-            return Int64Type.instance;
-        } else {
-            body.addOpCode(OpCode.I32_CONST, bytes);
-            return Int32Type.instance
-        }
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResult {
+        if(this.isI64())
+            return { type: Int64Type.instance, ref: module.i64.const(this.value & 0xFFFFFFFF, this.value >> 32)}; // TODO deal with i64 literals
+        else
+            return { type: Int32Type.instance, ref: module.i32.const(this.value)};
     }
 
     private isI64() {

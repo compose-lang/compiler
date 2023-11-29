@@ -19,11 +19,7 @@ export default class NullType extends NativeType {
         return 0;
     }
 
-    byteLength(): number {
-        return 0;
-    }
-
-    writeTo(target: IWasmTarget) {
-        // nothing to do
+    asType(): number {
+        assert.ok(false); // should never get there
     }
 }

@@ -29,11 +29,7 @@ export default class TypeType extends UserType {
         assert.ok(false); // TODO will we ever need this ?
     }
 
-    byteLength(): number {
-        assert.ok(false); // TODO will we ever need this ?
-    }
-
-    writeTo(target: IWasmTarget): void {
+    asType(): number {
         assert.ok(false); // TODO will we ever need this ?
     }
 

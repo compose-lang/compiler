@@ -1,6 +1,6 @@
 import StatementBase from "./StatementBase";
-import WasmModule from "../module/wasm/WasmModule";
-import FunctionBody from "../module/wasm/FunctionBody";
+import WasmModule from "../module/WasmModule";
+import FunctionBody from "../module/FunctionBody";
 import IType from "../type/IType";
 import Context from "../context/Context";
 import * as assert from "assert";
@@ -9,6 +9,7 @@ import DeclareInstanceStatement from "./DeclareInstanceStatement";
 import StatementList from "./StatementList";
 import VoidType from "../type/VoidType";
 import CompilerFlags from "../compiler/CompilerFlags";
+import IResults from "./IResults";
 
 export default class ForStatement extends StatementBase {
 
@@ -46,7 +47,7 @@ export default class ForStatement extends StatementBase {
         assert.ok(false); // TODO
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults {
         assert.ok(false); // TODO
     }
 

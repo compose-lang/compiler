@@ -1,6 +1,6 @@
 import IDeclaration from "../declaration/IDeclaration";
 import IGlobalStatement from "../statement/IGlobalStatement";
-import ImportStatement from "../module/wasm/ImportStatement";
+import ImportStatement from "../module/ImportStatement";
 import Context from "../context/Context";
 
 export default class CompilationUnit {

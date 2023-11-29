@@ -27,7 +27,7 @@ it('constifys global',  () => {
 it('constifys forward global',  () => {
     const compiler = new Compiler();
     const target = new WasmBufferTarget();
-    const unit = ComposeBuilder.parse_unit("@ModuleExport const SL_BITS: u32 = 4 + AL_BITS; const AL_BITS: u32 = 4;");
+    const unit = ComposeBuilder.parse_unit("@ModuleExport let SL_BITS: u32 = 4 + AL_BITS; const AL_BITS: u32 = 4;");
     compiler.buildOne(unit, target);
     const runner = Runner.of(target.asWasmSource());
     const result = runner.readGlobal<number>("SL_BITS");

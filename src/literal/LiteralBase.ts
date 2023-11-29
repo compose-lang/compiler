@@ -1,8 +1,8 @@
 import ExpressionBase from "../expression/ExpressionBase";
-import WasmModule from "../module/wasm/WasmModule";
+import WasmModule from "../module/WasmModule";
 import Context from "../context/Context";
 import ILiteralExpression from "./ILiteralExpression";
-import FunctionBody from "../module/wasm/FunctionBody";
+import FunctionBody from "../module/FunctionBody";
 import IExpression from "../expression/IExpression";
 
 export default abstract class LiteralBase<T> extends ExpressionBase implements ILiteralExpression {

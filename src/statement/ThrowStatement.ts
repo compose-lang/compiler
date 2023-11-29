@@ -1,12 +1,13 @@
 import StatementBase from "./StatementBase";
 import IExpression from "../expression/IExpression";
-import WasmModule from "../module/wasm/WasmModule";
-import FunctionBody from "../module/wasm/FunctionBody";
+import WasmModule from "../module/WasmModule";
+import FunctionBody from "../module/FunctionBody";
 import IType from "../type/IType";
 import Context from "../context/Context";
 import * as assert from "assert";
 import ErrorType from "../type/ErrorType";
 import CompilerFlags from "../compiler/CompilerFlags";
+import IResults from "./IResults";
 
 export default class ThrowStatement extends StatementBase {
 
@@ -31,7 +32,7 @@ export default class ThrowStatement extends StatementBase {
         assert.ok(false); // TODO
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults {
         assert.ok(false); // TODO
     }
 
