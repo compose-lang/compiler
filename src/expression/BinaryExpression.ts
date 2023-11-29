@@ -1,13 +1,14 @@
 import ExpressionBase from "./ExpressionBase";
-import WasmModule from "../module/wasm/WasmModule";
+import WasmModule from "../module/WasmModule";
 import IType from "../type/IType";
 import Context from "../context/Context";
 import BinaryOperator from "./BinaryOperator";
 import IExpression from "./IExpression";
 import * as assert from "assert";
-import FunctionBody from "../module/wasm/FunctionBody";
+import FunctionBody from "../module/FunctionBody";
 import {BINARY_CONSTIFIERS} from "../compiler/Constifiers";
 import CompilerFlags from "../compiler/CompilerFlags";
+import IResult from "./IResult";
 
 export default class BinaryExpression extends ExpressionBase {
 
@@ -68,9 +69,9 @@ export default class BinaryExpression extends ExpressionBase {
         this.right.rehearse(context, module, body);
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
-        const leftType = this.left.compile(context, module, flags, body);
-        const rightType = this.right.compile(context, module, flags, body);
+    compile(context: Context, module: WasmModule, flags: CompilerFlags): IResult {
+        assert.ok(false) /*const leftType = this.left.compile(context, module, flags);
+        const rightType = this.right.compile(context, module, flags);
         switch(this.operator) {
             case BinaryOperator.PLUS:
                 return leftType.compileAdd(context, module, body, leftType, rightType, true);
@@ -82,6 +83,6 @@ export default class BinaryExpression extends ExpressionBase {
                 return leftType.compileBinaryBitsOperator(context, module, flags, body, rightType, this.operator);
             default:
                 assert.ok(false, "Not implemented: " + BinaryOperator[this.operator]);
-        }
+        }*/
     }
 }

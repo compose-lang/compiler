@@ -28,10 +28,8 @@ import { Integer_typeContext } from "./ComposeParser";
 import { Decimal_typeContext } from "./ComposeParser";
 import { I32_typeContext } from "./ComposeParser";
 import { I64_typeContext } from "./ComposeParser";
-import { Isize_typeContext } from "./ComposeParser";
 import { U32_typeContext } from "./ComposeParser";
 import { U64_typeContext } from "./ComposeParser";
-import { Usize_typeContext } from "./ComposeParser";
 import { F32_typeContext } from "./ComposeParser";
 import { F64_typeContext } from "./ComposeParser";
 import { String_typeContext } from "./ComposeParser";
@@ -86,8 +84,6 @@ import { InExpressionContext } from "./ComposeParser";
 import { ItemExpressionContext } from "./ComposeParser";
 import { CompareExpressionContext } from "./ComposeParser";
 import { OrExpressionContext } from "./ComposeParser";
-import { SizeofExpressionContext } from "./ComposeParser";
-import { AlignofExpressionContext } from "./ComposeParser";
 import { ThisExpressionContext } from "./ComposeParser";
 import { PreCastExpressionContext } from "./ComposeParser";
 import { AndExpressionContext } from "./ComposeParser";
@@ -112,7 +108,6 @@ import { UnaryBitNotExpressionContext } from "./ComposeParser";
 import { MemberExpressionContext } from "./ComposeParser";
 import { BitAndExpressionContext } from "./ComposeParser";
 import { AddExpressionContext } from "./ComposeParser";
-import { OffsetofExpressionContext } from "./ComposeParser";
 import { BitOrExpressionContext } from "./ComposeParser";
 import { EqualsExpressionContext } from "./ComposeParser";
 import { Function_callContext } from "./ComposeParser";
@@ -400,16 +395,6 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 */
 	exitI64_type?: (ctx: I64_typeContext) => void;
 	/**
-	 * Enter a parse tree produced by `ComposeParser.isize_type`.
-	 * @param ctx the parse tree
-	 */
-	enterIsize_type?: (ctx: Isize_typeContext) => void;
-	/**
-	 * Exit a parse tree produced by `ComposeParser.isize_type`.
-	 * @param ctx the parse tree
-	 */
-	exitIsize_type?: (ctx: Isize_typeContext) => void;
-	/**
 	 * Enter a parse tree produced by `ComposeParser.u32_type`.
 	 * @param ctx the parse tree
 	 */
@@ -429,16 +414,6 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitU64_type?: (ctx: U64_typeContext) => void;
-	/**
-	 * Enter a parse tree produced by `ComposeParser.usize_type`.
-	 * @param ctx the parse tree
-	 */
-	enterUsize_type?: (ctx: Usize_typeContext) => void;
-	/**
-	 * Exit a parse tree produced by `ComposeParser.usize_type`.
-	 * @param ctx the parse tree
-	 */
-	exitUsize_type?: (ctx: Usize_typeContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.f32_type`.
 	 * @param ctx the parse tree
@@ -1004,30 +979,6 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 */
 	exitOrExpression?: (ctx: OrExpressionContext) => void;
 	/**
-	 * Enter a parse tree produced by the `SizeofExpression`
-	 * labeled alternative in `ComposeParser.expression`.
-	 * @param ctx the parse tree
-	 */
-	enterSizeofExpression?: (ctx: SizeofExpressionContext) => void;
-	/**
-	 * Exit a parse tree produced by the `SizeofExpression`
-	 * labeled alternative in `ComposeParser.expression`.
-	 * @param ctx the parse tree
-	 */
-	exitSizeofExpression?: (ctx: SizeofExpressionContext) => void;
-	/**
-	 * Enter a parse tree produced by the `AlignofExpression`
-	 * labeled alternative in `ComposeParser.expression`.
-	 * @param ctx the parse tree
-	 */
-	enterAlignofExpression?: (ctx: AlignofExpressionContext) => void;
-	/**
-	 * Exit a parse tree produced by the `AlignofExpression`
-	 * labeled alternative in `ComposeParser.expression`.
-	 * @param ctx the parse tree
-	 */
-	exitAlignofExpression?: (ctx: AlignofExpressionContext) => void;
-	/**
 	 * Enter a parse tree produced by the `ThisExpression`
 	 * labeled alternative in `ComposeParser.expression`.
 	 * @param ctx the parse tree
@@ -1315,18 +1266,6 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitAddExpression?: (ctx: AddExpressionContext) => void;
-	/**
-	 * Enter a parse tree produced by the `OffsetofExpression`
-	 * labeled alternative in `ComposeParser.expression`.
-	 * @param ctx the parse tree
-	 */
-	enterOffsetofExpression?: (ctx: OffsetofExpressionContext) => void;
-	/**
-	 * Exit a parse tree produced by the `OffsetofExpression`
-	 * labeled alternative in `ComposeParser.expression`.
-	 * @param ctx the parse tree
-	 */
-	exitOffsetofExpression?: (ctx: OffsetofExpressionContext) => void;
 	/**
 	 * Enter a parse tree produced by the `BitOrExpression`
 	 * labeled alternative in `ComposeParser.expression`.

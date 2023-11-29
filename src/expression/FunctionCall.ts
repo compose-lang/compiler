@@ -1,10 +1,10 @@
 import ExpressionBase from "./ExpressionBase";
 import Identifier from "../builder/Identifier";
-import WasmModule from "../module/wasm/WasmModule";
+import WasmModule from "../module/WasmModule";
 import IType from "../type/IType";
 import Context from "../context/Context";
 import IExpression from "./IExpression";
-import FunctionBody from "../module/wasm/FunctionBody";
+import FunctionBody from "../module/FunctionBody";
 import * as assert from "assert";
 import FunctionFinder from "../finder/FunctionFinder";
 import OpCode from "../compiler/OpCode";
@@ -12,6 +12,7 @@ import IFunctionDeclaration from "../declaration/IFunctionDeclaration";
 import RestParameter from "../parameter/RestParameter";
 import IntegerLiteral from "../literal/IntegerLiteral";
 import CompilerFlags from "../compiler/CompilerFlags";
+import IResult from "./IResult";
 
 export default class FunctionCall extends ExpressionBase {
 
@@ -56,15 +57,16 @@ export default class FunctionCall extends ExpressionBase {
         this.args.forEach(arg => arg.rehearse(context, module, body));
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
-        const decl = FunctionFinder.findDeclaration(context, this);
+    compile(context: Context, module: WasmModule, flags: CompilerFlags): IResult {
+        assert.ok(false)
+        /*const decl = FunctionFinder.findDeclaration(context, this);
         assert.ok(decl);
         const args = this.makeArgs(context, decl);
-        args.forEach(arg => arg.compile(context, module, flags, body));
-        const index = module.getFunctionIndex(decl);
+        args.forEach(arg => arg.compile(context, module, flags));
+        const index = module.getFunctionByDecl(decl);
         assert.ok(index >= 0);
         body.addOpCode(OpCode.CALL, [index]); // TODO encode if index > 0x7F
-        return decl.functionType().returnType;
+        return decl.functionType().returnType;*/
     }
 
     private makeArgs(context: Context, decl: IFunctionDeclaration) {

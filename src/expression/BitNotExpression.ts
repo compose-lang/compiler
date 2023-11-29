@@ -1,13 +1,14 @@
 import ExpressionBase from "./ExpressionBase";
 import IExpression from "./IExpression";
 import assert from "assert";
-import WasmModule from "../module/wasm/WasmModule";
+import WasmModule from "../module/WasmModule";
 import IType from "../type/IType";
 import Context from "../context/Context";
 import IntegerType from "../type/IntegerType";
-import FunctionBody from "../module/wasm/FunctionBody";
+import FunctionBody from "../module/FunctionBody";
 import UnaryOperator from "./UnaryOperator";
 import CompilerFlags from "../compiler/CompilerFlags";
+import IResult from "./IResult";
 
 export default class BitNotExpression extends ExpressionBase {
 
@@ -36,9 +37,9 @@ export default class BitNotExpression extends ExpressionBase {
         this.expression.rehearse(context, module, body);
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
-        const type = this.expression.check(context);
-        return type.compileUnaryOperator(context, module, flags, body, this.expression, UnaryOperator.BIT_NOT);
+    compile(context: Context, module: WasmModule, flags: CompilerFlags): IResult {
+        assert.ok(false) /* const type = this.expression.check(context);
+        return type.compileUnaryOperator(context, module, flags, this.expression, UnaryOperator.BIT_NOT, body); */
     }
 
 }

@@ -4,12 +4,13 @@ import Context from "../context/Context";
 import IExpression from "../expression/IExpression";
 import assert from "assert";
 import Identifier from "../builder/Identifier";
-import WasmModule from "../module/wasm/WasmModule";
-import FunctionBody from "../module/wasm/FunctionBody";
+import WasmModule from "../module/WasmModule";
 import BinaryOperator from "../expression/BinaryOperator";
 import UnaryOperator from "../expression/UnaryOperator";
 import CodeFragment from "../builder/CodeFragment";
 import CompilerFlags from "../compiler/CompilerFlags";
+import IResult from "../expression/IResult";
+import FunctionBody from "../module/FunctionBody";
 
 export default abstract class TypeBase extends CodeFragment implements IType {
 
@@ -64,9 +65,9 @@ export default abstract class TypeBase extends CodeFragment implements IType {
             assert.ok(false);
     }
 
-    compileAdd(context: Context, module: WasmModule, body: FunctionBody, leftType: IType, rightType: IType, tryReverse: boolean): IType {
+    compileAdd(context: Context, module: WasmModule, flags: CompilerFlags, left: IResult, right: IResult, tryReverse: boolean): IResult {
         if (tryReverse)
-            return rightType.compileAdd(context, module, body, leftType, rightType, false);
+            return right.type.compileAdd(context, module, flags, left, right, false);
         else
             assert.ok(false);
     }
@@ -86,7 +87,7 @@ export default abstract class TypeBase extends CodeFragment implements IType {
         assert.ok(false);
     }
 
-    compileBinaryBitsOperator(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, rightType: IType, operator: BinaryOperator): IType {
+    compileBinaryBitsOperator(context: Context, module: WasmModule, flags: CompilerFlags, left: IResult, right: IResult, operator: BinaryOperator): IResult {
         assert.ok(false);
     }
 
@@ -94,7 +95,7 @@ export default abstract class TypeBase extends CodeFragment implements IType {
         assert.ok(false);
     }
 
-    compileUnaryOperator(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, expression: IExpression, operator: UnaryOperator): IType {
+    compileUnaryOperator(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, expression: IExpression, operator: UnaryOperator): IResult {
         assert.ok(false);
     }
 

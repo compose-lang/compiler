@@ -1,12 +1,13 @@
 import IWasmTarget from "../compiler/IWasmTarget";
 import Context from "../context/Context";
-import WasmModule from "../module/wasm/WasmModule";
-import FunctionBody from "../module/wasm/FunctionBody";
+import WasmModule from "../module/WasmModule";
+import FunctionBody from "../module/FunctionBody";
 import IExpression from "../expression/IExpression";
 import Identifier from "../builder/Identifier";
 import UnaryOperator from "../expression/UnaryOperator";
 import BinaryOperator from "../expression/BinaryOperator";
 import CompilerFlags from "../compiler/CompilerFlags";
+import IResult from "../expression/IResult";
 
 export default interface IType {
 
@@ -29,20 +30,17 @@ export default interface IType {
     checkCompare(context: Context, rightType: IType): IType;
 
     checkAdd(context: Context, rightType: IType, tryReverse: boolean): IType;
-
-    compileAdd(context: Context, module: WasmModule, body: FunctionBody, leftType: IType, rightType: IType, tryReverse: boolean): IType;
+    compileAdd(context: Context, module: WasmModule, flags: CompilerFlags, left: IResult, right: IResult, tryReverse: boolean): IResult;
 
     checkSubtract(context: Context, rightType: IType): IType;
 
     checkMultiply(context: Context, rightType: IType, tryReverse: boolean): IType;
 
     checkBinaryBitsOperator(context: Context, operator: BinaryOperator, rightType: IType): IType;
-
-    compileBinaryBitsOperator(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, rightType: IType, operator: BinaryOperator): IType;
+    compileBinaryBitsOperator(context: Context, module: WasmModule, flags: CompilerFlags, left: IResult, right: IResult, operator: BinaryOperator): IResult;
 
     checkUnaryOperator(context: Context, operator: UnaryOperator): IType;
-
-    compileUnaryOperator(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, expression: IExpression, operator: UnaryOperator): IType;
+    compileUnaryOperator(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, expression: IExpression, operator: UnaryOperator): IResult;
 
     convertExpression(context: Context, expression: IExpression): IExpression;
 

@@ -2,14 +2,14 @@ import StatementBase from "./StatementBase";
 import Identifier from "../builder/Identifier";
 import IType from "../type/IType";
 import IExpression from "../expression/IExpression";
-import WasmModule from "../module/wasm/WasmModule";
-import FunctionBody from "../module/wasm/FunctionBody";
+import WasmModule from "../module/WasmModule";
+import FunctionBody from "../module/FunctionBody";
 import Context from "../context/Context";
 import OpCode from "../compiler/OpCode";
 import * as assert from "assert";
 import AssignOperator from "./AssignOperator";
-import VoidType from "../type/VoidType";
 import CompilerFlags from "../compiler/CompilerFlags";
+import IResults from "./IResults";
 
 export default class AssignInstanceStatement extends StatementBase {
 
@@ -68,18 +68,22 @@ export default class AssignInstanceStatement extends StatementBase {
         this.expression.rehearse(context, module, body);
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
-        this.expression.compile(context, module, flags, body);
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults {
+        assert.ok(false)
+        /*
+        this.expression.compile(context, module, flags);
         let index = body.getRegisteredLocalIndex(this.name);
         if(index >= 0) {
             // TODO compile operator
             body.addOpCode(OpCode.LOCAL_SET, [index]); // TODO encode if index > 0x7F
         } else {
-            index  = module.getGlobalsSection().getGlobalIndex(this.name);
+            index  = module.getGlobal(this.name);
             assert.ok(index);
             body.addOpCode(OpCode.GLOBAL_SET, [index]); // TODO encode if index > 0x7F
         }
         return null;
+        */
+
     }
 
 }

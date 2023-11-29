@@ -2,8 +2,8 @@ import StatementBase from "./StatementBase";
 import Identifier from "../builder/Identifier";
 import IType from "../type/IType";
 import IExpression from "../expression/IExpression";
-import WasmModule from "../module/wasm/WasmModule";
-import FunctionBody from "../module/wasm/FunctionBody";
+import WasmModule from "../module/WasmModule";
+import FunctionBody from "../module/FunctionBody";
 import Context from "../context/Context";
 import OpCode from "../compiler/OpCode";
 import Variable from "../context/Variable";
@@ -12,6 +12,7 @@ import * as assert from "assert";
 import VoidType from "../type/VoidType";
 import IGlobalStatement from "./IGlobalStatement";
 import CompilerFlags from "../compiler/CompilerFlags";
+import IResults from "./IResults";
 
 export default class DeclareInstanceStatement extends StatementBase implements IGlobalStatement {
 
@@ -72,11 +73,12 @@ export default class DeclareInstanceStatement extends StatementBase implements I
         body.registerLocal(this.name, variable.type);
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
-        this.expression.compile(context, module, flags, body);
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults {
+        /*this.expression.compile(context, module, flags);
         const index = body.getRegisteredLocalIndex(this.name);
         body.addOpCode(OpCode.LOCAL_SET, [index]); // TODO encode if index > 0x7F
-        return null;
+        return null;*/
+        assert.ok(false)
     }
 
     private asVariable(context: Context, type: IType) {

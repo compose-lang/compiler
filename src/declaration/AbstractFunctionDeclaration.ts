@@ -3,7 +3,7 @@ import Prototype from "./Prototype";
 import Context from "../context/Context";
 import Accessibility from "./Accessibility";
 import IType from "../type/IType";
-import WasmModule from "../module/wasm/WasmModule";
+import WasmModule from "../module/WasmModule";
 import Identifier from "../builder/Identifier";
 import Variable from "../context/Variable";
 import InstanceModifier from "../statement/InstanceModifier";
@@ -12,7 +12,7 @@ import * as assert from "assert";
 import ICompilable from "../compiler/ICompilable";
 import CompilerFlags from "../compiler/CompilerFlags";
 
-export default class AbstractFunctionDeclaration extends FunctionDeclarationBase implements ICompilable {
+export default class AbstractFunctionDeclaration extends FunctionDeclarationBase {
 
     constructor(accessibility: Accessibility, proto: Prototype) {
         super(accessibility, proto);

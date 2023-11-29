@@ -102,10 +102,8 @@ number_type:
 integer_type:
     i32_type
     | i64_type
-    | isize_type
     | u32_type
     | u64_type
-    | usize_type
     ;
 
 decimal_type:
@@ -121,20 +119,12 @@ i64_type:
     I64
     ;
 
-isize_type:
-    ISIZE
-    ;
-
 u32_type:
     U32
     ;
 
 u64_type:
     U64
-    ;
-
-usize_type:
-    USIZE
     ;
 
 f32_type:
@@ -289,7 +279,7 @@ throw_statement:
     ;
 
 try_statement:
-    TRY 
+    TRY
         LCURL statement* RCURL
     catch_clause*
     catch_all_clause?
@@ -302,7 +292,7 @@ catch_clause:
     ;
 
 catch_all_clause:
-    CATCH LPAR ETC RPAR 
+    CATCH LPAR ETC RPAR
         LCURL statement* RCURL
     ;
 
@@ -373,10 +363,6 @@ expression:
     | parent = expression
         DOT member = identifier                     # MemberExpression
     | NEW function_call                             # NewExpression
-    | SIZE_OF LPAR value_type RPAR                  # SizeofExpression
-    | ALIGN_OF LPAR value_type RPAR                 # AlignofExpression
-    | OFFSET_OF LPAR class_type
-        (COMMA attribute_ref)? RPAR                 # OffsetofExpression
     | function_call                                 # SimpleCallExpression
     | expression DOT function_call                  # ChildCallExpression
     | expression { $parser.willNotContainLineTerminator()}

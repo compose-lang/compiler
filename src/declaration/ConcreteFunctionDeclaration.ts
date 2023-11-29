@@ -1,7 +1,7 @@
 import FunctionDeclarationBase from "./FunctionDeclarationBase";
 import Prototype from "./Prototype";
 import Context from "../context/Context";
-import WasmModule from "../module/wasm/WasmModule";
+import WasmModule from "../module/WasmModule";
 import ICompilable from "../compiler/ICompilable";
 import OpCode from "../compiler/OpCode";
 import IType from "../type/IType";
@@ -14,8 +14,9 @@ import CompilationUnit from "../compiler/CompilationUnit";
 import AnyType from "../type/AnyType";
 import ParameterList from "../parameter/ParameterList";
 import CompilerFlags from "../compiler/CompilerFlags";
+import FunctionBody from "../module/FunctionBody";
 
-export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase implements ICompilable {
+export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase {
 
     isStatic: boolean;
     statements: StatementList;
@@ -56,17 +57,17 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
     }
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags): void {
+        assert.ok(false) /*
         if(this.isGeneric())
             return;
         context = this._unit.context;
-        const section = module.getCodeSection();
-        const body = section.createFunctionCode();
+        const body = new FunctionBody();
         const local = context.newLocalContext();
         this.parameters.rehearse(local, module, body);
         this.statements.rehearse(local, module, body);
         // parameters are compiled by function call
         this.statements.compile(local, module, flags, body);
-        body.addOpCode(OpCode.END);
+        body.addOpCode(OpCode.END); */
     }
 
     instantiateGeneric(typeArguments: IType[]): IFunctionDeclaration {

@@ -1,15 +1,18 @@
 import ExpressionBase from "./ExpressionBase";
 import Identifier from "../builder/Identifier";
-import WasmModule from "../module/wasm/WasmModule";
+import WasmModule from "../module/WasmModule";
 import Context from "../context/Context";
 import IType from "../type/IType";
 import * as assert from "assert";
-import FunctionBody from "../module/wasm/FunctionBody";
+import FunctionBody from "../module/FunctionBody";
 import OpCode from "../compiler/OpCode";
 import IExpression from "./IExpression";
 import ClassDeclaration from "../declaration/ClassDeclaration";
 import TypeType from "../type/TypeType";
 import CompilerFlags from "../compiler/CompilerFlags";
+import binaryen from "binaryen";
+import ExpressionRef = binaryen.ExpressionRef;
+import IResult from "./IResult";
 
 
 export default class UnresolvedIdentifierExpression extends ExpressionBase {
@@ -51,14 +54,15 @@ export default class UnresolvedIdentifierExpression extends ExpressionBase {
         this.resolved.rehearse(context, module, body);
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags): IResult {
         this.resolve(context);
-        return this.resolved.compile(context, module, flags, body);
+        return this.resolved.compile(context, module, flags);
     }
 
     compileAssign(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): void {
-        this.resolve(context);
-        this.resolved.compileAssign(context, module, flags, body);
+        assert.ok(false)
+        /* this.resolve(context);
+        this.resolved.compileAssign(context, module, flags, body, value);*/
     }
 
     private resolve(context: Context) {
@@ -150,15 +154,15 @@ class LocalVariableExpression extends ExpressionBase {
         // nothing to do
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
-        const index = body.getRegisteredLocalIndex(this.id.value);
+    compile(context: Context, module: WasmModule, flags: CompilerFlags): IResult {
+        assert.ok(false) /*const index = body.getRegisteredLocalIndex(this.id.value);
         body.addOpCode(OpCode.LOCAL_GET, [index]); // TODO encode if index > 0x7F
-        return context.getRegisteredLocal(this.id).type;
+        return context.getRegisteredLocal(this.id).type;*/
     }
 
     compileAssign(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): void {
-        const index = body.getRegisteredLocalIndex(this.id.value);
-        body.addOpCode(OpCode.LOCAL_SET, [index]); // TODO encode if index > 0x7F
+        assert.ok(false) /*const index = body.getRegisteredLocalIndex(this.id.value);
+        body.addOpCode(OpCode.LOCAL_SET, [index]); // TODO encode if index > 0x7F */
     }
 }
 
@@ -208,11 +212,11 @@ class GlobalVariableExpression extends ExpressionBase {
         // nothing to do
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
-        const index = module.getGlobalsSection().getGlobalIndex(this.name);
+    compile(context: Context, module: WasmModule, flags: CompilerFlags): IResult {
+        assert.ok(false) /*const index = module.getGlobal(this.name);
         assert.ok(index >= 0);
         body.addOpCode(OpCode.GLOBAL_GET, [index]); // TODO encode if index > 0x7F
-        return context.getRegisteredGlobal(this.id).type;
+        return context.getRegisteredGlobal(this.id).type;*/
     }
 }
 

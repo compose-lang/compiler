@@ -1,12 +1,12 @@
 import StatementBase from "./StatementBase";
 import IExpression from "../expression/IExpression";
-import WasmModule from "../module/wasm/WasmModule";
+import WasmModule from "../module/WasmModule";
 import Context from "../context/Context";
-import FunctionBody from "../module/wasm/FunctionBody";
-import OpCode from "../compiler/OpCode";
+import FunctionBody from "../module/FunctionBody";
 import IType from "../type/IType";
 import VoidType from "../type/VoidType";
 import CompilerFlags from "../compiler/CompilerFlags";
+import IResults from "./IResults";
 
 export default class ReturnStatement extends StatementBase {
 
@@ -41,12 +41,12 @@ export default class ReturnStatement extends StatementBase {
             this.expression.rehearse(context, module, body);
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
-        let type: IType = null;
-        if(this.expression)
-            type = this.expression.compile(context, module, flags, body);
-        body.addOpCode(OpCode.RETURN);
-        return type;
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults {
+        if(this.expression) {
+            const result = this.expression.compile(context, module, flags);
+            return {refs: [ module.return(result.ref) ], type: result.type};
+        } else
+            return {refs: [ module.return() ], type: VoidType.instance};
     }
 
 

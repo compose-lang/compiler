@@ -4,8 +4,8 @@ import Context from "../context/Context";
 import VoidType from "../type/VoidType";
 import * as assert from "assert";
 import TypeMap from "../type/TypeMap";
-import WasmModule from "../module/wasm/WasmModule";
-import FunctionBody from "../module/wasm/FunctionBody";
+import WasmModule from "../module/WasmModule";
+import FunctionBody from "../module/FunctionBody";
 import CompilerFlags from "../compiler/CompilerFlags";
 
 export default class StatementList extends Array<IStatement> {
@@ -48,9 +48,9 @@ export default class StatementList extends Array<IStatement> {
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
         const typeMap = new TypeMap();
         this.forEach(stmt => {
-            const type = stmt.compile(context, module, flags, body) || null;
-            if(type && type!=VoidType.instance)
-                typeMap.add(type);
+            const result = stmt.compile(context, module, flags, body) || null;
+            if(result && result.type!=VoidType.instance)
+                typeMap.add(result.type);
         }, this);
         return typeMap.inferType(context);
     }

@@ -1,7 +1,7 @@
 import IParameter from "./IParameter";
 import Context from "../context/Context";
-import WasmModule from "../module/wasm/WasmModule";
-import FunctionBody from "../module/wasm/FunctionBody";
+import WasmModule from "../module/WasmModule";
+import FunctionBody from "../module/FunctionBody";
 
 export default class ParameterList extends Array<IParameter> {
 

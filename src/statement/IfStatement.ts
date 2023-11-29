@@ -1,8 +1,8 @@
 import StatementBase from "./StatementBase";
 import StatementList from "./StatementList";
 import IExpression from "../expression/IExpression";
-import WasmModule from "../module/wasm/WasmModule";
-import FunctionBody from "../module/wasm/FunctionBody";
+import WasmModule from "../module/WasmModule";
+import FunctionBody from "../module/FunctionBody";
 import IType from "../type/IType";
 import * as assert from "assert";
 import Context from "../context/Context";
@@ -11,6 +11,7 @@ import BooleanType from "../type/BooleanType";
 import VoidType from "../type/VoidType";
 import OpCode from "../compiler/OpCode";
 import CompilerFlags from "../compiler/CompilerFlags";
+import IResults from "./IResults";
 
 export interface IfBlock {
     condition: IExpression;
@@ -65,7 +66,7 @@ export default class IfStatement extends StatementBase {
         })
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType {
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults {
         const typeMap = new TypeMap();
         const blocks = Array.from(this.blocks) as IfBlock[];
         const block = blocks.splice(0, 1)[0];
@@ -75,8 +76,8 @@ export default class IfStatement extends StatementBase {
     }
 
     private compileBlock(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, typeMap: TypeMap, block: IfBlock, remaining: IfBlock[]) {
-        if(block.condition) {
-            block.condition.compile(context, module, flags, body);
+        /*if(block.condition) {
+            block.condition.compile(context, module, flags);
             body.addOpCode(OpCode.IF, [ 0x40 ]); // 0x40 == void
             const type = block.statements.compile(context, module, flags, body) || null;
             if(type && type!=VoidType.instance)
@@ -91,7 +92,7 @@ export default class IfStatement extends StatementBase {
             const type = block.statements.compile(context, module, flags, body) || null;
             if(type && type!=VoidType.instance)
                 typeMap.add(type);
-        }
+        }*/
     }
 
 

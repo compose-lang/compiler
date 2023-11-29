@@ -3,12 +3,13 @@ import ICompilable from "../compiler/ICompilable";
 import Accessibility from "./Accessibility";
 import Prototype from "./Prototype";
 import Instruction from "../assembly/Instruction";
-import WasmModule from "../module/wasm/WasmModule";
+import WasmModule from "../module/WasmModule";
 import Context from "../context/Context";
 import IType from "../type/IType";
 import CompilerFlags from "../compiler/CompilerFlags";
+import FunctionBody from "../module/FunctionBody";
 
-export default class NativeFunctionDeclaration extends FunctionDeclarationBase implements ICompilable {
+export default class NativeFunctionDeclaration extends FunctionDeclarationBase {
 
     instructions: Instruction[];
 
@@ -37,9 +38,8 @@ export default class NativeFunctionDeclaration extends FunctionDeclarationBase i
     }
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags): void {
-        const section = module.getCodeSection();
-        const body = section.createFunctionCode();
         const local = context.newLocalContext();
+        const body = new FunctionBody();
         this.parameters.forEach(param => param.rehearse(local, module, body));
         this.instructions.forEach(i => i.rehearse(local, module, body));
         // parameters are compiled by function call

@@ -1,5 +1,5 @@
 import Context from "../context/Context";
-import WasmModule from "../module/wasm/WasmModule";
+import WasmModule from "../module/WasmModule";
 import CompilationUnit from "./CompilationUnit";
 import CompilerFlags from "./CompilerFlags";
 

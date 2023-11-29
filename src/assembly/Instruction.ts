@@ -1,9 +1,11 @@
 import OpCode from "../compiler/OpCode";
 import IExpression from "../expression/IExpression";
 import Context from "../context/Context";
-import WasmModule from "../module/wasm/WasmModule";
-import FunctionBody from "../module/wasm/FunctionBody";
+import WasmModule from "../module/WasmModule";
+import FunctionBody from "../module/FunctionBody";
 import CompilerFlags from "../compiler/CompilerFlags";
+import assert from "assert";
+import binaryen from "binaryen";
 
 export default class Instruction {
 
@@ -29,8 +31,9 @@ export default class Instruction {
         this.expressions.forEach(e => e.rehearse(context, module, body), this);
     }
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody) {
-        this.expressions.forEach(e => e.compile(context, module, flags, body), this);
-        body.addOpCode(this.opcode, this.variants);
+    compile(context: Context, module: WasmModule, flags: CompilerFlags): binaryen.ExpressionRef[] {
+        assert.ok(false)
+        /*this.expressions.forEach(e => e.compile(context, module, flags), this);
+        body.addOpCode(this.opcode, this.variants);*/
     }
 }

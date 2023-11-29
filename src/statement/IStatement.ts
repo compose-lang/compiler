@@ -1,11 +1,12 @@
-import WasmModule from "../module/wasm/WasmModule";
+import WasmModule from "../module/WasmModule";
 import Context from "../context/Context";
-import FunctionBody from "../module/wasm/FunctionBody";
+import FunctionBody from "../module/FunctionBody";
 import IType from "../type/IType";
 import Annotation from "../builder/Annotation";
 import ExportType from "../compiler/ExportType";
 import CompilationUnit from "../compiler/CompilationUnit";
 import CompilerFlags from "../compiler/CompilerFlags";
+import IResults from "./IResults";
 
 export default interface IStatement {
 
@@ -18,6 +19,6 @@ export default interface IStatement {
     declare(context: Context, module: WasmModule): void;
     rehearse(context: Context, module: WasmModule, body: FunctionBody): void;
 
-    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IType;
+    compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults;
 
 }

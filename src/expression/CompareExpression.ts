@@ -1,5 +1,5 @@
 import ExpressionBase from "./ExpressionBase";
-import WasmModule from "../module/wasm/WasmModule";
+import WasmModule from "../module/WasmModule";
 import IType from "../type/IType";
 import * as assert from "assert";
 import Context from "../context/Context";

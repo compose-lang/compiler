@@ -1,7 +1,7 @@
 import IType from "./IType";
-import WasmModule from "../module/wasm/WasmModule";
+import WasmModule from "../module/WasmModule";
 import IWasmTarget from "../compiler/IWasmTarget";
-import FunctionBody from "../module/wasm/FunctionBody";
+import FunctionBody from "../module/FunctionBody";
 import * as assert from "assert";
 import Context from "../context/Context";
 import Identifier from "../builder/Identifier";
@@ -10,6 +10,7 @@ import IExpression from "../expression/IExpression";
 import BinaryOperator from "../expression/BinaryOperator";
 import UnaryOperator from "../expression/UnaryOperator";
 import CompilerFlags from "../compiler/CompilerFlags";
+import IResult from "../expression/IResult";
 
 export default class ImportsType extends Map<string, IFunctionDeclaration> implements IType {
 
@@ -73,7 +74,7 @@ export default class ImportsType extends Map<string, IFunctionDeclaration> imple
         assert.ok(false, "Should never get there!");
     }
 
-    compileAdd(context: Context, module: WasmModule, body: FunctionBody, leftType: IType, rightType: IType, tryReverse: boolean): IType {
+    compileAdd(context: Context, module: WasmModule, flags: CompilerFlags, left: IResult, right: IResult, tryReverse: boolean): IResult {
         assert.ok(false, "Should never get there!");
     }
 
@@ -81,7 +82,7 @@ export default class ImportsType extends Map<string, IFunctionDeclaration> imple
         assert.ok(false, "Should never get there!");
     }
 
-    compileBinaryBitsOperator(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, rightType: IType, operator: BinaryOperator): IType {
+    compileBinaryBitsOperator(context: Context, module: WasmModule, flags: CompilerFlags, left: IResult, right: IResult, operator: BinaryOperator): IResult {
         assert.ok(false, "Should never get there!");
     }
 
@@ -89,7 +90,7 @@ export default class ImportsType extends Map<string, IFunctionDeclaration> imple
         assert.ok(false, "Should never get there!");
     }
 
-    compileUnaryOperator(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, expression: IExpression, operator: UnaryOperator): IType {
+    compileUnaryOperator(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, expression: IExpression, operator: UnaryOperator): IResult {
         assert.ok(false, "Should never get there!");
     }
 
