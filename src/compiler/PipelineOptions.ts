@@ -1,6 +1,6 @@
-export default class CompilerOptions {
+export default class PipelineOptions {
 
-    static DEFAULTS = new CompilerOptions();
+    static DEFAULTS = new PipelineOptions();
 
     parseAndCheck = true;
     declare = true;

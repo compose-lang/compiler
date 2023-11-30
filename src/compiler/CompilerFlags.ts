@@ -6,9 +6,11 @@ export default class CompilerFlags {
 
     readonly debug;
     readonly optimize;
+    readonly dwarfPath: string;
 
-    private constructor(debug: boolean, optimize: boolean) {
+    constructor(debug: boolean, optimize: boolean, dwarfPath?: string) {
         this.debug = debug;
         this.optimize = optimize;
+        this.dwarfPath = dwarfPath;
     }
 }

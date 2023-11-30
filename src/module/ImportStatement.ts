@@ -1,6 +1,5 @@
 import Identifier from "../builder/Identifier";
 import ImportSource from "./ImportSource";
-import Compiler from "../compiler/Compiler";
 import CodeFragment from "../builder/CodeFragment";
 import CompilationUnit from "../compiler/CompilationUnit";
 import * as assert from "assert";
@@ -23,11 +22,11 @@ export default class ImportStatement extends CodeFragment {
         this.source = source;
     }
 
-    process(unit: CompilationUnit, compiler: Compiler) {
+    process(unit: CompilationUnit, addUnit: (unit: CompilationUnit) => void) {
         const path = this.source.resolve(unit.path);
         assert.ok(path);
         const importedUnit = ComposeBuilder.parse_unit(path);
-        compiler.addUnit(importedUnit);
+        addUnit(importedUnit);
         if(this.mainSymbol) {
             assert.equal(this.mainSymbol.value, importedUnit.mainExport.name);
             ImportStatement.import(unit, importedUnit.mainExport);

@@ -23,6 +23,11 @@ export default class WasmModule extends binaryen.Module {
     functions: IFunctionDeclaration[] = [];
     functionsByName = new Map<string, Map<Prototype,IFunctionScope>>();
 
+    addMemory(minPages: number, maxPages?: number) {
+        maxPages = Math.max(minPages, maxPages || 0);
+        this.setMemory(minPages, maxPages);
+    }
+
     declareGlobal(unit: CompilationUnit, variable: Variable, value: IExpression, mutable: boolean, exported: boolean): number {
         assert.ok(!this.globalsByName.has(variable.name));
         const global = new Global(unit, this.globals.length, mutable, exported, variable, value);

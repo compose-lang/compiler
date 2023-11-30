@@ -8,7 +8,7 @@ import * as assert from "assert";
 it("runs a wasm file",  () => {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = dirname(dirname(__filename));
-    const path = __dirname + "/samples/simple/simple.wasm";
+    const path = __dirname + "/samples/assembly/simple/simple.wasm";
     const bytes = fs.readFileSync(path);
     const source = new WasmBufferSource(bytes);
     let result: number = 0;

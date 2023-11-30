@@ -1,0 +1,7 @@
+@ModuleExport
+function simple_function(v: i32): i32 {
+    v++;
+    const a: i32 = v++;
+    const b: i32 = v++;
+    return b;
+}

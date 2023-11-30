@@ -1,4 +1,4 @@
-import Compiler from "../../src/compiler/Compiler";
+import Pipeline from "../../src/compiler/Pipeline";
 import WasmBufferTarget from "../../src/compiler/WasmBufferTarget";
 import ComposeBuilder from "../../src/builder/ComposeBuilder";
 import Runner from "../../src/runner/Runner";
@@ -7,10 +7,10 @@ import Optimizer from "../../src/optimizer/Optimizer";
 import WasmBufferSource from "../../src/runner/WasmBufferSource";
 
 it('optimizes an expression',  () => {
-    const compiler = new Compiler();
+    const pipeline = new Pipeline();
     const target = new WasmBufferTarget();
     const unit = ComposeBuilder.parse_unit("@ModuleExport function stuff():u32 { return 4 + 4 + 8 + 19 + 27; }");
-    compiler.buildOne(unit, target);
+    pipeline.buildOne(unit, target);
     let runner = Runner.of(target.asWasmSource());
     let result = runner.runFunction("stuff");
     assert.equal(result, 62);
