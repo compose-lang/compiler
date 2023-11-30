@@ -6,32 +6,48 @@ import ComposeBuilder from "../builder/ComposeBuilder";
 import {fileURLToPath} from "url";
 import {dirname} from "path";
 import PipelineOptions from "./PipelineOptions";
-import CompilerFlags from "./CompilerFlags";
 
 export default class Pipeline {
 
-    units: CompilationUnit[] = [];
+    readonly units: CompilationUnit[] = [];
+    readonly options = PipelineOptions.DEFAULTS;
 
-    buildOne(unit: CompilationUnit, wasmTarget: IWasmTarget, flags = CompilerFlags.DEFAULTS, options = PipelineOptions.DEFAULTS) {
+    constructor(options = PipelineOptions.DEFAULTS) {
+        if(!options.sourceAdded)
+            options.sourceAdded = path => this.addSource(path);
+        this.options = options;
+    }
+
+    build(units: CompilationUnit[]): IWasmTarget[] {
         assert.ok(this.units.length == 0);
-        if(options.parseAndCheck) {
-            this.addUnit(unit);
-            if (options.declare) {
+        if(this.options.parseAndCheck) {
+            units.forEach(unit => this.addUnit(unit), this);
+            if (this.options.declare) {
                 this.declareUnits();
-                if (options.compile) {
-                    this.compileUnits(flags);
-                    if (options.assemble) {
-                         this.assembleModules(wasmTarget, flags);
+                if (this.options.compile) {
+                    this.compileUnits();
+                    if (this.options.assemble) {
+                         return this.assembleModules();
                     }
                 }
             }
         }
+        return null;
+    }
+
+    addSource(path: string): CompilationUnit {
+        let unit = this.units.filter(unit => unit.path == path)[0];
+        if(!unit) {
+            unit = ComposeBuilder.parse_unit(path);
+            this.addUnit(unit);
+        }
+        return unit;
     }
 
     addUnit(unit: CompilationUnit) {
         this.units.push(unit);
         unit.context = Context.newGlobalsContext();
-        unit.processImports(this.addUnit);
+        unit.processImports(this.options);
         unit.populateContextAndCheck(Pipeline.parseAndRegisterBuiltins);
     }
 
@@ -39,14 +55,20 @@ export default class Pipeline {
         this.units.forEach(unit => unit.declare());
     }
 
-    private compileUnits(flags: CompilerFlags) {
-        this.units.forEach(unit => unit.compileAtoms(flags));
+    private compileUnits() {
+        this.units.forEach(unit => unit.compileAtoms(this.options.compilerFlags));
     }
 
-    assembleModules(wasmTarget: IWasmTarget, flags: CompilerFlags) {
-        // multi-unit not supported yet
-        assert.equal(1, this.units.length)
-        this.units[0].assembleModule(wasmTarget, flags);
+    assembleModules(): IWasmTarget[] {
+        return this.units.map(unit => {
+            if(this.options.emitWat) {
+                const wat = unit.module.emitText();
+                console.log(wat);
+            }
+            const wasmTarget = this.options.provideTarget(unit);
+            unit.assembleModule(wasmTarget, this.options.compilerFlags);
+            return wasmTarget;
+        })
     }
 
     private static parseAndRegisterBuiltins(context: Context) {

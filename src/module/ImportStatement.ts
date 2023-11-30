@@ -8,6 +8,7 @@ import IDeclaration from "../declaration/IDeclaration";
 import IStatement from "../statement/IStatement";
 import DeclarationBase from "../declaration/DeclarationBase";
 import StatementBase from "../statement/StatementBase";
+import PipelineOptions from "../compiler/PipelineOptions";
 
 export default class ImportStatement extends CodeFragment {
 
@@ -22,11 +23,10 @@ export default class ImportStatement extends CodeFragment {
         this.source = source;
     }
 
-    process(unit: CompilationUnit, addUnit: (unit: CompilationUnit) => void) {
-        const path = this.source.resolve(unit.path);
+    process(unit: CompilationUnit, options: PipelineOptions) {
+        const path = options.resolveSource(unit.path, this.source.value);
         assert.ok(path);
-        const importedUnit = ComposeBuilder.parse_unit(path);
-        addUnit(importedUnit);
+        const importedUnit = options.sourceAdded(path);
         if(this.mainSymbol) {
             assert.equal(this.mainSymbol.value, importedUnit.mainExport.name);
             ImportStatement.import(unit, importedUnit.mainExport);

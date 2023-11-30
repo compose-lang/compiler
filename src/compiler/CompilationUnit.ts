@@ -5,6 +5,7 @@ import Context from "../context/Context";
 import WasmModule from "../module/WasmModule";
 import CompilerFlags from "./CompilerFlags";
 import IWasmTarget from "./IWasmTarget";
+import PipelineOptions from "./PipelineOptions";
 
 export default class CompilationUnit {
 
@@ -27,8 +28,8 @@ export default class CompilationUnit {
         this.declarations.forEach(decl => decl.unit = this);
     }
 
-   processImports(addUnit: (unit: CompilationUnit) => void) {
-        this.imports.forEach(imp => imp.process(this, addUnit));
+   processImports(options: PipelineOptions) {
+        this.imports.forEach(imp => imp.process(this, options), this);
     }
 
     populateContextAndCheck(parseBuiltins: (context: Context) => void) {
@@ -52,15 +53,14 @@ export default class CompilationUnit {
 
     }
 
-    compileAtoms(flags: CompilerFlags) {
+    compileAtoms(compilerFlags: CompilerFlags) {
         // compile globals in the order of their registration in the globals section
-        this.module.globals.forEach(glob => glob.compile(this.context, this.module, flags, null), this);
+        this.module.globals.forEach(glob => glob.compile(this.context, this.module, compilerFlags, null), this);
         // compile functions in the order of their registration in the functions section
-        this.module.functions.forEach(decl => decl.compile(this.context, this.module, flags, null), this);
+        this.module.functions.forEach(decl => decl.compile(this.context, this.module, compilerFlags, null), this);
     }
 
     assembleModule(wasmTarget: IWasmTarget, flags: CompilerFlags) {
-        const wat = this.module.emitText();
         const bytes = this.module.emitBinary();
         wasmTarget.open();
         wasmTarget.writeUint8Array(bytes);
