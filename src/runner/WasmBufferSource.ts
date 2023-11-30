@@ -2,6 +2,7 @@ import IWasmSource from "./IWasmSource";
 
 export default class WasmBufferSource implements IWasmSource {
 
+    readonly path = "<memory>";
     bytes: ArrayBuffer
 
     constructor(bytes: ArrayBuffer) {

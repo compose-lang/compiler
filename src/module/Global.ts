@@ -38,8 +38,6 @@ export default class Global implements ICompilable {
         const expression = this.value.constify(context);
         const value = expression.compile(context, module, flags, body);
         module.addGlobal(this.variable.name, this.variable.type.asType(), this.mutable, value.ref);
-        if(this.exported)
-            module.addGlobalExport(this.variable.name, this.variable.name);
     }
 
 }

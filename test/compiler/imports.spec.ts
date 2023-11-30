@@ -5,6 +5,7 @@ import * as assert from "assert";
 import {fileURLToPath} from "url";
 import {dirname} from "path";
 import * as os from "os";
+import ISourceLocator from "../../src/runner/ISourceLocator";
 
 it('compiles and runs a function using imported globals',  () => {
     const __filename = fileURLToPath(import.meta.url);
@@ -13,8 +14,13 @@ it('compiles and runs a function using imported globals',  () => {
     const unit = ComposeBuilder.parse_unit(path);
     const pipeline = new Pipeline();
     const dwarfPath = os.tmpdir() + "/" + "importing.dwarf"
-    const wasmTarget = pipeline.build([unit])[0];
-    const runner = Runner.of(wasmTarget.asWasmSource());
+    const wasmTargets = pipeline.build([unit]);
+    const sourceLocator: ISourceLocator = (path: string) => {
+        const index = pipeline.units.findIndex(unit => unit.path == path);
+        assert.ok(index >= 0);
+        return wasmTargets[index].asWasmSource();
+    }
+    const runner = Runner.of(wasmTargets[0].asWasmSource(), null, sourceLocator);
     const result = runner.runFunction<number>("useImports");
     assert.equal(result, 31);
 });

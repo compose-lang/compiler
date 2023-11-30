@@ -11,7 +11,7 @@ export default class PipelineOptions {
     parseAndCheck = true;
     declare = true;
     compile = true;
-    emitWat: true;
+    emitWat = true;
     assemble = true;
     optimize = false;
     merge = false;

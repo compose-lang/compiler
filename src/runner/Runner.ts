@@ -1,23 +1,31 @@
 import IWasmSource from "./IWasmSource";
+import Loader from "./Loader";
+import RunnableModule from "./RunnableModule";
+import ISourceLocator from "./ISourceLocator";
+import Imports from "./Imports";
 
 export default class Runner {
 
-    static of(source: IWasmSource, imports?: any): Runner {
-        const module = source.compile();
-        const instance = new WebAssembly.Instance(module, imports);
-        return new Runner(module, instance);
+    static of(source: IWasmSource, externals?: WebAssembly.Imports, sourceLocator?: ISourceLocator): Runner {
+        const runnables: RunnableModule[] = [];
+        const imports: Imports = {};
+        if(externals) {
+            for(const key in externals)
+                imports[key] = { runnable: null, imports: externals[key] };
+        }
+        const loader = new Loader(imports);
+        const runnable = loader.loadSource(source, runnables, sourceLocator);
+        return new Runner(runnable);
     }
 
-    module: WebAssembly.Module;
-    instance: WebAssembly.Instance;
+    readonly runnable: RunnableModule;
 
-    private constructor(module: WebAssembly.Module, instance: WebAssembly.Instance) {
-        this.module = module;
-        this.instance = instance;
+    private constructor(runnable: RunnableModule) {
+        this.runnable = runnable;
     }
 
     readFunction(method: string): Function {
-        return this.instance.exports[method] as Function;
+        return this.runnable.instance.exports[method] as Function;
     }
 
     runFunction<T>(method: string, ...args: any[]): T {
@@ -26,7 +34,7 @@ export default class Runner {
     }
 
     readGlobal<T>(name: string): T {
-        const global = this.instance.exports[name] as WebAssembly.Global;
+        const global = this.runnable.instance.exports[name] as WebAssembly.Global;
         return global ? global.value as T : null;
     }
 

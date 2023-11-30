@@ -255,7 +255,7 @@ export default class ComposeBuilder extends ComposeParserListener {
     }
 
     private static readExportType(exportNode: TerminalNode, defaultNode: TerminalNode) {
-        return exportNode ? defaultNode ? ExportType.MAIN : ExportType.CHILD : ExportType.NONE;
+        return exportNode ? ( defaultNode ? ExportType.MAIN : ExportType.CHILD ) : ExportType.NONE;
     }
 
 
@@ -758,6 +758,8 @@ export default class ComposeBuilder extends ComposeParserListener {
     exitAny_type = (ctx: Any_typeContext) => {
         this.setNodeValue(ctx, AnyType.instance);
     }
+
+
 
     exitDeclare_instances_statement = (ctx: Declare_instances_statementContext) => {
         const modifier = ctx.LET() !== null ? InstanceModifier.LET : ctx.CONST() !== null ? InstanceModifier.CONST : null;

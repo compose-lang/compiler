@@ -14,10 +14,10 @@ export default abstract class StatementBase extends CodeFragment implements ISta
 
     _unit: CompilationUnit;
     annotations: Annotation[];
-    exportType: ExportType;
+    exportType: ExportType = ExportType.NONE;
 
     isModuleExport() {
-        return this.annotations && this.annotations.some(a => a.name === "@ModuleExport");
+        return this.exportType!=ExportType.NONE || this.annotations && this.annotations.some(a => a.name === "@ModuleExport");
     }
 
     set unit(unit: CompilationUnit) {

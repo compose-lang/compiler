@@ -28,11 +28,17 @@ export default class WasmModule extends binaryen.Module {
         this.setMemory(minPages, maxPages);
     }
 
+    declareImportedGlobal(unit: CompilationUnit, variable: Variable) {
+        this.addGlobalImport(variable.name, unit.path, variable.name, variable.type.asType());
+    }
+
     declareGlobal(unit: CompilationUnit, variable: Variable, value: IExpression, mutable: boolean, exported: boolean): number {
         assert.ok(!this.globalsByName.has(variable.name));
         const global = new Global(unit, this.globals.length, mutable, exported, variable, value);
         this.globals.push(global);
-        this.globalsByName.set(variable.name, global)
+        this.globalsByName.set(variable.name, global);
+        if(exported)
+            this.addGlobalExport(variable.name, variable.name);
         return global.index
     }
 

@@ -20,12 +20,10 @@ export default class CompilationUnit {
 
     constructor(imports: ImportStatement[], statements: IGlobalStatement[], declarations: IDeclaration[], mainExport: any, childExports: any[]) {
         this.imports = imports;
-        this.statements = statements;
-        this.declarations = declarations;
+        this.statements = statements.map(stmt => { stmt.unit = this; return stmt; });
+        this.declarations = declarations.map(decl => { decl.unit = this; return decl; });
         this.mainExport = mainExport;
         this.childExports = childExports;
-        this.statements.forEach(stmt => stmt.unit = this);
-        this.declarations.forEach(decl => decl.unit = this);
     }
 
    processImports(options: PipelineOptions) {
@@ -37,16 +35,20 @@ export default class CompilationUnit {
         parseBuiltins(this.context);
         // register special builtins
         this.context.registerBuiltins();
+        // register imports
+        this.imports.forEach(imp => imp.register(this.context), this);
+        this.imports.forEach(imp => imp.check(this.context), this);
         // register declarations
-        this.declarations.forEach(decl => decl.register(this.context));
+        this.declarations.forEach(decl => decl.register(this.context), this);
         // register then check globals (once declarations are registered)
-        this.statements.forEach(stmt => stmt.register(this.context));
-        this.statements.forEach(stmt => stmt.check(this.context));
+        this.statements.forEach(stmt => stmt.register(this.context), this);
+        this.statements.forEach(stmt => stmt.check(this.context), this);
         // check declarations
-        this.declarations.forEach(decl => decl.check(this.context));
+        this.declarations.forEach(decl => decl.check(this.context), this);
     }
 
     declare() {
+        this.imports.forEach(imp => imp.declare(this.context, this.module), this);
         this.declarations.filter(decl => decl.isModuleImport()).forEach(decl => decl.declare(this.context, this.module), this);
         this.declarations.filter(decl => !decl.isModuleImport()).forEach(decl => decl.declare(this.context, this.module), this);
         this.statements.forEach(stmt => stmt.declare(this.context, this.module), this);
@@ -54,6 +56,7 @@ export default class CompilationUnit {
     }
 
     compileAtoms(compilerFlags: CompilerFlags) {
+        this.imports.forEach(imp => imp.compile(this.context, this.module, compilerFlags, null), this);
         // compile globals in the order of their registration in the globals section
         this.module.globals.forEach(glob => glob.compile(this.context, this.module, compilerFlags, null), this);
         // compile functions in the order of their registration in the functions section
