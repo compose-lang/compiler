@@ -4,7 +4,6 @@ import Runner from "../../src/runner/Runner";
 import * as assert from "assert";
 import {fileURLToPath} from "url";
 import {dirname} from "path";
-import * as os from "os";
 import ISourceLocator from "../../src/runner/ISourceLocator";
 
 it('compiles and runs a function using imported globals',  () => {
@@ -14,6 +13,8 @@ it('compiles and runs a function using imported globals',  () => {
     const unit = ComposeBuilder.parse_unit(unitPath);
     const pipeline = new Pipeline();
     const wasmTargets = pipeline.build([unit]);
+    assert.equal(wasmTargets.length, 2);
+    assert.equal(pipeline.units.length, 2);
     const sourceLocator: ISourceLocator = (path: string) => {
         const index = pipeline.units.findIndex(unit => unit.path == path);
         if(index < 0) {
