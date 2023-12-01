@@ -13,7 +13,6 @@ it('compiles and runs a function using imported globals',  () => {
     const path = __dirname + "/samples/cots/importing.cots";
     const unit = ComposeBuilder.parse_unit(path);
     const pipeline = new Pipeline();
-    const dwarfPath = os.tmpdir() + "/" + "importing.dwarf"
     const wasmTargets = pipeline.build([unit]);
     const sourceLocator: ISourceLocator = (path: string) => {
         const index = pipeline.units.findIndex(unit => unit.path == path);
