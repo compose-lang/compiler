@@ -46,7 +46,13 @@ export default class Pipeline {
     }
 
     addUnit(unit: CompilationUnit) {
-        console.log("Adding unit: " + unit.path);
+        if(unit.path == "<memory>")
+            this.units.push(unit);
+        else {
+            console.log("Adding unit: " + unit.path);
+            this.units.push(unit);
+            console.log("Units paths: " + this.units.map(u => u.path).join(", "));
+        }
         this.units.push(unit);
         unit.context = Context.newGlobalsContext();
         unit.processImports(this.options);
