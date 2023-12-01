@@ -11,6 +11,7 @@ it('compiles and runs a function using imported globals',  () => {
     const __dirname = dirname(dirname(__filename));
     const unitPath = __dirname + "/samples/cots/importing.cots";
     const unit = ComposeBuilder.parse_unit(unitPath);
+    assert.notEqual(unit.path, "<memory>");
     const pipeline = new Pipeline();
     const wasmTargets = pipeline.build([unit]);
     assert.equal(wasmTargets.length, 2);
