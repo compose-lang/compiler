@@ -36,7 +36,8 @@ export default class Pipeline {
     }
 
     addSource(path: string): CompilationUnit {
-        let unit = this.units.filter(unit => unit.path == path)[0];
+        console.log("Adding source: " + path);
+        let unit = this.units.find(unit => unit.path == path);
         if(!unit) {
             unit = ComposeBuilder.parse_unit(path);
             this.addUnit(unit);
