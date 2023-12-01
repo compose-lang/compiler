@@ -19,6 +19,7 @@ it('compiles and runs a function using imported globals',  () => {
         if(index < 0) {
             console.log("Unit path: " + unitPath);
             console.log("Dependency path: " + path);
+            console.log("Units paths: " + pipeline.units.map(u => u.path).join(", "));
         }
         assert.ok(index >= 0);
         return wasmTargets[index].asWasmSource();
