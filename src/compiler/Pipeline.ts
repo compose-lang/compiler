@@ -14,21 +14,20 @@ export default class Pipeline {
 
     constructor(options = PipelineOptions.DEFAULTS) {
         console.log(options.sourceAdded);
-        if(!options.sourceAdded)
+        if (!options.sourceAdded)
             options = options.with(options => options.sourceAdded = path => this.addSource(path));
         this.options = options;
     }
 
     build(units: CompilationUnit[]): IWasmTarget[] {
-        assert.ok(this.units.length == 0);
-        if(this.options.parseAndCheck) {
+        if (this.options.parseAndCheck) {
             units.forEach(unit => this.addUnit(unit), this);
             if (this.options.declare) {
                 this.declareUnits();
                 if (this.options.compile) {
                     this.compileUnits();
                     if (this.options.assemble) {
-                         return this.assembleModules();
+                        return this.assembleModules();
                     }
                 }
             }
@@ -37,10 +36,10 @@ export default class Pipeline {
     }
 
     addSource(path: string): CompilationUnit {
-        if(this.options.logPaths)
+        if (this.options.logPaths)
             console.log("Adding source: " + path);
         let unit = this.units.find(unit => unit.path == path);
-        if(!unit) {
+        if (!unit) {
             unit = ComposeBuilder.parse_unit(path);
             this.addUnit(unit);
         }
@@ -48,10 +47,10 @@ export default class Pipeline {
     }
 
     addUnit(unit: CompilationUnit) {
-        if(this.options.logPaths && unit.path != "<memory>")
+        if (this.options.logPaths && unit.path != "<memory>")
             console.log("Adding unit: " + unit.path + " to " + this.units.map(u => u.path).join(", "));
         this.units.push(unit);
-        if(this.options.logPaths && unit.path != "<memory>")
+        if (this.options.logPaths && unit.path != "<memory>")
             console.log("Units paths: " + this.units.map(u => u.path).join(", "));
         unit.context = Context.newGlobalsContext();
         unit.processImports(this.options);
@@ -68,7 +67,7 @@ export default class Pipeline {
 
     assembleModules(): IWasmTarget[] {
         return this.units.map(unit => {
-            if(this.options.emitWat) {
+            if (this.options.emitWat) {
                 const wat = unit.module.emitText();
                 console.log(wat);
             }
