@@ -53,7 +53,6 @@ export default class Pipeline {
             this.units.push(unit);
             console.log("Units paths: " + this.units.map(u => u.path).join(", "));
         }
-        this.units.push(unit);
         unit.context = Context.newGlobalsContext();
         unit.processImports(this.options);
         unit.populateContextAndCheck(Pipeline.parseAndRegisterBuiltins);
