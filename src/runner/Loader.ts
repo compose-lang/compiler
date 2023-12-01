@@ -17,7 +17,6 @@ export default class Loader {
         const module = source.compile();
         const required = WebAssembly.Module.imports(module);
         if (required.length > 0) {
-            assert.ok(sourceLocator);
             const importer = new Importer(this.imports, runnables, sourceLocator);
             required.forEach(elem => importer.loadImport(elem));
         }

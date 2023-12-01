@@ -36,6 +36,7 @@ export default class Importer {
     loadModule(path: string): RunnableModule {
         let runnable = this.runnables.find(r => r.path == path);
         if(!runnable) {
+            assert.ok(this.sourceLocator);
             const source = this.sourceLocator(path);
             assert.ok(source);
             const loader = new Loader(this.imports);
