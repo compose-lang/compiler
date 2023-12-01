@@ -6,6 +6,8 @@ import WasmModule from "../module/WasmModule";
 import CompilerFlags from "./CompilerFlags";
 import IWasmTarget from "./IWasmTarget";
 import PipelineOptions from "./PipelineOptions";
+import {dirname} from "path";
+import {writeFileSync} from "fs";
 
 export default class CompilationUnit {
 
@@ -91,11 +93,20 @@ export default class CompilationUnit {
         this.module.functions.forEach(decl => decl.compile(this.context, this.module, options.compilerFlags, null), this);
     }
 
-    assembleModule(wasmTarget: IWasmTarget, flags: CompilerFlags) {
-        const bytes = this.module.emitBinary();
+    assembleModule(wasmTarget: IWasmTarget, options: PipelineOptions) {
+        let mapFilePath: string;
+        if(options.compilerFlags.debug && this.path!="<memory>") {
+            if(options.debugDir) {
+                const thisName = this.path.substring(this.path.lastIndexOf("/"));
+                mapFilePath = options.debugDir + thisName + ".map";
+            }
+        }
+        const wasm = this.module.emitBinary(mapFilePath);
         wasmTarget.open();
-        wasmTarget.writeUint8Array(bytes);
+        wasmTarget.writeUint8Array(wasm.binary);
         wasmTarget.close();
+        if(mapFilePath && wasm.sourceMap)
+            writeFileSync(mapFilePath, wasm.sourceMap);
     }
 
  }

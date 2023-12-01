@@ -17,6 +17,7 @@ export default class PipelineOptions {
     optimize = false;
     merge = false;
     logPaths = false;
+    debugDir: string = null;
     compilerFlags = CompilerFlags.DEFAULTS;
     resolveSource: (source: string, path: string) => string = FileSourceResolver;
     provideTarget: (unit: CompilationUnit) => IWasmTarget = () => new WasmBufferTarget();

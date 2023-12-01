@@ -71,7 +71,7 @@ export default class Pipeline {
                 console.log(wat);
             }
             const wasmTarget = this.options.provideTarget(unit);
-            unit.assembleModule(wasmTarget, this.options.compilerFlags);
+            unit.assembleModule(wasmTarget, this.options);
             return wasmTarget;
         })
     }

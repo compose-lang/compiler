@@ -68,8 +68,12 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
         const locals = body.compileLocals();
         const results = this.statements.compile(local, module, flags, body);
         const block = module.block(null, results.refs, results.type.asType());
-        const ref = module.addFunction(this.name, this.functionType().asType(), results.type.asType(), locals, block);
-        body.setLocalNames(ref);
+        const funcref = module.addFunction(this.name, this.functionType().asType(), results.type.asType(), locals, block);
+        body.setLocalNames(funcref);
+        if(flags.debug) {
+            const file = module.addDebugInfoFileName(this.fragment.path);
+            body.debugFragments.forEach((fragment, ref) => module.setDebugLocation(funcref, ref, file, fragment.startLocation.line + 1, fragment.startLocation.column + 1))            ;
+        }
     }
 
     instantiateGeneric(typeArguments: IType[]): IFunctionDeclaration {

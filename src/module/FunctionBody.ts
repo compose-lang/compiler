@@ -1,6 +1,7 @@
 import IType from "../type/IType";
 import IValueType from "../type/IValueType";
 import binaryen from "binaryen";
+import Fragment from "../builder/Fragment";
 
 enum LocalScope {
     PARAM,
@@ -24,6 +25,7 @@ export default class FunctionBody {
 
     locals: Local[] = [];
     localsMap = new Map<string, Local>();
+    debugFragments = new Map<binaryen.ExpressionRef, Fragment>();
 
     registerParameter(name: string, type: IValueType) {
         const local = { index: this.locals.length, scope: LocalScope.PARAM, name, type }
@@ -50,5 +52,9 @@ export default class FunctionBody {
     setLocalNames(func: number) {
         const funcs = binaryen["Function" as keyof typeof binaryen] as any as IFunction;
         this.locals.forEach(local => funcs.setLocalName(func, local.index, local.name));
+    }
+
+    registerDebugInfo(ref: binaryen.ExpressionRef, fragment: Fragment) {
+        this.debugFragments.set(ref, fragment);
     }
 }

@@ -47,7 +47,11 @@ export default class StatementList extends Array<IStatement> {
     }
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults {
-        const results = this.map(stmt => stmt.compile(context, module, flags, body));
+        const results = this.map(stmt => {
+            const result = stmt.compile(context, module, flags, body)
+            stmt.registerDebugInfo(body, result.refs);
+            return result;
+        });
         const typeMap = new TypeMap();
         results.filter(result => result && result.type!=VoidType.instance).forEach(result => typeMap.add(result.type));
         return { type: typeMap.inferType(context), refs: results.filter(result => result).map(result => result.refs).flat() }
