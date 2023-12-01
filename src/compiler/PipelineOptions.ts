@@ -16,29 +16,17 @@ export default class PipelineOptions {
     assemble = true;
     optimize = false;
     merge = false;
+    logPaths = false;
     compilerFlags = CompilerFlags.DEFAULTS;
     resolveSource: (source: string, path: string) => string = FileSourceResolver;
     provideTarget: (unit: CompilationUnit) => IWasmTarget = () => new WasmBufferTarget();
     sourceAdded: (path: string) => CompilationUnit = null;
 
-    withUnitAdded(unitAdded: (path: string) => CompilationUnit): PipelineOptions {
+    with(setter: (options: PipelineOptions) => void) {
         const options = new PipelineOptions();
         Object.assign(options, this);
-        options.sourceAdded = unitAdded;
+        setter.apply(options);
         return options;
     }
 
-    withAssemble(assemble: boolean) {
-        const options = new PipelineOptions();
-        Object.assign(options, this);
-        options.assemble = assemble;
-        return options;
-    }
-
-    withCompile(compile: boolean) {
-        const options = new PipelineOptions();
-        Object.assign(options, this);
-        options.compile = compile;
-        return options;
-    }
 }

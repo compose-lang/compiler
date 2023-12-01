@@ -36,7 +36,8 @@ export default class Pipeline {
     }
 
     addSource(path: string): CompilationUnit {
-        console.log("Adding source: " + path);
+        if(this.options.logPaths)
+            console.log("Adding source: " + path);
         let unit = this.units.find(unit => unit.path == path);
         if(!unit) {
             unit = ComposeBuilder.parse_unit(path);
@@ -46,24 +47,22 @@ export default class Pipeline {
     }
 
     addUnit(unit: CompilationUnit) {
-        if(unit.path == "<memory>")
-            this.units.push(unit);
-        else {
+        if(this.options.logPaths && unit.path != "<memory>")
             console.log("Adding unit: " + unit.path + " to " + this.units.map(u => u.path).join(", "));
-            this.units.push(unit);
+        this.units.push(unit);
+        if(this.options.logPaths && unit.path != "<memory>")
             console.log("Units paths: " + this.units.map(u => u.path).join(", "));
-        }
         unit.context = Context.newGlobalsContext();
         unit.processImports(this.options);
-        unit.populateContextAndCheck(Pipeline.parseAndRegisterBuiltins);
+        unit.populateContextAndCheck(Pipeline.parseAndRegisterBuiltins, this.options);
     }
 
     declareUnits() {
-        this.units.forEach(unit => unit.declare());
+        this.units.forEach(unit => unit.declare(this.options), this);
     }
 
     private compileUnits() {
-        this.units.forEach(unit => unit.compileAtoms(this.options.compilerFlags));
+        this.units.forEach(unit => unit.compileAtoms(this.options), this);
     }
 
     assembleModules(): IWasmTarget[] {

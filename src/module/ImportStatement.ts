@@ -32,10 +32,12 @@ export default class ImportStatement extends CodeFragment {
     }
 
     process(unit: CompilationUnit, options: PipelineOptions) {
-        console.log("Processing import of: " + this.source.value + " from: " + unit.path);
+        if(options.logPaths)
+            console.log("Processing import of: " + this.source.value + " from: " + unit.path);
         const path = options.resolveSource(unit.path, this.source.value);
         assert.ok(path);
-        console.log("Resolved import of: " + this.source.value + " from: " + unit.path + " to: " + path);
+        if(options.logPaths)
+            console.log("Resolved import of: " + this.source.value + " from: " + unit.path + " to: " + path);
         this.importedUnit = options.sourceAdded(path);
         if(this.mainSymbol)
             assert.equal(this.mainSymbol.value, this.importedUnit.mainExport.name);
