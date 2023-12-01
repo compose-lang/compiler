@@ -46,6 +46,7 @@ export default class Pipeline {
     }
 
     addUnit(unit: CompilationUnit) {
+        console.log("Adding unit: " + unit.path);
         this.units.push(unit);
         unit.context = Context.newGlobalsContext();
         unit.processImports(this.options);
