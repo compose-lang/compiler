@@ -48,7 +48,7 @@ export default class NativeFunctionDeclaration extends FunctionDeclarationBase {
         // parameters are compiled by function call
         const refs = this.instructions.filter(i => i.opcode != OpCode.END).map(i => i.compile(local, module, flags, body), this);
         // TODO types
-        const block = module.block(null, refs, binaryen.i32);
+        const block = module.block(null, refs, binaryen.i32); // TODO block type
         module.addFunction(this.name, 0, binaryen.i32, [], block);
     }
 

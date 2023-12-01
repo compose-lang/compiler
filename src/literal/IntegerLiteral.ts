@@ -5,29 +5,35 @@ import IType from "../type/IType";
 import Int32Type from "../type/Int32Type";
 import Int64Type from "../type/Int64Type";
 import CompilerFlags from "../compiler/CompilerFlags";
-import binaryen from "binaryen";
 import IResult from "../expression/IResult";
-import assert from "assert";
 import FunctionBody from "../module/FunctionBody";
 
 export default class IntegerLiteral extends LiteralBase<number> {
 
     public static parseInteger(text: string): number {
+        let radix = 8;
         if(text[0] === "0") {
-            switch(text[1]) {
-                case 'x':
-                case 'X':
-                    return parseInt(text.substring(2), 16);
-                case 'b':
-                case 'B':
-                    return parseInt(text.substring(2), 2);
-                default:
-                    return parseInt(text.substring(1), 8);
+            if(text.length == 1)
+                return 0;
+            else {
+                switch(text[1]) {
+                    case 'x':
+                    case 'X':
+                        radix = 16;
+                        text = text.substring(2);
+                        break;
+                    case 'b':
+                    case 'B':
+                        radix = 2;
+                        text = text.substring(2);
+                        break;
+                    default:
+                        text = text.substring(1);
+                }
             }
-        } else {
-            text = text.replace(/_/g, "");
-            return parseInt(text);
         }
+        text = text.replace(/_/g, "");
+        return parseInt(text, radix);
     }
 
     constructor(text: string) {

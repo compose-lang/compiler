@@ -3,6 +3,7 @@ import IWasmTarget from "./IWasmTarget";
 import FileSourceResolver from "./FileSourceResolver";
 import WasmBufferTarget from "./WasmBufferTarget";
 import CompilerFlags from "./CompilerFlags";
+import CiCdUtils from "../utils/CiCdUtils";
 
 export default class PipelineOptions {
 
@@ -11,7 +12,7 @@ export default class PipelineOptions {
     parseAndCheck = true;
     declare = true;
     compile = true;
-    emitWat = true;
+    emitWat = !CiCdUtils.isCiCd();
     assemble = true;
     optimize = false;
     merge = false;
@@ -24,6 +25,13 @@ export default class PipelineOptions {
         const options = new PipelineOptions();
         Object.assign(options, this);
         options.sourceAdded = unitAdded;
+        return options;
+    }
+
+    withAssemble(assemble: boolean) {
+        const options = new PipelineOptions();
+        Object.assign(options, this);
+        options.assemble = assemble;
         return options;
     }
 }
