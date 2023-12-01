@@ -34,4 +34,11 @@ export default class PipelineOptions {
         options.assemble = assemble;
         return options;
     }
+
+    withCompile(compile: boolean) {
+        const options = new PipelineOptions();
+        Object.assign(options, this);
+        options.compile = compile;
+        return options;
+    }
 }
