@@ -20,7 +20,7 @@ export default class PipelineOptions {
     compilerFlags = CompilerFlags.DEFAULTS;
     resolveSource: (source: string, path: string) => string = FileSourceResolver;
     provideTarget: (unit: CompilationUnit) => IWasmTarget = () => new WasmBufferTarget();
-    sourceAdded: (path: string) => CompilationUnit;
+    sourceAdded: (path: string) => CompilationUnit = null;
 
     with(setter: (options: PipelineOptions) => void) {
         const options = new PipelineOptions();

@@ -15,7 +15,7 @@ export default class Pipeline {
     constructor(options = PipelineOptions.DEFAULTS) {
         console.log(options.sourceAdded);
         if(!options.sourceAdded)
-            options.sourceAdded = path => this.addSource(path);
+            options = options.with(options => options.sourceAdded = path => this.addSource(path));
         this.options = options;
     }
 
