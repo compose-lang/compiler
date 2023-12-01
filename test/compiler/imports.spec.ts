@@ -5,6 +5,7 @@ import * as assert from "assert";
 import {fileURLToPath} from "url";
 import {dirname} from "path";
 import ISourceLocator from "../../src/runner/ISourceLocator";
+import PipelineOptions from "../../src/compiler/PipelineOptions";
 
 it('compiles and runs a function using imported globals',  () => {
     const __filename = fileURLToPath(import.meta.url);
@@ -12,7 +13,8 @@ it('compiles and runs a function using imported globals',  () => {
     const unitPath = __dirname + "/samples/cots/importing.cots";
     const unit = ComposeBuilder.parse_unit(unitPath);
     assert.notEqual(unit.path, "<memory>");
-    const pipeline = new Pipeline();
+    const options = PipelineOptions.DEFAULTS.with(options => options.logPaths = true);
+    const pipeline = new Pipeline(options);
     const wasmTargets = pipeline.build([unit]);
     assert.equal(wasmTargets.length, 2);
     assert.equal(pipeline.units.length, 2);

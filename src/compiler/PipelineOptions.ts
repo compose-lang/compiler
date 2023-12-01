@@ -25,7 +25,7 @@ export default class PipelineOptions {
     with(setter: (options: PipelineOptions) => void) {
         const options = new PipelineOptions();
         Object.assign(options, this);
-        setter.apply(options);
+        setter(options);
         return options;
     }
 
