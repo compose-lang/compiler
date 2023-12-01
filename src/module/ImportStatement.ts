@@ -3,7 +3,6 @@ import ImportSource from "./ImportSource";
 import CodeFragment from "../builder/CodeFragment";
 import CompilationUnit from "../compiler/CompilationUnit";
 import * as assert from "assert";
-import ComposeBuilder from "../builder/ComposeBuilder";
 import IDeclaration from "../declaration/IDeclaration";
 import IStatement from "../statement/IStatement";
 import DeclarationBase from "../declaration/DeclarationBase";
@@ -33,6 +32,7 @@ export default class ImportStatement extends CodeFragment {
     }
 
     process(unit: CompilationUnit, options: PipelineOptions) {
+        console.log("Processing import: " + this.source.value);
         const path = options.resolveSource(unit.path, this.source.value);
         assert.ok(path);
         this.importedUnit = options.sourceAdded(path);
