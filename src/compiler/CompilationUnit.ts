@@ -94,19 +94,25 @@ export default class CompilationUnit {
     }
 
     assembleModule(wasmTarget: IWasmTarget, options: PipelineOptions) {
-        let mapFilePath: string;
+        let mapFilePath: string = undefined;
         if(options.compilerFlags.debug && this.path!="<memory>") {
             if(options.debugDir) {
                 const thisName = this.path.substring(this.path.lastIndexOf("/"));
                 mapFilePath = options.debugDir + thisName + ".map";
             }
         }
-        const wasm = this.module.emitBinary(mapFilePath);
-        wasmTarget.open();
-        wasmTarget.writeUint8Array(wasm.binary);
-        wasmTarget.close();
-        if(mapFilePath && wasm.sourceMap)
+        if(mapFilePath) {
+            const wasm = this.module.emitBinary(mapFilePath);
+            wasmTarget.open();
+            wasmTarget.writeUint8Array(wasm.binary);
+            wasmTarget.close();
             writeFileSync(mapFilePath, wasm.sourceMap);
+        } else {
+            const binary = this.module.emitBinary();
+            wasmTarget.open();
+            wasmTarget.writeUint8Array(binary);
+            wasmTarget.close();
+        }
     }
 
  }
