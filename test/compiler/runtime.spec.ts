@@ -9,7 +9,7 @@ it('parses and checks memory.cots',  () => {
     const __dirname = dirname(dirname(dirname(__filename)));
     const path = __dirname + "/runtime/rt/memory.cots";
     const unit = ComposeBuilder.parse_unit(path);
-    const options = PipelineOptions.DEFAULTS.with(options => options.compile = false);
+    const options = PipelineOptions.DEFAULTS.with(options => options.compile = false); // TODO enable once we support classes
     const pipeline = new Pipeline(options);
     pipeline.build([unit]);
 });

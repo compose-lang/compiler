@@ -13,7 +13,6 @@ export default class Pipeline {
     readonly options = PipelineOptions.DEFAULTS;
 
     constructor(options = PipelineOptions.DEFAULTS) {
-        console.log(options.sourceAdded);
         if (!options.sourceAdded)
             options = options.with(options => options.sourceAdded = path => this.addSource(path));
         this.options = options;
