@@ -27,7 +27,9 @@ export default class CompilationUnit {
     }
 
    processImports(options: PipelineOptions) {
+       console.log("Unit path before process imports: " + this.path);
         this.imports.forEach(imp => imp.process(this, options), this);
+       console.log("Unit path after process imports: " + this.path);
     }
 
     populateContextAndCheck(parseBuiltins: (context: Context) => void) {
@@ -36,8 +38,11 @@ export default class CompilationUnit {
         // register special builtins
         this.context.registerBuiltins();
         // register imports
+        console.log("Unit path before register imports: " + this.path);
         this.imports.forEach(imp => imp.register(this.context), this);
+        console.log("Unit path before check imports: " + this.path);
         this.imports.forEach(imp => imp.check(this.context), this);
+        console.log("Unit path after check imports: " + this.path);
         // register declarations
         this.declarations.forEach(decl => decl.register(this.context), this);
         // register then check globals (once declarations are registered)
@@ -48,7 +53,9 @@ export default class CompilationUnit {
     }
 
     declare() {
+        console.log("Unit path before declare imports: " + this.path);
         this.imports.forEach(imp => imp.declare(this.context, this.module), this);
+        console.log("Unit path after declare imports: " + this.path);
         this.declarations.filter(decl => decl.isModuleImport()).forEach(decl => decl.declare(this.context, this.module), this);
         this.declarations.filter(decl => !decl.isModuleImport()).forEach(decl => decl.declare(this.context, this.module), this);
         this.statements.forEach(stmt => stmt.declare(this.context, this.module), this);
@@ -56,7 +63,9 @@ export default class CompilationUnit {
     }
 
     compileAtoms(compilerFlags: CompilerFlags) {
+        console.log("Unit path before compile imports: " + this.path);
         this.imports.forEach(imp => imp.compile(this.context, this.module, compilerFlags, null), this);
+        console.log("Unit path after compile imports: " + this.path);
         // compile globals in the order of their registration in the globals section
         this.module.globals.forEach(glob => glob.compile(this.context, this.module, compilerFlags, null), this);
         // compile functions in the order of their registration in the functions section
