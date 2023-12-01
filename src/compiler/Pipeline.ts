@@ -49,7 +49,7 @@ export default class Pipeline {
         if(unit.path == "<memory>")
             this.units.push(unit);
         else {
-            console.log("Adding unit: " + unit.path);
+            console.log("Adding unit: " + unit.path + " to " + this.units.map(u => u.path).join(", "));
             this.units.push(unit);
             console.log("Units paths: " + this.units.map(u => u.path).join(", "));
         }
