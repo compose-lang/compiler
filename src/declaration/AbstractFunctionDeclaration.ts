@@ -9,7 +9,6 @@ import Variable from "../context/Variable";
 import InstanceModifier from "../statement/InstanceModifier";
 import ImportsType from "../type/ImportsType";
 import * as assert from "assert";
-import ICompilable from "../compiler/ICompilable";
 import CompilerFlags from "../compiler/CompilerFlags";
 
 export default class AbstractFunctionDeclaration extends FunctionDeclarationBase {
@@ -44,11 +43,12 @@ export default class AbstractFunctionDeclaration extends FunctionDeclarationBase
 
     declare(context: Context, module: WasmModule) {
         if(this.isModuleImport())
-            module.declareImportedFunction(this);
+            module.declareFunction(this);
     }
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags): void {
-        // nothing to do
+        if(this.isModuleImport())
+            module.addFunctionImport(this.name, this.getModuleImportName(), this.name, this.functionType().asType(), this.returnType.asType());
     }
 
 }

@@ -1,7 +1,5 @@
 import binaryen from "binaryen";
-import IWasmTarget from "../compiler/IWasmTarget";
 import IFunctionDeclaration from "../declaration/IFunctionDeclaration";
-import ICompilable from "../compiler/ICompilable";
 import IExpression from "../expression/IExpression";
 import Variable from "../context/Variable";
 import CompilationUnit from "../compiler/CompilationUnit";
@@ -9,19 +7,12 @@ import * as assert from "assert";
 import Global from "./Global";
 import Prototype from "../declaration/Prototype";
 
-enum Scope {
-    LOCAL,
-    IMPORTED,
-    EXPORTED
-}
-interface IFunctionScope { index: number, scope: Scope }
-
 export default class WasmModule extends binaryen.Module {
 
     globals: Global[] = [];
     globalsByName = new Map<string, Global>();
     functions: IFunctionDeclaration[] = [];
-    functionsByName = new Map<string, Map<Prototype,IFunctionScope>>();
+    functionsByName = new Map<string, Map<Prototype, number>>();
 
     addMemory(minPages: number, maxPages?: number) {
         maxPages = Math.max(minPages, maxPages || 0);
@@ -37,8 +28,6 @@ export default class WasmModule extends binaryen.Module {
         const global = new Global(unit, this.globals.length, mutable, exported, variable, value);
         this.globals.push(global);
         this.globalsByName.set(variable.name, global);
-        if(exported)
-            this.addGlobalExport(variable.name, variable.name);
         return global.index
     }
 
@@ -53,39 +42,26 @@ export default class WasmModule extends binaryen.Module {
         global.value = value;
     }
 
-    private getPrototypesMap(decl: IFunctionDeclaration): Map<Prototype, IFunctionScope> {
+    private getPrototypesMap(decl: IFunctionDeclaration): Map<Prototype, number> {
         let prototypes = this.functionsByName.get(decl.name);
         if(!prototypes) {
-            prototypes = new Map<Prototype, IFunctionScope>();
+            prototypes = new Map<Prototype, number>();
             this.functionsByName.set(decl.name, prototypes);
         }
         return prototypes;
     }
 
-    declareImportedFunction(decl: IFunctionDeclaration) {
+    declareFunction(decl: IFunctionDeclaration) {
         const prototypes = this.getPrototypesMap(decl);
         const prototype = decl.prototype();
         assert.ok(!prototypes.has(prototype));
-        prototypes.set(prototype, { index: this.functions.length, scope: Scope.IMPORTED });
+        prototypes.set(prototype, this.functions.length);
         this.functions.push(decl);
-        this.addFunctionImport(decl.name, decl.getModuleImportName(), decl.name, decl.functionType().asType(), decl.returnType.asType());
-    }
-
-    declareConcreteFunction(decl: IFunctionDeclaration, exported: boolean) {
-        const prototypes = this.getPrototypesMap(decl);
-        const prototype = decl.prototype();
-        assert.ok(!prototypes.has(prototype));
-        prototypes.set(prototype, { index: this.functions.length, scope: exported ? Scope.EXPORTED : Scope.LOCAL });
-        this.functions.push(decl);
-        if(exported) {
-            this.addFunctionExport(decl.name, decl.name); // TODO mangle name
-        }
     }
 
     getFunctionByDecl(decl: IFunctionDeclaration): number {
         const prototypes = this.functionsByName.get(decl.name);
-        const entry = prototypes.get(decl.prototype());
-        return entry.index;
+        return prototypes.get(decl.prototype());
     }
 
 

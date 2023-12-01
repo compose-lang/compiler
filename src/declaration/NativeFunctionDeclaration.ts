@@ -32,13 +32,15 @@ export default class NativeFunctionDeclaration extends FunctionDeclarationBase {
     }
 
     declare(context: Context, module: WasmModule): void {
-        module.declareConcreteFunction(this, this.isModuleExport());
+        module.declareFunction(this);
         const local = context.newLocalContext();
         this.parameters.forEach(param => param.declare(local, module));
         this.instructions.forEach(i => i.declare(local, module));
     }
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags): void {
+        if(this.isModuleExport())
+            module.addFunctionExport(this.name, this.name); // TODO mangle name
         const local = context.newLocalContext();
         const body = new FunctionBody();
         this.parameters.forEach(param => param.rehearse(local, module, body));

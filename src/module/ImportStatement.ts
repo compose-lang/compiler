@@ -88,7 +88,7 @@ export default class ImportStatement extends CodeFragment {
 
     private declareImported(context: Context, module: WasmModule, imported: IDeclaration | IStatement) {
         if(imported instanceof FunctionDeclarationBase)
-            module.declareImportedFunction(imported);
+            module.declareFunction(imported);
         else if(imported instanceof DeclareInstanceStatement) {
             const variable = new Variable(InstanceModifier.CONST, imported.id, imported.type);
             module.declareImportedGlobal(this.importedUnit, variable);

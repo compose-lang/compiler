@@ -2,8 +2,6 @@ import FunctionDeclarationBase from "./FunctionDeclarationBase";
 import Prototype from "./Prototype";
 import Context from "../context/Context";
 import WasmModule from "../module/WasmModule";
-import ICompilable from "../compiler/ICompilable";
-import OpCode from "../compiler/OpCode";
 import IType from "../type/IType";
 import IFunctionDeclaration from "./IFunctionDeclaration";
 import * as assert from "assert";
@@ -15,7 +13,6 @@ import AnyType from "../type/AnyType";
 import ParameterList from "../parameter/ParameterList";
 import CompilerFlags from "../compiler/CompilerFlags";
 import FunctionBody from "../module/FunctionBody";
-import binaryen from "binaryen";
 
 export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase {
 
@@ -51,7 +48,7 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
         if(this.isGeneric())
             return;
         context = this._unit.context;
-        module.declareConcreteFunction(this, this.isModuleExport());
+        module.declareFunction(this);
         const local = context.newLocalContext();
         this.parameters.forEach(param => param.declare(local, module), this);
         this.statements.declare(local, module);
@@ -60,6 +57,8 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
     compile(context: Context, module: WasmModule, flags: CompilerFlags): void {
         if(this.isGeneric())
             return;
+        if(this.isModuleExport())
+            module.addFunctionExport(this.name, this.name); // TODO mangle name
         context = this._unit.context;
         const body = new FunctionBody();
         const local = context.newLocalContext();
