@@ -9,7 +9,7 @@ import PipelineOptions from "./PipelineOptions";
 
 export default class CompilationUnit {
 
-    path: string = "<memory>";
+    private _path: string = "<memory>";
     imports: ImportStatement[] = [];
     statements: IGlobalStatement[] = [];
     declarations: IDeclaration[] = [];
@@ -24,6 +24,16 @@ export default class CompilationUnit {
         this.declarations = declarations.map(decl => { decl.unit = this; return decl; });
         this.mainExport = mainExport;
         this.childExports = childExports;
+    }
+
+    get path() {
+        return this._path;
+    }
+
+    set path(value: string) {
+        if(value == "<memory>")
+            throw new Error("Changing path from " + this._path + " to <memory>");
+        this._path = value;
     }
 
    processImports(options: PipelineOptions) {

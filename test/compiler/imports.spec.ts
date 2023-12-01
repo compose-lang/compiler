@@ -6,7 +6,7 @@ import {fileURLToPath} from "url";
 import {dirname} from "path";
 import ISourceLocator from "../../src/runner/ISourceLocator";
 
-it('compiles and runs a function using imported globals',  (done) => {
+it('compiles and runs a function using imported globals',  () => {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = dirname(dirname(__filename));
     const unitPath = __dirname + "/samples/cots/importing.cots";
@@ -30,5 +30,4 @@ it('compiles and runs a function using imported globals',  (done) => {
     const runner = Runner.of(wasmTargets[0].asWasmSource(), null, sourceLocator);
     const result = runner.runFunction<number>("useImports");
     assert.equal(result, 31);
-    done();
 });
