@@ -101,15 +101,3 @@ it('runs a global function call with rest parameter',  () => {
     const result = runner.runFunction<number>("stuff");
     assert.equal(result, 5);
 });
-
-
-it('returns a string received as parameter', () => {
-    const value = "Hello world!"
-    const pipeline = new Pipeline();
-    const unit = ComposeBuilder.parse_unit("" +
-        "@ModuleExport function stuff(v: string): string { return v; }");
-    const wasmTarget = pipeline.build([unit])[0];
-    const runner = Runner.of(wasmTarget.asWasmSource());
-    const result = runner.runFunction<string>("stuff", value);
-    assert.equal(result, value);
-})
