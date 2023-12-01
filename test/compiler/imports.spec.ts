@@ -16,6 +16,7 @@ it('compiles and runs a function using imported globals',  () => {
     const wasmTargets = pipeline.build([unit]);
     assert.equal(wasmTargets.length, 2);
     assert.equal(pipeline.units.length, 2);
+    console.log("Units paths after build: " + pipeline.units.map(u => u.path).join(", "));
     const sourceLocator: ISourceLocator = (path: string) => {
         const index = pipeline.units.findIndex(unit => unit.path == path);
         if(index < 0) {
