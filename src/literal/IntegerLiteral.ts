@@ -11,7 +11,7 @@ import FunctionBody from "../module/FunctionBody";
 export default class IntegerLiteral extends LiteralBase<number> {
 
     public static parseInteger(text: string): number {
-        let radix = 8;
+        let radix = 10;
         if(text[0] === "0") {
             if(text.length == 1)
                 return 0;
@@ -28,6 +28,7 @@ export default class IntegerLiteral extends LiteralBase<number> {
                         text = text.substring(2);
                         break;
                     default:
+                        radix = 8;
                         text = text.substring(1);
                 }
             }
