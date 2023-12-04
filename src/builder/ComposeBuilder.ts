@@ -134,7 +134,7 @@ import IntegerLiteral from "../literal/IntegerLiteral";
 import DecimalLiteral from "../literal/DecimalLiteral";
 import CharLiteral from "../literal/CharLiteral";
 import StringLiteral from "../literal/StringLiteral";
-import ListLiteral from "../literal/ListLiteral";
+import ArrayLiteral from "../literal/ArrayLiteral";
 import SetLiteral from "../literal/SetLiteral";
 import KeyValuePair from "../utils/KeyValuePair";
 import MapLiteral from "../literal/MapLiteral";
@@ -642,7 +642,7 @@ export default class ComposeBuilder extends ComposeParserListener {
 
     exitList_literal = (ctx: List_literalContext) => {
         const items = ctx.expression_list().map(exp => this.getNodeValue<IExpression>(exp), this);
-        this.setNodeValue(ctx, new ListLiteral(ctx.getText(), items));
+        this.setNodeValue(ctx, new ArrayLiteral(ctx.getText(), items));
     }
 
     exitSetLiteral = (ctx: SetLiteralContext) => {

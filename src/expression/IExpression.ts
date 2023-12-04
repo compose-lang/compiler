@@ -10,6 +10,7 @@ import ExpressionRef = binaryen.ExpressionRef;
 export default interface IExpression {
 
     check(context: Context): IType;
+    resolveType(context: Context, type: IType): void;
 
     isConst(context: Context): boolean;
     constify(context: Context): IExpression;

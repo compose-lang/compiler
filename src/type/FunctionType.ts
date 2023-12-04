@@ -9,6 +9,7 @@ import assert from "assert";
 import NullLiteral from "../literal/NullLiteral";
 import IExpression from "../expression/IExpression";
 import binaryen from "binaryen";
+import Type = binaryen.Type;
 
 export default class FunctionType extends UserType {
 
@@ -61,7 +62,7 @@ export default class FunctionType extends UserType {
         return 1;
     }
 
-    asType(): number {
+    asType(): Type {
         const types = this.parameters.map(param => param.type.asType());
         return binaryen.createType(types);
     }

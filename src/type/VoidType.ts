@@ -2,6 +2,7 @@ import NativeType from "./NativeType";
 import IExpression from "../expression/IExpression";
 import * as assert from "assert";
 import binaryen from "binaryen";
+import Type = binaryen.Type;
 
 export default class VoidType extends NativeType {
 
@@ -19,7 +20,7 @@ export default class VoidType extends NativeType {
         return 0;
     }
 
-    asType(): number {
+    asType(): Type {
         return binaryen.none;
     }
 }

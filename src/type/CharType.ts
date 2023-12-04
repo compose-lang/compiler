@@ -2,6 +2,8 @@ import NativeType from "./NativeType";
 import CharLiteral from "../literal/CharLiteral";
 import IExpression from "../expression/IExpression";
 import * as assert from "assert";
+import binaryen from "binaryen";
+import Type = binaryen.Type;
 
 export default class CharType extends NativeType {
 
@@ -15,7 +17,7 @@ export default class CharType extends NativeType {
         return new CharLiteral("\0");
     }
 
-    asType(): number {
+    asType(): Type {
         assert.ok(false)
     }
 }

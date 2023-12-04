@@ -8,6 +8,8 @@ import UnaryOperator from "../expression/UnaryOperator";
 import BinaryOperator from "../expression/BinaryOperator";
 import CompilerFlags from "../compiler/CompilerFlags";
 import IResult from "../expression/IResult";
+import binaryen from "binaryen";
+import Type = binaryen.Type;
 
 export default interface IType {
 
@@ -18,7 +20,8 @@ export default interface IType {
     defaultValue(): IExpression;
 
     count(): number;
-    asType(): number;
+
+    asType(): Type;
 
     prepareContext(context: Context): Context;
 

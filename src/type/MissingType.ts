@@ -1,5 +1,4 @@
 import NativeType from "./NativeType";
-import IWasmTarget from "../compiler/IWasmTarget";
 import IExpression from "../expression/IExpression";
 import * as assert from "assert";
 import IValueType from "./IValueType";
@@ -8,12 +7,12 @@ import IType from "./IType";
 import binaryen from "binaryen";
 import Type = binaryen.Type;
 
-export default class AnyType extends NativeType implements IValueType {
+export default class MissingType extends NativeType implements IValueType {
 
-    static instance = new AnyType()
+    static instance = new MissingType();
 
     private constructor() {
-        super("any")
+        super("missing")
     }
 
     isAssignableFrom(context: Context, type: IType): boolean {
@@ -29,7 +28,7 @@ export default class AnyType extends NativeType implements IValueType {
     }
 
     asType(): Type {
-        assert.ok(false); // should never get there
+        return binaryen.auto;
     }
 
 }

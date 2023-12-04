@@ -1,10 +1,8 @@
 import NativeType from "./NativeType";
-import IWasmTarget from "../compiler/IWasmTarget";
 import IExpression from "../expression/IExpression";
-import DecimalLiteral from "../literal/DecimalLiteral";
 import NullLiteral from "../literal/NullLiteral";
-import assert from "assert";
 import binaryen from "binaryen";
+import Type = binaryen.Type;
 
 export default class StringType extends NativeType {
 
@@ -18,7 +16,7 @@ export default class StringType extends NativeType {
         return new NullLiteral();
     }
 
-    asType(): number {
+    asType(): Type {
         return binaryen.stringref;
     }
 }

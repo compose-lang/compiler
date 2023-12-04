@@ -49,6 +49,11 @@ export default class UnresolvedIdentifierExpression extends ExpressionBase {
         this.resolved.declare(context, module);
     }
 
+    resolveType(context: Context, type: IType) {
+        this.resolve(context);
+        this.resolved.resolveType(context, type);
+    }
+
     rehearse(context: Context, module: WasmModule, body: FunctionBody): void {
         this.resolve(context);
         this.resolved.rehearse(context, module, body);
@@ -67,7 +72,7 @@ export default class UnresolvedIdentifierExpression extends ExpressionBase {
     private resolve(context: Context) {
         if(!this.resolved) {
             this.resolved = this.resolveLocalVariable(context);
-            assert.ok(this.resolved, "Could not resolve '" + this.name + "' at " + this.fragment.toString());
+            assert.ok(this.resolved, "Could not resolveType '" + this.name + "' at " + this.fragment.toString());
         }
     }
 
@@ -141,7 +146,7 @@ class LocalVariableExpression extends ExpressionBase {
 
     check(context: Context): IType {
         const local = context.getRegisteredLocal(this.id);
-        assert.ok(local !== null, "Could not resolve local '" + this.name + "' at " + this.fragment.toString());
+        assert.ok(local !== null, "Could not resolveType local '" + this.name + "' at " + this.fragment.toString());
         return local.type;
     }
 

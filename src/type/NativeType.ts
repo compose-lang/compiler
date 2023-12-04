@@ -1,5 +1,7 @@
 import IExpression from "../expression/IExpression";
 import TypeBase from "./TypeBase";
+import binaryen from "binaryen";
+import Type = binaryen.Type;
 
 export default abstract class NativeType extends TypeBase {
 
@@ -20,6 +22,6 @@ export default abstract class NativeType extends TypeBase {
         return 1;
     }
 
-    abstract asType(): number;
+    abstract asType(): Type;
 
 }

@@ -1,6 +1,8 @@
 import DecimalType from "./DecimalType";
 import IWasmTarget from "../compiler/IWasmTarget";
 import NumberPrecedence from "./NumberPrecedence";
+import binaryen from "binaryen";
+import Type = binaryen.Type;
 
 export default class Float32Type extends DecimalType {
 
@@ -14,8 +16,8 @@ export default class Float32Type extends DecimalType {
         return NumberPrecedence.Float32;
     }
 
-    asType(): number {
-        return 0x7D; // f32
+    asType(): Type {
+        return binaryen.f32;
     }
 
 }

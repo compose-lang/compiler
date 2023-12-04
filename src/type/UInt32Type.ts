@@ -12,6 +12,7 @@ import IResult from "../expression/IResult";
 import binaryen from "binaryen";
 import FunctionBody from "../module/FunctionBody";
 import OpCode from "../compiler/OpCode";
+import Type = binaryen.Type;
 
 export default class UInt32Type extends IntegerType {
 
@@ -25,7 +26,7 @@ export default class UInt32Type extends IntegerType {
         return NumberPrecedence.UInt32;
     }
 
-    asType(): number {
+    asType(): Type {
         return binaryen.i32;
     }
 

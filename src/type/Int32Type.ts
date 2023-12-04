@@ -11,6 +11,8 @@ import IExpression from "../expression/IExpression";
 import FunctionBody from "../module/FunctionBody";
 import UnaryOperator from "../expression/UnaryOperator";
 import ExpressionRef = binaryen.ExpressionRef;
+import {symlink} from "fs";
+import Type = binaryen.Type;
 
 export default class Int32Type extends IntegerType {
 
@@ -24,7 +26,7 @@ export default class Int32Type extends IntegerType {
         return NumberPrecedence.Int32;
     }
 
-    asType(): number {
+    asType(): Type {
         return binaryen.i32;
     }
 

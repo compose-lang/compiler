@@ -4,6 +4,8 @@ import IWasmTarget from "../compiler/IWasmTarget";
 import Context from "../context/Context";
 import UserType from "./UserType";
 import * as assert from "assert";
+import binaryen from "binaryen";
+import Type = binaryen.Type;
 
 export default class AttributeType extends UserType {
 
@@ -23,7 +25,7 @@ export default class AttributeType extends UserType {
         assert.ok(false); // TODO
     }
 
-    asType(): number {
+    asType(): Type {
         assert.ok(false); // TODO
     }
 

@@ -7,6 +7,6 @@ export default class RestParameter extends TypedParameter {
 
     get atomicType(): IType {
         assert.ok(this.type instanceof ArrayType);
-        return this.type.atomicType;
+        return this.type.elementType;
     }
 }

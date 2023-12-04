@@ -11,6 +11,8 @@ import BinaryOperator from "../expression/BinaryOperator";
 import UnaryOperator from "../expression/UnaryOperator";
 import CompilerFlags from "../compiler/CompilerFlags";
 import IResult from "../expression/IResult";
+import binaryen from "binaryen";
+import Type = binaryen.Type;
 
 export default class ImportsType extends Map<string, IFunctionDeclaration> implements IType {
 
@@ -38,7 +40,7 @@ export default class ImportsType extends Map<string, IFunctionDeclaration> imple
         assert.ok(false, "Should never get there!");
     }
 
-    asType(): number {
+    asType(): Type {
         assert.ok(false, "Should never get there!");
     }
 

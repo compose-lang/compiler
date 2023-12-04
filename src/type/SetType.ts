@@ -3,6 +3,8 @@ import IType from "./IType";
 import IExpression from "../expression/IExpression";
 import assert from "assert";
 import IWasmTarget from "../compiler/IWasmTarget";
+import binaryen from "binaryen";
+import Type = binaryen.Type;
 
 export default class SetType extends CollectionType {
 
@@ -14,7 +16,7 @@ export default class SetType extends CollectionType {
         assert.ok(false); // TODO
     }
 
-    asType(): number {
+    asType(): Type {
         assert.ok(false); // TODO
     }
 }

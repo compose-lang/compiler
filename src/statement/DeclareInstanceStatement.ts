@@ -49,6 +49,7 @@ export default class DeclareInstanceStatement extends StatementBase implements I
         let type = this.expression.check(context);
         if(this.type) {
             assert.ok(this.type.isAssignableFrom(context, type));
+            this.expression.resolveType(context, this.type);
             type = this.type;
         }
         context.registerLocal(this.asVariable(context, type));

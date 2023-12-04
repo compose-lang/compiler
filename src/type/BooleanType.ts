@@ -3,6 +3,8 @@ import IWasmTarget from "../compiler/IWasmTarget";
 import IValueType from "./IValueType";
 import BooleanLiteral from "../literal/BooleanLiteral";
 import IExpression from "../expression/IExpression";
+import binaryen from "binaryen";
+import Type = binaryen.Type;
 
 export default class BooleanType extends NativeType implements IValueType {
 
@@ -16,7 +18,7 @@ export default class BooleanType extends NativeType implements IValueType {
         return new BooleanLiteral("false");
     }
 
-    asType(): number {
+    asType(): Type {
         return 0x7F; // i32
     }
 

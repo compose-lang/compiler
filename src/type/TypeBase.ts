@@ -1,5 +1,4 @@
 import IType from "./IType";
-import IWasmTarget from "../compiler/IWasmTarget";
 import Context from "../context/Context";
 import IExpression from "../expression/IExpression";
 import assert from "assert";
@@ -11,6 +10,9 @@ import CodeFragment from "../builder/CodeFragment";
 import CompilerFlags from "../compiler/CompilerFlags";
 import IResult from "../expression/IResult";
 import FunctionBody from "../module/FunctionBody";
+import binaryen from "binaryen";
+import Type = binaryen.Type;
+
 
 export default abstract class TypeBase extends CodeFragment implements IType {
 
@@ -20,7 +22,7 @@ export default abstract class TypeBase extends CodeFragment implements IType {
 
     abstract count(): number;
 
-    abstract asType(): number;
+    abstract asType(): Type;
 
     isAssignableFrom(context: Context, type: IType): boolean {
         return type === this;

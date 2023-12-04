@@ -5,6 +5,8 @@ import Context from "../context/Context";
 import FunctionType from "./FunctionType";
 import UserType from "./UserType";
 import assert from "assert";
+import binaryen from "binaryen";
+import Type = binaryen.Type;
 
 export default class TupleType extends UserType {
 
@@ -26,7 +28,7 @@ export default class TupleType extends UserType {
         return this.validTypes().length;
     }
 
-    asType(): number {
+    asType(): Type {
        assert.ok(false)
     }
 
