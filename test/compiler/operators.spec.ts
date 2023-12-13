@@ -173,7 +173,7 @@ it('runs a binary xor expression on uint32',  () => {
     assert.equal(result, 67 ^ 37);
 });
 
-it('runs a binary not expression on uint32',  () => {
+it('runs a unary not expression on uint32',  () => {
     const pipeline = new Pipeline();
     const unit = ComposeBuilder.parse_unit("" +
         "@ModuleExport function stuff(v: u32): u32 { return ~v; }");

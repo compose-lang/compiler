@@ -6,7 +6,7 @@ import IntegerLiteral from "../../src/literal/IntegerLiteral";
 import DecimalLiteral from "../../src/literal/DecimalLiteral";
 import CharLiteral from "../../src/literal/CharLiteral";
 import StringLiteral from "../../src/literal/StringLiteral";
-import ListLiteral from "../../src/literal/ListLiteral";
+import ArrayLiteral from "../../src/literal/ArrayLiteral";
 import SetLiteral from "../../src/literal/SetLiteral";
 import MapLiteral from "../../src/literal/MapLiteral";
 
@@ -78,7 +78,7 @@ it('parses a string literal',  () => {
 
 it('parses a list literal',  () => {
     const exp = ComposeBuilder.parse_expression("[ 123, 'a', \"xyz\", 12.47, true, false, null ]");
-    assert.ok(exp instanceof ListLiteral);
+    assert.ok(exp instanceof ArrayLiteral);
     assert.deepEqual(exp.toNative(), [ 123, 'a', "xyz", 12.47, true, false, null ]);
 });
 
