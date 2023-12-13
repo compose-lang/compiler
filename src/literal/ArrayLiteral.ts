@@ -11,6 +11,7 @@ import CompilerFlags from "../compiler/CompilerFlags";
 import FunctionBody from "../module/FunctionBody";
 import IResult from "../expression/IResult";
 import {TypeBuilder} from "../binaryen/binaryen_ts";
+import HeapTypeRegistry from "../registry/HeapTypeRegistry";
 
 export default class ArrayLiteral extends LiteralBase<any[]> {
 
@@ -56,12 +57,9 @@ export default class ArrayLiteral extends LiteralBase<any[]> {
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResult {
         const elemType = this.type.elementType.asType();
-        const builder = new TypeBuilder(1);
-        builder.setArrayType(0, elemType, null, true)
-        const result = builder.buildAndDispose();
-        const heapType = result.heapTypes[0];
+        const types = HeapTypeRegistry.instance.getArrayType(elemType, true);
         const values = this.value.map(v => v.compile(context, module, flags, body)).map(r => r.ref);
-        const ref = module.arrays.fromValues(heapType, values);
+        const ref = module.arrays.fromValues(types[1], values);
         return { ref, type: this.type }
     }
 

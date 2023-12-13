@@ -10,7 +10,7 @@ export default class HeapTypeRegistry {
     private constructor() {
     }
 
-    getArrayType(elementType: Type, mutable = false, packedType: PackedType = PackedType.NotPacked, nullable = true): [Type, HeapType] {
+    getArrayType(elementType: Type, mutable = true, packedType: PackedType = PackedType.NotPacked, nullable = true): [Type, HeapType] {
         if(!this.arrayTypesMap.has(elementType)) {
             const builder = new TypeBuilder(1);
             builder.setArrayType(0, elementType, packedType, mutable);

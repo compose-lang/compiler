@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "webpack --mode=production",
-    "test": "mocha --no-warnings --loader=ts-node/esm --require ts-node/register test/**/*.ts"
+    "test": "mocha --node-option loader=ts-node/esm --node-option experimental-wasm-gc --node-option experimental-wasm-stringref --node-option no-warnings --require ts-node/register test/**/*.ts"
   },
   "keywords": [],
   "author": "",

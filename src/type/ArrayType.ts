@@ -18,7 +18,7 @@ export default class ArrayType extends CollectionType {
     }
 
     asType(): Type {
-        const types = HeapTypeRegistry.instance.getArrayType(this.elementType.asType());
+        const types = HeapTypeRegistry.instance.getArrayType(this.elementType.asType(), true);
         return types[0];
     }
 
