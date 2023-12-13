@@ -88,9 +88,9 @@ export default class CompilationUnit {
         if(options.logPaths)
             console.log("Unit path after compile imports: " + this.path);
         // compile globals in the order of their registration in the globals section
-        this.module.globals.forEach(glob => glob.compile(this.context, this.module, options.compilerFlags, null), this);
+        this.module.globalsList.forEach(glob => glob.compile(this.context, this.module, options.compilerFlags, null), this);
         // compile functions in the order of their registration in the functions section
-        this.module.functions.forEach(decl => decl.compile(this.context, this.module, options.compilerFlags, null), this);
+        this.module.functionsList.forEach(decl => decl.compile(this.context, this.module, options.compilerFlags, null), this);
     }
 
     assembleModule(wasmTarget: IWasmTarget, options: PipelineOptions) {
