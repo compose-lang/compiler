@@ -49,6 +49,7 @@ export default class DeclareInstanceStatement extends StatementBase implements I
         let type = this.expression.check(context);
         if(this.type) {
             assert.ok(this.type.isAssignableFrom(context, type));
+            this.expression.resolveType(context, this.type);
             type = this.type;
         }
         context.registerLocal(this.asVariable(context, type));
@@ -75,7 +76,7 @@ export default class DeclareInstanceStatement extends StatementBase implements I
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults {
         const local = body.getRegisteredLocal(this.name);
         const value = this.expression.compile(context, module, flags, body);
-        const result = module.local.set(local.index, value.ref);
+        const result = module.locals.set(local.index, value.ref);
         return { refs: [result], type: VoidType.instance };
     }
 

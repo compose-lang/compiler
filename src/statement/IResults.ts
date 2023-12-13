@@ -1,4 +1,4 @@
-import binaryen from "binaryen";
 import IType from "../type/IType";
+import {ExpressionRef} from "../binaryen/binaryen_ts";
 
-export default interface IResults { type: IType, refs: binaryen.ExpressionRef[]  }
+export default interface IResults { type: IType, refs: ExpressionRef[]  }

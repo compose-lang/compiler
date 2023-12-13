@@ -7,7 +7,7 @@ import ExportType from "../compiler/ExportType";
 import CompilationUnit from "../compiler/CompilationUnit";
 import CompilerFlags from "../compiler/CompilerFlags";
 import IResults from "./IResults";
-import binaryen from "binaryen";
+import {ExpressionRef} from "../binaryen/binaryen_ts";
 
 export default interface IStatement {
 
@@ -21,5 +21,5 @@ export default interface IStatement {
     rehearse(context: Context, module: WasmModule, body: FunctionBody): void;
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults;
-    registerDebugInfo(body: FunctionBody, refs: binaryen.ExpressionRef[]): void;
+    registerDebugInfo(body: FunctionBody, refs: ExpressionRef[]): void;
 }

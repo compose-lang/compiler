@@ -74,11 +74,11 @@ export default class AssignInstanceStatement extends StatementBase {
         const local = body.getRegisteredLocal(this.name);
         if(local) {
             // TODO compile assign operator
-            return { refs: [ module.local.set(local.index, value.ref) ], type: VoidType.instance }
+            return { refs: [ module.locals.set(local.index, value.ref) ], type: VoidType.instance }
         } else {
             const global = module.getRegisteredGlobal(this.name);
             assert.ok(global);
-            return { refs: [ module.global.set(this.name, value.ref) ], type: VoidType.instance }
+            return { refs: [ module.globals.set(this.name, value.ref) ], type: VoidType.instance }
         }
     }
 

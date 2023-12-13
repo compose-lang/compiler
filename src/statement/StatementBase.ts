@@ -9,7 +9,7 @@ import ExportType from "../compiler/ExportType";
 import CompilationUnit from "../compiler/CompilationUnit";
 import CompilerFlags from "../compiler/CompilerFlags";
 import IResults from "./IResults";
-import binaryen from "binaryen";
+import {ExpressionRef} from "../binaryen/binaryen_ts";
 
 export default abstract class StatementBase extends CodeFragment implements IStatement {
 
@@ -37,7 +37,7 @@ export default abstract class StatementBase extends CodeFragment implements ISta
     abstract rehearse(context: Context, module: WasmModule, body: FunctionBody): void;
     abstract compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults;
 
-    registerDebugInfo(body: FunctionBody, refs: binaryen.ExpressionRef[]) {
+    registerDebugInfo(body: FunctionBody, refs: ExpressionRef[]) {
         body.registerDebugInfo(refs[0], this.fragment);
     }
 }
