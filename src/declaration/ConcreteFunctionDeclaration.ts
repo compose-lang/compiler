@@ -13,6 +13,7 @@ import AnyType from "../type/AnyType";
 import ParameterList from "../parameter/ParameterList";
 import CompilerFlags from "../compiler/CompilerFlags";
 import FunctionBody from "../module/FunctionBody";
+import { Function } from "../binaryen/binaryen_ts";
 
 export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase {
 
@@ -58,7 +59,7 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
         if(this.isGeneric())
             return;
         if(this.isModuleExport())
-            module.addFunctionExport(this.name, this.name); // TODO mangle name
+            module.functions.addExport(this.name, this.name); // TODO mangle name
         context = this._unit.context;
         const body = new FunctionBody();
         const local = context.newLocalContext();
@@ -68,11 +69,12 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
         const locals = body.compileLocals();
         const results = this.statements.compile(local, module, flags, body);
         const block = module.block(null, results.refs, results.type.asType());
-        const funcref = module.addFunction(this.name, this.functionType().asType(), results.type.asType(), locals, block);
+        const funcref = module.functions.add(this.name, this.functionType().asType(), results.type.asType(), locals, block);
         body.setLocalNames(funcref);
         if(flags.debug) {
             const file = module.addDebugInfoFileName(this.fragment.path);
-            body.debugFragments.forEach((fragment, ref) => module.setDebugLocation(funcref, ref, file, fragment.startLocation.line + 1, fragment.startLocation.column + 1))            ;
+            const func = new Function(funcref);
+            body.debugFragments.forEach((fragment, ref) => func.setDebugLocation(ref, file, fragment.startLocation.line + 1, fragment.startLocation.column + 1))            ;
         }
     }
 
