@@ -2,6 +2,7 @@ import ComposeBuilder from "../../src/builder/ComposeBuilder";
 import Pipeline from "../../src/compiler/Pipeline";
 import Runner from "../../src/runner/Runner";
 import * as assert from "assert";
+import {Module, Feature} from "../../src/binaryen/binaryen_ts";
 
 it('compiles and runs an empty compilation unit',  () => {
     const pipeline = new Pipeline();
@@ -35,4 +36,13 @@ it('does not export a global without @ModuleExport',  () => {
     const runner = Runner.of(wasmTarget.asWasmSource());
     const result = runner.readGlobal<number>("SL_BITS");
     assert.equal(result, null);
+});
+
+it('it adds a Feature',  () => {
+    const module = new Module();
+    const before = module.getFeatures();
+    module.addFeature(Feature.GC);
+    const after = module.getFeatures();
+    before.add(Feature.GC);
+    assert.deepEqual(after, before);
 });

@@ -1,4 +1,4 @@
-import {Features, Module} from "../binaryen/binaryen_ts";
+import {Feature, Module} from "../binaryen/binaryen_ts";
 import IFunctionDeclaration from "../declaration/IFunctionDeclaration";
 import IExpression from "../expression/IExpression";
 import Variable from "../context/Variable";
@@ -16,8 +16,9 @@ export default class WasmModule extends Module {
 
     constructor(ptr?: number) {
         super(ptr);
-        if(!ptr)
-            this.setFeatures(Features.GC);
+        if(!ptr) {
+            this.setFeatures(Feature.GC, Feature.ReferenceTypes);
+        }
     }
     addMemory(minPages: number, maxPages?: number) {
         maxPages = Math.max(minPages, maxPages || 0);
