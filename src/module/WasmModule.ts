@@ -1,4 +1,4 @@
-import binaryen from "binaryen";
+import {Features, Module} from "../binaryen/binaryen_ts";
 import IFunctionDeclaration from "../declaration/IFunctionDeclaration";
 import IExpression from "../expression/IExpression";
 import Variable from "../context/Variable";
@@ -7,26 +7,31 @@ import * as assert from "assert";
 import Global from "./Global";
 import Prototype from "../declaration/Prototype";
 
-export default class WasmModule extends binaryen.Module {
+export default class WasmModule extends Module {
 
-    globals: Global[] = [];
+    globalsList: Global[] = [];
     globalsByName = new Map<string, Global>();
-    functions: IFunctionDeclaration[] = [];
+    functionsList: IFunctionDeclaration[] = [];
     functionsByName = new Map<string, Map<Prototype, number>>();
 
+    constructor(ptr?: number) {
+        super(ptr);
+        if(!ptr)
+            this.setFeatures(Features.GC);
+    }
     addMemory(minPages: number, maxPages?: number) {
         maxPages = Math.max(minPages, maxPages || 0);
-        this.setMemory(minPages, maxPages);
+        this.memory.set(minPages, maxPages);
     }
 
     declareImportedGlobal(unit: CompilationUnit, variable: Variable) {
-        this.addGlobalImport(variable.name, unit.path, variable.name, variable.type.asType());
+        this.globals.addImport(variable.name, unit.path, variable.name, variable.type.asType(), false);
     }
 
     declareGlobal(unit: CompilationUnit, variable: Variable, value: IExpression, mutable: boolean, exported: boolean): number {
         assert.ok(!this.globalsByName.has(variable.name));
-        const global = new Global(unit, this.globals.length, mutable, exported, variable, value);
-        this.globals.push(global);
+        const global = new Global(unit, this.globalsList.length, mutable, exported, variable, value);
+        this.globalsList.push(global);
         this.globalsByName.set(variable.name, global);
         return global.index
     }
@@ -55,8 +60,8 @@ export default class WasmModule extends binaryen.Module {
         const prototypes = this.getPrototypesMap(decl);
         const prototype = decl.prototype();
         assert.ok(!prototypes.has(prototype));
-        prototypes.set(prototype, this.functions.length);
-        this.functions.push(decl);
+        prototypes.set(prototype, this.functionsList.length);
+        this.functionsList.push(decl);
     }
 
     getFunctionByDecl(decl: IFunctionDeclaration): number {
