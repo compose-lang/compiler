@@ -12,9 +12,9 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@types/node": "^20.10.0",
     "@types/glob": "^8.0.0",
     "@types/mocha": "^10.0.0",
+    "@types/node": "^20.10.0",
     "mathjax-full": "^3.2.2",
     "mocha": "^10.1.0",
     "ts-loader": "^9.4.1",
@@ -24,7 +24,6 @@
   },
   "dependencies": {
     "antlr4": "4.13.1-patch-1",
-    "binaryen": "116.0.0",
     "tempfile": "^5.0.0"
   }
 }
