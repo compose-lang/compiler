@@ -66,6 +66,8 @@ export default class Pipeline {
 
     assembleModules(): IWasmTarget[] {
         return this.units.map(unit => {
+            if(this.options.validate)
+                unit.module.validate();
             if (this.options.emitWat) {
                 const wat = unit.module.emitText();
                 console.log(wat);

@@ -12,6 +12,7 @@ export default class PipelineOptions {
     parseAndCheck = true;
     declare = true;
     compile = true;
+    validate = true;
     emitWat = !CiCdUtils.isCiCd();
     assemble = true;
     optimize = false;
