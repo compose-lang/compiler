@@ -4,12 +4,8 @@ import IType from "../type/IType";
 import Context from "../context/Context";
 import WasmModule from "../module/WasmModule";
 import FunctionBody from "../module/FunctionBody";
-import OpCode from "../compiler/OpCode";
 import CompilerFlags from "../compiler/CompilerFlags";
-import binaryen from "binaryen";
-import ExpressionRef = binaryen.ExpressionRef;
 import IResult from "../expression/IResult";
-import assert from "assert";
 
 export default class BooleanLiteral extends LiteralBase<boolean> {
 
