@@ -1,6 +1,6 @@
 import DecimalType from "./DecimalType";
-import IWasmTarget from "../compiler/IWasmTarget";
 import NumberPrecedence from "./NumberPrecedence";
+import {f64, Type} from "../binaryen/binaryen_ts";
 
 export default class Float64Type extends DecimalType {
 
@@ -14,8 +14,8 @@ export default class Float64Type extends DecimalType {
         return NumberPrecedence.Float64;
     }
 
-    asType(): number {
-        return 0x7C; // f64
+    asType(): Type {
+        return f64;
     }
 
 }

@@ -1,5 +1,6 @@
 import IntegerType from "./IntegerType";
 import NumberPrecedence from "./NumberPrecedence";
+import {i64, Type} from "../binaryen/binaryen_ts";
 
 export default class UInt64Type extends IntegerType {
 
@@ -13,8 +14,8 @@ export default class UInt64Type extends IntegerType {
         return NumberPrecedence.UInt64;
     }
 
-    asType(): number {
-        return 0x7E;
+    asType(): Type {
+        return i64;
     }
 
 }

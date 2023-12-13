@@ -1,6 +1,5 @@
 import IType from "./IType";
 import WasmModule from "../module/WasmModule";
-import IWasmTarget from "../compiler/IWasmTarget";
 import FunctionBody from "../module/FunctionBody";
 import * as assert from "assert";
 import Context from "../context/Context";
@@ -11,6 +10,7 @@ import BinaryOperator from "../expression/BinaryOperator";
 import UnaryOperator from "../expression/UnaryOperator";
 import CompilerFlags from "../compiler/CompilerFlags";
 import IResult from "../expression/IResult";
+import {Type} from "../binaryen/binaryen_ts";
 
 export default class ImportsType extends Map<string, IFunctionDeclaration> implements IType {
 
@@ -38,7 +38,7 @@ export default class ImportsType extends Map<string, IFunctionDeclaration> imple
         assert.ok(false, "Should never get there!");
     }
 
-    asType(): number {
+    asType(): Type {
         assert.ok(false, "Should never get there!");
     }
 

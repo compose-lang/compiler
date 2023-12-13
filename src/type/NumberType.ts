@@ -7,13 +7,14 @@ import WasmModule from "../module/WasmModule";
 import BooleanType from "./BooleanType";
 import IResult from "../expression/IResult";
 import CompilerFlags from "../compiler/CompilerFlags";
+import MissingType from "./MissingType";
 
 export default abstract class NumberType extends NativeType implements IValueType {
 
     abstract get precedence(): NumberPrecedence;
 
     isAssignableFrom(context: Context, type: IType): boolean {
-        return type instanceof NumberType;
+        return type instanceof NumberType || type === MissingType.instance;
     }
 
     checkEquals(context: Context, rightType: IType): IType {

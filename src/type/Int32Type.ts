@@ -6,11 +6,10 @@ import BinaryOperator from "../expression/BinaryOperator";
 import UInt32Type from "./UInt32Type";
 import CompilerFlags from "../compiler/CompilerFlags";
 import IResult from "../expression/IResult";
-import binaryen from "binaryen";
 import IExpression from "../expression/IExpression";
 import FunctionBody from "../module/FunctionBody";
 import UnaryOperator from "../expression/UnaryOperator";
-import ExpressionRef = binaryen.ExpressionRef;
+import {i32, Type} from "../binaryen/binaryen_ts";
 
 export default class Int32Type extends IntegerType {
 
@@ -24,8 +23,8 @@ export default class Int32Type extends IntegerType {
         return NumberPrecedence.Int32;
     }
 
-    asType(): number {
-        return binaryen.i32;
+    asType(): Type {
+        return i32;
     }
 
     compileAdd(context: Context, module: WasmModule, flags: CompilerFlags, left: IResult, right: IResult, tryReverse: boolean): IResult {

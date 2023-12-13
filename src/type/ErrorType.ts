@@ -6,6 +6,7 @@ import ClassType from "./ClassType";
 import Identifier from "../builder/Identifier";
 import IType from "./IType";
 import Context from "../context/Context";
+import {Type} from "../binaryen/binaryen_ts";
 
 export default class ErrorType extends NativeType {
 
@@ -19,7 +20,7 @@ export default class ErrorType extends NativeType {
         return null;
     }
 
-    asType(): number {
+    asType(): Type {
         assert.ok(false); // TODO
     }
 

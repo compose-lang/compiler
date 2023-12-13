@@ -3,10 +3,10 @@ import IType from "./IType";
 
 export default abstract class CollectionType extends NativeType {
 
-    atomicType: IType
+    elementType: IType
 
     constructor(typeName: string, atomicType: IType) {
         super(typeName);
-        this.atomicType = atomicType;
+        this.elementType = atomicType;
     }
 }

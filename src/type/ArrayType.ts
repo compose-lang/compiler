@@ -1,21 +1,28 @@
 import CollectionType from "./CollectionType";
 import IType from "./IType";
-import IWasmTarget from "../compiler/IWasmTarget";
 import IExpression from "../expression/IExpression";
 import * as assert from "assert";
-import binaryen from "binaryen";
+import Context from "../context/Context";
+import HeapTypeRegistry from "../registry/HeapTypeRegistry";
+import {Type} from "../binaryen/binaryen_ts";
+
 
 export default class ArrayType extends CollectionType {
 
-    constructor(atomicType: IType) {
-        super("array<" + atomicType.typeName + ">", atomicType);
+    constructor(elementType: IType) {
+        super("array<" + elementType.typeName + ">", elementType);
     }
 
     defaultValue(): IExpression {
         assert.ok(false); // TODO
     }
 
-    asType(): number {
-        return binaryen.i32; // as an offset of the data to the memory start
+    asType(): Type {
+        const types = HeapTypeRegistry.instance.getArrayType(this.elementType.asType());
+        return types[0];
+    }
+
+    isAssignableFrom(context: Context, type: IType): boolean {
+        return type instanceof ArrayType && this.elementType.isAssignableFrom(context, type.elementType);
     }
 }

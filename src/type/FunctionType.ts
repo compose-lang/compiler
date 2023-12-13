@@ -1,14 +1,12 @@
 import ParameterList from "../parameter/ParameterList";
 import IType from "./IType";
-import LEB128 from "../utils/LEB128";
-import IWasmTarget from "../compiler/IWasmTarget";
 import Context from "../context/Context";
 import UserType from "./UserType";
 import {equalArrays, equalObjects} from "../utils/ObjectUtils";
 import assert from "assert";
 import NullLiteral from "../literal/NullLiteral";
 import IExpression from "../expression/IExpression";
-import binaryen from "binaryen";
+import {createType, Type} from "../binaryen/binaryen_ts";
 
 export default class FunctionType extends UserType {
 
@@ -61,9 +59,9 @@ export default class FunctionType extends UserType {
         return 1;
     }
 
-    asType(): number {
+    asType(): Type {
         const types = this.parameters.map(param => param.type.asType());
-        return binaryen.createType(types);
+        return createType(types);
     }
 
     toString(): string {

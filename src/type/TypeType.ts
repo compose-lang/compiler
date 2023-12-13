@@ -1,8 +1,8 @@
-import IWasmTarget from "../compiler/IWasmTarget";
 import IType from "./IType";
 import * as assert from "assert";
 import Context from "../context/Context";
 import UserType from "./UserType";
+import {Type} from "../binaryen/binaryen_ts";
 
 export default class TypeType extends UserType {
 
@@ -29,7 +29,7 @@ export default class TypeType extends UserType {
         assert.ok(false); // TODO will we ever need this ?
     }
 
-    asType(): number {
+    asType(): Type {
         assert.ok(false); // TODO will we ever need this ?
     }
 

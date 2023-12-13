@@ -1,4 +1,3 @@
-import IWasmTarget from "../compiler/IWasmTarget";
 import Context from "../context/Context";
 import WasmModule from "../module/WasmModule";
 import FunctionBody from "../module/FunctionBody";
@@ -8,6 +7,7 @@ import UnaryOperator from "../expression/UnaryOperator";
 import BinaryOperator from "../expression/BinaryOperator";
 import CompilerFlags from "../compiler/CompilerFlags";
 import IResult from "../expression/IResult";
+import {Type} from "../binaryen/binaryen_ts";
 
 export default interface IType {
 
@@ -18,7 +18,8 @@ export default interface IType {
     defaultValue(): IExpression;
 
     count(): number;
-    asType(): number;
+
+    asType(): Type;
 
     prepareContext(context: Context): Context;
 

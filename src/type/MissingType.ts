@@ -1,18 +1,17 @@
 import NativeType from "./NativeType";
-import IWasmTarget from "../compiler/IWasmTarget";
 import IExpression from "../expression/IExpression";
 import * as assert from "assert";
 import IValueType from "./IValueType";
 import Context from "../context/Context";
 import IType from "./IType";
-import {Type} from "../binaryen/binaryen_ts";
+import {auto, Type} from "../binaryen/binaryen_ts";
 
-export default class AnyType extends NativeType implements IValueType {
+export default class MissingType extends NativeType implements IValueType {
 
-    static instance = new AnyType()
+    static instance = new MissingType();
 
     private constructor() {
-        super("any")
+        super("missing")
     }
 
     isAssignableFrom(context: Context, type: IType): boolean {
@@ -28,7 +27,7 @@ export default class AnyType extends NativeType implements IValueType {
     }
 
     asType(): Type {
-        assert.ok(false); // should never get there
+        return auto;
     }
 
 }

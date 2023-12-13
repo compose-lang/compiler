@@ -1,5 +1,4 @@
 import IntegerType from "./IntegerType";
-import IWasmTarget from "../compiler/IWasmTarget";
 import NumberPrecedence from "./NumberPrecedence";
 import Context from "../context/Context";
 import WasmModule from "../module/WasmModule";
@@ -9,9 +8,8 @@ import BinaryOperator from "../expression/BinaryOperator";
 import Int32Type from "./Int32Type";
 import CompilerFlags from "../compiler/CompilerFlags";
 import IResult from "../expression/IResult";
-import binaryen from "binaryen";
 import FunctionBody from "../module/FunctionBody";
-import OpCode from "../compiler/OpCode";
+import {i32, Type} from "../binaryen/binaryen_ts";
 
 export default class UInt32Type extends IntegerType {
 
@@ -25,8 +23,8 @@ export default class UInt32Type extends IntegerType {
         return NumberPrecedence.UInt32;
     }
 
-    asType(): number {
-        return binaryen.i32;
+    asType(): Type {
+        return i32;
     }
 
     compileAdd(context: Context, module: WasmModule, flags: CompilerFlags, left: IResult, right: IResult, tryReverse: boolean): IResult {

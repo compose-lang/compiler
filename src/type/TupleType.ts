@@ -1,10 +1,10 @@
 import IType from "./IType";
-import IWasmTarget from "../compiler/IWasmTarget";
 import TypeList from "./TypeList";
 import Context from "../context/Context";
 import FunctionType from "./FunctionType";
 import UserType from "./UserType";
 import assert from "assert";
+import {Type} from "../binaryen/binaryen_ts";
 
 export default class TupleType extends UserType {
 
@@ -26,7 +26,7 @@ export default class TupleType extends UserType {
         return this.validTypes().length;
     }
 
-    asType(): number {
+    asType(): Type {
        assert.ok(false)
     }
 

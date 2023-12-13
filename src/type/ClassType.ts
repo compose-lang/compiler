@@ -8,6 +8,7 @@ import IValueType from "./IValueType";
 import * as assert from "assert";
 import NullType from "./NullType";
 import BooleanType from "./BooleanType";
+import {Type} from "../binaryen/binaryen_ts";
 
 export default class ClassType extends UserType implements IValueType {
 
@@ -34,7 +35,7 @@ export default class ClassType extends UserType implements IValueType {
         assert.ok(false); // TODO
     }
 
-    asType(): number {
+    asType(): Type {
         assert.ok(false); // TODO
     }
 

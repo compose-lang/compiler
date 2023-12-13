@@ -1,7 +1,7 @@
 import NativeType from "./NativeType";
-import IWasmTarget from "../compiler/IWasmTarget";
 import IExpression from "../expression/IExpression";
 import * as assert from "assert";
+import {none, Type} from "../binaryen/binaryen_ts";
 
 export default class NullType extends NativeType {
 
@@ -19,7 +19,7 @@ export default class NullType extends NativeType {
         return 0;
     }
 
-    asType(): number {
-        assert.ok(false); // should never get there
+    asType(): Type {
+        return none;
     }
 }

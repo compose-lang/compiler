@@ -1,6 +1,6 @@
 import IntegerType from "./IntegerType";
-import IWasmTarget from "../compiler/IWasmTarget";
 import NumberPrecedence from "./NumberPrecedence";
+import {i64, Type} from "../binaryen/binaryen_ts";
 
 export default class Int64Type extends IntegerType {
 
@@ -14,8 +14,8 @@ export default class Int64Type extends IntegerType {
         return NumberPrecedence.Int64;
     }
 
-    asType(): number {
-        return 0x7E; // i64
+    asType(): Type {
+        return i64;
     }
 
 }
