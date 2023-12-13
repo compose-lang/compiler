@@ -10,9 +10,8 @@ import IExpression from "./IExpression";
 import ClassDeclaration from "../declaration/ClassDeclaration";
 import TypeType from "../type/TypeType";
 import CompilerFlags from "../compiler/CompilerFlags";
-import binaryen from "binaryen";
-import ExpressionRef = binaryen.ExpressionRef;
 import IResult from "./IResult";
+import {ExpressionRef} from "../binaryen/binaryen_ts";
 
 
 export default class UnresolvedIdentifierExpression extends ExpressionBase {
@@ -49,6 +48,11 @@ export default class UnresolvedIdentifierExpression extends ExpressionBase {
         this.resolved.declare(context, module);
     }
 
+    resolveType(context: Context, type: IType) {
+        this.resolve(context);
+        this.resolved.resolveType(context, type);
+    }
+
     rehearse(context: Context, module: WasmModule, body: FunctionBody): void {
         this.resolve(context);
         this.resolved.rehearse(context, module, body);
@@ -67,7 +71,7 @@ export default class UnresolvedIdentifierExpression extends ExpressionBase {
     private resolve(context: Context) {
         if(!this.resolved) {
             this.resolved = this.resolveLocalVariable(context);
-            assert.ok(this.resolved, "Could not resolve '" + this.name + "' at " + this.fragment.toString());
+            assert.ok(this.resolved, "Could not resolveType '" + this.name + "' at " + this.fragment.toString());
         }
     }
 
@@ -141,7 +145,7 @@ class LocalVariableExpression extends ExpressionBase {
 
     check(context: Context): IType {
         const local = context.getRegisteredLocal(this.id);
-        assert.ok(local !== null, "Could not resolve local '" + this.name + "' at " + this.fragment.toString());
+        assert.ok(local !== null, "Could not resolveType local '" + this.name + "' at " + this.fragment.toString());
         return local.type;
     }
 
@@ -155,13 +159,13 @@ class LocalVariableExpression extends ExpressionBase {
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResult {
         const local = body.getRegisteredLocal(this.name);
-        const value = module.local.get(local.index, local.type.asType());
+        const value = module.locals.get(local.index, local.type.asType());
         return { ref: value, type: local.type };
     }
 
     compileAssign(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, value: ExpressionRef): IResult {
         const local = body.getRegisteredLocal(this.id.value);
-        const ref = module.local.set(local.index, value);
+        const ref = module.locals.set(local.index, value);
         return { ref, type: local.type };
     }
 }
@@ -214,7 +218,7 @@ class GlobalVariableExpression extends ExpressionBase {
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResult {
         const global = context.getRegisteredGlobal(this.id);
-        return { ref: module.global.get(global.name, global.type.asType()), type: global.type };
+        return { ref: module.globals.get(global.name, global.type.asType()), type: global.type };
     }
 }
 

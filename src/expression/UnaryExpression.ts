@@ -6,9 +6,7 @@ import IExpression from "./IExpression";
 import UnaryOperator from "./UnaryOperator";
 import FunctionBody from "../module/FunctionBody";
 import CompilerFlags from "../compiler/CompilerFlags";
-import binaryen from "binaryen";
 import IResult from "./IResult";
-import assert from "assert";
 
 export default class UnaryExpression extends ExpressionBase {
 

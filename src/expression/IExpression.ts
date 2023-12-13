@@ -4,12 +4,12 @@ import FunctionBody from "../module/FunctionBody";
 import IType from "../type/IType";
 import CompilerFlags from "../compiler/CompilerFlags";
 import IResult from "./IResult";
-import binaryen from "binaryen";
-import ExpressionRef = binaryen.ExpressionRef;
+import {ExpressionRef} from "../binaryen/binaryen_ts";
 
 export default interface IExpression {
 
     check(context: Context): IType;
+    resolveType(context: Context, type: IType): void;
 
     isConst(context: Context): boolean;
     constify(context: Context): IExpression;

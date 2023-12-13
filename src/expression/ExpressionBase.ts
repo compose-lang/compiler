@@ -7,8 +7,7 @@ import IType from "../type/IType";
 import assert from "assert";
 import CompilerFlags from "../compiler/CompilerFlags";
 import IResult from "./IResult";
-import binaryen from "binaryen";
-import ExpressionRef = binaryen.ExpressionRef;
+import { ExpressionRef } from "../binaryen/binaryen_ts";
 
 export default abstract class ExpressionBase extends CodeFragment implements IExpression {
 
@@ -23,6 +22,10 @@ export default abstract class ExpressionBase extends CodeFragment implements IEx
     }
 
     abstract declare(context: Context, module: WasmModule): void;
+
+    resolveType(context: Context, type: IType) {
+        // nothing to do
+    }
 
     rehearse(context: Context, module: WasmModule, body: FunctionBody): void {
         assert.ok(false, "Missing rehearse method for " + Object.getPrototypeOf(this).constructor.name);
