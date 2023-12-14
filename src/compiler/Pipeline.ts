@@ -1,11 +1,11 @@
 import CompilationUnit from "./CompilationUnit";
 import IWasmTarget from "./IWasmTarget";
 import Context from "../context/Context";
-import * as assert from "assert";
 import ComposeBuilder from "../builder/ComposeBuilder";
 import {fileURLToPath} from "url";
 import {dirname} from "path";
 import PipelineOptions from "./PipelineOptions";
+import * as fs from "fs";
 
 export default class Pipeline {
 
@@ -71,9 +71,15 @@ export default class Pipeline {
             if (this.options.emitWat) {
                 const wat = unit.module.emitText();
                 console.log(wat);
+                if(this.options.dumpWatPath)
+                    fs.writeFileSync(this.options.dumpWatPath, wat);
             }
             const wasmTarget = this.options.provideTarget(unit);
             unit.assembleModule(wasmTarget, this.options);
+            if(this.options.dumpWasmPath) {
+                const buffer = wasmTarget.asWasmBuffer();
+                fs.writeFileSync(this.options.dumpWasmPath, buffer);
+            }
             return wasmTarget;
         })
     }

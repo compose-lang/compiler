@@ -1,4 +1,3 @@
-import IWasmSource from "../runner/IWasmSource";
 import WasmTargetBase from "./WasmTargetBase";
 import WasmFileSource from "../runner/WasmFileSource";
 import fs from "fs";
@@ -29,7 +28,7 @@ export default class WasmFileTarget extends WasmTargetBase {
         return fs.readFileSync(this.targetPath);
     }
 
-    asWasmSource(): IWasmSource {
+    asWasmSource(): WasmFileSource {
         return new WasmFileSource(this.targetPath);
     }
 

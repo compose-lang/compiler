@@ -10,6 +10,7 @@ export default class HeapTypeRegistry {
     private constructor() {
     }
 
+    // TODO set heap type name using BinaryenModuleSetTypeName
     getArrayType(elementType: Type, mutable = true, packedType: PackedType = PackedType.NotPacked, nullable = true): [Type, HeapType] {
         if(!this.arrayTypesMap.has(elementType)) {
             const builder = new TypeBuilder(1);

@@ -1,4 +1,3 @@
-import IWasmSource from "../runner/IWasmSource";
 import WasmTargetBase from "./WasmTargetBase";
 import WasmBufferSource from "../runner/WasmBufferSource";
 
@@ -25,7 +24,7 @@ export default class WasmBufferTarget extends WasmTargetBase {
         return buffer;
     }
 
-    asWasmSource(): IWasmSource {
+    asWasmSource(): WasmBufferSource {
         const buffer = this.asWasmBuffer();
         return new WasmBufferSource(buffer);
     }
