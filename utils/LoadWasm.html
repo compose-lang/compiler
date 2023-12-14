@@ -1,0 +1,33 @@
+<html>
+    <header>
+    <script>
+
+        function wasmLoaded(event) {
+            const wasm = event.target.result;
+            const module = new WebAssembly.Module(wasm);
+            const instance = new WebAssembly.Instance(module, {});
+            const stuff = instance.exports["stuff"];
+            const result = stuff();
+            alert(result.toString());
+            const i32s = [];
+            result.forEach(i => i32s.push(i));
+            alert(i32s);
+        }
+
+        function fileSelected(input) {
+            if(input.value.endsWith(".wasm")) {
+                const reader = new FileReader();
+                reader.onload = wasmLoaded;
+                reader.readAsArrayBuffer(input.files[0])
+            } else
+                alert("Unsupported format: " + input.value);
+        }
+    </script>
+    </header>
+    <body>
+        <form>
+            <label>Select WASM file</label>
+            <input type="file" accept=".wasm" onchange="fileSelected(this)"/>
+        </form>
+    </body>
+</html>
