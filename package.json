@@ -16,6 +16,7 @@
     "@types/mocha": "^10.0.0",
     "@types/node": "^20.10.0",
     "mathjax-full": "^3.2.2",
+    "binaryen": "^116.0.0",
     "mocha": "^10.1.0",
     "ts-loader": "^9.4.1",
     "ts-node": "^10.9.1",

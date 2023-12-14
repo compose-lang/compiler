@@ -3,3 +3,4 @@ dist
 *.map
 grammar/gen
 /opcodes/gc/
+/dumps/
