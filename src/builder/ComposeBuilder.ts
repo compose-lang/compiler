@@ -199,6 +199,9 @@ import ArrayType from "../type/ArrayType";
 import SetType from "../type/SetType";
 import ParameterList from "../parameter/ParameterList";
 
+type A = { const: string }
+const a = { const: 12};
+
 interface IndexedNode {
     __id?: number;
 }
