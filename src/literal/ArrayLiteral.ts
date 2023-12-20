@@ -16,8 +16,10 @@ export default class ArrayLiteral extends LiteralBase<any[]> {
 
     type: ArrayType = null;
 
-    constructor(text: string, values: IExpression[]) {
+    constructor(text: string, values: IExpression[], elemType?: IType) {
         super(text, values);
+        if(elemType)
+            this.type = new ArrayType(elemType);
     }
 
     toNative(): any[] {

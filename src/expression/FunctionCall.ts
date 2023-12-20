@@ -13,6 +13,8 @@ import IntegerLiteral from "../literal/IntegerLiteral.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResult from "./IResult.ts";
 import { assert } from "../../deps.ts";
+import HeapTypeRegistry from "../registry/HeapTypeRegistry.ts";
+import ArrayLiteral from "../literal/ArrayLiteral.ts";
 
 export default class FunctionCall extends ExpressionBase {
 
@@ -82,8 +84,8 @@ export default class FunctionCall extends ExpressionBase {
                     const convertedArg = paramType.convertExpression(context, actualArg);
                     items.push(convertedArg);
                 }
-                // TODO compile new array + items
-                convertedArg = new IntegerLiteral("0"); // TODO placeholder to push something on the stack
+                const text = "[" + items.join(", ") + "]";
+                convertedArg = new ArrayLiteral(text, items, paramType);
             }
             convertedArgs.push(convertedArg);
         });
