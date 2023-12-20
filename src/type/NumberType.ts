@@ -1,13 +1,13 @@
-import NativeType from "./NativeType";
-import IType from "./IType";
-import Context from "../context/Context";
-import IValueType from "./IValueType";
-import NumberPrecedence from "./NumberPrecedence";
-import WasmModule from "../module/WasmModule";
-import BooleanType from "./BooleanType";
-import IResult from "../expression/IResult";
-import CompilerFlags from "../compiler/CompilerFlags";
-import MissingType from "./MissingType";
+import NativeType from "./NativeType.ts";
+import IType from "./IType.ts";
+import Context from "../context/Context.ts";
+import IValueType from "./IValueType.ts";
+import NumberPrecedence from "./NumberPrecedence.ts";
+import WasmModule from "../module/WasmModule.ts";
+import BooleanType from "./BooleanType.ts";
+import IResult from "../expression/IResult.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
+import MissingType from "./MissingType.ts";
 
 export default abstract class NumberType extends NativeType implements IValueType {
 

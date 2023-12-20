@@ -1,18 +1,18 @@
-import WasmModule from "../module/WasmModule";
-import Context from "../context/Context";
-import FunctionBody from "../module/FunctionBody";
-import IType from "../type/IType";
-import Annotation from "../builder/Annotation";
-import ExportType from "../compiler/ExportType";
-import CompilationUnit from "../compiler/CompilationUnit";
-import CompilerFlags from "../compiler/CompilerFlags";
-import IResults from "./IResults";
-import {ExpressionRef} from "../binaryen/binaryen_ts";
+import WasmModule from "../module/WasmModule.ts";
+import Context from "../context/Context.ts";
+import FunctionBody from "../module/FunctionBody.ts";
+import IType from "../type/IType.ts";
+import Annotation from "../builder/Annotation.ts";
+import ExportType from "../compiler/ExportType.ts";
+import CompilationUnit from "../compiler/CompilationUnit.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
+import IResults from "./IResults.ts";
+import {ExpressionRef} from "../binaryen/binaryen_ts.ts";
 
 export default interface IStatement {
 
-    unit: CompilationUnit;
-    annotations: Annotation[];
+    unit: CompilationUnit | null;
+    annotations: Annotation[] | null;
     exportType: ExportType;
 
     check(context: Context): IType;

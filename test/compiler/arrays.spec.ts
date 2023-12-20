@@ -1,10 +1,10 @@
-import Pipeline from "../../src/compiler/Pipeline";
-import ComposeBuilder from "../../src/builder/ComposeBuilder";
-import Runner from "../../src/runner/Runner";
-import assert from "assert";
-import PipelineOptions from "../../src/compiler/PipelineOptions";
+import Pipeline from "../../src/compiler/Pipeline.ts";
+import ComposeBuilder from "../../src/builder/ComposeBuilder.ts";
+import Runner from "../../src/runner/Runner.ts";
+import { assertEquals } from "https://deno.land/std@0.209.0/assert/mod.ts";
+import PipelineOptions from "../../src/compiler/PipelineOptions.ts";
 
-it('returns an i32 array',  () => {
+Deno.test('returns an i32 array',  () => {
     const options = PipelineOptions.DEFAULTS
         .with(options => options.dumpWatPath = "dumps/returns_an_i32_array.wat")
         .with(options => options.dumpWasmPath = "dumps/returns_an_i32_array.wasm")
@@ -13,5 +13,5 @@ it('returns an i32 array',  () => {
     const wasmTarget = pipeline.build([unit])[0];
     const runner = Runner.of(wasmTarget.asWasmSource());
     const result = runner.runFunction<number>("stuff");
-    assert.equal(result, []);
+    assertEquals(result, []);
 });

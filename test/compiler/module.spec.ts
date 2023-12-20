@@ -1,48 +1,47 @@
-import ComposeBuilder from "../../src/builder/ComposeBuilder";
-import Pipeline from "../../src/compiler/Pipeline";
-import Runner from "../../src/runner/Runner";
-import * as assert from "assert";
-import {Module, Feature} from "../../src/binaryen/binaryen_ts";
+import ComposeBuilder from "../../src/builder/ComposeBuilder.ts";
+import Pipeline from "../../src/compiler/Pipeline.ts";
+import Runner from "../../src/runner/Runner.ts";
+import {Module, Feature} from "../../src/binaryen/binaryen_ts.ts";
 
-it('compiles and runs an empty compilation unit',  () => {
+Deno.test('compiles and runs an empty compilation unit',  () => {
     const pipeline = new Pipeline();
     const unit = ComposeBuilder.parse_unit("");
     const wasmTarget = pipeline.build([unit])[0];
     Runner.of(wasmTarget.asWasmSource());
 });
 
-it('returns an i32 literal',  () => {
+Deno.test('returns an i32 literal',  () => {
     const pipeline = new Pipeline();
     const unit = ComposeBuilder.parse_unit("@ModuleExport function stuff(): i32 { return 2; }");
     const wasmTarget = pipeline.build([unit])[0];
     const runner = Runner.of(wasmTarget.asWasmSource());
     const result = runner.runFunction<number>("stuff");
-    assert.equal(result, 2);
+    assertEquals(result, 2);
 });
 
-it('does not export a function without @ModuleExport',  () => {
+Deno.test('does not export a function without @ModuleExport',  () => {
     const pipeline = new Pipeline();
     const unit = ComposeBuilder.parse_unit("function stuff(): i32 { return 2; }");
     const wasmTarget = pipeline.build([unit])[0];
     const runner = Runner.of(wasmTarget.asWasmSource());
     const result = runner.readFunction("stuff");
-    assert.equal(result, null);
+    assertEquals(result, null);
 });
 
-it('does not export a global without @ModuleExport',  () => {
+Deno.test('does not export a global without @ModuleExport',  () => {
     const pipeline = new Pipeline();
     const unit = ComposeBuilder.parse_unit("const SL_BITS: u32 = 4;");
     const wasmTarget = pipeline.build([unit])[0];
     const runner = Runner.of(wasmTarget.asWasmSource());
     const result = runner.readGlobal<number>("SL_BITS");
-    assert.equal(result, null);
+    assertEquals(result, null);
 });
 
-it('it adds a Feature',  () => {
+Deno.test('it adds a Feature',  () => {
     const module = new Module();
     const before = module.getFeatures();
     module.addFeature(Feature.GC);
     const after = module.getFeatures();
     before.add(Feature.GC);
-    assert.deepEqual(after, before);
+    assertEquals(after, before);
 });

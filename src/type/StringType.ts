@@ -1,8 +1,8 @@
-import NativeType from "./NativeType";
-import IExpression from "../expression/IExpression";
-import NullLiteral from "../literal/NullLiteral";
-import {Type} from "../binaryen/binaryen_ts";
-import assert from "assert";
+import NativeType from "./NativeType.ts";
+import IExpression from "../expression/IExpression.ts";
+import NullLiteral from "../literal/NullLiteral.ts";
+import {Type} from "../binaryen/binaryen_ts.ts";
+import {assert} from "../../deps.ts";
 
 export default class StringType extends NativeType {
 

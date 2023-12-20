@@ -1,9 +1,5 @@
-import {fileURLToPath} from "url";
-import {dirname} from "path";
-import fs from "fs";
-import WasmBufferSource from "../../src/runner/WasmBufferSource";
-import Runner from "../../src/runner/Runner";
-import * as assert from "assert";
+import WasmBufferSource from "../../src/runner/WasmBufferSource.ts";
+import Runner from "../../src/runner/Runner.ts";
 
 it("runs a wasm file",  () => {
     const __filename = fileURLToPath(import.meta.url);
@@ -21,5 +17,5 @@ it("runs a wasm file",  () => {
     };
     const runner = Runner.of(source, importObject);
     runner.runFunction<void>("exported_func");
-    assert.equal(result, 42);
+    assertEquals(result, 42);
 });

@@ -1,4 +1,4 @@
-import {HeapType, PackedType, Type, TypeBuilder} from "../binaryen/binaryen_ts";
+import {HeapType, PackedType, Type, TypeBuilder} from "../binaryen/binaryen_ts.ts";
 
 export default class HeapTypeRegistry {
 
@@ -18,12 +18,12 @@ export default class HeapTypeRegistry {
             const result = builder.buildAndDispose();
             this.arrayTypesMap.set(elementType, result.heapTypes[0]);
         }
-        const heapType = this.arrayTypesMap.get(elementType);
+        const heapType = this.arrayTypesMap.get(elementType)!;
         if(!this.heapTypesMap.has(heapType)) {
             const type = TypeBuilder.typeFromTempHeapType(heapType, nullable);
             this.heapTypesMap.set(heapType, type)
         }
-        const type = this.heapTypesMap.get(heapType);
+        const type = this.heapTypesMap.get(heapType)!;
         return [type, heapType];
     }
 }

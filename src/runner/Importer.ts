@@ -1,8 +1,7 @@
-import Loader from "./Loader";
-import RunnableModule from "./RunnableModule";
-import ISourceLocator from "./ISourceLocator";
-import assert from "assert";
-import Imports from "./Imports";
+import Loader from "./Loader.ts";
+import RunnableModule from "./RunnableModule.ts";
+import ISourceLocator from "./ISourceLocator.ts";
+import Imports from "./Imports.ts";
 
 export default class Importer {
 
@@ -27,7 +26,7 @@ export default class Importer {
         if(!loadedSymbol) {
             const exports = WebAssembly.Module.exports(moduleImports.runnable.module);
             const descriptor = exports.find(d => d.name == elem.name);
-            assert.ok(descriptor);
+            assert(descriptor);
             assert.equal(elem.kind, descriptor.kind);
             moduleImports.imports[elem.name] = moduleImports.runnable.instance.exports[elem.name];
         }
@@ -36,9 +35,9 @@ export default class Importer {
     loadModule(path: string): RunnableModule {
         let runnable = this.runnables.find(r => r.path == path);
         if(!runnable) {
-            assert.ok(this.sourceLocator);
+            assert(this.sourceLocator);
             const source = this.sourceLocator(path);
-            assert.ok(source);
+            assert(source);
             const loader = new Loader(this.imports);
             runnable = loader.loadSource(source, this.runnables, this.sourceLocator);
         }

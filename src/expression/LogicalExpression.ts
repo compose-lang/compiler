@@ -1,10 +1,9 @@
-import ExpressionBase from "./ExpressionBase";
-import WasmModule from "../module/WasmModule";
-import IType from "../type/IType";
-import * as assert from "assert";
-import Context from "../context/Context";
-import IExpression from "./IExpression";
-import BooleanType from "../type/BooleanType";
+import ExpressionBase from "./ExpressionBase.ts";
+import WasmModule from "../module/WasmModule.ts";
+import IType from "../type/IType.ts";
+import Context from "../context/Context.ts";
+import IExpression from "./IExpression.ts";
+import BooleanType from "../type/BooleanType.ts";
 
 export default abstract class LogicalExpression extends ExpressionBase {
 
@@ -19,9 +18,9 @@ export default abstract class LogicalExpression extends ExpressionBase {
 
     check(context: Context): IType {
         const leftType = this.left.check(context);
-        assert.ok(leftType == BooleanType.instance);
+        assert(leftType == BooleanType.instance);
         const rightType = this.right.check(context);
-        assert.ok(rightType == BooleanType.instance);
+        assert(rightType == BooleanType.instance);
         return BooleanType.instance;
     }
 

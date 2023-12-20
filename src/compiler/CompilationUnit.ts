@@ -1,13 +1,10 @@
-import IDeclaration from "../declaration/IDeclaration";
-import IGlobalStatement from "../statement/IGlobalStatement";
-import ImportStatement from "../module/ImportStatement";
-import Context from "../context/Context";
-import WasmModule from "../module/WasmModule";
-import CompilerFlags from "./CompilerFlags";
-import IWasmTarget from "./IWasmTarget";
-import PipelineOptions from "./PipelineOptions";
-import {dirname} from "path";
-import {writeFileSync} from "fs";
+import IDeclaration from "../declaration/IDeclaration.ts";
+import IGlobalStatement from "../statement/IGlobalStatement.ts";
+import ImportStatement from "../module/ImportStatement.ts";
+import Context from "../context/Context.ts";
+import WasmModule from "../module/WasmModule.ts";
+import IWasmTarget from "./IWasmTarget.ts";
+import PipelineOptions from "./PipelineOptions.ts";
 
 export default class CompilationUnit {
 

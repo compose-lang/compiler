@@ -1,12 +1,12 @@
-import CodeFragment from "../builder/CodeFragment";
-import IParameter from "./IParameter";
-import Identifier from "../builder/Identifier";
-import FunctionType from "../type/FunctionType";
-import ILiteralExpression from "../literal/ILiteralExpression";
-import Context from "../context/Context";
-import WasmModule from "../module/WasmModule";
-import FunctionBody from "../module/FunctionBody";
-import IType from "../type/IType";
+import CodeFragment from "../builder/CodeFragment.ts";
+import IParameter from "./IParameter.ts";
+import Identifier from "../builder/Identifier.ts";
+import FunctionType from "../type/FunctionType.ts";
+import ILiteralExpression from "../literal/ILiteralExpression.ts";
+import Context from "../context/Context.ts";
+import WasmModule from "../module/WasmModule.ts";
+import FunctionBody from "../module/FunctionBody.ts";
+import IType from "../type/IType.ts";
 
 export default class FunctionParameter extends CodeFragment implements IParameter {
 

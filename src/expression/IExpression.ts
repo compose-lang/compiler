@@ -1,10 +1,10 @@
-import Context from "../context/Context";
-import WasmModule from "../module/WasmModule";
-import FunctionBody from "../module/FunctionBody";
-import IType from "../type/IType";
-import CompilerFlags from "../compiler/CompilerFlags";
-import IResult from "./IResult";
-import {ExpressionRef} from "../binaryen/binaryen_ts";
+import Context from "../context/Context.ts";
+import WasmModule from "../module/WasmModule.ts";
+import FunctionBody from "../module/FunctionBody.ts";
+import IType from "../type/IType.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
+import IResult from "./IResult.ts";
+import {ExpressionRef} from "../binaryen/binaryen_ts.ts";
 
 export default interface IExpression {
 

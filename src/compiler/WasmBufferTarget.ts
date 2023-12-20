@@ -1,5 +1,5 @@
-import WasmTargetBase from "./WasmTargetBase";
-import WasmBufferSource from "../runner/WasmBufferSource";
+import WasmTargetBase from "./WasmTargetBase.ts";
+import WasmBufferSource from "../runner/WasmBufferSource.ts";
 
 export default class WasmBufferTarget extends WasmTargetBase {
 

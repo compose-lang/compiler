@@ -1,5 +1,5 @@
-import {Token} from "antlr4";
-import Location from "./Location";
+import {Token} from "npm:antlr4";
+import Location from "./Location.ts";
 
 export default class Fragment {
 

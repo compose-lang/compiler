@@ -1,11 +1,10 @@
-import ExpressionBase from "./ExpressionBase";
-import assert from "assert";
-import WasmModule from "../module/WasmModule";
-import IType from "../type/IType";
-import Context from "../context/Context";
-import IExpression from "./IExpression";
-import BooleanType from "../type/BooleanType";
-import TypeMap from "../type/TypeMap";
+import ExpressionBase from "./ExpressionBase.ts";
+import WasmModule from "../module/WasmModule.ts";
+import IType from "../type/IType.ts";
+import Context from "../context/Context.ts";
+import IExpression from "./IExpression.ts";
+import BooleanType from "../type/BooleanType.ts";
+import TypeMap from "../type/TypeMap.ts";
 
 export default class TernaryExpression extends ExpressionBase {
 
@@ -23,7 +22,7 @@ export default class TernaryExpression extends ExpressionBase {
 
     check(context: Context): IType {
         const type = this.condition.check(context);
-        assert.ok(type == BooleanType.instance);
+        assert(type == BooleanType.instance);
         const trueType = this.ifTrue.check(context);
         const falseType = this.ifFalse.check(context);
         const typeMap = new TypeMap();

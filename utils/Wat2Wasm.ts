@@ -1,5 +1,5 @@
-import * as fs from "fs";
-import binaryen from "binaryen";
+import * as fs from "fs.ts";
+import binaryen from "binaryen.ts";
 
 const wat = fs.readFileSync("../dumps/returns_an_i32_array.wat", "utf8");
 const module = binaryen.parseText(wat);

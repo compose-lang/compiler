@@ -1,18 +1,17 @@
-import IDeclaration from "./IDeclaration";
-import Identifier from "../builder/Identifier";
-import IdentifierList from "../builder/IdentifierList";
-import FunctionList from "../builder/FunctionList";
-import DeclarationBase from "./DeclarationBase";
-import Context from "../context/Context";
-import Accessibility from "./Accessibility";
-import IType from "../type/IType";
-import ClassType from "../type/ClassType";
-import IFunctionDeclaration from "./IFunctionDeclaration";
-import WasmModule from "../module/WasmModule";
-import CompilationUnit from "../compiler/CompilationUnit";
-import FieldList from "../builder/FieldList";
-import IClassMember from "./IClassMember";
-import * as assert from "assert";
+import IDeclaration from "./IDeclaration.ts";
+import Identifier from "../builder/Identifier.ts";
+import IdentifierList from "../builder/IdentifierList.ts";
+import FunctionList from "../builder/FunctionList.ts";
+import DeclarationBase from "./DeclarationBase.ts";
+import Context from "../context/Context.ts";
+import Accessibility from "./Accessibility.ts";
+import IType from "../type/IType.ts";
+import ClassType from "../type/ClassType.ts";
+import IFunctionDeclaration from "./IFunctionDeclaration.ts";
+import WasmModule from "../module/WasmModule.ts";
+import CompilationUnit from "../compiler/CompilationUnit.ts";
+import FieldList from "../builder/FieldList.ts";
+import IClassMember from "./IClassMember.ts";
 
 export default class ClassDeclaration extends DeclarationBase implements IDeclaration {
 
@@ -88,7 +87,7 @@ export default class ClassDeclaration extends DeclarationBase implements IDeclar
     private findInheritedMember(context: Context, memberId: Identifier) {
         for(let i=0; i<this.parents.length; i++) {
             const parent = context.getRegisteredClass(this.parents[i]);
-            assert.ok(parent);
+            assert(parent);
             const member = parent.findMember(context, memberId);
             if(member)
                 return member;

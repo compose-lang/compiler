@@ -1,10 +1,10 @@
-import NumberType from "./NumberType";
-import IntegerLiteral from "../literal/IntegerLiteral";
-import IExpression from "../expression/IExpression";
-import IType from "./IType";
-import Context from "../context/Context";
-import BinaryOperator from "../expression/BinaryOperator";
-import UnaryOperator from "../expression/UnaryOperator";
+import NumberType from "./NumberType.ts";
+import IntegerLiteral from "../literal/IntegerLiteral.ts";
+import IExpression from "../expression/IExpression.ts";
+import IType from "./IType.ts";
+import Context from "../context/Context.ts";
+import BinaryOperator from "../expression/BinaryOperator.ts";
+import UnaryOperator from "../expression/UnaryOperator.ts";
 
 export default abstract class IntegerType extends NumberType {
 

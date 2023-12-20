@@ -1,5 +1,5 @@
-import * as binaryen from "../../src/binaryen/binaryen_ts";
-import {dumpObject} from "./dump_utils";
+import * as binaryen from "../../src/binaryen/binaryen_ts.ts";
+import {dumpObject} from "./dump_utils.ts";
 
 it("dumps new binaryen symbols",  () => {
     dumpObject("", binaryen);

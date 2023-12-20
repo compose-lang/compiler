@@ -1,15 +1,14 @@
-import FunctionDeclarationBase from "./FunctionDeclarationBase";
-import Prototype from "./Prototype";
-import Context from "../context/Context";
-import Accessibility from "./Accessibility";
-import IType from "../type/IType";
-import WasmModule from "../module/WasmModule";
-import Identifier from "../builder/Identifier";
-import Variable from "../context/Variable";
-import InstanceModifier from "../statement/InstanceModifier";
-import ImportsType from "../type/ImportsType";
-import * as assert from "assert";
-import CompilerFlags from "../compiler/CompilerFlags";
+import FunctionDeclarationBase from "./FunctionDeclarationBase.ts";
+import Prototype from "./Prototype.ts";
+import Context from "../context/Context.ts";
+import Accessibility from "./Accessibility.ts";
+import IType from "../type/IType.ts";
+import WasmModule from "../module/WasmModule.ts";
+import Identifier from "../builder/Identifier.ts";
+import Variable from "../context/Variable.ts";
+import InstanceModifier from "../statement/InstanceModifier.ts";
+import ImportsType from "../type/ImportsType.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
 
 export default class AbstractFunctionDeclaration extends FunctionDeclarationBase {
 
@@ -30,7 +29,7 @@ export default class AbstractFunctionDeclaration extends FunctionDeclarationBase
                 context.registerGlobal(global);
             }
             const type = global.type as ImportsType;
-            assert.ok(!type.has(this.name));
+            assert(!type.has(this.name));
             type.set(this.name, this);
         }
     }

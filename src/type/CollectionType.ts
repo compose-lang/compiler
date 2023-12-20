@@ -1,5 +1,5 @@
-import NativeType from "./NativeType";
-import IType from "./IType";
+import NativeType from "./NativeType.ts";
+import IType from "./IType.ts";
 
 export default abstract class CollectionType extends NativeType {
 

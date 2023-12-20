@@ -1,13 +1,13 @@
-import IParameter from "./IParameter";
-import CodeFragment from "../builder/CodeFragment";
-import AttributeType from "../type/AttributeType";
-import ILiteralExpression from "../literal/ILiteralExpression";
-import Context from "../context/Context";
-import WasmModule from "../module/WasmModule";
-import FunctionBody from "../module/FunctionBody";
-import IType from "../type/IType";
-import IValueType from "../type/IValueType";
-import TypedParameter from "./TypedParameter";
+import IParameter from "./IParameter.ts";
+import CodeFragment from "../builder/CodeFragment.ts";
+import AttributeType from "../type/AttributeType.ts";
+import ILiteralExpression from "../literal/ILiteralExpression.ts";
+import Context from "../context/Context.ts";
+import WasmModule from "../module/WasmModule.ts";
+import FunctionBody from "../module/FunctionBody.ts";
+import IType from "../type/IType.ts";
+import IValueType from "../type/IValueType.ts";
+import TypedParameter from "./TypedParameter.ts";
 
 export default class AttributeParameter extends CodeFragment implements IParameter {
 
@@ -46,7 +46,7 @@ export default class AttributeParameter extends CodeFragment implements IParamet
     register(context: Context): void {
         // TODO
         /*const decl = context.getRegisteredAttribute(this.type.id);
-        assert.ok(decl);
+        assert(decl);
         context.registerLocal(new Variable(InstanceModifier.LET, this.type.id, decl.type));*/
     }
 

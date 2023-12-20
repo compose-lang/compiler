@@ -1,17 +1,15 @@
-import ExpressionBase from "./ExpressionBase";
-import Identifier from "../builder/Identifier";
-import WasmModule from "../module/WasmModule";
-import Context from "../context/Context";
-import IType from "../type/IType";
-import * as assert from "assert";
-import FunctionBody from "../module/FunctionBody";
-import OpCode from "../compiler/OpCode";
-import IExpression from "./IExpression";
-import ClassDeclaration from "../declaration/ClassDeclaration";
-import TypeType from "../type/TypeType";
-import CompilerFlags from "../compiler/CompilerFlags";
-import IResult from "./IResult";
-import {ExpressionRef} from "../binaryen/binaryen_ts";
+import ExpressionBase from "./ExpressionBase.ts";
+import Identifier from "../builder/Identifier.ts";
+import WasmModule from "../module/WasmModule.ts";
+import Context from "../context/Context.ts";
+import IType from "../type/IType.ts";
+import FunctionBody from "../module/FunctionBody.ts";
+import IExpression from "./IExpression.ts";
+import ClassDeclaration from "../declaration/ClassDeclaration.ts";
+import TypeType from "../type/TypeType.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
+import IResult from "./IResult.ts";
+import {ExpressionRef} from "../binaryen/binaryen_ts.ts";
 
 
 export default class UnresolvedIdentifierExpression extends ExpressionBase {
@@ -71,7 +69,7 @@ export default class UnresolvedIdentifierExpression extends ExpressionBase {
     private resolve(context: Context) {
         if(!this.resolved) {
             this.resolved = this.resolveLocalVariable(context);
-            assert.ok(this.resolved, "Could not resolveType '" + this.name + "' at " + this.fragment.toString());
+            assert(this.resolved, "Could not resolveType '" + this.name + "' at " + this.fragment.toString());
         }
     }
 
@@ -145,7 +143,7 @@ class LocalVariableExpression extends ExpressionBase {
 
     check(context: Context): IType {
         const local = context.getRegisteredLocal(this.id);
-        assert.ok(local !== null, "Could not resolveType local '" + this.name + "' at " + this.fragment.toString());
+        assert(local !== null, "Could not resolveType local '" + this.name + "' at " + this.fragment.toString());
         return local.type;
     }
 
@@ -194,7 +192,7 @@ class GlobalVariableExpression extends ExpressionBase {
         if(global)
             return global.type;
         const value = context.getRegisteredGlobalValue(this.id);
-        assert.ok(value !== null);
+        assert(value !== null);
         return value.check(context);
     }
 
@@ -204,7 +202,7 @@ class GlobalVariableExpression extends ExpressionBase {
 
     constify(context: Context): IExpression {
         const value = context.getRegisteredGlobalValue(this.id);
-        assert.ok(value);
+        assert(value);
         return value.constify(context);
     }
 
@@ -245,7 +243,7 @@ class ClassExpression extends ExpressionBase {
     }
 
     declare(context: Context, module: WasmModule): void {
-        assert.ok(false);
+        assert(false);
     }
 
 }

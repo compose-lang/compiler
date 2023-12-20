@@ -1,4 +1,4 @@
-import IWasmSource from "../runner/IWasmSource";
+import IWasmSource from "../runner/IWasmSource.ts";
 
 export default interface IWasmTarget {
     open(): void;

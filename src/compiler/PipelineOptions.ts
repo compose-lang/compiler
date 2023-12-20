@@ -1,9 +1,9 @@
-import CompilationUnit from "./CompilationUnit";
-import IWasmTarget from "./IWasmTarget";
-import FileSourceResolver from "./FileSourceResolver";
-import WasmBufferTarget from "./WasmBufferTarget";
-import CompilerFlags from "./CompilerFlags";
-import CiCdUtils from "../utils/CiCdUtils";
+import CompilationUnit from "./CompilationUnit.ts";
+import IWasmTarget from "./IWasmTarget.ts";
+import FileSourceResolver from "./FileSourceResolver.ts";
+import WasmBufferTarget from "./WasmBufferTarget.ts";
+import CompilerFlags from "./CompilerFlags.ts";
+import CiCdUtils from "../utils/CiCdUtils.ts";
 
 export default class PipelineOptions {
 

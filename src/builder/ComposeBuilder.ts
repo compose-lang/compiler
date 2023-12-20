@@ -1,4 +1,4 @@
-import CompilationUnit from "../compiler/CompilationUnit";
+import CompilationUnit from "../compiler/CompilationUnit.ts";
 import {
     CharStream,
     CommonTokenStream,
@@ -7,8 +7,8 @@ import {
     ParseTreeWalker,
     TerminalNode,
     Token
-} from "antlr4";
-import {fileExists} from "../utils/FileUtils";
+} from "npm:antlr4";
+import {fileExists} from "../utils/FileUtils.ts";
 import ComposeParser, {
     Abstract_function_declarationContext,
     AddExpressionContext,
@@ -102,102 +102,101 @@ import ComposeParser, {
     UnaryNotExpressionContext,
     Value_type_or_nullContext,
     Value_typeContext
-} from "../parser/ComposeParser";
-import ComposeLexer from "../parser/ComposeLexer";
-import ComposeParserListener from "../parser/ComposeParserListener";
-import Identifier from "./Identifier";
-import Fragment from "./Fragment";
-import CodeFragment from "./CodeFragment";
-import StringType from "../type/StringType";
-import IValueType from "../type/IValueType";
-import AttributeDeclaration from "../declaration/AttributeDeclaration";
-import IDeclaration from "../declaration/IDeclaration";
-import ClassDeclaration from "../declaration/ClassDeclaration";
-import FunctionDeclarationBase from "../declaration/FunctionDeclarationBase";
-import AttributeType from "../type/AttributeType";
-import ClassType from "../type/ClassType";
-import IParameter from "../parameter/IParameter";
-import IType from "../type/IType";
-import Prototype from "../declaration/Prototype";
-import AbstractFunctionDeclaration from "../declaration/AbstractFunctionDeclaration";
-import BooleanType from "../type/BooleanType";
-import AttributeParameter from "../parameter/AttributeParameter";
-import TypedParameter from "../parameter/TypedParameter";
-import FunctionType from "../type/FunctionType";
-import TypeList from "../type/TypeList";
-import VoidType from "../type/VoidType";
-import FunctionParameter from "../parameter/FunctionParameter";
-import IExpression from "../expression/IExpression";
-import NullLiteral from "../literal/NullLiteral";
-import BooleanLiteral from "../literal/BooleanLiteral";
-import IntegerLiteral from "../literal/IntegerLiteral";
-import DecimalLiteral from "../literal/DecimalLiteral";
-import CharLiteral from "../literal/CharLiteral";
-import StringLiteral from "../literal/StringLiteral";
-import ArrayLiteral from "../literal/ArrayLiteral";
-import SetLiteral from "../literal/SetLiteral";
-import KeyValuePair from "../utils/KeyValuePair";
-import MapLiteral from "../literal/MapLiteral";
-import UnresolvedIdentifierExpression from "../expression/UnresolvedIdentifierExpression";
-import IStatement from "../statement/IStatement";
-import ReturnStatement from "../statement/ReturnStatement";
-import ConcreteFunctionDeclaration from "../declaration/ConcreteFunctionDeclaration";
-import Int32Type from "../type/Int32Type";
-import Float32Type from "../type/Float32Type";
-import Float64Type from "../type/Float64Type";
-import Int64Type from "../type/Int64Type";
-import UInt64Type from "../type/UInt64Type";
-import UInt32Type from "../type/UInt32Type";
-import InstanceModifier from "../statement/InstanceModifier";
-import Annotation from "./Annotation";
-import FunctionCall from "../expression/FunctionCall";
-import StatementBase from "../statement/StatementBase";
-import DeclarationBase from "../declaration/DeclarationBase";
-import DeclareInstanceStatement from "../statement/DeclareInstanceStatement";
-import AssignOperator from "../statement/AssignOperator";
-import AssignInstanceStatement from "../statement/AssignInstanceStatement";
-import * as assert from "assert";
-import TupleType from "../type/TupleType";
-import FunctionCallStatement from "../statement/FunctionCallStatement";
-import GenericParameter from "../declaration/GenericParameter";
-import BinaryOperator from "../expression/BinaryOperator";
-import BinaryExpression from "../expression/BinaryExpression";
-import Accessibility from "../declaration/Accessibility";
-import OpCode from "../compiler/OpCode";
-import Instruction from "../assembly/Instruction";
-import NativeFunctionDeclaration from "../declaration/NativeFunctionDeclaration";
-import StatementList from "../statement/StatementList";
-import ImportStatement from "../module/ImportStatement";
-import ImportSource from "../module/ImportSource";
-import ExportType from "../compiler/ExportType";
-import EnumDeclaration from "../declaration/EnumDeclaration";
-import ILiteralExpression from "../literal/ILiteralExpression";
-import PreprocessedFileStream from "./PreprocessedFileStream";
-import PreprocessedCharStream from "./PreprocessedCharStream";
-import FieldDeclaration from "../declaration/FieldDeclaration";
-import MemberExpression from "../expression/MemberExpression";
-import TernaryExpression from "../expression/TernaryExpression";
-import ParenthesisExpression from "../expression/ParenthesisExpression";
-import CastExpression from "../expression/CastExpression";
-import BitNotExpression from "../expression/BitNotExpression";
-import AnyType from "../type/AnyType";
-import IfStatement, {IfBlock} from "../statement/IfStatement";
-import CompareExpression from "../expression/CompareExpression";
-import Comparator from "../expression/Comparator";
-import EqualsExpression from "../expression/EqualsExpression";
-import AndExpression from "../expression/AndExpression";
-import OrExpression from "../expression/OrExpression";
-import LogicalNotExpression from "../expression/LogicalNotExpression";
-import ThrowStatement from "../statement/ThrowStatement";
-import ForStatement from "../statement/ForStatement";
-import ConstructorExpression from "../expression/ConstructorExpression";
-import UnaryExpression from "../expression/UnaryExpression";
-import UnaryOperator from "../expression/UnaryOperator";
-import UnaryStatement from "../statement/UnaryStatement";
-import RestParameter from "../parameter/RestParameter";
-import ArrayType from "../type/ArrayType";
-import SetType from "../type/SetType";
-import ParameterList from "../parameter/ParameterList";
+} from "../parser/ComposeParser.ts";
+import ComposeLexer from "../parser/ComposeLexer.ts";
+import ComposeParserListener from "../parser/ComposeParserListener.ts";
+import Identifier from "./Identifier.ts";
+import Fragment from "./Fragment.ts";
+import CodeFragment from "./CodeFragment.ts";
+import StringType from "../type/StringType.ts";
+import IValueType from "../type/IValueType.ts";
+import AttributeDeclaration from "../declaration/AttributeDeclaration.ts";
+import IDeclaration from "../declaration/IDeclaration.ts";
+import ClassDeclaration from "../declaration/ClassDeclaration.ts";
+import FunctionDeclarationBase from "../declaration/FunctionDeclarationBase.ts";
+import AttributeType from "../type/AttributeType.ts";
+import ClassType from "../type/ClassType.ts";
+import IParameter from "../parameter/IParameter.ts";
+import IType from "../type/IType.ts";
+import Prototype from "../declaration/Prototype.ts";
+import AbstractFunctionDeclaration from "../declaration/AbstractFunctionDeclaration.ts";
+import BooleanType from "../type/BooleanType.ts";
+import AttributeParameter from "../parameter/AttributeParameter.ts";
+import TypedParameter from "../parameter/TypedParameter.ts";
+import FunctionType from "../type/FunctionType.ts";
+import TypeList from "../type/TypeList.ts";
+import VoidType from "../type/VoidType.ts";
+import FunctionParameter from "../parameter/FunctionParameter.ts";
+import IExpression from "../expression/IExpression.ts";
+import NullLiteral from "../literal/NullLiteral.ts";
+import BooleanLiteral from "../literal/BooleanLiteral.ts";
+import IntegerLiteral from "../literal/IntegerLiteral.ts";
+import DecimalLiteral from "../literal/DecimalLiteral.ts";
+import CharLiteral from "../literal/CharLiteral.ts";
+import StringLiteral from "../literal/StringLiteral.ts";
+import ArrayLiteral from "../literal/ArrayLiteral.ts";
+import SetLiteral from "../literal/SetLiteral.ts";
+import KeyValuePair from "../utils/KeyValuePair.ts";
+import MapLiteral from "../literal/MapLiteral.ts";
+import UnresolvedIdentifierExpression from "../expression/UnresolvedIdentifierExpression.ts";
+import IStatement from "../statement/IStatement.ts";
+import ReturnStatement from "../statement/ReturnStatement.ts";
+import ConcreteFunctionDeclaration from "../declaration/ConcreteFunctionDeclaration.ts";
+import Int32Type from "../type/Int32Type.ts";
+import Float32Type from "../type/Float32Type.ts";
+import Float64Type from "../type/Float64Type.ts";
+import Int64Type from "../type/Int64Type.ts";
+import UInt64Type from "../type/UInt64Type.ts";
+import UInt32Type from "../type/UInt32Type.ts";
+import InstanceModifier from "../statement/InstanceModifier.ts";
+import Annotation from "./Annotation.ts";
+import FunctionCall from "../expression/FunctionCall.ts";
+import StatementBase from "../statement/StatementBase.ts";
+import DeclarationBase from "../declaration/DeclarationBase.ts";
+import DeclareInstanceStatement from "../statement/DeclareInstanceStatement.ts";
+import AssignOperator from "../statement/AssignOperator.ts";
+import AssignInstanceStatement from "../statement/AssignInstanceStatement.ts";
+import TupleType from "../type/TupleType.ts";
+import FunctionCallStatement from "../statement/FunctionCallStatement.ts";
+import GenericParameter from "../declaration/GenericParameter.ts";
+import BinaryOperator from "../expression/BinaryOperator.ts";
+import BinaryExpression from "../expression/BinaryExpression.ts";
+import Accessibility from "../declaration/Accessibility.ts";
+import OpCode from "../compiler/OpCode.ts";
+import Instruction from "../assembly/Instruction.ts";
+import NativeFunctionDeclaration from "../declaration/NativeFunctionDeclaration.ts";
+import StatementList from "../statement/StatementList.ts";
+import ImportStatement from "../module/ImportStatement.ts";
+import ImportSource from "../module/ImportSource.ts";
+import ExportType from "../compiler/ExportType.ts";
+import EnumDeclaration from "../declaration/EnumDeclaration.ts";
+import ILiteralExpression from "../literal/ILiteralExpression.ts";
+import PreprocessedFileStream from "./PreprocessedFileStream.ts";
+import PreprocessedCharStream from "./PreprocessedCharStream.ts";
+import FieldDeclaration from "../declaration/FieldDeclaration.ts";
+import MemberExpression from "../expression/MemberExpression.ts";
+import TernaryExpression from "../expression/TernaryExpression.ts";
+import ParenthesisExpression from "../expression/ParenthesisExpression.ts";
+import CastExpression from "../expression/CastExpression.ts";
+import BitNotExpression from "../expression/BitNotExpression.ts";
+import AnyType from "../type/AnyType.ts";
+import IfStatement, {IfBlock} from "../statement/IfStatement.ts";
+import CompareExpression from "../expression/CompareExpression.ts";
+import Comparator from "../expression/Comparator.ts";
+import EqualsExpression from "../expression/EqualsExpression.ts";
+import AndExpression from "../expression/AndExpression.ts";
+import OrExpression from "../expression/OrExpression.ts";
+import LogicalNotExpression from "../expression/LogicalNotExpression.ts";
+import ThrowStatement from "../statement/ThrowStatement.ts";
+import ForStatement from "../statement/ForStatement.ts";
+import ConstructorExpression from "../expression/ConstructorExpression.ts";
+import UnaryExpression from "../expression/UnaryExpression.ts";
+import UnaryOperator from "../expression/UnaryOperator.ts";
+import UnaryStatement from "../statement/UnaryStatement.ts";
+import RestParameter from "../parameter/RestParameter.ts";
+import ArrayType from "../type/ArrayType.ts";
+import SetType from "../type/SetType.ts";
+import ParameterList from "../parameter/ParameterList.ts";
 
 type A = { const: string }
 const a = { const: 12};
@@ -245,7 +244,7 @@ export default class ComposeBuilder extends ComposeParserListener {
                 case ComposeParser.PRIVATE:
                     return Accessibility.PRIVATE;
                 default:
-                    assert.ok(false);
+                    assert(false);
             }
         }
         return null;
@@ -585,7 +584,7 @@ export default class ComposeBuilder extends ComposeParserListener {
         const declarations = all.filter(a => a instanceof DeclarationBase); // can't use reflection on interfaces
         const mainExports = declarations.filter(decl => decl.exportType == ExportType.MAIN)
             .concat(globals.filter(stmt => stmt.exportType == ExportType.MAIN));
-        assert.ok(mainExports.length <= 1);
+        assert(mainExports.length <= 1);
         const mainExport = mainExports.length > 0 ? mainExports[0] : null;
         const childExports = declarations.filter(decl => decl.exportType == ExportType.CHILD).concat(globals.filter(stmt => stmt.exportType == ExportType.CHILD));
         this.setNodeValue(ctx, new CompilationUnit(imports, globals, declarations, mainExport, childExports));
@@ -704,7 +703,7 @@ export default class ComposeBuilder extends ComposeParserListener {
     exitIf_statement = (ctx: If_statementContext) => {
         const conditions = ctx.expression_list().map(c => this.getNodeValue<IExpression>(c), this);
         const lists = ctx.statements_list().map(c => this.getNodeValue<StatementList>(c), this);
-        assert.ok(lists.length == conditions.length || lists.length == conditions.length + 1);
+        assert(lists.length == conditions.length || lists.length == conditions.length + 1);
         const blocks: IfBlock[] = [];
         for(let i=0; i<conditions.length; i++) {
             const block: IfBlock = { condition: conditions[i], statements: lists[i] };

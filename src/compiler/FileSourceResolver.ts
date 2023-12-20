@@ -1,5 +1,4 @@
-import {dirname} from "path";
-import {fileExists} from "../utils/FileUtils";
+import {fileExists} from "../utils/FileUtils.ts";
 
 const FileSourceResolver = (unitPath: string, importSource: string) => {
     let dirPath = dirname(unitPath);

@@ -1,10 +1,10 @@
-import CollectionType from "./CollectionType";
-import IType from "./IType";
-import IExpression from "../expression/IExpression";
-import * as assert from "assert";
-import Context from "../context/Context";
-import HeapTypeRegistry from "../registry/HeapTypeRegistry";
-import {Type} from "../binaryen/binaryen_ts";
+import CollectionType from "./CollectionType.ts";
+import IType from "./IType.ts";
+import IExpression from "../expression/IExpression.ts";
+import Context from "../context/Context.ts";
+import HeapTypeRegistry from "../registry/HeapTypeRegistry.ts";
+import {Type} from "../binaryen/binaryen_ts.ts";
+import {assert} from "../../deps.ts";
 
 
 export default class ArrayType extends CollectionType {
@@ -14,7 +14,7 @@ export default class ArrayType extends CollectionType {
     }
 
     defaultValue(): IExpression {
-        assert.ok(false); // TODO
+        assert(false); // TODO
     }
 
     asType(): Type {

@@ -1,19 +1,18 @@
-import FunctionDeclarationBase from "./FunctionDeclarationBase";
-import Prototype from "./Prototype";
-import Context from "../context/Context";
-import WasmModule from "../module/WasmModule";
-import IType from "../type/IType";
-import IFunctionDeclaration from "./IFunctionDeclaration";
-import * as assert from "assert";
-import Identifier from "../builder/Identifier";
-import Accessibility from "./Accessibility";
-import StatementList from "../statement/StatementList";
-import CompilationUnit from "../compiler/CompilationUnit";
-import AnyType from "../type/AnyType";
-import ParameterList from "../parameter/ParameterList";
-import CompilerFlags from "../compiler/CompilerFlags";
-import FunctionBody from "../module/FunctionBody";
-import { Function } from "../binaryen/binaryen_ts";
+import FunctionDeclarationBase from "./FunctionDeclarationBase.ts";
+import Prototype from "./Prototype.ts";
+import Context from "../context/Context.ts";
+import WasmModule from "../module/WasmModule.ts";
+import IType from "../type/IType.ts";
+import IFunctionDeclaration from "./IFunctionDeclaration.ts";
+import Identifier from "../builder/Identifier.ts";
+import Accessibility from "./Accessibility.ts";
+import StatementList from "../statement/StatementList.ts";
+import CompilationUnit from "../compiler/CompilationUnit.ts";
+import AnyType from "../type/AnyType.ts";
+import ParameterList from "../parameter/ParameterList.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
+import FunctionBody from "../module/FunctionBody.ts";
+import { Function } from "../binaryen/binaryen_ts.ts";
 
 export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase {
 
@@ -79,7 +78,7 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
     }
 
     instantiateGeneric(typeArguments: IType[]): IFunctionDeclaration {
-        assert.ok(this.isGeneric());
+        assert(this.isGeneric());
         return GenericFunctionInstance.instantiate(this, typeArguments);
     }
 }

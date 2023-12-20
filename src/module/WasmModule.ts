@@ -1,11 +1,10 @@
-import {Feature, Module} from "../binaryen/binaryen_ts";
-import IFunctionDeclaration from "../declaration/IFunctionDeclaration";
-import IExpression from "../expression/IExpression";
-import Variable from "../context/Variable";
-import CompilationUnit from "../compiler/CompilationUnit";
-import * as assert from "assert";
-import Global from "./Global";
-import Prototype from "../declaration/Prototype";
+import {Feature, Module} from "../binaryen/binaryen_ts.ts";
+import IFunctionDeclaration from "../declaration/IFunctionDeclaration.ts";
+import IExpression from "../expression/IExpression.ts";
+import Variable from "../context/Variable.ts";
+import CompilationUnit from "../compiler/CompilationUnit.ts";
+import Global from "./Global.ts";
+import Prototype from "../declaration/Prototype.ts";
 
 export default class WasmModule extends Module {
 
@@ -30,7 +29,7 @@ export default class WasmModule extends Module {
     }
 
     declareGlobal(unit: CompilationUnit, variable: Variable, value: IExpression, mutable: boolean, exported: boolean): number {
-        assert.ok(!this.globalsByName.has(variable.name));
+        assert(!this.globalsByName.has(variable.name));
         const global = new Global(unit, this.globalsList.length, mutable, exported, variable, value);
         this.globalsList.push(global);
         this.globalsByName.set(variable.name, global);
@@ -44,7 +43,7 @@ export default class WasmModule extends Module {
 
     setGlobalValue(variable: Variable, value: IExpression) {
         const global = this.globalsByName.get(variable.name);
-        assert.ok(global);
+        assert(global);
         global.value = value;
     }
 
@@ -60,7 +59,7 @@ export default class WasmModule extends Module {
     declareFunction(decl: IFunctionDeclaration) {
         const prototypes = this.getPrototypesMap(decl);
         const prototype = decl.prototype();
-        assert.ok(!prototypes.has(prototype));
+        assert(!prototypes.has(prototype));
         prototypes.set(prototype, this.functionsList.length);
         this.functionsList.push(decl);
     }

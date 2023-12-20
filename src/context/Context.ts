@@ -1,16 +1,15 @@
-import AttributeDeclaration from "../declaration/AttributeDeclaration";
-import ClassDeclaration from "../declaration/ClassDeclaration";
-import IFunctionDeclaration from "../declaration/IFunctionDeclaration";
-import * as assert from "assert";
-import Variable from "./Variable";
-import Identifier from "../builder/Identifier";
-import IType from "../type/IType";
-import ClassType from "../type/ClassType";
-import EnumDeclaration from "../declaration/EnumDeclaration";
-import ImportsType from "../type/ImportsType";
-import IExpression from "../expression/IExpression";
-import AssertFunction from "../builtins/AssertFunction";
-import CompilationUnit from "../compiler/CompilationUnit";
+import AttributeDeclaration from "../declaration/AttributeDeclaration.ts";
+import ClassDeclaration from "../declaration/ClassDeclaration.ts";
+import IFunctionDeclaration from "../declaration/IFunctionDeclaration.ts";
+import Variable from "./Variable.ts";
+import Identifier from "../builder/Identifier.ts";
+import IType from "../type/IType.ts";
+import ClassType from "../type/ClassType.ts";
+import EnumDeclaration from "../declaration/EnumDeclaration.ts";
+import ImportsType from "../type/ImportsType.ts";
+import IExpression from "../expression/IExpression.ts";
+import AssertFunction from "../builtins/AssertFunction.ts";
+import CompilationUnit from "../compiler/CompilationUnit.ts";
 
 export default class Context {
 
@@ -79,12 +78,12 @@ export default class Context {
     }
 
     registerClass(klass: ClassDeclaration) {
-        assert.ok(!this.classes.has(klass.name) && !this.enums.has(klass.name));
+        assert(!this.classes.has(klass.name) && !this.enums.has(klass.name));
         this.classes.set(klass.name, klass);
     }
 
     registerEnum(decl: EnumDeclaration) {
-        assert.ok(!this.classes.has(decl.name) && !this.enums.has(decl.name));
+        assert(!this.classes.has(decl.name) && !this.enums.has(decl.name));
         this.enums.set(decl.name, decl);
     }
 
@@ -93,12 +92,12 @@ export default class Context {
             this.functions.set(decl.name, new Map<string, IFunctionDeclaration>());
         const protos = this.functions.get(decl.name);
         const proto = decl.functionType().toString();
-        assert.ok(!protos.has(proto));
+        assert(!protos.has(proto));
         protos.set(proto, decl);
     }
 
     registerLocal(local: Variable) {
-        assert.ok(!this.locals.has(local.name));
+        assert(!this.locals.has(local.name));
         this.locals.set(local.name, local);
     }
 

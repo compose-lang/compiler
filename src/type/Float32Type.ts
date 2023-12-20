@@ -1,6 +1,6 @@
-import DecimalType from "./DecimalType";
-import NumberPrecedence from "./NumberPrecedence";
-import {f32, Type} from "../binaryen/binaryen_ts";
+import DecimalType from "./DecimalType.ts";
+import NumberPrecedence from "./NumberPrecedence.ts";
+import {f32, Type} from "../binaryen/binaryen_ts.ts";
 
 export default class Float32Type extends DecimalType {
 

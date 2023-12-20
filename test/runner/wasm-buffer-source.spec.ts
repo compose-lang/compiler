@@ -1,8 +1,4 @@
-import * as assert from "assert";
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-import fs from "fs";
-import WasmBufferSource from "../../src/runner/WasmBufferSource";
+import WasmBufferSource from "../../src/runner/WasmBufferSource.ts";
 
 it("loads a binary file", () => {
     const __filename = fileURLToPath(import.meta.url);
@@ -10,7 +6,7 @@ it("loads a binary file", () => {
     const path = __dirname + "/samples/assembly/simple/simple.wasm";
     const bytes = fs.readFileSync(path);
     const wasm = new WasmBufferSource(bytes);
-    assert.equal(wasm.length, 78);
+    assertEquals(wasm.length, 78);
 })
 
 

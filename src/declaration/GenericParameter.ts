@@ -1,7 +1,7 @@
-import CodeFragment from "../builder/CodeFragment";
-import Identifier from "../builder/Identifier";
-import IType from "../type/IType";
-import {equalObjects} from "../utils/ObjectUtils";
+import CodeFragment from "../builder/CodeFragment.ts";
+import Identifier from "../builder/Identifier.ts";
+import IType from "../type/IType.ts";
+import {equalObjects} from "../utils/ObjectUtils.ts";
 
 export default class GenericParameter extends CodeFragment {
 

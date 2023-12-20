@@ -1,10 +1,9 @@
-import ExpressionBase from "./ExpressionBase";
-import WasmModule from "../module/WasmModule";
-import IType from "../type/IType";
-import Context from "../context/Context";
-import * as assert from "assert";
-import Identifier from "../builder/Identifier";
-import IExpression from "./IExpression";
+import ExpressionBase from "./ExpressionBase.ts";
+import WasmModule from "../module/WasmModule.ts";
+import IType from "../type/IType.ts";
+import Context from "../context/Context.ts";
+import Identifier from "../builder/Identifier.ts";
+import IExpression from "./IExpression.ts";
 
 export default class MemberExpression extends ExpressionBase {
 

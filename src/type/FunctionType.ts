@@ -1,12 +1,12 @@
-import ParameterList from "../parameter/ParameterList";
-import IType from "./IType";
-import Context from "../context/Context";
-import UserType from "./UserType";
-import {equalArrays, equalObjects} from "../utils/ObjectUtils";
-import assert from "assert";
-import NullLiteral from "../literal/NullLiteral";
-import IExpression from "../expression/IExpression";
-import {createType, Type} from "../binaryen/binaryen_ts";
+import ParameterList from "../parameter/ParameterList.ts";
+import IType from "./IType.ts";
+import Context from "../context/Context.ts";
+import UserType from "./UserType.ts";
+import {equalArrays, equalObjects} from "../utils/ObjectUtils.ts";
+import NullLiteral from "../literal/NullLiteral.ts";
+import IExpression from "../expression/IExpression.ts";
+import {createType, Type} from "../binaryen/binaryen_ts.ts";
+import {assert} from "../../deps.ts";
 
 export default class FunctionType extends UserType {
 
@@ -52,7 +52,7 @@ export default class FunctionType extends UserType {
     }
 
     prepareContext(context: Context): Context {
-        assert.ok(false); // TODO
+        assert(false); // TODO
     }
 
     count(): number {

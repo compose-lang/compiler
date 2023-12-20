@@ -1,9 +1,9 @@
-import LiteralBase from "./LiteralBase";
-import IExpression from "../expression/IExpression";
-import Identifier from "../builder/Identifier";
-import KeyValuePair from "../utils/KeyValuePair";
-import Context from "../context/Context";
-import IType from "../type/IType";
+import LiteralBase from "./LiteralBase.ts";
+import IExpression from "../expression/IExpression.ts";
+import Identifier from "../builder/Identifier.ts";
+import KeyValuePair from "../utils/KeyValuePair.ts";
+import Context from "../context/Context.ts";
+import IType from "../type/IType.ts";
 
 export default class MapLiteral extends LiteralBase<Map<any, any>> {
 

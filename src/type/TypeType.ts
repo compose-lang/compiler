@@ -1,8 +1,8 @@
-import IType from "./IType";
-import * as assert from "assert";
-import Context from "../context/Context";
-import UserType from "./UserType";
-import {Type} from "../binaryen/binaryen_ts";
+import IType from "./IType.ts";
+import Context from "../context/Context.ts";
+import UserType from "./UserType.ts";
+import {Type} from "../binaryen/binaryen_ts.ts";
+import {assert} from "../../deps.ts";
 
 export default class TypeType extends UserType {
 
@@ -26,11 +26,11 @@ export default class TypeType extends UserType {
     }
 
     count(): number {
-        assert.ok(false); // TODO will we ever need this ?
+        assert(false); // TODO will we ever need this ?
     }
 
     asType(): Type {
-        assert.ok(false); // TODO will we ever need this ?
+        assert(false); // TODO will we ever need this ?
     }
 
 }

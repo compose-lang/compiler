@@ -1,4 +1,4 @@
-import BinaryenWrapper from "./BinaryenWrapper.js"
+import BinaryenWrapper from "./BinaryenWrapper.js.ts"
 
 const wrapper = await BinaryenWrapper();
 

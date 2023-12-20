@@ -1,17 +1,17 @@
-import StatementBase from "./StatementBase";
-import StatementList from "./StatementList";
-import IExpression from "../expression/IExpression";
-import WasmModule from "../module/WasmModule";
-import FunctionBody from "../module/FunctionBody";
-import IType from "../type/IType";
-import * as assert from "assert";
-import Context from "../context/Context";
-import TypeMap from "../type/TypeMap";
-import BooleanType from "../type/BooleanType";
-import VoidType from "../type/VoidType";
-import OpCode from "../compiler/OpCode";
-import CompilerFlags from "../compiler/CompilerFlags";
-import IResults from "./IResults";
+import StatementBase from "./StatementBase.ts";
+import StatementList from "./StatementList.ts";
+import IExpression from "../expression/IExpression.ts";
+import WasmModule from "../module/WasmModule.ts";
+import FunctionBody from "../module/FunctionBody.ts";
+import IType from "../type/IType.ts";
+import Context from "../context/Context.ts";
+import TypeMap from "../type/TypeMap.ts";
+import BooleanType from "../type/BooleanType.ts";
+import VoidType from "../type/VoidType.ts";
+import OpCode from "../compiler/OpCode.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
+import IResults from "./IResults.ts";
+import {assert} from "../../deps.ts";
 
 export interface IfBlock {
     condition: IExpression;
@@ -37,7 +37,7 @@ export default class IfStatement extends StatementBase {
                 typeCount ++;
             }
         }, this);
-        assert.ok(typeCount==0 || typeCount==this.blocks.length)
+        assert(typeCount==0 || typeCount==this.blocks.length)
         const result = typeMap.inferType(context);
         return result == VoidType.instance ? null : result;
     }
@@ -45,7 +45,7 @@ export default class IfStatement extends StatementBase {
     private static checkBlock(context: Context, block: IfBlock): IType {
         if(block.condition) {
             const type = block.condition.check(context);
-            assert.ok(type == BooleanType.instance);
+            assert(type == BooleanType.instance);
         }
         return block.statements.check(context.newChildContext(), null);
     }
@@ -85,15 +85,15 @@ export default class IfStatement extends StatementBase {
                 ifFalse = this.compileBlock(context, module, flags, body, typeMap, block, remaining);
             }
             const ref = module.if(condition.ref,
-                module.block(null, ifTrue.refs, ifTrue.type.asType()),
-                ifFalse.refs ? module.block(null, ifTrue.refs, ifTrue.type.asType()) : null
+                module.block(null, ifTrue.refs!, ifTrue.type.asType()),
+                ifFalse.refs ? module.block(null, ifFalse.refs!, ifFalse.type.asType()) : undefined
                 )
             return { refs: [ref], type: typeMap.inferType(context) };
         } else { // final else
             const results = block.statements.compile(context, module, flags, body) || null;
             if(results && results.type && results.type!=VoidType.instance)
                 typeMap.add(results.type);
-            const ref = module.block(null, results.refs );
+            const ref = module.block(null, results.refs! );
             return { refs: [ ref ], type: results.type };
         }
     }

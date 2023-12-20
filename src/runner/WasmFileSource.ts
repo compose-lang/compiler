@@ -1,5 +1,5 @@
-import fs from "fs";
-import IWasmSource from "./IWasmSource";
+import fs from "fs.ts";
+import IWasmSource from "./IWasmSource.ts";
 
 export default class WasmFileSource implements IWasmSource {
 

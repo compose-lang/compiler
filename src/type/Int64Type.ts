@@ -1,6 +1,6 @@
-import IntegerType from "./IntegerType";
-import NumberPrecedence from "./NumberPrecedence";
-import {i64, Type} from "../binaryen/binaryen_ts";
+import IntegerType from "./IntegerType.ts";
+import NumberPrecedence from "./NumberPrecedence.ts";
+import {i64, Type} from "../binaryen/binaryen_ts.ts";
 
 export default class Int64Type extends IntegerType {
 

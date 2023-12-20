@@ -1,15 +1,15 @@
-import IntegerType from "./IntegerType";
-import NumberPrecedence from "./NumberPrecedence";
-import Context from "../context/Context";
-import WasmModule from "../module/WasmModule";
-import IExpression from "../expression/IExpression";
-import UnaryOperator from "../expression/UnaryOperator";
-import BinaryOperator from "../expression/BinaryOperator";
-import Int32Type from "./Int32Type";
-import CompilerFlags from "../compiler/CompilerFlags";
-import IResult from "../expression/IResult";
-import FunctionBody from "../module/FunctionBody";
-import {i32, Type} from "../binaryen/binaryen_ts";
+import IntegerType from "./IntegerType.ts";
+import NumberPrecedence from "./NumberPrecedence.ts";
+import Context from "../context/Context.ts";
+import WasmModule from "../module/WasmModule.ts";
+import IExpression from "../expression/IExpression.ts";
+import UnaryOperator from "../expression/UnaryOperator.ts";
+import BinaryOperator from "../expression/BinaryOperator.ts";
+import Int32Type from "./Int32Type.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
+import IResult from "../expression/IResult.ts";
+import FunctionBody from "../module/FunctionBody.ts";
+import {i32, Type} from "../binaryen/binaryen_ts.ts";
 
 export default class UInt32Type extends IntegerType {
 

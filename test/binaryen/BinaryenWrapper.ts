@@ -1,5 +1,5 @@
 // @ts-ignore
-import Binaryen from "../../src/binaryen/binaryen_wasm_ts.js"
+import Binaryen from "../../src/binaryen/binaryen_wasm_ts.js.ts"
 
 type onRuntimeInitialized = (super_: Function ) => () => void;
 

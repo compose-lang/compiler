@@ -1,10 +1,8 @@
-import ComposeBuilder from "../../src/builder/ComposeBuilder";
-import Pipeline from "../../src/compiler/Pipeline";
-import {fileURLToPath} from "url";
-import {dirname} from "path";
-import PipelineOptions from "../../src/compiler/PipelineOptions";
+import ComposeBuilder from "../../src/builder/ComposeBuilder.ts";
+import Pipeline from "../../src/compiler/Pipeline.ts";
+import PipelineOptions from "../../src/compiler/PipelineOptions.ts";
 
-it('parses and checks memory.cots',  () => {
+Deno.test('parses and checks memory.cots',  () => {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = dirname(dirname(dirname(__filename)));
     const path = __dirname + "/runtime/rt/memory.cots";

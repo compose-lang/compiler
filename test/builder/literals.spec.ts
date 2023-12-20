@@ -1,97 +1,96 @@
-import ComposeBuilder from "../../src/builder/ComposeBuilder";
-import * as assert from "assert";
-import NullLiteral from "../../src/literal/NullLiteral";
-import BooleanLiteral from "../../src/literal/BooleanLiteral";
-import IntegerLiteral from "../../src/literal/IntegerLiteral";
-import DecimalLiteral from "../../src/literal/DecimalLiteral";
-import CharLiteral from "../../src/literal/CharLiteral";
-import StringLiteral from "../../src/literal/StringLiteral";
-import ArrayLiteral from "../../src/literal/ArrayLiteral";
-import SetLiteral from "../../src/literal/SetLiteral";
-import MapLiteral from "../../src/literal/MapLiteral";
+import ComposeBuilder from "../../src/builder/ComposeBuilder.ts";
+import NullLiteral from "../../src/literal/NullLiteral.ts";
+import BooleanLiteral from "../../src/literal/BooleanLiteral.ts";
+import IntegerLiteral from "../../src/literal/IntegerLiteral.ts";
+import DecimalLiteral from "../../src/literal/DecimalLiteral.ts";
+import CharLiteral from "../../src/literal/CharLiteral.ts";
+import StringLiteral from "../../src/literal/StringLiteral.ts";
+import ArrayLiteral from "../../src/literal/ArrayLiteral.ts";
+import SetLiteral from "../../src/literal/SetLiteral.ts";
+import MapLiteral from "../../src/literal/MapLiteral.ts";
 
-it('parses a null literal',  () => {
+Deno.test('parses a null literal',  () => {
     const exp = ComposeBuilder.parse_expression("null");
-    assert.ok(exp instanceof NullLiteral);
+    assert(exp instanceof NullLiteral);
 });
 
-it('parses a boolean literal',  () => {
+Deno.test('parses a boolean literal',  () => {
     let exp = ComposeBuilder.parse_expression("true");
-    assert.ok(exp instanceof BooleanLiteral);
-    assert.equal(exp.value, true);
+    assert(exp instanceof BooleanLiteral);
+    assertEquals(exp.value, true);
     exp = ComposeBuilder.parse_expression("false");
-    assert.ok(exp instanceof BooleanLiteral);
-    assert.equal(exp.value, false);
+    assert(exp instanceof BooleanLiteral);
+    assertEquals(exp.value, false);
 });
 
-it('parses an integer literal',  () => {
+Deno.test('parses an integer literal',  () => {
     // short decimal
     let exp = ComposeBuilder.parse_expression("123");
-    assert.ok(exp instanceof IntegerLiteral);
-    assert.equal(exp.value, 123);
+    assert(exp instanceof IntegerLiteral);
+    assertEquals(exp.value, 123);
     // short hexadecimal
     exp = ComposeBuilder.parse_expression("0x12");
-    assert.ok(exp instanceof IntegerLiteral);
-    assert.equal(exp.value, 18);
+    assert(exp instanceof IntegerLiteral);
+    assertEquals(exp.value, 18);
     // short octal
     exp = ComposeBuilder.parse_expression("012");
-    assert.ok(exp instanceof IntegerLiteral);
-    assert.equal(exp.value, 10);
+    assert(exp instanceof IntegerLiteral);
+    assertEquals(exp.value, 10);
     // short binary
     exp = ComposeBuilder.parse_expression("0b10");
-    assert.ok(exp instanceof IntegerLiteral);
-    assert.equal(exp.value, 2);
+    assert(exp instanceof IntegerLiteral);
+    assertEquals(exp.value, 2);
     // long decimal
     exp = ComposeBuilder.parse_expression("6_666_666_666");
-    assert.ok(exp instanceof IntegerLiteral);
-    assert.equal(exp.value, 6_666_666_666);
+    assert(exp instanceof IntegerLiteral);
+    assertEquals(exp.value, 6_666_666_666);
     // long hexadecimal
     exp = ComposeBuilder.parse_expression("0x1212121212121212");
-    assert.ok(exp instanceof IntegerLiteral);
-    assert.equal(exp.value, 0x1212121212121212);
+    assert(exp instanceof IntegerLiteral);
+    assertEquals(exp.value, 0x1212121212121212);
 });
 
-it('parses a decimal literal',  () => {
+Deno.test('parses a decimal literal',  () => {
     let exp = ComposeBuilder.parse_expression("123.4");
-    assert.ok(exp instanceof DecimalLiteral);
-    assert.equal(exp.value, 123.4);
+    assert(exp instanceof DecimalLiteral);
+    assertEquals(exp.value, 123.4);
     exp = ComposeBuilder.parse_expression("123.4e3");
-    assert.ok(exp instanceof DecimalLiteral);
-    assert.equal(exp.value, 123_400.0);
+    assert(exp instanceof DecimalLiteral);
+    assertEquals(exp.value, 123_400.0);
     // TODO support hexadecimal floats
     // exp = Builder.parse_expression("0x12.04");
-    // assert.ok(exp instanceof DecimalLiteral);
-    // assert.equal(exp.value, 123.4);
+    // assert(exp instanceof DecimalLiteral);
+    // assertEquals(exp.value, 123.4);
 });
 
-it('parses a character literal',  () => {
+Deno.test('parses a character literal',  () => {
     const exp = ComposeBuilder.parse_expression("'1'");
-    assert.ok(exp instanceof CharLiteral);
-    assert.equal(exp.value, "1");
+    assert(exp instanceof CharLiteral);
+    assertEquals(exp.value, "1");
 });
 
-it('parses a string literal',  () => {
+Deno.test('parses a string literal',  () => {
     const exp = ComposeBuilder.parse_expression('"123"');
-    assert.ok(exp instanceof StringLiteral);
-    assert.equal(exp.value, "123");
+    assert(exp instanceof StringLiteral);
+    assertEquals(exp.value, "123");
 });
 
-it('parses a list literal',  () => {
+Deno.test('parses a list literal',  () => {
     const exp = ComposeBuilder.parse_expression("[ 123, 'a', \"xyz\", 12.47, true, false, null ]");
-    assert.ok(exp instanceof ArrayLiteral);
-    assert.deepEqual(exp.toNative(), [ 123, 'a', "xyz", 12.47, true, false, null ]);
+    assert(exp instanceof ArrayLiteral);
+    assertEquals(exp.toNative(), [ 123, 'a', "xyz", 12.47, true, false, null ]);
 });
 
-it('parses a set literal',  () => {
+Deno.test('parses a set literal',  () => {
     const exp = ComposeBuilder.parse_expression("< 123, 'a', \"xyz\", 12.47, true, false, null >");
-    assert.ok(exp instanceof SetLiteral);
-    assert.deepEqual(exp.toNative(), new Set([ 123, 'a', "xyz", 12.47, true, false, null ]));
+    assert(exp instanceof SetLiteral);
+    assertEquals(exp.toNative(), new Set([ 123, 'a', "xyz", 12.47, true, false, null ]));
 });
 
-it('parses a map literal',  () => {
+Deno.test('parses a map literal',  () => {
     const exp = ComposeBuilder.parse_expression("{ x: 123, y: true }");
-    assert.ok(exp instanceof MapLiteral);
-    assert.deepEqual(exp.toNative(), new Map<string, any>([ ["x", 123], ["y", true] ]));
+    assert(exp instanceof MapLiteral);
+    assertEquals(exp.toNative(), new Map<string, any>([ ["x", 123], ["y", true] ]));
 });
 
 

@@ -1,13 +1,13 @@
-import Accessibility from "../declaration/Accessibility";
-import Prototype from "../declaration/Prototype";
-import Identifier from "../builder/Identifier";
-import TypedParameter from "../parameter/TypedParameter";
-import NativeFunctionDeclaration from "../declaration/NativeFunctionDeclaration";
-import Instruction from "../assembly/Instruction";
-import VoidType from "../type/VoidType";
-import AnyType from "../type/AnyType";
-import CompilationUnit from "../compiler/CompilationUnit";
-import ParameterList from "../parameter/ParameterList";
+import Accessibility from "../declaration/Accessibility.ts";
+import Prototype from "../declaration/Prototype.ts";
+import Identifier from "../builder/Identifier.ts";
+import TypedParameter from "../parameter/TypedParameter.ts";
+import NativeFunctionDeclaration from "../declaration/NativeFunctionDeclaration.ts";
+import Instruction from "../assembly/Instruction.ts";
+import VoidType from "../type/VoidType.ts";
+import AnyType from "../type/AnyType.ts";
+import CompilationUnit from "../compiler/CompilationUnit.ts";
+import ParameterList from "../parameter/ParameterList.ts";
 
 export default class AssertFunction extends NativeFunctionDeclaration {
 

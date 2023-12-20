@@ -1,9 +1,9 @@
-import IType from "./IType";
-import Identifier from "../builder/Identifier";
-import Context from "../context/Context";
-import UserType from "./UserType";
-import * as assert from "assert";
-import {Type} from "../binaryen/binaryen_ts";
+import IType from "./IType.ts";
+import Identifier from "../builder/Identifier.ts";
+import Context from "../context/Context.ts";
+import UserType from "./UserType.ts";
+import {Type} from "../binaryen/binaryen_ts.ts";
+import {assert} from "../../deps.ts";
 
 export default class AttributeType extends UserType {
 
@@ -20,19 +20,19 @@ export default class AttributeType extends UserType {
     }
 
     count(): number {
-        assert.ok(false); // TODO
+        assert(false); // TODO
     }
 
     asType(): Type {
-        assert.ok(false); // TODO
+        assert(false); // TODO
     }
 
     isAssignableFrom(context: Context, type: IType): boolean {
-        assert.ok(false); // TODO
+        assert(false); // TODO
     }
 
     prepareContext(context: Context): Context {
-        assert.ok(false); // TODO
+        assert(false); // TODO
     }
 
 }

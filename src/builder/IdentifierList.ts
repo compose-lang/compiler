@@ -1,4 +1,4 @@
-import Identifier from "./Identifier";
+import Identifier from "./Identifier.ts";
 
 type IdentifierList = Array<Identifier>;
 

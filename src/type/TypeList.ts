@@ -1,4 +1,4 @@
-import IType from "./IType";
+import IType from "./IType.ts";
 
 type TypeList = Array<IType>;
 

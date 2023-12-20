@@ -1,11 +1,10 @@
-import DeclarationBase from "./DeclarationBase";
-import KeyValuePair from "../utils/KeyValuePair";
-import Identifier from "../builder/Identifier";
-import IExpression from "../expression/IExpression";
-import IType from "../type/IType";
-import Context from "../context/Context";
-import * as assert from "assert";
-import TypeMap from "../type/TypeMap";
+import DeclarationBase from "./DeclarationBase.ts";
+import KeyValuePair from "../utils/KeyValuePair.ts";
+import Identifier from "../builder/Identifier.ts";
+import IExpression from "../expression/IExpression.ts";
+import IType from "../type/IType.ts";
+import Context from "../context/Context.ts";
+import TypeMap from "../type/TypeMap.ts";
 
 export default class EnumDeclaration extends DeclarationBase {
 
@@ -24,7 +23,7 @@ export default class EnumDeclaration extends DeclarationBase {
         const names = new Set<string>();
         const types = new TypeMap();
         this.members.forEach(kvp => {
-            assert.ok(!names.has(kvp.key.value));
+            assert(!names.has(kvp.key.value));
             names.add(kvp.key.value);
             const type = kvp.value.check(context);
             types.add(type);

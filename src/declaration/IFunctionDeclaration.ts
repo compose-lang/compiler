@@ -1,11 +1,11 @@
-import IDeclaration from "./IDeclaration";
-import ParameterList from "../parameter/ParameterList";
-import FunctionType from "../type/FunctionType";
-import IType from "../type/IType";
-import Prototype from "./Prototype";
-import ClassDeclaration from "./ClassDeclaration";
-import Context from "../context/Context";
-import ICompilable from "../compiler/ICompilable";
+import IDeclaration from "./IDeclaration.ts";
+import ParameterList from "../parameter/ParameterList.ts";
+import FunctionType from "../type/FunctionType.ts";
+import IType from "../type/IType.ts";
+import Prototype from "./Prototype.ts";
+import ClassDeclaration from "./ClassDeclaration.ts";
+import Context from "../context/Context.ts";
+import ICompilable from "../compiler/ICompilable.ts";
 
 export default interface IFunctionDeclaration extends IDeclaration, ICompilable {
 

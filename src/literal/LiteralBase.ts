@@ -1,9 +1,9 @@
-import ExpressionBase from "../expression/ExpressionBase";
-import WasmModule from "../module/WasmModule";
-import Context from "../context/Context";
-import ILiteralExpression from "./ILiteralExpression";
-import FunctionBody from "../module/FunctionBody";
-import IExpression from "../expression/IExpression";
+import ExpressionBase from "../expression/ExpressionBase.ts";
+import WasmModule from "../module/WasmModule.ts";
+import Context from "../context/Context.ts";
+import ILiteralExpression from "./ILiteralExpression.ts";
+import FunctionBody from "../module/FunctionBody.ts";
+import IExpression from "../expression/IExpression.ts";
 
 export default abstract class LiteralBase<T> extends ExpressionBase implements ILiteralExpression {
 

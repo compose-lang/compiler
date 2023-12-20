@@ -1,14 +1,14 @@
-import FunctionDeclarationBase from "./FunctionDeclarationBase";
-import Accessibility from "./Accessibility";
-import Prototype from "./Prototype";
-import Instruction from "../assembly/Instruction";
-import WasmModule from "../module/WasmModule";
-import Context from "../context/Context";
-import IType from "../type/IType";
-import CompilerFlags from "../compiler/CompilerFlags";
-import FunctionBody from "../module/FunctionBody";
-import OpCode from "../compiler/OpCode";
-import { i32 } from "../binaryen/binaryen_ts";
+import FunctionDeclarationBase from "./FunctionDeclarationBase.ts";
+import Accessibility from "./Accessibility.ts";
+import Prototype from "./Prototype.ts";
+import Instruction from "../assembly/Instruction.ts";
+import WasmModule from "../module/WasmModule.ts";
+import Context from "../context/Context.ts";
+import IType from "../type/IType.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
+import FunctionBody from "../module/FunctionBody.ts";
+import OpCode from "../compiler/OpCode.ts";
+import { i32 } from "../binaryen/binaryen_ts.ts";
 
 export default class NativeFunctionDeclaration extends FunctionDeclarationBase {
 

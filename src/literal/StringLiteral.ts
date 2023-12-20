@@ -1,9 +1,9 @@
-import LiteralBase from "./LiteralBase";
-import Context from "../context/Context";
-import IType from "../type/IType";
-import StringType from "../type/StringType";
-import WasmModule from "../module/WasmModule";
-import FunctionBody from "../module/FunctionBody";
+import LiteralBase from "./LiteralBase.ts";
+import Context from "../context/Context.ts";
+import IType from "../type/IType.ts";
+import StringType from "../type/StringType.ts";
+import WasmModule from "../module/WasmModule.ts";
+import FunctionBody from "../module/FunctionBody.ts";
 
 export default class StringLiteral extends LiteralBase<string> {
 

@@ -1,7 +1,7 @@
-import LiteralBase from "./LiteralBase";
-import IExpression from "../expression/IExpression";
-import Context from "../context/Context";
-import IType from "../type/IType";
+import LiteralBase from "./LiteralBase.ts";
+import IExpression from "../expression/IExpression.ts";
+import Context from "../context/Context.ts";
+import IType from "../type/IType.ts";
 
 export default class SetLiteral extends LiteralBase<Set<any>> {
 

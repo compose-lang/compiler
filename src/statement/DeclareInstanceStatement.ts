@@ -1,17 +1,17 @@
-import StatementBase from "./StatementBase";
-import Identifier from "../builder/Identifier";
-import IType from "../type/IType";
-import IExpression from "../expression/IExpression";
-import WasmModule from "../module/WasmModule";
-import FunctionBody from "../module/FunctionBody";
-import Context from "../context/Context";
-import Variable from "../context/Variable";
-import InstanceModifier from "./InstanceModifier";
-import * as assert from "assert";
-import IGlobalStatement from "./IGlobalStatement";
-import CompilerFlags from "../compiler/CompilerFlags";
-import IResults from "./IResults";
-import VoidType from "../type/VoidType";
+import StatementBase from "./StatementBase.ts";
+import Identifier from "../builder/Identifier.ts";
+import IType from "../type/IType.ts";
+import IExpression from "../expression/IExpression.ts";
+import WasmModule from "../module/WasmModule.ts";
+import FunctionBody from "../module/FunctionBody.ts";
+import Context from "../context/Context.ts";
+import Variable from "../context/Variable.ts";
+import InstanceModifier from "./InstanceModifier.ts";
+import IGlobalStatement from "./IGlobalStatement.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
+import IResults from "./IResults.ts";
+import VoidType from "../type/VoidType.ts";
+import {assert} from "../../deps.ts";
 
 export default class DeclareInstanceStatement extends StatementBase implements IGlobalStatement {
 
@@ -40,15 +40,15 @@ export default class DeclareInstanceStatement extends StatementBase implements I
 
     check(context: Context): IType {
         this._check(context);
-        return null;
+        return VoidType.instance;
     }
 
     private _check(context: Context): IType {
         if(context.isGlobal())
-            assert.ok(this.expression.isConst(context));
+            assert(this.expression.isConst(context));
         let type = this.expression.check(context);
         if(this.type) {
-            assert.ok(this.type.isAssignableFrom(context, type));
+            assert(this.type.isAssignableFrom(context, type));
             this.expression.resolveType(context, this.type);
             type = this.type;
         }
@@ -59,7 +59,8 @@ export default class DeclareInstanceStatement extends StatementBase implements I
     declare(context: Context, module: WasmModule): void {
         if(context.isGlobal()) {
             const variable = context.getRegisteredLocal(this.id);
-            assert.ok(variable !== null);
+            assert(variable !== null);
+            assert(this.unit);
             module.declareGlobal(this.unit, variable, this.expression, this.modifier == InstanceModifier.LET, this.isModuleExport());
         } else
             this._check(context);
@@ -75,6 +76,7 @@ export default class DeclareInstanceStatement extends StatementBase implements I
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults {
         const local = body.getRegisteredLocal(this.name);
+        assert(local);
         const value = this.expression.compile(context, module, flags, body);
         const result = module.locals.set(local.index, value.ref);
         return { refs: [result], type: VoidType.instance };

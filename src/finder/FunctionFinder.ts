@@ -1,12 +1,11 @@
-import FunctionCall from "../expression/FunctionCall";
-import Context from "../context/Context";
-import Identifier from "../builder/Identifier";
-import IType from "../type/IType";
-import IFunctionDeclaration from "../declaration/IFunctionDeclaration";
-import * as assert from "assert";
-import IExpression from "../expression/IExpression";
-import VoidType from "../type/VoidType";
-import RestParameter from "../parameter/RestParameter";
+import FunctionCall from "../expression/FunctionCall.ts";
+import Context from "../context/Context.ts";
+import Identifier from "../builder/Identifier.ts";
+import IType from "../type/IType.ts";
+import IFunctionDeclaration from "../declaration/IFunctionDeclaration.ts";
+import IExpression from "../expression/IExpression.ts";
+import VoidType from "../type/VoidType.ts";
+import RestParameter from "../parameter/RestParameter.ts";
 
 enum Score {
     WORSE = -1,
@@ -169,8 +168,8 @@ class MemberSimpleFinder extends FunctionFinder {
 
     protected resolveContext(): void {
         const type = this.parent.check(this.context);
-        assert.ok(type);
-        assert.ok(type != VoidType.instance);
+        assert(type);
+        assert(type != VoidType.instance);
         this.context = type.prepareContext(this.context);
     }
 

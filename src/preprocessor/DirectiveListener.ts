@@ -1,15 +1,15 @@
 // Generated from Directive.g4 by ANTLR 4.13.1
 
-import {ParseTreeListener} from "antlr4";
+import {ParseTreeListener} from "npm:antlr4";
 
 
-import { DirectiveContext } from "./DirectiveParser";
-import { If_directiveContext } from "./DirectiveParser";
-import { Else_if_directiveContext } from "./DirectiveParser";
-import { Else_directiveContext } from "./DirectiveParser";
-import { End_directiveContext } from "./DirectiveParser";
-import { ValueContext } from "./DirectiveParser";
-import { TrailerContext } from "./DirectiveParser";
+import { DirectiveContext } from "./DirectiveParser.ts";
+import { If_directiveContext } from "./DirectiveParser.ts";
+import { Else_if_directiveContext } from "./DirectiveParser.ts";
+import { Else_directiveContext } from "./DirectiveParser.ts";
+import { End_directiveContext } from "./DirectiveParser.ts";
+import { ValueContext } from "./DirectiveParser.ts";
+import { TrailerContext } from "./DirectiveParser.ts";
 
 
 /**

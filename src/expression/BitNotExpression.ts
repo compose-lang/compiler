@@ -1,14 +1,13 @@
-import ExpressionBase from "./ExpressionBase";
-import IExpression from "./IExpression";
-import assert from "assert";
-import WasmModule from "../module/WasmModule";
-import IType from "../type/IType";
-import Context from "../context/Context";
-import IntegerType from "../type/IntegerType";
-import FunctionBody from "../module/FunctionBody";
-import UnaryOperator from "./UnaryOperator";
-import CompilerFlags from "../compiler/CompilerFlags";
-import IResult from "./IResult";
+import ExpressionBase from "./ExpressionBase.ts";
+import IExpression from "./IExpression.ts";
+import WasmModule from "../module/WasmModule.ts";
+import IType from "../type/IType.ts";
+import Context from "../context/Context.ts";
+import IntegerType from "../type/IntegerType.ts";
+import FunctionBody from "../module/FunctionBody.ts";
+import UnaryOperator from "./UnaryOperator.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
+import IResult from "./IResult.ts";
 
 export default class BitNotExpression extends ExpressionBase {
 
@@ -21,7 +20,7 @@ export default class BitNotExpression extends ExpressionBase {
 
     check(context: Context): IType {
         const type = this.expression.check(context);
-        assert.ok(type instanceof IntegerType);
+        assert(type instanceof IntegerType);
         return type;
     }
 

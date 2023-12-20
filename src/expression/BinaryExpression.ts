@@ -1,14 +1,13 @@
-import ExpressionBase from "./ExpressionBase";
-import WasmModule from "../module/WasmModule";
-import IType from "../type/IType";
-import Context from "../context/Context";
-import BinaryOperator from "./BinaryOperator";
-import IExpression from "./IExpression";
-import * as assert from "assert";
-import FunctionBody from "../module/FunctionBody";
-import {BINARY_CONSTIFIERS} from "../compiler/Constifiers";
-import CompilerFlags from "../compiler/CompilerFlags";
-import IResult from "./IResult";
+import ExpressionBase from "./ExpressionBase.ts";
+import WasmModule from "../module/WasmModule.ts";
+import IType from "../type/IType.ts";
+import Context from "../context/Context.ts";
+import BinaryOperator from "./BinaryOperator.ts";
+import IExpression from "./IExpression.ts";
+import FunctionBody from "../module/FunctionBody.ts";
+import {BINARY_CONSTIFIERS} from "../compiler/Constifiers.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
+import IResult from "./IResult.ts";
 
 export default class BinaryExpression extends ExpressionBase {
 
@@ -41,7 +40,7 @@ export default class BinaryExpression extends ExpressionBase {
             case BinaryOperator.BIT_XOR:
                 return leftType.checkBinaryBitsOperator(context, this.operator, rightType);
             default:
-                assert.ok(false, "Not implemented: " + BinaryOperator[this.operator]);
+                assert(false, "Not implemented: " + BinaryOperator[this.operator]);
         }
     }
 
@@ -55,7 +54,7 @@ export default class BinaryExpression extends ExpressionBase {
         const leftType = left.check(context);
         const rightType = right.check(context);
         const constifier = BINARY_CONSTIFIERS.getConstifier(leftType, rightType, this.operator);
-        assert.ok(constifier);
+        assert(constifier);
         return constifier(left, right);
     }
 
@@ -82,7 +81,7 @@ export default class BinaryExpression extends ExpressionBase {
             case BinaryOperator.BIT_XOR:
                 return leftResult.type.compileBinaryBitsOperator(context, module, flags, leftResult, rightResult, this.operator);
             default:
-                assert.ok(false, "Not implemented: " + BinaryOperator[this.operator]);
+                assert(false, "Not implemented: " + BinaryOperator[this.operator]);
         }
     }
 }

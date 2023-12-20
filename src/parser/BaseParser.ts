@@ -1,5 +1,5 @@
-import { Parser } from 'antlr4';
-import ComposeLexer from "./ComposeLexer";
+import { Parser } from 'npm:antlr4';
+import ComposeLexer from "./ComposeLexer.ts";
 
 export default class BaseParser extends Parser {
 

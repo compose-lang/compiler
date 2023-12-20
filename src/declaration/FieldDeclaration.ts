@@ -1,7 +1,7 @@
-import Identifier from "../builder/Identifier";
-import Accessibility from "./Accessibility";
-import IValueType from "../type/IValueType";
-import IClassMember from "./IClassMember";
+import Identifier from "../builder/Identifier.ts";
+import Accessibility from "./Accessibility.ts";
+import IValueType from "../type/IValueType.ts";
+import IClassMember from "./IClassMember.ts";
 
 export default class FieldDeclaration implements IClassMember {
 

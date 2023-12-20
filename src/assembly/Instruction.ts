@@ -1,11 +1,12 @@
-import OpCode from "../compiler/OpCode";
-import IExpression from "../expression/IExpression";
-import Context from "../context/Context";
-import WasmModule from "../module/WasmModule";
-import FunctionBody from "../module/FunctionBody";
-import CompilerFlags from "../compiler/CompilerFlags";
-import ComposeLexer from "../parser/ComposeLexer";
-import {ExpressionRef} from "../binaryen/binaryen_ts";
+import OpCode from "../compiler/OpCode.ts";
+import IExpression from "../expression/IExpression.ts";
+import Context from "../context/Context.ts";
+import WasmModule from "../module/WasmModule.ts";
+import FunctionBody from "../module/FunctionBody.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
+import ComposeLexer from "../parser/ComposeLexer.ts";
+import {ExpressionRef} from "../binaryen/binaryen_ts.ts";
+import {assert} from "../../deps.ts";
 
 export interface IIndexable {
     [key: string]: any;
@@ -45,6 +46,7 @@ export default class Instruction {
         const name = OpCode[this.opcode];
         const token = ComposeLexer[name as keyof typeof ComposeLexer] as number;
         let literal = ComposeLexer.literalNames[token];
+        assert(literal)
         literal = literal.substring(1, literal.length - 1)
         const parts = literal.split("\.");
         let source = module as IIndexable;

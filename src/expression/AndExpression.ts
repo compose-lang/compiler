@@ -1,4 +1,4 @@
-import LogicalExpression from "./LogicalExpression";
+import LogicalExpression from "./LogicalExpression.ts";
 
 export default class AndExpression extends LogicalExpression {
 

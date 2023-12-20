@@ -1,4 +1,4 @@
-import FieldDeclaration from "../declaration/FieldDeclaration";
+import FieldDeclaration from "../declaration/FieldDeclaration.ts";
 
 type FieldList = Array<FieldDeclaration>;
 

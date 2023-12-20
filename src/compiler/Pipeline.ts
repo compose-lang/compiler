@@ -1,11 +1,8 @@
-import CompilationUnit from "./CompilationUnit";
-import IWasmTarget from "./IWasmTarget";
-import Context from "../context/Context";
-import ComposeBuilder from "../builder/ComposeBuilder";
-import {fileURLToPath} from "url";
-import {dirname} from "path";
-import PipelineOptions from "./PipelineOptions";
-import * as fs from "fs";
+import CompilationUnit from "./CompilationUnit.ts";
+import IWasmTarget from "./IWasmTarget.ts";
+import Context from "../context/Context.ts";
+import ComposeBuilder from "../builder/ComposeBuilder.ts";
+import PipelineOptions from "./PipelineOptions.ts";
 
 export default class Pipeline {
 

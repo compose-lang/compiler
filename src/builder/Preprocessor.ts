@@ -1,13 +1,12 @@
-import DirectiveListener from "../preprocessor/DirectiveListener";
-import {CharStreams, CommonTokenStream, ParserRuleContext, ParseTree, ParseTreeWalker, Token} from "antlr4";
-import DirectiveLexer from "../preprocessor/DirectiveLexer";
+import DirectiveListener from "../preprocessor/DirectiveListener.ts";
+import {CharStreams, CommonTokenStream, ParserRuleContext, ParseTree, ParseTreeWalker, Token} from "npm:antlr4";
+import DirectiveLexer from "../preprocessor/DirectiveLexer.ts";
 import DirectiveParser, {
     DirectiveContext,
     Else_directiveContext,
     Else_if_directiveContext, End_directiveContext,
     If_directiveContext
-} from "../preprocessor/DirectiveParser";
-import * as assert from "assert";
+} from "../preprocessor/DirectiveParser.ts";
 
 abstract class Directive {
 
@@ -148,10 +147,10 @@ class Analyzer {
             const acceptingCode = this.directives.has(directive.id) && this.directives.get(directive.id);
             this.stateStack.push({directive: directive, hasAcceptedCode: false, acceptingCode: acceptingCode});
         } else if (directive instanceof EndDirective) {
-            assert.ok(this.stateStack.length > 0);
+            assert(this.stateStack.length > 0);
             this.stateStack.pop();
         } else {
-            assert.ok(this.stateStack.length > 0);
+            assert(this.stateStack.length > 0);
             const state = this.stateStack.pop();
             const hasAcceptedCode = state.hasAcceptedCode || state.acceptingCode;
             let acceptingCode = !hasAcceptedCode;

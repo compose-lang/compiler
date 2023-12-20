@@ -1,13 +1,14 @@
-import IStatement from "./IStatement";
-import IType from "../type/IType";
-import Context from "../context/Context";
-import VoidType from "../type/VoidType";
-import * as assert from "assert";
-import TypeMap from "../type/TypeMap";
-import WasmModule from "../module/WasmModule";
-import FunctionBody from "../module/FunctionBody";
-import CompilerFlags from "../compiler/CompilerFlags";
-import IResults from "./IResults";
+import IStatement from "./IStatement.ts";
+import IType from "../type/IType.ts";
+import Context from "../context/Context.ts";
+import VoidType from "../type/VoidType.ts";
+import TypeMap from "../type/TypeMap.ts";
+import WasmModule from "../module/WasmModule.ts";
+import FunctionBody from "../module/FunctionBody.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
+import IResults from "./IResults.ts";
+import {assert} from "../../deps.ts";
+import {ExpressionRef} from "../binaryen/binaryen_ts.ts";
 
 export default class StatementList extends Array<IStatement> {
 
@@ -17,11 +18,11 @@ export default class StatementList extends Array<IStatement> {
         return result as StatementList;
     }
 
-    check(context: Context, returnType: IType): IType {
+    check(context: Context, returnType: IType | null): IType {
         if(returnType == VoidType.instance) {
             this.forEach(stmt => {
-                const type = stmt.check(context) || null;
-                assert.ok(type != VoidType.instance);
+                const type = stmt.check(context);
+                assert(type != VoidType.instance);
             }, this);
             return VoidType.instance
         } else {
@@ -49,11 +50,11 @@ export default class StatementList extends Array<IStatement> {
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults {
         const results = this.map(stmt => {
             const result = stmt.compile(context, module, flags, body)
-            stmt.registerDebugInfo(body, result.refs);
+            stmt.registerDebugInfo(body, result.refs!);
             return result;
         });
         const typeMap = new TypeMap();
         results.filter(result => result && result.type!=VoidType.instance).forEach(result => typeMap.add(result.type));
-        return { type: typeMap.inferType(context), refs: results.filter(result => result).map(result => result.refs).flat() }
+        return { type: typeMap.inferType(context), refs: results.filter(result => result).map(result => result.refs).flat() as ExpressionRef[] }
     }
 }

@@ -1,7 +1,7 @@
-import IType from "../type/IType";
-import IValueType from "../type/IValueType";
-import Fragment from "../builder/Fragment";
-import {ExpressionRef, Function, FunctionRef} from "../binaryen/binaryen_ts";
+import IType from "../type/IType.ts";
+import IValueType from "../type/IValueType.ts";
+import Fragment from "../builder/Fragment.ts";
+import {ExpressionRef, Function, FunctionRef} from "../binaryen/binaryen_ts.ts";
 
 enum LocalScope {
     PARAM,

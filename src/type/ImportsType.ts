@@ -1,16 +1,16 @@
-import IType from "./IType";
-import WasmModule from "../module/WasmModule";
-import FunctionBody from "../module/FunctionBody";
-import * as assert from "assert";
-import Context from "../context/Context";
-import Identifier from "../builder/Identifier";
-import IFunctionDeclaration from "../declaration/IFunctionDeclaration";
-import IExpression from "../expression/IExpression";
-import BinaryOperator from "../expression/BinaryOperator";
-import UnaryOperator from "../expression/UnaryOperator";
-import CompilerFlags from "../compiler/CompilerFlags";
-import IResult from "../expression/IResult";
-import {Type} from "../binaryen/binaryen_ts";
+import IType from "./IType.ts";
+import WasmModule from "../module/WasmModule.ts";
+import FunctionBody from "../module/FunctionBody.ts";
+import Context from "../context/Context.ts";
+import Identifier from "../builder/Identifier.ts";
+import IFunctionDeclaration from "../declaration/IFunctionDeclaration.ts";
+import IExpression from "../expression/IExpression.ts";
+import BinaryOperator from "../expression/BinaryOperator.ts";
+import UnaryOperator from "../expression/UnaryOperator.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
+import IResult from "../expression/IResult.ts";
+import {Type} from "../binaryen/binaryen_ts.ts";
+import {assert} from "../../deps.ts";
 
 export default class ImportsType extends Map<string, IFunctionDeclaration> implements IType {
 
@@ -23,23 +23,23 @@ export default class ImportsType extends Map<string, IFunctionDeclaration> imple
     }
 
     isAssignableFrom(context: Context, type: IType): boolean {
-        assert.ok(false, "Should never get there!");
+        assert(false, "Should never get there!");
     }
 
     defaultValue(): IExpression {
-        assert.ok(false, "Should never get there!");
+        assert(false, "Should never get there!");
     }
 
     convertExpression(context: Context, expression: IExpression): IExpression {
-        assert.ok(false, "Should never get there!");
+        assert(false, "Should never get there!");
     }
 
     count(): number {
-        assert.ok(false, "Should never get there!");
+        assert(false, "Should never get there!");
     }
 
     asType(): Type {
-        assert.ok(false, "Should never get there!");
+        assert(false, "Should never get there!");
     }
 
     prepareContext(context: Context): Context {
@@ -47,47 +47,47 @@ export default class ImportsType extends Map<string, IFunctionDeclaration> imple
     }
 
     checkMember(context: Context, memberId: Identifier): IType {
-        assert.ok(false, "Should never get there!");
+        assert(false, "Should never get there!");
     }
 
     checkEquals(context: Context, rightType: IType): IType {
-        assert.ok(false, "Should never get there!");
+        assert(false, "Should never get there!");
     }
 
     checkCompare(context: Context, rightType: IType): IType {
-        assert.ok(false, "Should never get there!");
+        assert(false, "Should never get there!");
     }
 
     checkAdd(context: Context, rightType: IType, tryReverse: boolean): IType {
-        assert.ok(false, "Should never get there!");
+        assert(false, "Should never get there!");
     }
 
     checkSubtract(context: Context, rightType: IType): IType {
-        assert.ok(false, "Should never get there!");
+        assert(false, "Should never get there!");
     }
 
     checkMultiply(context: Context, rightType: IType, tryReverse: boolean): IType {
-        assert.ok(false, "Should never get there!");
+        assert(false, "Should never get there!");
     }
 
     compileAdd(context: Context, module: WasmModule, flags: CompilerFlags, left: IResult, right: IResult, tryReverse: boolean): IResult {
-        assert.ok(false, "Should never get there!");
+        assert(false, "Should never get there!");
     }
 
     checkBinaryBitsOperator(context: Context, operator: BinaryOperator, rightType: IType): IType {
-        assert.ok(false, "Should never get there!");
+        assert(false, "Should never get there!");
     }
 
     compileBinaryBitsOperator(context: Context, module: WasmModule, flags: CompilerFlags, left: IResult, right: IResult, operator: BinaryOperator): IResult {
-        assert.ok(false, "Should never get there!");
+        assert(false, "Should never get there!");
     }
 
     checkUnaryOperator(context: Context, operator: UnaryOperator): IType {
-        assert.ok(false, "Should never get there!");
+        assert(false, "Should never get there!");
     }
 
     compileUnaryOperator(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, expression: IExpression, operator: UnaryOperator): IResult {
-        assert.ok(false, "Should never get there!");
+        assert(false, "Should never get there!");
     }
 
 }

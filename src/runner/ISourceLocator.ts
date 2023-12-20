@@ -1,4 +1,4 @@
-import IWasmSource from "./IWasmSource";
+import IWasmSource from "./IWasmSource.ts";
 
 type ISourceLocator = (path: string) => IWasmSource;
 

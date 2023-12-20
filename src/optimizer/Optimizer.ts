@@ -1,7 +1,7 @@
-import IWasmTarget from "../compiler/IWasmTarget";
-import IWasmSource from "../runner/IWasmSource";
-import WasmBufferSource from "../runner/WasmBufferSource";
-import {Module} from "../binaryen/binaryen_ts";
+import IWasmTarget from "../compiler/IWasmTarget.ts";
+import IWasmSource from "../runner/IWasmSource.ts";
+import WasmBufferSource from "../runner/WasmBufferSource.ts";
+import {Module} from "../binaryen/binaryen_ts.ts";
 
 enum Flags {
 

@@ -1,17 +1,15 @@
-import LiteralBase from "./LiteralBase";
-import IExpression from "../expression/IExpression";
-import Context from "../context/Context";
-import IType from "../type/IType";
-import TypeMap from "../type/TypeMap";
-import assert from "assert";
-import ArrayType from "../type/ArrayType";
-import MissingType from "../type/MissingType";
-import WasmModule from "../module/WasmModule";
-import CompilerFlags from "../compiler/CompilerFlags";
-import FunctionBody from "../module/FunctionBody";
-import IResult from "../expression/IResult";
-import {TypeBuilder} from "../binaryen/binaryen_ts";
-import HeapTypeRegistry from "../registry/HeapTypeRegistry";
+import LiteralBase from "./LiteralBase.ts";
+import IExpression from "../expression/IExpression.ts";
+import Context from "../context/Context.ts";
+import IType from "../type/IType.ts";
+import TypeMap from "../type/TypeMap.ts";
+import ArrayType from "../type/ArrayType.ts";
+import MissingType from "../type/MissingType.ts";
+import WasmModule from "../module/WasmModule.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
+import FunctionBody from "../module/FunctionBody.ts";
+import IResult from "../expression/IResult.ts";
+import HeapTypeRegistry from "../registry/HeapTypeRegistry.ts";
 
 export default class ArrayLiteral extends LiteralBase<any[]> {
 
@@ -38,7 +36,7 @@ export default class ArrayLiteral extends LiteralBase<any[]> {
             const typeMap = new TypeMap();
             this.value.forEach(v => {
                 const elemType = v.check();
-                assert.ok(elemType);
+                assert(elemType);
                 typeMap.add(elemType);
             });
             return typeMap.inferType(context);

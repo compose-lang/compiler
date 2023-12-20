@@ -1,10 +1,8 @@
-import ExpressionBase from "./ExpressionBase";
-import IExpression from "./IExpression";
-import Comparator from "./Comparator";
-import Context from "../context/Context";
-import IType from "../type/IType";
-import WasmModule from "../module/WasmModule";
-import assert from "assert";
+import ExpressionBase from "./ExpressionBase.ts";
+import IExpression from "./IExpression.ts";
+import Context from "../context/Context.ts";
+import IType from "../type/IType.ts";
+import WasmModule from "../module/WasmModule.ts";
 
 export default class EqualsExpression extends ExpressionBase {
 
