@@ -14,26 +14,26 @@ let node_url: typeof import("node:url") | null = null;
 let node_os: typeof import("node:os") | null = null;
 
 if(isNodeJs()) {
-    await import(/* webpackMode: "weak" */"node:fs").then(module => node_fs = module, reason => console.log(reason));
-    await import(/* webpackMode: "weak" */"node:path").then(module => node_path = module, reason => console.log(reason));
-    await import(/* webpackMode: "weak" */"node:url").then(module => node_url = module, reason => console.log(reason));
-    await import(/* webpackMode: "weak" */"node:os").then(module => node_os = module, reason => console.log(reason));
+    node_fs = await import(/* webpackMode: "weak" */"node:fs");
+    node_path = await import(/* webpackMode: "weak" */"node:path");
+    node_url = await import(/* webpackMode: "weak" */"node:url");
+    node_os = await import(/* webpackMode: "weak" */"node:os");
 }
 
-export function importPathIfNode(): typeof import("node:path") | null {
+export function importPathIfNode() {
     return node_path;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function importFsIfNode(): typeof import("node:fs") | null {
+export function importFsIfNode() {
     return node_fs;
 }
 
-export function importUrlIfNode(): typeof import("node:url") | null {
+export function importUrlIfNode() {
     return node_url;
 }
 
-export function importOsIfNode(): typeof import("node:os") | null {
+export function importOsIfNode() {
     return node_os;
 }
 
@@ -43,25 +43,25 @@ let deno_url: typeof import("https://deno.land/std@0.83.0/node/url.ts") | null =
 let deno_os: typeof import("https://deno.land/std@0.83.0/node/os.ts") | null = null;
 
 if(isDeno()) {
-    await import("https://deno.land/std@0.209.0/path/mod.ts").then(module => deno_path = module, reason => console.log(reason));
-    await import("https://deno.land/std@0.209.0/fs/mod.ts").then(module => deno_fs = module, reason => console.log(reason));
-    await import("https://deno.land/std@0.83.0/node/url.ts").then(module => deno_url = module, reason => console.log(reason));
-    await import("https://deno.land/std@0.83.0/node/os.ts").then(module => deno_os = module, reason => console.log(reason));
+    deno_path = await import("https://deno.land/std@0.209.0/path/mod.ts");
+    deno_fs = await import("https://deno.land/std@0.209.0/fs/mod.ts");
+    deno_url = await import("https://deno.land/std@0.83.0/node/url.ts");
+    deno_os = await import("https://deno.land/std@0.83.0/node/os.ts");
 }
 
 
-export function importPathIfDeno(): typeof import("https://deno.land/std@0.209.0/path/mod.ts") | null {
+export function importPathIfDeno() {
     return deno_path;
 }
-export function importFsIfDeno(): typeof import("https://deno.land/std@0.209.0/fs/mod.ts") | null {
+export function importFsIfDeno() {
     return deno_fs;
 }
 
-export function importUrlIfDeno(): typeof import("https://deno.land/std@0.83.0/node/url.ts") | null {
+export function importUrlIfDeno() {
     return deno_url;
 }
 
-export function importOsIfDeno(): typeof import("https://deno.land/std@0.83.0/node/os.ts") | null {
+export function importOsIfDeno() {
     return deno_os;
 }
 
