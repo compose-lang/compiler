@@ -18,7 +18,7 @@ export default class StatementList extends Array<IStatement> {
         return result as StatementList;
     }
 
-    check(context: Context, returnType: IType | null): IType {
+    check(context: Context, returnType: IType): IType {
         if(returnType == VoidType.instance) {
             this.forEach(stmt => {
                 const type = stmt.check(context);
@@ -50,7 +50,7 @@ export default class StatementList extends Array<IStatement> {
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults {
         const results = this.map(stmt => {
             const result = stmt.compile(context, module, flags, body)
-            stmt.registerDebugInfo(body, result.refs!);
+            stmt.registerDebugInfo(body, result.refs);
             return result;
         });
         const typeMap = new TypeMap();

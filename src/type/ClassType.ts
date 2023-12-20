@@ -14,7 +14,7 @@ export default class ClassType extends UserType implements IValueType {
 
     nullable = false;
     id: Identifier;
-    klass: ClassDeclaration | null;
+    klass: ClassDeclaration;
 
     constructor(id: Identifier, klass?: ClassDeclaration) {
         super();
@@ -28,7 +28,7 @@ export default class ClassType extends UserType implements IValueType {
 
     getClass(context: Context): ClassDeclaration {
         this.ensureClass(context);
-        return this.klass!;
+        return this.klass;
     }
 
     count(): number {
@@ -52,7 +52,7 @@ export default class ClassType extends UserType implements IValueType {
 
     checkMember(context: Context, memberId: Identifier): IType {
         this.ensureClass(context);
-        const member = this.klass!.findMember(context, memberId);
+        const member = this.klass.findMember(context, memberId);
         assert(member);
         return member.type;
     }

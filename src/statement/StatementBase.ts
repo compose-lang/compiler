@@ -13,19 +13,19 @@ import {ExpressionRef} from "../binaryen/binaryen_ts.ts";
 
 export default abstract class StatementBase extends CodeFragment implements IStatement {
 
-    _unit: CompilationUnit | null = null;
-    annotations: Annotation[] | null = null;
+    _unit: CompilationUnit = null;
+    annotations: Annotation[] = null;
     exportType: ExportType = ExportType.NONE;
 
     isModuleExport(): boolean {
-        return this.exportType!=ExportType.NONE || this.annotations && this.annotations.some(a => a.name === "@ModuleExport") || false;
+        return this.exportType!=ExportType.NONE || this.annotations && this.annotations.some(a => a.name === "@ModuleExport");
     }
 
     set unit(unit: CompilationUnit) {
         this._unit = unit;
     }
 
-    get unit(): CompilationUnit | null {
+    get unit(): CompilationUnit {
         return this._unit;
     }
 

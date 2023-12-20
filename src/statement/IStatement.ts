@@ -11,8 +11,8 @@ import {ExpressionRef} from "../binaryen/binaryen_ts.ts";
 
 export default interface IStatement {
 
-    unit: CompilationUnit | null;
-    annotations: Annotation[] | null;
+    unit: CompilationUnit;
+    annotations: Annotation[];
     exportType: ExportType;
 
     check(context: Context): IType;
