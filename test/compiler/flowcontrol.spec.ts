@@ -1,6 +1,7 @@
 import Pipeline from "../../src/compiler/Pipeline.ts";
 import ComposeBuilder from "../../src/builder/ComposeBuilder.ts";
 import Runner from "../../src/runner/Runner.ts";
+import { assertEquals } from "../../deps.ts";
 
 Deno.test('runs a simple if',  () => {
     const pipeline = new Pipeline();

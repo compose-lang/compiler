@@ -3,6 +3,7 @@ import ComposeBuilder from "../../src/builder/ComposeBuilder.ts";
 import Runner from "../../src/runner/Runner.ts";
 import Optimizer from "../../src/optimizer/Optimizer.ts";
 import WasmBufferSource from "../../src/runner/WasmBufferSource.ts";
+import { assert, assertEquals } from "../../deps.ts";
 
 Deno.test('optimizes an expression',  () => {
     const pipeline = new Pipeline();
@@ -12,9 +13,9 @@ Deno.test('optimizes an expression',  () => {
     let result = runner.runFunction("stuff");
     assertEquals(result, 62);
     const beforeSize = wasmTarget.asWasmBuffer().length;
-    let beforeText = "";
-    let afterText = "";
-    const optimized = Optimizer.optimize(wasmTarget, null, (before, after) => { beforeText = before; afterText = after });
+    let _beforeText = "";
+    let _afterText = "";
+    const optimized = Optimizer.optimize(wasmTarget, null, (before, after) => { _beforeText = before; _afterText = after });
     const afterSize = (optimized as WasmBufferSource).length;
     runner = Runner.of(optimized);
     result = runner.runFunction("stuff");

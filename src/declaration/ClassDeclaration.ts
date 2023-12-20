@@ -12,6 +12,7 @@ import WasmModule from "../module/WasmModule.ts";
 import CompilationUnit from "../compiler/CompilationUnit.ts";
 import FieldList from "../builder/FieldList.ts";
 import IClassMember from "./IClassMember.ts";
+import { assert } from "../../deps.ts";
 
 export default class ClassDeclaration extends DeclarationBase implements IDeclaration {
 

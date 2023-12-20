@@ -3,6 +3,7 @@ import UnresolvedIdentifierExpression from "../../src/expression/UnresolvedIdent
 import FunctionCall from "../../src/expression/FunctionCall.ts";
 import BinaryExpression from "../../src/expression/BinaryExpression.ts";
 import BinaryOperator from "../../src/expression/BinaryOperator.ts";
+import { assert, assertEquals } from "../../deps.ts";
 
 Deno.test('parses a variable',  () => {
     const exp = ComposeBuilder.parse_expression("my_var");

@@ -5,6 +5,7 @@ import Context from "../context/Context.ts";
 import IExpression from "./IExpression.ts";
 import BooleanType from "../type/BooleanType.ts";
 import TypeMap from "../type/TypeMap.ts";
+import { assert } from "../../deps.ts";
 
 export default class TernaryExpression extends ExpressionBase {
 

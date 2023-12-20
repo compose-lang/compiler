@@ -31,7 +31,7 @@ export default class TypeMap extends Map<string, IType> {
                 inferred = type;
             } else {
                 const common: IType | null = null; // TODO this._inferCommonBaseType(context, inferred, type);
-                assert(common);
+                // assert(common);
                 // if(common)
                     inferred = common;
                 // else

@@ -1,3 +1,4 @@
+import { assertEquals } from "../../deps.ts";
 import ComposeBuilder from "../../src/builder/ComposeBuilder.ts";
 
 Deno.test('exports child statement',  () => {
@@ -15,7 +16,7 @@ Deno.test('exports default statement',  () => {
     const unit = ComposeBuilder.parse_unit(code);
     assertEquals(unit.declarations.length, 0);
     assertEquals(unit.statements.length, 2);
-    assertEquals(unit.childExports, 0);
+    assertEquals(unit.childExports.length, 0);
     assertEquals(unit.mainExport, unit.statements[0]);
 });
 
@@ -38,7 +39,7 @@ Deno.test('exports default declaration',  () => {
 });
 
 Deno.test('reads import statement', () => {
-    const code = 'import Stuff1, { Stuff2 } from .ts"./Stuff";';
+    const code = 'import Stuff1, { Stuff2 } from "./Stuff";';
     const unit = ComposeBuilder.parse_unit(code);
     assertEquals(unit.imports.length, 1);
     const stmt = unit.imports[0];

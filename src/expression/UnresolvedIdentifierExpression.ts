@@ -10,6 +10,7 @@ import TypeType from "../type/TypeType.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResult from "./IResult.ts";
 import {ExpressionRef} from "../binaryen/binaryen_ts.ts";
+import { assert } from "../../deps.ts";
 
 
 export default class UnresolvedIdentifierExpression extends ExpressionBase {

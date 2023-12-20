@@ -5,6 +5,8 @@ import IExpression from "../expression/IExpression.ts";
 import IType from "../type/IType.ts";
 import Context from "../context/Context.ts";
 import TypeMap from "../type/TypeMap.ts";
+import { assert } from "../../deps.ts";
+import {assertFalse} from "https://deno.land/std@0.209.0/assert/assert_false.ts";
 
 export default class EnumDeclaration extends DeclarationBase {
 
@@ -23,7 +25,7 @@ export default class EnumDeclaration extends DeclarationBase {
         const names = new Set<string>();
         const types = new TypeMap();
         this.members.forEach(kvp => {
-            assert(!names.has(kvp.key.value));
+            assertFalse(names.has(kvp.key.value));
             names.add(kvp.key.value);
             const type = kvp.value.check(context);
             types.add(type);

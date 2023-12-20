@@ -2,6 +2,7 @@ import Loader from "./Loader.ts";
 import RunnableModule from "./RunnableModule.ts";
 import ISourceLocator from "./ISourceLocator.ts";
 import Imports from "./Imports.ts";
+import { assert, assertEquals } from "../../deps.ts";
 
 export default class Importer {
 
@@ -27,7 +28,7 @@ export default class Importer {
             const exports = WebAssembly.Module.exports(moduleImports.runnable.module);
             const descriptor = exports.find(d => d.name == elem.name);
             assert(descriptor);
-            assert.equal(elem.kind, descriptor.kind);
+            assertEquals(elem.kind, descriptor.kind);
             moduleImports.imports[elem.name] = moduleImports.runnable.instance.exports[elem.name];
         }
     }

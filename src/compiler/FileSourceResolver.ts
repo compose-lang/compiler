@@ -1,4 +1,4 @@
-import {fileExists} from "../utils/FileUtils.ts";
+import { dirname, fileExistsSync} from "../utils/FileUtils.ts";
 
 const FileSourceResolver = (unitPath: string, importSource: string) => {
     let dirPath = dirname(unitPath);
@@ -10,9 +10,9 @@ const FileSourceResolver = (unitPath: string, importSource: string) => {
         else if(part != ".")
             dirPath = dirPath + "/" + part;
     }
-    if(fileExists(dirPath))
+    if(fileExistsSync(dirPath))
         return dirPath;
-    else if(fileExists(dirPath + ".cots"))
+    else if(fileExistsSync(dirPath + ".cots"))
         return dirPath + ".cots";
     else
         return null;

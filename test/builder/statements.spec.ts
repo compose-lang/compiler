@@ -8,6 +8,7 @@ import FunctionCallStatement from "../../src/statement/FunctionCallStatement.ts"
 import OpCode from "../../src/compiler/OpCode.ts";
 import ImportStatement from "../../src/module/ImportStatement.ts";
 import IfStatement from "../../src/statement/IfStatement.ts";
+import { assert, assertEquals } from "../../deps.ts";
 
 Deno.test('parses a declare statement',  () => {
     const stmts = ComposeBuilder.parse_statement("const a = 2, b: i64 = 3;");
@@ -49,7 +50,7 @@ Deno.test('parses an instruction',  () => {
 });
 
 Deno.test('parses an import statement',  () => {
-    const stmt = ComposeBuilder.parse_import('import Stuff, { Stuff1, Stuff2 } from "./Stuff.ts";');
+    const stmt = ComposeBuilder.parse_import('import Stuff, { Stuff1, Stuff2 } from "./Stuff";');
     assert(stmt instanceof ImportStatement);
     assertEquals(stmt.mainSymbol.value, "Stuff");
     assertEquals(stmt.childSymbols.map(id => id.value), [ "Stuff1", "Stuff2" ]);

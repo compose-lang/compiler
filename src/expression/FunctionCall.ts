@@ -12,6 +12,7 @@ import RestParameter from "../parameter/RestParameter.ts";
 import IntegerLiteral from "../literal/IntegerLiteral.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResult from "./IResult.ts";
+import { assert } from "../../deps.ts";
 
 export default class FunctionCall extends ExpressionBase {
 

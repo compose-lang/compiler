@@ -11,6 +11,7 @@ import Context from "../context/Context.ts";
 import RestParameter from "../parameter/RestParameter.ts";
 import WasmModule from "../module/WasmModule.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
+import {assert, assertEquals} from "../../deps.ts";
 
 export default abstract class FunctionDeclarationBase extends DeclarationBase implements IFunctionDeclaration {
 
@@ -65,7 +66,7 @@ export default abstract class FunctionDeclarationBase extends DeclarationBase im
         const restParams = this.parameters.filter(param => param instanceof RestParameter);
         assert(restParams.length <= 1);
         if(restParams.length == 1)
-            assert.equal(this.parameters.at(-1), restParams[0]); // must be last
+            assertEquals(this.parameters.at(-1), restParams[0]); // must be last
     }
 
 }

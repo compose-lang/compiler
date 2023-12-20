@@ -5,6 +5,7 @@ import Context from "../context/Context.ts";
 import WasmModule from "../module/WasmModule.ts";
 import IWasmTarget from "./IWasmTarget.ts";
 import PipelineOptions from "./PipelineOptions.ts";
+import { writeFileSync } from "../utils/FileUtils.ts";
 
 export default class CompilationUnit {
 

@@ -24,8 +24,8 @@ export default class Runner {
         this.runnable = runnable;
     }
 
-    readFunction(method: string): Function {
-        return this.runnable.instance.exports[method] as Function;
+    readFunction(method: string): Function | null {
+        return this.runnable.instance.exports[method] as Function || null;
     }
 
     runFunction<T>(method: string, ...args: any[]): T {

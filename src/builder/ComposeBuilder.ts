@@ -8,7 +8,7 @@ import {
     TerminalNode,
     Token
 } from "npm:antlr4";
-import {fileExists} from "../utils/FileUtils.ts";
+import {fileExistsSync} from "../utils/FileUtils.ts";
 import ComposeParser, {
     Abstract_function_declarationContext,
     AddExpressionContext,
@@ -197,6 +197,7 @@ import RestParameter from "../parameter/RestParameter.ts";
 import ArrayType from "../type/ArrayType.ts";
 import SetType from "../type/SetType.ts";
 import ParameterList from "../parameter/ParameterList.ts";
+import { assert } from "../../deps.ts";
 
 type A = { const: string }
 const a = { const: 12};
@@ -209,7 +210,7 @@ export default class ComposeBuilder extends ComposeParserListener {
 
     static parse_unit(data: string, directives?: Map<string, boolean>): CompilationUnit | null {
         const unit = ComposeBuilder.doParse<CompilationUnit>((parser: ComposeParser) => parser.compilation_unit(), data, null, directives);
-        if(fileExists(data))
+        if(fileExistsSync(data))
             unit.path = data;
         return unit;
     }
@@ -263,7 +264,7 @@ export default class ComposeBuilder extends ComposeParserListener {
 
     static doParse<T>(rule: (parser: ComposeParser) => ParseTree, data?: string, stream?: CharStream, directives?: Map<string, boolean>): T | null {
         try {
-            const isFile = data && fileExists(data);
+            const isFile = data && fileExistsSync(data);
             const path = isFile ? data : "";
             stream = stream || isFile ? new PreprocessedFileStream(data, directives) : new PreprocessedCharStream(data, directives);
             const lexer = new ComposeLexer(stream);

@@ -7,6 +7,7 @@ import DirectiveParser, {
     Else_if_directiveContext, End_directiveContext,
     If_directiveContext
 } from "../preprocessor/DirectiveParser.ts";
+import { assert } from "../../deps.ts";
 
 abstract class Directive {
 

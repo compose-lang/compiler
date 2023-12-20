@@ -10,6 +10,7 @@ import CompilerFlags from "../compiler/CompilerFlags.ts";
 import FunctionBody from "../module/FunctionBody.ts";
 import IResult from "../expression/IResult.ts";
 import HeapTypeRegistry from "../registry/HeapTypeRegistry.ts";
+import { assert } from "../../deps.ts";
 
 export default class ArrayLiteral extends LiteralBase<any[]> {
 

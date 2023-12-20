@@ -9,6 +9,7 @@ import Variable from "../context/Variable.ts";
 import InstanceModifier from "../statement/InstanceModifier.ts";
 import ImportsType from "../type/ImportsType.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
+import { assert } from "../../deps.ts";
 
 export default class AbstractFunctionDeclaration extends FunctionDeclarationBase {
 

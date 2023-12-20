@@ -10,6 +10,8 @@ import ImportsType from "../type/ImportsType.ts";
 import IExpression from "../expression/IExpression.ts";
 import AssertFunction from "../builtins/AssertFunction.ts";
 import CompilationUnit from "../compiler/CompilationUnit.ts";
+import {assertFalse} from "https://deno.land/std@0.209.0/assert/assert_false.ts";
+import {assert} from "../../deps.ts";
 
 export default class Context {
 
@@ -97,7 +99,7 @@ export default class Context {
     }
 
     registerLocal(local: Variable) {
-        assert(!this.locals.has(local.name));
+        assertFalse(this.locals.has(local.name));
         this.locals.set(local.name, local);
     }
 

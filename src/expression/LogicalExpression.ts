@@ -4,6 +4,7 @@ import IType from "../type/IType.ts";
 import Context from "../context/Context.ts";
 import IExpression from "./IExpression.ts";
 import BooleanType from "../type/BooleanType.ts";
+import { assert } from "../../deps.ts";
 
 export default abstract class LogicalExpression extends ExpressionBase {
 

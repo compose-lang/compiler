@@ -5,6 +5,7 @@ import Variable from "../context/Variable.ts";
 import CompilationUnit from "../compiler/CompilationUnit.ts";
 import Global from "./Global.ts";
 import Prototype from "../declaration/Prototype.ts";
+import { assert } from "../../deps.ts";
 
 export default class WasmModule extends Module {
 

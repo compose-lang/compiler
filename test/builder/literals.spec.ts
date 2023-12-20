@@ -8,6 +8,7 @@ import StringLiteral from "../../src/literal/StringLiteral.ts";
 import ArrayLiteral from "../../src/literal/ArrayLiteral.ts";
 import SetLiteral from "../../src/literal/SetLiteral.ts";
 import MapLiteral from "../../src/literal/MapLiteral.ts";
+import { assert, assertEquals } from "../../deps.ts";
 
 Deno.test('parses a null literal',  () => {
     const exp = ComposeBuilder.parse_expression("null");

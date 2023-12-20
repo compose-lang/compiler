@@ -1,3 +1,4 @@
+import {assert, assertEquals} from "../../deps.ts";
 import ComposeBuilder from "../../src/builder/ComposeBuilder.ts";
 import FunctionType from "../../src/type/FunctionType.ts";
 import TupleType from "../../src/type/TupleType.ts";

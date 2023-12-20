@@ -8,6 +8,7 @@ import FunctionBody from "../module/FunctionBody.ts";
 import {BINARY_CONSTIFIERS} from "../compiler/Constifiers.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResult from "./IResult.ts";
+import { assert } from "../../deps.ts";
 
 export default class BinaryExpression extends ExpressionBase {
 

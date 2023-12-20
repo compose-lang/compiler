@@ -2,6 +2,7 @@ import ComposeBuilder from "../../src/builder/ComposeBuilder.ts";
 import ComposeLexer from "../../src/parser/ComposeLexer.ts";
 import PreprocessedCharStream from "../../src/builder/PreprocessedCharStream.ts";
 import { Token } from "npm:antlr4";
+import { assertEquals } from "../../deps.ts";
 
 Deno.test('ignores directive text', () => {
     const code = "#if TRACE";

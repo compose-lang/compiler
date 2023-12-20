@@ -1,3 +1,4 @@
+import { assertEquals } from "../../deps.ts";
 import ComposeBuilder from "../../src/builder/ComposeBuilder.ts";
 import Pipeline from "../../src/compiler/Pipeline.ts";
 import Runner from "../../src/runner/Runner.ts";

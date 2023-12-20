@@ -15,6 +15,7 @@ import FunctionDeclarationBase from "../declaration/FunctionDeclarationBase.ts";
 import DeclareInstanceStatement from "../statement/DeclareInstanceStatement.ts";
 import Variable from "../context/Variable.ts";
 import InstanceModifier from "../statement/InstanceModifier.ts";
+import {assert, assertEquals} from "../../deps.ts";
 
 export default class ImportStatement extends CodeFragment {
 
@@ -39,7 +40,7 @@ export default class ImportStatement extends CodeFragment {
             console.log("Resolved import of: " + this.source.value + " from: " + unit.path + " to: " + path);
         this.importedUnit = options.sourceAdded(path);
         if(this.mainSymbol)
-            assert.equal(this.mainSymbol.value, this.importedUnit.mainExport.name);
+            assertEquals(this.mainSymbol.value, this.importedUnit.mainExport.name);
         this.childSymbols.forEach(symbol => {
             const childExport = this.importedUnit.childExports.find(child => child.name == symbol.value);
             assert(childExport);

@@ -2,6 +2,9 @@ import ComposeBuilder from "../../src/builder/ComposeBuilder.ts";
 import Pipeline from "../../src/compiler/Pipeline.ts";
 import Runner from "../../src/runner/Runner.ts";
 import ISourceLocator from "../../src/runner/ISourceLocator.ts";
+import { assert, assertEquals } from "../../deps.ts";
+import { dirname } from "../../src/utils/FileUtils.ts";
+import { fileURLToPath } from "../../src/utils/URLUtils.ts";
 
 Deno.test('compiles and runs a function using imported globals',  () => {
     const __filename = fileURLToPath(import.meta.url);

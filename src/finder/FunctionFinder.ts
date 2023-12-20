@@ -6,6 +6,7 @@ import IFunctionDeclaration from "../declaration/IFunctionDeclaration.ts";
 import IExpression from "../expression/IExpression.ts";
 import VoidType from "../type/VoidType.ts";
 import RestParameter from "../parameter/RestParameter.ts";
+import {assert, assertEquals} from "../../deps.ts";
 
 enum Score {
     WORSE = -1,
@@ -101,7 +102,7 @@ export default abstract class FunctionFinder {
                     ambiguous.push(decl);
             }
         }, this);
-        assert.equal(ambiguous.length, 0);
+        assertEquals(ambiguous.length, 0);
         return candidate;
     }
 
