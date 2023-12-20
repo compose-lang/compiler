@@ -6,14 +6,11 @@ import Context from "../context/Context.ts";
 import IExpression from "./IExpression.ts";
 import FunctionBody from "../module/FunctionBody.ts";
 import FunctionFinder from "../finder/FunctionFinder.ts";
-import OpCode from "../compiler/OpCode.ts";
 import IFunctionDeclaration from "../declaration/IFunctionDeclaration.ts";
 import RestParameter from "../parameter/RestParameter.ts";
-import IntegerLiteral from "../literal/IntegerLiteral.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResult from "./IResult.ts";
 import { assert } from "../../deps.ts";
-import HeapTypeRegistry from "../registry/HeapTypeRegistry.ts";
 import ArrayLiteral from "../literal/ArrayLiteral.ts";
 
 export default class FunctionCall extends ExpressionBase {
