@@ -1,6 +1,8 @@
 import DecimalType from "./DecimalType.ts";
 import NumberPrecedence from "./NumberPrecedence.ts";
-import {f64, Type} from "../binaryen/binaryen_ts.ts";
+import {Type} from "../binaryen/binaryen_wasm.d.ts";
+/// <reference types="../binaryen/binaryen_wasm.d.ts" />
+import {f64} from "../binaryen/binaryen_wasm.js";
 
 export default class Float64Type extends DecimalType {
 

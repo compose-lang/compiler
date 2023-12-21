@@ -3,7 +3,7 @@ import IType from "./IType.ts";
 import IExpression from "../expression/IExpression.ts";
 import Context from "../context/Context.ts";
 import HeapTypeRegistry from "../registry/HeapTypeRegistry.ts";
-import {Type} from "../binaryen/binaryen_ts.ts";
+import {Type} from "../binaryen/binaryen_wasm.d.ts";
 import {assert} from "../../deps.ts";
 
 

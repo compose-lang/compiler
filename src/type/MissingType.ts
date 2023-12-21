@@ -3,7 +3,9 @@ import IExpression from "../expression/IExpression.ts";
 import IValueType from "./IValueType.ts";
 import Context from "../context/Context.ts";
 import IType from "./IType.ts";
-import {auto, Type} from "../binaryen/binaryen_ts.ts";
+import {Type} from "../binaryen/binaryen_wasm.d.ts";
+/// <reference types="../binaryen/binaryen_wasm.d.ts" />
+import {auto} from "../binaryen/binaryen_wasm.js";
 import {assert} from "../../deps.ts";
 
 export default class MissingType extends NativeType implements IValueType {

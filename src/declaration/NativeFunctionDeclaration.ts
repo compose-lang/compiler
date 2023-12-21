@@ -8,7 +8,8 @@ import IType from "../type/IType.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import FunctionBody from "../module/FunctionBody.ts";
 import OpCode from "../compiler/OpCode.ts";
-import { i32 } from "../binaryen/binaryen_ts.ts";
+/// <reference types="../binaryen/binaryen_wasm.d.ts" />
+import { i32 } from "../binaryen/binaryen_wasm.js";
 
 export default class NativeFunctionDeclaration extends FunctionDeclarationBase {
 

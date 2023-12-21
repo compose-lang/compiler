@@ -9,7 +9,7 @@ import ExportType from "../compiler/ExportType.ts";
 import CompilationUnit from "../compiler/CompilationUnit.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResults from "./IResults.ts";
-import {ExpressionRef} from "../binaryen/binaryen_ts.ts";
+import {ExpressionRef} from "../binaryen/binaryen_wasm.d.ts";
 
 export default abstract class StatementBase extends CodeFragment implements IStatement {
 

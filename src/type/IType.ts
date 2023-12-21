@@ -7,7 +7,7 @@ import UnaryOperator from "../expression/UnaryOperator.ts";
 import BinaryOperator from "../expression/BinaryOperator.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResult from "../expression/IResult.ts";
-import {Type} from "../binaryen/binaryen_ts.ts";
+import {Type} from "../binaryen/binaryen_wasm.d.ts";
 
 export default interface IType {
 

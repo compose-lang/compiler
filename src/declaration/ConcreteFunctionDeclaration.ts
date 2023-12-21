@@ -12,7 +12,8 @@ import AnyType from "../type/AnyType.ts";
 import ParameterList from "../parameter/ParameterList.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import FunctionBody from "../module/FunctionBody.ts";
-import { Function } from "../binaryen/binaryen_ts.ts";
+/// <reference types="../binaryen/binaryen_wasm.d.ts" />
+import { Function } from "../binaryen/binaryen_wasm.js";
 import { assert } from "../../deps.ts";
 
 export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase {

@@ -1,4 +1,5 @@
-import {Feature, Module} from "../binaryen/binaryen_ts.ts";
+/// <reference types="../binaryen/binaryen_wasm.d.ts" />
+import {Feature, Module} from "../binaryen/binaryen_wasm.js";
 import IFunctionDeclaration from "../declaration/IFunctionDeclaration.ts";
 import IExpression from "../expression/IExpression.ts";
 import Variable from "../context/Variable.ts";

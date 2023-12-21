@@ -9,7 +9,7 @@ import ClassDeclaration from "../declaration/ClassDeclaration.ts";
 import TypeType from "../type/TypeType.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResult from "./IResult.ts";
-import {ExpressionRef} from "../binaryen/binaryen_ts.ts";
+import {ExpressionRef} from "../binaryen/binaryen_wasm.d.ts";
 import { assert } from "../../deps.ts";
 
 

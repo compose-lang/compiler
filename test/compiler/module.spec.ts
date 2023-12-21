@@ -1,7 +1,8 @@
 import ComposeBuilder from "../../src/builder/ComposeBuilder.ts";
 import Pipeline from "../../src/compiler/Pipeline.ts";
 import Runner from "../../src/runner/Runner.ts";
-import {Module, Feature} from "../../src/binaryen/binaryen_ts.ts";
+/// <reference types="../../src/binaryen/binaryen_wasm.d.ts" />
+import {Module, Feature} from "../../src/binaryen/binaryen_wasm.js";
 import { assertEquals } from "../../deps.ts";
 
 Deno.test('compiles and runs an empty compilation unit',  () => {

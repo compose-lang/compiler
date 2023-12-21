@@ -5,7 +5,9 @@ import UserType from "./UserType.ts";
 import {equalArrays, equalObjects} from "../utils/ObjectUtils.ts";
 import NullLiteral from "../literal/NullLiteral.ts";
 import IExpression from "../expression/IExpression.ts";
-import {createType, Type} from "../binaryen/binaryen_ts.ts";
+import {Type} from "../binaryen/binaryen_wasm.d.ts";
+/// <reference types="../binaryen/binaryen_wasm.d.ts" />
+import {createType} from "../binaryen/binaryen_wasm.js";
 import {assert} from "../../deps.ts";
 
 export default class FunctionType extends UserType {

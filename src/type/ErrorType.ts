@@ -1,11 +1,10 @@
 import NativeType from "./NativeType.ts";
-import IWasmTarget from "../compiler/IWasmTarget.ts";
 import IExpression from "../expression/IExpression.ts";
 import ClassType from "./ClassType.ts";
 import Identifier from "../builder/Identifier.ts";
 import IType from "./IType.ts";
 import Context from "../context/Context.ts";
-import {Type} from "../binaryen/binaryen_ts.ts";
+import {Type} from "../binaryen/binaryen_wasm.d.ts";
 import {assert} from "../../deps.ts";
 import NullLiteral from "../literal/NullLiteral.ts";
 

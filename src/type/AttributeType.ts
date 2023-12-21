@@ -2,7 +2,7 @@ import IType from "./IType.ts";
 import Identifier from "../builder/Identifier.ts";
 import Context from "../context/Context.ts";
 import UserType from "./UserType.ts";
-import {Type} from "../binaryen/binaryen_ts.ts";
+import {Type} from "../binaryen/binaryen_wasm.d.ts";
 import {assert} from "../../deps.ts";
 
 export default class AttributeType extends UserType {

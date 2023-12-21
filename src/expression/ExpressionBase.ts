@@ -6,7 +6,7 @@ import FunctionBody from "../module/FunctionBody.ts";
 import IType from "../type/IType.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResult from "./IResult.ts";
-import { ExpressionRef } from "../binaryen/binaryen_ts.ts";
+import { ExpressionRef } from "../binaryen/binaryen_wasm.d.ts";
 import { assert } from "../../deps.ts";
 
 export default abstract class ExpressionBase extends CodeFragment implements IExpression {

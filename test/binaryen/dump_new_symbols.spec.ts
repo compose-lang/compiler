@@ -1,11 +1,11 @@
-import * as binaryen from "../../src/binaryen/binaryen_ts.ts";
+import * as binaryen from "../../src/binaryen/binaryen_wasm.js";
 import {dumpObject} from "./dump_utils.ts";
 
-it("dumps new binaryen symbols",  () => {
+Deno.test("dumps new binaryen symbols",  () => {
     dumpObject("", binaryen);
 });
 
-it("dumps new binaryen constants",  () => {
+Deno.test("dumps new binaryen constants",  () => {
     console.log(binaryen.f64);
     console.log(binaryen.ExternalKinds.Function);
     console.log(binaryen.Operations.AbsFloat32);

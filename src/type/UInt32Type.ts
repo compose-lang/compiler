@@ -9,7 +9,9 @@ import Int32Type from "./Int32Type.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResult from "../expression/IResult.ts";
 import FunctionBody from "../module/FunctionBody.ts";
-import {i32, Type} from "../binaryen/binaryen_ts.ts";
+import {Type} from "../binaryen/binaryen_wasm.d.ts";
+/// <reference types="../binaryen/binaryen_wasm.d.ts" />
+import {i32} from "../binaryen/binaryen_wasm.js";
 
 export default class UInt32Type extends IntegerType {
 

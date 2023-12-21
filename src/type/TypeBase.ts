@@ -9,7 +9,7 @@ import CodeFragment from "../builder/CodeFragment.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResult from "../expression/IResult.ts";
 import FunctionBody from "../module/FunctionBody.ts";
-import {Type} from "../binaryen/binaryen_ts.ts";
+import {Type} from "../binaryen/binaryen_wasm.d.ts";
 import {assert} from "../../deps.ts";
 
 

@@ -1,4 +1,6 @@
-import {HeapType, PackedType, Type, TypeBuilder} from "../binaryen/binaryen_ts.ts";
+import {Type, HeapType} from "../binaryen/binaryen_wasm.d.ts";
+/// <reference types="../binaryen/binaryen_wasm.d.ts" />
+import {PackedType, TypeBuilder} from "../binaryen/binaryen_wasm.js";
 
 export default class HeapTypeRegistry {
 
@@ -11,7 +13,7 @@ export default class HeapTypeRegistry {
     }
 
     // TODO set heap type name using BinaryenModuleSetTypeName
-    getArrayType(elementType: Type, mutable = true, packedType: PackedType = PackedType.NotPacked, nullable = true): [Type, HeapType] {
+    getArrayType(elementType: Type, mutable = true, packedType = PackedType.NotPacked, nullable = true): [Type, HeapType] {
         if(!this.arrayTypesMap.has(elementType)) {
             const builder = new TypeBuilder(1);
             builder.setArrayType(0, elementType, packedType, mutable);

@@ -9,7 +9,9 @@ import IResult from "../expression/IResult.ts";
 import IExpression from "../expression/IExpression.ts";
 import FunctionBody from "../module/FunctionBody.ts";
 import UnaryOperator from "../expression/UnaryOperator.ts";
-import {i32, Type} from "../binaryen/binaryen_ts.ts";
+import {Type} from "../binaryen/binaryen_wasm.d.ts";
+/// <reference types="../binaryen/binaryen_wasm.d.ts" />
+import {i32} from "../binaryen/binaryen_wasm.js";
 
 export default class Int32Type extends IntegerType {
 

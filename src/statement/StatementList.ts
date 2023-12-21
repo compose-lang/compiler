@@ -8,7 +8,7 @@ import FunctionBody from "../module/FunctionBody.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResults from "./IResults.ts";
 import {assert} from "../../deps.ts";
-import {ExpressionRef} from "../binaryen/binaryen_ts.ts";
+import {ExpressionRef} from "../binaryen/binaryen_wasm.d.ts";
 
 export default class StatementList extends Array<IStatement> {
 

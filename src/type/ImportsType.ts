@@ -9,7 +9,7 @@ import BinaryOperator from "../expression/BinaryOperator.ts";
 import UnaryOperator from "../expression/UnaryOperator.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResult from "../expression/IResult.ts";
-import {Type} from "../binaryen/binaryen_ts.ts";
+import {Type} from "../binaryen/binaryen_wasm.d.ts";
 import {assert} from "../../deps.ts";
 
 export default class ImportsType extends Map<string, IFunctionDeclaration> implements IType {

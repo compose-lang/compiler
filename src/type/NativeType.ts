@@ -1,6 +1,6 @@
 import IExpression from "../expression/IExpression.ts";
 import TypeBase from "./TypeBase.ts";
-import {Type} from "../binaryen/binaryen_ts.ts";
+import {Type} from "../binaryen/binaryen_wasm.d.ts";
 
 export default abstract class NativeType extends TypeBase {
 

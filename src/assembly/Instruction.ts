@@ -5,7 +5,7 @@ import WasmModule from "../module/WasmModule.ts";
 import FunctionBody from "../module/FunctionBody.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import ComposeLexer from "../parser/ComposeLexer.ts";
-import {ExpressionRef} from "../binaryen/binaryen_ts.ts";
+import {ExpressionRef} from "../binaryen/binaryen_wasm.d.ts";
 import {assert} from "../../deps.ts";
 
 export interface IIndexable {

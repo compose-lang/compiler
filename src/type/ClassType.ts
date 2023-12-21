@@ -1,13 +1,12 @@
 import IType from "./IType.ts";
 import Identifier from "../builder/Identifier.ts";
-import IWasmTarget from "../compiler/IWasmTarget.ts";
 import Context from "../context/Context.ts";
 import UserType from "./UserType.ts";
 import ClassDeclaration from "../declaration/ClassDeclaration.ts";
 import IValueType from "./IValueType.ts";
 import NullType from "./NullType.ts";
 import BooleanType from "./BooleanType.ts";
-import {Type} from "../binaryen/binaryen_ts.ts";
+import {Type} from "../binaryen/binaryen_wasm.d.ts";
 import {assert} from "../../deps.ts";
 
 export default class ClassType extends UserType implements IValueType {
