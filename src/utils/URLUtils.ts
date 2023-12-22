@@ -1,13 +1,4 @@
-import { isNodeJs, isDeno, importUrlIfNode, importUrlIfDeno } from './ImportUtils.ts';
-
-const node_url = importUrlIfNode();
-const deno_url = importUrlIfDeno();
-
+import * as urls from "https://deno.land/std@0.83.0/node/url.ts";
 export function fileURLToPath(path: string) {
-    if(isNodeJs())
-        return node_url.fileURLToPath(path);
-    else if (isDeno())
-        return deno_url.fileURLToPath(path);
-    else
-        throw new Error("Should never get there!")
+    return urls.fileURLToPath(path);
 }

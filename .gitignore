@@ -4,3 +4,4 @@ dist
 grammar/gen
 /opcodes/gc/
 /dumps/
+/node_modules/
