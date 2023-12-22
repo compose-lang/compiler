@@ -1,0 +1,20 @@
+<html>
+    <header>
+        <script>
+            const Deno = null;
+            function compileAndRun() {
+                const area = document.getElementById("compose");
+                const code = area.value;
+                alert(code);
+            }
+        </script>
+        <script type="module" src="../dist/compose-compiler-browser.js"></script>
+    </header>
+    <body>
+        <form>
+            <label>Enter compose code (use print(s) for output)</label><br/>
+            <textarea id="compose" cols="80" rows="30"></textarea><br/>
+            <button onclick="compileAndRun()">Run</button>
+        </form>
+    </body>
+</html>

@@ -1,10 +1,12 @@
 import WasmTargetBase from "./WasmTargetBase.ts";
 import WasmFileSource from "../runner/WasmFileSource.ts";
+import { assert } from "../../deps.ts";
+import { writeFileSync, openFileSync, closeFileSync, readPathSync } from "../utils/FileUtils.ts";
 
 export default class WasmFileTarget extends WasmTargetBase {
 
     targetPath: string;
-    file = -1;
+    file: Deno.FsFile;
 
     constructor(targetPath: string) {
         super();
@@ -12,18 +14,18 @@ export default class WasmFileTarget extends WasmTargetBase {
     }
 
     open(): void {
-        assert(this.file == -1);
-        this.file = fs.openSync(this.targetPath, "w");
+        assert(!this.file);
+        this.file = openFileSync(this.targetPath, { write: true, create: true, truncate: true });
     }
 
     close(): void {
-        assert(this.file != -1);
-        fs.close(this.file);
-        this.file = -1;
+        assert(this.file);
+        closeFileSync(this.file);
+        this.file = null;
     }
 
     asWasmBuffer(): Uint8Array {
-        return fs.readFileSync(this.targetPath);
+        return readPathSync(this.targetPath);
     }
 
     asWasmSource(): WasmFileSource {
@@ -31,7 +33,7 @@ export default class WasmFileTarget extends WasmTargetBase {
     }
 
     writeUint8Array(uint8s: Uint8Array): void {
-        fs.writeFileSync(this.file, uint8s, "binary");
+        writeFileSync(this.file, uint8s);
 
     }
 

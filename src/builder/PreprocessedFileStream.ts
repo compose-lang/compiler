@@ -1,4 +1,4 @@
-import {FileStream} from "npm:antlr4";
+import FileStream from "./FileStream.ts";
 import Preprocessor from "./Preprocessor.ts";
 
 export default class PreprocessedFileStream extends FileStream {

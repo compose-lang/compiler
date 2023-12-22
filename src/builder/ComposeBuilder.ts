@@ -43,7 +43,7 @@ import ComposeParser, {
     Declare_oneContext, Embeddable_statementContext,
     Enum_declarationContext,
     Enum_itemContext,
-    EqualsExpressionContext, ExpressionContext,
+    EqualsExpressionContext,
     F32_typeContext,
     F64_typeContext,
     Field_declarationContext,
@@ -100,8 +100,7 @@ import ComposeParser, {
     U64_typeContext, Unary_statementContext,
     UnaryBitNotExpressionContext,
     UnaryNotExpressionContext,
-    Value_type_or_nullContext,
-    Value_typeContext
+    Value_type_or_nullContext
 } from "../parser/ComposeParser.ts";
 import ComposeLexer from "../parser/ComposeLexer.ts";
 import ComposeParserListener from "../parser/ComposeParserListener.ts";

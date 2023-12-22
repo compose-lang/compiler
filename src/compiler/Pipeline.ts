@@ -3,7 +3,7 @@ import IWasmTarget from "./IWasmTarget.ts";
 import Context from "../context/Context.ts";
 import ComposeBuilder from "../builder/ComposeBuilder.ts";
 import PipelineOptions from "./PipelineOptions.ts";
-import { dirname, writeFileSync } from "../utils/FileUtils.ts";
+import { dirname, writePathSync } from "../utils/FileUtils.ts";
 import { fileURLToPath } from "../utils/URLUtils.ts";
 import CiCdUtils from "../utils/CiCdUtils.ts";
 
@@ -73,13 +73,13 @@ export default class Pipeline {
                 if(!CiCdUtils.isRunningInCI())
                     console.log(wat);
                 if(this.options.dumpWatPath)
-                    writeFileSync(this.options.dumpWatPath, wat);
+                    writePathSync(this.options.dumpWatPath, wat);
             }
             const wasmTarget = this.options.provideTarget(unit);
             unit.assembleModule(wasmTarget, this.options);
             if(this.options.dumpWasmPath) {
                 const buffer = wasmTarget.asWasmBuffer();
-                writeFileSync(this.options.dumpWasmPath, buffer);
+                writePathSync(this.options.dumpWasmPath, buffer);
             }
             return wasmTarget;
         })

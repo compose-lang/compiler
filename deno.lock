@@ -3,7 +3,8 @@
   "packages": {
     "specifiers": {
       "npm:@types/node": "npm:@types/node@18.16.19",
-      "npm:antlr4": "npm:antlr4@4.13.1-patch-1"
+      "npm:antlr4": "npm:antlr4@4.13.1-patch-1",
+      "npm:esbuild-plugin-ignore": "npm:esbuild-plugin-ignore@1.1.1"
     },
     "npm": {
       "@types/node@18.16.19": {
@@ -12,6 +13,10 @@
       },
       "antlr4@4.13.1-patch-1": {
         "integrity": "sha512-OjFLWWLzDMV9rdFhpvroCWR4ooktNg9/nvVYSA5z28wuVpU36QUNuioR1XLnQtcjVlf8npjyz593PxnU/f/Cow==",
+        "dependencies": {}
+      },
+      "esbuild-plugin-ignore@1.1.1": {
+        "integrity": "sha512-RVh45nlpiFiBJuw687Qh935VQvSzIA4rkBBytYYb5M3bTQcxokULQFQW6Sj0YHbFR6thNWmQYFkBghEQt5D3jg==",
         "dependencies": {}
       }
     }
