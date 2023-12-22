@@ -5,6 +5,7 @@ import ComposeBuilder from "../builder/ComposeBuilder.ts";
 import PipelineOptions from "./PipelineOptions.ts";
 import { dirname, writeFileSync } from "../utils/FileUtils.ts";
 import { fileURLToPath } from "../utils/URLUtils.ts";
+import CiCdUtils from "../utils/CiCdUtils.ts";
 
 export default class Pipeline {
 
@@ -69,7 +70,8 @@ export default class Pipeline {
                 unit.module.validate();
             if (this.options.emitWat) {
                 const wat = unit.module.emitText();
-                console.log(wat);
+                if(!CiCdUtils.isRunningInCI())
+                    console.log(wat);
                 if(this.options.dumpWatPath)
                     writeFileSync(this.options.dumpWatPath, wat);
             }

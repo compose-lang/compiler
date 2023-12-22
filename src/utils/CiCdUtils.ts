@@ -1,11 +1,8 @@
-import {isNodeJs} from "./ImportUtils.ts";
+import { getEnv } from "./ProcessUtils.ts";
 
 export default abstract class CiCdUtils {
 
-    static isCiCd() {
-        if(isNodeJs())
-            return eval("process && !!process.env.CI");
-        else
-            return false; // TODO
+    static isRunningInCI() {
+        return getEnv("CI") == "true";
     }
 }
