@@ -1,4 +1,4 @@
-import fs from "fs.ts";
+import { readFileSync, statSync } from "../utils/FileUtils.ts";
 import IWasmSource from "./IWasmSource.ts";
 
 export default class WasmFileSource implements IWasmSource {
@@ -10,15 +10,15 @@ export default class WasmFileSource implements IWasmSource {
     }
 
     get length(): number {
-        const stats = fs.statSync(this.path);
-        if ( stats.isFile() )
+        const stats = statSync(this.path);
+        if ( stats.isFile )
             return stats.size;
         else
             throw new Error("No such file: " + this.path);
     }
 
     compile(): WebAssembly.Module {
-        const bytes = fs.readFileSync(this.path)
+        const bytes = readFileSync(this.path)
         return new WebAssembly.Module(bytes);
     }
 }

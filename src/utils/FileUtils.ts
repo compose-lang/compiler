@@ -1,4 +1,4 @@
-import { isNodeJs, isDeno, importOsIfNode, importOsIfDeno, importFsIfNode, importFsIfDeno, importPathIfNode, importPathIfDeno } from './ImportUtils.ts';
+import { isNodeJs, isDeno, importOsIfNode, /*importOsIfDeno, */importFsIfNode, importFsIfDeno, importPathIfNode, importPathIfDeno } from './ImportUtils.ts';
 import {stringToArrayBuffer} from "./StringUtils.ts";
 
 const node_fs = importFsIfNode();
@@ -8,7 +8,7 @@ const node_path = importPathIfNode();
 const deno_path = importPathIfDeno();
 
 const node_os = importOsIfNode();
-const deno_os = importOsIfDeno();
+// const deno_os = importOsIfDeno();
 
 export function fileExistsSync(path: string) {
     if(isNodeJs())
@@ -16,6 +16,18 @@ export function fileExistsSync(path: string) {
     else if (isDeno())
         return deno_fs.existsSync(path);
     else
+        throw new Error("Should never get there!")
+}
+
+export function statSync(path: string) {
+    if(isNodeJs())
+        return node_fs.statSync(path);
+    else if (isDeno()) {
+        const stats = Deno.statSync(path);
+        return Object.assign(stats, {
+            isFile: () => stats.isFile
+        });
+    } else
         throw new Error("Should never get there!")
 }
 
@@ -60,6 +72,16 @@ export function dirname(path: string): string {
     else
         throw new Error("Should never get there!")
 }
+
+export function filename(path: string): string {
+    if(isNodeJs())
+        return node_path.basename(path, node_path.extname(path));
+    else if(isDeno())
+        return deno_path.basename(path, deno_path.extname(path));
+    else
+        throw new Error("Should never get there!")
+}
+
 
 export function tmpdir(): string {
     if(isNodeJs())
