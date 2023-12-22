@@ -1,12 +1,12 @@
-import LiteralBase from "./LiteralBase";
-import Context from "../context/Context";
-import WasmModule from "../module/WasmModule";
-import IType from "../type/IType";
-import Int32Type from "../type/Int32Type";
-import Int64Type from "../type/Int64Type";
-import CompilerFlags from "../compiler/CompilerFlags";
-import IResult from "../expression/IResult";
-import FunctionBody from "../module/FunctionBody";
+import LiteralBase from "./LiteralBase.ts";
+import Context from "../context/Context.ts";
+import WasmModule from "../module/WasmModule.ts";
+import IType from "../type/IType.ts";
+import Int32Type from "../type/Int32Type.ts";
+import Int64Type from "../type/Int64Type.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
+import IResult from "../expression/IResult.ts";
+import FunctionBody from "../module/FunctionBody.ts";
 
 export default class IntegerLiteral extends LiteralBase<number> {
 

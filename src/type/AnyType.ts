@@ -1,10 +1,10 @@
-import NativeType from "./NativeType";
-import IWasmTarget from "../compiler/IWasmTarget";
-import IExpression from "../expression/IExpression";
-import * as assert from "assert";
-import IValueType from "./IValueType";
-import Context from "../context/Context";
-import IType from "./IType";
+import NativeType from "./NativeType.ts";
+import IExpression from "../expression/IExpression.ts";
+import IValueType from "./IValueType.ts";
+import Context from "../context/Context.ts";
+import IType from "./IType.ts";
+import {Type} from "../binaryen/binaryen_wasm.d.ts";
+import {assert} from "../../deps.ts";
 
 export default class AnyType extends NativeType implements IValueType {
 
@@ -19,15 +19,15 @@ export default class AnyType extends NativeType implements IValueType {
     }
 
     defaultValue(): IExpression {
-        assert.ok(false); // should never get there
+        assert(false); // should never get there
     }
 
     count(): number {
-        assert.ok(false); // should never get there
+        assert(false); // should never get there
     }
 
-    asType(): number {
-        assert.ok(false); // should never get there
+    asType(): Type {
+        assert(false); // should never get there
     }
 
 }

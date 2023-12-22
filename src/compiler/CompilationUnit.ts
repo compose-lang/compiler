@@ -1,13 +1,11 @@
-import IDeclaration from "../declaration/IDeclaration";
-import IGlobalStatement from "../statement/IGlobalStatement";
-import ImportStatement from "../module/ImportStatement";
-import Context from "../context/Context";
-import WasmModule from "../module/WasmModule";
-import CompilerFlags from "./CompilerFlags";
-import IWasmTarget from "./IWasmTarget";
-import PipelineOptions from "./PipelineOptions";
-import {dirname} from "path";
-import {writeFileSync} from "fs";
+import IDeclaration from "../declaration/IDeclaration.ts";
+import IGlobalStatement from "../statement/IGlobalStatement.ts";
+import ImportStatement from "../module/ImportStatement.ts";
+import Context from "../context/Context.ts";
+import WasmModule from "../module/WasmModule.ts";
+import IWasmTarget from "./IWasmTarget.ts";
+import PipelineOptions from "./PipelineOptions.ts";
+import { writeFileSync } from "../utils/FileUtils.ts";
 
 export default class CompilationUnit {
 
@@ -88,9 +86,9 @@ export default class CompilationUnit {
         if(options.logPaths)
             console.log("Unit path after compile imports: " + this.path);
         // compile globals in the order of their registration in the globals section
-        this.module.globals.forEach(glob => glob.compile(this.context, this.module, options.compilerFlags, null), this);
+        this.module.globalsList.forEach(glob => glob.compile(this.context, this.module, options.compilerFlags, null), this);
         // compile functions in the order of their registration in the functions section
-        this.module.functions.forEach(decl => decl.compile(this.context, this.module, options.compilerFlags, null), this);
+        this.module.functionsList.forEach(decl => decl.compile(this.context, this.module, options.compilerFlags, null), this);
     }
 
     assembleModule(wasmTarget: IWasmTarget, options: PipelineOptions) {

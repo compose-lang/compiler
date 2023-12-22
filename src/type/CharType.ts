@@ -1,7 +1,8 @@
-import NativeType from "./NativeType";
-import CharLiteral from "../literal/CharLiteral";
-import IExpression from "../expression/IExpression";
-import * as assert from "assert";
+import NativeType from "./NativeType.ts";
+import CharLiteral from "../literal/CharLiteral.ts";
+import IExpression from "../expression/IExpression.ts";
+import {Type} from "../binaryen/binaryen_wasm.d.ts";
+import {assert} from "../../deps.ts";
 
 export default class CharType extends NativeType {
 
@@ -15,7 +16,7 @@ export default class CharType extends NativeType {
         return new CharLiteral("\0");
     }
 
-    asType(): number {
-        assert.ok(false)
+    asType(): Type {
+        assert(false)
     }
 }

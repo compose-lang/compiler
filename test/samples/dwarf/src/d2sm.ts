@@ -915,7 +915,7 @@ function parseSections(buffer: Uint8Array): Array<Section | CustomSection> {
     }
     // Move to the end of the section
     pos += sectionSize.value;
-    console.log(`${WasmSectionType[id].padStart(10, ' ')} starts=0x${section.start.toString(16).padStart(8, '0')} size=0x${section.size.toString(16).padEnd(5, ' ')} ${(section as any).name ?? ""}`);
+    console.log(`${WasmSectionType[id].padStart(10, ' ')} starts=0x${section.start.toString(16).padStart(8, '0')} size=0x${section.size.toString(16).padEnd(5, ' ')} ${(section as any).name ?? ".ts"}`);
     sections.push(section);
   }
   return sections;

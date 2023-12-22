@@ -1,8 +1,5 @@
-import IWasmSource from "../runner/IWasmSource";
-import WasmTargetBase from "./WasmTargetBase";
-import WasmFileSource from "../runner/WasmFileSource";
-import fs from "fs";
-import assert from "assert";
+import WasmTargetBase from "./WasmTargetBase.ts";
+import WasmFileSource from "../runner/WasmFileSource.ts";
 
 export default class WasmFileTarget extends WasmTargetBase {
 
@@ -29,7 +26,7 @@ export default class WasmFileTarget extends WasmTargetBase {
         return fs.readFileSync(this.targetPath);
     }
 
-    asWasmSource(): IWasmSource {
+    asWasmSource(): WasmFileSource {
         return new WasmFileSource(this.targetPath);
     }
 

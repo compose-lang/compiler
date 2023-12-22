@@ -1,23 +1,23 @@
-import CodeFragment from "../builder/CodeFragment";
-import IStatement from "./IStatement";
-import WasmModule from "../module/WasmModule";
-import Context from "../context/Context";
-import FunctionBody from "../module/FunctionBody";
-import IType from "../type/IType";
-import Annotation from "../builder/Annotation";
-import ExportType from "../compiler/ExportType";
-import CompilationUnit from "../compiler/CompilationUnit";
-import CompilerFlags from "../compiler/CompilerFlags";
-import IResults from "./IResults";
-import binaryen from "binaryen";
+import CodeFragment from "../builder/CodeFragment.ts";
+import IStatement from "./IStatement.ts";
+import WasmModule from "../module/WasmModule.ts";
+import Context from "../context/Context.ts";
+import FunctionBody from "../module/FunctionBody.ts";
+import IType from "../type/IType.ts";
+import Annotation from "../builder/Annotation.ts";
+import ExportType from "../compiler/ExportType.ts";
+import CompilationUnit from "../compiler/CompilationUnit.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
+import IResults from "./IResults.ts";
+import {ExpressionRef} from "../binaryen/binaryen_wasm.d.ts";
 
 export default abstract class StatementBase extends CodeFragment implements IStatement {
 
-    _unit: CompilationUnit;
-    annotations: Annotation[];
+    _unit: CompilationUnit = null;
+    annotations: Annotation[] = null;
     exportType: ExportType = ExportType.NONE;
 
-    isModuleExport() {
+    isModuleExport(): boolean {
         return this.exportType!=ExportType.NONE || this.annotations && this.annotations.some(a => a.name === "@ModuleExport");
     }
 
@@ -25,7 +25,7 @@ export default abstract class StatementBase extends CodeFragment implements ISta
         this._unit = unit;
     }
 
-    get unit() {
+    get unit(): CompilationUnit {
         return this._unit;
     }
 
@@ -37,7 +37,7 @@ export default abstract class StatementBase extends CodeFragment implements ISta
     abstract rehearse(context: Context, module: WasmModule, body: FunctionBody): void;
     abstract compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults;
 
-    registerDebugInfo(body: FunctionBody, refs: binaryen.ExpressionRef[]) {
+    registerDebugInfo(body: FunctionBody, refs: ExpressionRef[]) {
         body.registerDebugInfo(refs[0], this.fragment);
     }
 }

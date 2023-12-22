@@ -1,13 +1,13 @@
-import IWasmTarget from "../compiler/IWasmTarget";
-import Context from "../context/Context";
-import WasmModule from "../module/WasmModule";
-import FunctionBody from "../module/FunctionBody";
-import IExpression from "../expression/IExpression";
-import Identifier from "../builder/Identifier";
-import UnaryOperator from "../expression/UnaryOperator";
-import BinaryOperator from "../expression/BinaryOperator";
-import CompilerFlags from "../compiler/CompilerFlags";
-import IResult from "../expression/IResult";
+import Context from "../context/Context.ts";
+import WasmModule from "../module/WasmModule.ts";
+import FunctionBody from "../module/FunctionBody.ts";
+import IExpression from "../expression/IExpression.ts";
+import Identifier from "../builder/Identifier.ts";
+import UnaryOperator from "../expression/UnaryOperator.ts";
+import BinaryOperator from "../expression/BinaryOperator.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
+import IResult from "../expression/IResult.ts";
+import {Type} from "../binaryen/binaryen_wasm.d.ts";
 
 export default interface IType {
 
@@ -18,7 +18,8 @@ export default interface IType {
     defaultValue(): IExpression;
 
     count(): number;
-    asType(): number;
+
+    asType(): Type;
 
     prepareContext(context: Context): Context;
 

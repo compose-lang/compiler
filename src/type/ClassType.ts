@@ -1,13 +1,13 @@
-import IType from "./IType";
-import Identifier from "../builder/Identifier";
-import IWasmTarget from "../compiler/IWasmTarget";
-import Context from "../context/Context";
-import UserType from "./UserType";
-import ClassDeclaration from "../declaration/ClassDeclaration";
-import IValueType from "./IValueType";
-import * as assert from "assert";
-import NullType from "./NullType";
-import BooleanType from "./BooleanType";
+import IType from "./IType.ts";
+import Identifier from "../builder/Identifier.ts";
+import Context from "../context/Context.ts";
+import UserType from "./UserType.ts";
+import ClassDeclaration from "../declaration/ClassDeclaration.ts";
+import IValueType from "./IValueType.ts";
+import NullType from "./NullType.ts";
+import BooleanType from "./BooleanType.ts";
+import {Type} from "../binaryen/binaryen_wasm.d.ts";
+import {assert} from "../../deps.ts";
 
 export default class ClassType extends UserType implements IValueType {
 
@@ -31,28 +31,28 @@ export default class ClassType extends UserType implements IValueType {
     }
 
     count(): number {
-        assert.ok(false); // TODO
+        assert(false); // TODO
     }
 
-    asType(): number {
-        assert.ok(false); // TODO
+    asType(): Type {
+        assert(false); // TODO
     }
 
     isAssignableFrom(context: Context, type: IType): boolean {
         if(type == NullType.instance || type.typeName == this.typeName)
             return true;
         else
-            assert.ok(false); // TODO
+            assert(false); // TODO
     }
 
     prepareContext(context: Context): Context {
-        assert.ok(false); // TODO
+        assert(false); // TODO
     }
 
     checkMember(context: Context, memberId: Identifier): IType {
         this.ensureClass(context);
         const member = this.klass.findMember(context, memberId);
-        assert.ok(member);
+        assert(member);
         return member.type;
     }
 
@@ -66,7 +66,7 @@ export default class ClassType extends UserType implements IValueType {
     private ensureClass(context: Context) {
         if(!this.klass) {
             this.klass = context.getRegisteredClass(this.id);
-            assert.ok(this.klass, "Cannot find class '" + this.id.value + "'");
+            assert(this.klass, "Cannot find class '" + this.id.value + "'");
         }
    }
 }

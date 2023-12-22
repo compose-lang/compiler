@@ -1,17 +1,17 @@
-import IntegerType from "./IntegerType";
-import IWasmTarget from "../compiler/IWasmTarget";
-import NumberPrecedence from "./NumberPrecedence";
-import Context from "../context/Context";
-import WasmModule from "../module/WasmModule";
-import IExpression from "../expression/IExpression";
-import UnaryOperator from "../expression/UnaryOperator";
-import BinaryOperator from "../expression/BinaryOperator";
-import Int32Type from "./Int32Type";
-import CompilerFlags from "../compiler/CompilerFlags";
-import IResult from "../expression/IResult";
-import binaryen from "binaryen";
-import FunctionBody from "../module/FunctionBody";
-import OpCode from "../compiler/OpCode";
+import IntegerType from "./IntegerType.ts";
+import NumberPrecedence from "./NumberPrecedence.ts";
+import Context from "../context/Context.ts";
+import WasmModule from "../module/WasmModule.ts";
+import IExpression from "../expression/IExpression.ts";
+import UnaryOperator from "../expression/UnaryOperator.ts";
+import BinaryOperator from "../expression/BinaryOperator.ts";
+import Int32Type from "./Int32Type.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
+import IResult from "../expression/IResult.ts";
+import FunctionBody from "../module/FunctionBody.ts";
+import {Type} from "../binaryen/binaryen_wasm.d.ts";
+/// <reference types="../binaryen/binaryen_wasm.d.ts" />
+import {i32} from "../binaryen/binaryen_wasm.js";
 
 export default class UInt32Type extends IntegerType {
 
@@ -25,8 +25,8 @@ export default class UInt32Type extends IntegerType {
         return NumberPrecedence.UInt32;
     }
 
-    asType(): number {
-        return binaryen.i32;
+    asType(): Type {
+        return i32;
     }
 
     compileAdd(context: Context, module: WasmModule, flags: CompilerFlags, left: IResult, right: IResult, tryReverse: boolean): IResult {

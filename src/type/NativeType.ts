@@ -1,5 +1,6 @@
-import IExpression from "../expression/IExpression";
-import TypeBase from "./TypeBase";
+import IExpression from "../expression/IExpression.ts";
+import TypeBase from "./TypeBase.ts";
+import {Type} from "../binaryen/binaryen_wasm.d.ts";
 
 export default abstract class NativeType extends TypeBase {
 
@@ -20,6 +21,6 @@ export default abstract class NativeType extends TypeBase {
         return 1;
     }
 
-    abstract asType(): number;
+    abstract asType(): Type;
 
 }

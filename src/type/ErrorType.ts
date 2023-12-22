@@ -1,11 +1,12 @@
-import NativeType from "./NativeType";
-import IWasmTarget from "../compiler/IWasmTarget";
-import IExpression from "../expression/IExpression";
-import * as assert from "assert";
-import ClassType from "./ClassType";
-import Identifier from "../builder/Identifier";
-import IType from "./IType";
-import Context from "../context/Context";
+import NativeType from "./NativeType.ts";
+import IExpression from "../expression/IExpression.ts";
+import ClassType from "./ClassType.ts";
+import Identifier from "../builder/Identifier.ts";
+import IType from "./IType.ts";
+import Context from "../context/Context.ts";
+import {Type} from "../binaryen/binaryen_wasm.d.ts";
+import {assert} from "../../deps.ts";
+import NullLiteral from "../literal/NullLiteral.ts";
 
 export default class ErrorType extends NativeType {
 
@@ -16,11 +17,11 @@ export default class ErrorType extends NativeType {
     }
 
     defaultValue(): IExpression {
-        return null;
+        return new NullLiteral();
     }
 
-    asType(): number {
-        assert.ok(false); // TODO
+    asType(): Type {
+        assert(false); // TODO
     }
 
     isAssignableFrom(context: Context, type: IType): boolean {

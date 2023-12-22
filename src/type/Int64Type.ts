@@ -1,6 +1,8 @@
-import IntegerType from "./IntegerType";
-import IWasmTarget from "../compiler/IWasmTarget";
-import NumberPrecedence from "./NumberPrecedence";
+import IntegerType from "./IntegerType.ts";
+import NumberPrecedence from "./NumberPrecedence.ts";
+import {Type} from "../binaryen/binaryen_wasm.d.ts";
+/// <reference types="../binaryen/binaryen_wasm.d.ts" />
+import {i64} from "../binaryen/binaryen_wasm.js";
 
 export default class Int64Type extends IntegerType {
 
@@ -14,8 +16,8 @@ export default class Int64Type extends IntegerType {
         return NumberPrecedence.Int64;
     }
 
-    asType(): number {
-        return 0x7E; // i64
+    asType(): Type {
+        return i64;
     }
 
 }

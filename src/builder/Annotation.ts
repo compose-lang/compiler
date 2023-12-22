@@ -1,6 +1,6 @@
-import CodeFragment from "./CodeFragment";
-import Identifier from "./Identifier";
-import ILiteralExpression from "../literal/ILiteralExpression";
+import CodeFragment from "./CodeFragment.ts";
+import Identifier from "./Identifier.ts";
+import ILiteralExpression from "../literal/ILiteralExpression.ts";
 
 export default class Annotation extends CodeFragment {
 

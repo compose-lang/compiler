@@ -1,17 +1,17 @@
-import IFunctionDeclaration from "./IFunctionDeclaration";
-import DeclarationBase from "./DeclarationBase";
-import ParameterList from "../parameter/ParameterList";
-import Prototype from "./Prototype";
-import FunctionType from "../type/FunctionType";
-import IType from "../type/IType";
-import GenericParameter from "./GenericParameter";
-import * as assert from "assert";
-import Accessibility from "./Accessibility";
-import ClassDeclaration from "./ClassDeclaration";
-import Context from "../context/Context";
-import RestParameter from "../parameter/RestParameter";
-import WasmModule from "../module/WasmModule";
-import CompilerFlags from "../compiler/CompilerFlags";
+import IFunctionDeclaration from "./IFunctionDeclaration.ts";
+import DeclarationBase from "./DeclarationBase.ts";
+import ParameterList from "../parameter/ParameterList.ts";
+import Prototype from "./Prototype.ts";
+import FunctionType from "../type/FunctionType.ts";
+import IType from "../type/IType.ts";
+import GenericParameter from "./GenericParameter.ts";
+import Accessibility from "./Accessibility.ts";
+import ClassDeclaration from "./ClassDeclaration.ts";
+import Context from "../context/Context.ts";
+import RestParameter from "../parameter/RestParameter.ts";
+import WasmModule from "../module/WasmModule.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
+import {assert, assertEquals} from "../../deps.ts";
 
 export default abstract class FunctionDeclarationBase extends DeclarationBase implements IFunctionDeclaration {
 
@@ -59,14 +59,14 @@ export default abstract class FunctionDeclarationBase extends DeclarationBase im
     }
 
     instantiateGeneric(typeArguments: IType[]): IFunctionDeclaration {
-        assert.ok(false);
+        assert(false);
     }
 
     checkRestParameters(context: Context): void {
         const restParams = this.parameters.filter(param => param instanceof RestParameter);
-        assert.ok(restParams.length <= 1);
+        assert(restParams.length <= 1);
         if(restParams.length == 1)
-            assert.equal(this.parameters.at(-1), restParams[0]); // must be last
+            assertEquals(this.parameters.at(-1), restParams[0]); // must be last
     }
 
 }

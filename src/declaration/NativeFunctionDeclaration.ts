@@ -1,14 +1,15 @@
-import FunctionDeclarationBase from "./FunctionDeclarationBase";
-import Accessibility from "./Accessibility";
-import Prototype from "./Prototype";
-import Instruction from "../assembly/Instruction";
-import WasmModule from "../module/WasmModule";
-import Context from "../context/Context";
-import IType from "../type/IType";
-import CompilerFlags from "../compiler/CompilerFlags";
-import FunctionBody from "../module/FunctionBody";
-import binaryen from "binaryen";
-import OpCode from "../compiler/OpCode";
+import FunctionDeclarationBase from "./FunctionDeclarationBase.ts";
+import Accessibility from "./Accessibility.ts";
+import Prototype from "./Prototype.ts";
+import Instruction from "../assembly/Instruction.ts";
+import WasmModule from "../module/WasmModule.ts";
+import Context from "../context/Context.ts";
+import IType from "../type/IType.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
+import FunctionBody from "../module/FunctionBody.ts";
+import OpCode from "../compiler/OpCode.ts";
+/// <reference types="../binaryen/binaryen_wasm.d.ts" />
+import { i32 } from "../binaryen/binaryen_wasm.js";
 
 export default class NativeFunctionDeclaration extends FunctionDeclarationBase {
 
@@ -40,7 +41,7 @@ export default class NativeFunctionDeclaration extends FunctionDeclarationBase {
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags): void {
         if(this.isModuleExport())
-            module.addFunctionExport(this.name, this.name); // TODO mangle name
+            module.functions.addExport(this.name, this.name); // TODO mangle name
         const local = context.newLocalContext();
         const body = new FunctionBody();
         this.parameters.forEach(param => param.rehearse(local, module, body));
@@ -48,8 +49,8 @@ export default class NativeFunctionDeclaration extends FunctionDeclarationBase {
         // parameters are compiled by function call
         const refs = this.instructions.filter(i => i.opcode != OpCode.END).map(i => i.compile(local, module, flags, body), this);
         // TODO types
-        const block = module.block(null, refs, binaryen.i32); // TODO block type
-        module.addFunction(this.name, 0, binaryen.i32, [], block);
+        const block = module.block(null, refs, i32); // TODO block type
+        module.functions.add(this.name, 0, i32, [], block);
     }
 
 }

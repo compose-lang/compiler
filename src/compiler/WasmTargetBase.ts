@@ -1,6 +1,6 @@
-import IWasmTarget from "./IWasmTarget";
-import IWasmSource from "../runner/IWasmSource";
-import LEB128 from "../utils/LEB128";
+import IWasmTarget from "./IWasmTarget.ts";
+import IWasmSource from "../runner/IWasmSource.ts";
+import LEB128 from "../utils/LEB128.ts";
 
 export default abstract class WasmTargetBase implements IWasmTarget {
 

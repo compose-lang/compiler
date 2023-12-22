@@ -1,4 +1,4 @@
-import CodeFragment from "./CodeFragment";
+import CodeFragment from "./CodeFragment.ts";
 
 export default class Identifier extends CodeFragment {
 

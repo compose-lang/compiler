@@ -1,4 +1,4 @@
-import IWasmSource from "./IWasmSource";
+import IWasmSource from "./IWasmSource.ts";
 
 export default class WasmBufferSource implements IWasmSource {
 

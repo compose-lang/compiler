@@ -1,15 +1,11 @@
-import LiteralBase from "./LiteralBase";
-import BooleanType from "../type/BooleanType";
-import IType from "../type/IType";
-import Context from "../context/Context";
-import WasmModule from "../module/WasmModule";
-import FunctionBody from "../module/FunctionBody";
-import OpCode from "../compiler/OpCode";
-import CompilerFlags from "../compiler/CompilerFlags";
-import binaryen from "binaryen";
-import ExpressionRef = binaryen.ExpressionRef;
-import IResult from "../expression/IResult";
-import assert from "assert";
+import LiteralBase from "./LiteralBase.ts";
+import BooleanType from "../type/BooleanType.ts";
+import IType from "../type/IType.ts";
+import Context from "../context/Context.ts";
+import WasmModule from "../module/WasmModule.ts";
+import FunctionBody from "../module/FunctionBody.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
+import IResult from "../expression/IResult.ts";
 
 export default class BooleanLiteral extends LiteralBase<boolean> {
 

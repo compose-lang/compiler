@@ -1,8 +1,8 @@
-import IWasmSource from "./IWasmSource";
-import Loader from "./Loader";
-import RunnableModule from "./RunnableModule";
-import ISourceLocator from "./ISourceLocator";
-import Imports from "./Imports";
+import IWasmSource from "./IWasmSource.ts";
+import Loader from "./Loader.ts";
+import RunnableModule from "./RunnableModule.ts";
+import ISourceLocator from "./ISourceLocator.ts";
+import Imports from "./Imports.ts";
 
 export default class Runner {
 
@@ -24,8 +24,8 @@ export default class Runner {
         this.runnable = runnable;
     }
 
-    readFunction(method: string): Function {
-        return this.runnable.instance.exports[method] as Function;
+    readFunction(method: string): Function | null {
+        return this.runnable.instance.exports[method] as Function || null;
     }
 
     runFunction<T>(method: string, ...args: any[]): T {

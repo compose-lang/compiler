@@ -1,15 +1,15 @@
-import StatementBase from "./StatementBase";
-import WasmModule from "../module/WasmModule";
-import FunctionBody from "../module/FunctionBody";
-import IType from "../type/IType";
-import Context from "../context/Context";
-import * as assert from "assert";
-import IExpression from "../expression/IExpression";
-import DeclareInstanceStatement from "./DeclareInstanceStatement";
-import StatementList from "./StatementList";
-import VoidType from "../type/VoidType";
-import CompilerFlags from "../compiler/CompilerFlags";
-import IResults from "./IResults";
+import StatementBase from "./StatementBase.ts";
+import WasmModule from "../module/WasmModule.ts";
+import FunctionBody from "../module/FunctionBody.ts";
+import IType from "../type/IType.ts";
+import Context from "../context/Context.ts";
+import IExpression from "../expression/IExpression.ts";
+import DeclareInstanceStatement from "./DeclareInstanceStatement.ts";
+import StatementList from "./StatementList.ts";
+import VoidType from "../type/VoidType.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
+import IResults from "./IResults.ts";
+import {assert} from "../../deps.ts";
 
 export default class ForStatement extends StatementBase {
 
@@ -31,8 +31,7 @@ export default class ForStatement extends StatementBase {
         this.locals.forEach(local => local.check(context), this);
         this.checkExpressions.forEach(exp => exp.check(context), this);
         this.loopStatements.check(context, null);
-        const returnType = this.statements.check(context, null);
-        return returnType == VoidType.instance ? null : returnType;
+        return this.statements.check(context, null);
     }
 
     declare(context: Context, module: WasmModule): void {
@@ -44,11 +43,11 @@ export default class ForStatement extends StatementBase {
     }
 
     rehearse(context: Context, module: WasmModule, body: FunctionBody): void {
-        assert.ok(false); // TODO
+        assert(false); // TODO
     }
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults {
-        assert.ok(false); // TODO
+        assert(false); // TODO
     }
 
 }

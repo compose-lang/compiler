@@ -1,10 +1,10 @@
-import ExpressionBase from "./ExpressionBase";
-import assert from "assert";
-import WasmModule from "../module/WasmModule";
-import IType from "../type/IType";
-import Context from "../context/Context";
-import IExpression from "./IExpression";
-import IValueType from "../type/IValueType";
+import ExpressionBase from "./ExpressionBase.ts";
+import WasmModule from "../module/WasmModule.ts";
+import IType from "../type/IType.ts";
+import Context from "../context/Context.ts";
+import IExpression from "./IExpression.ts";
+import IValueType from "../type/IValueType.ts";
+import { assert } from "../../deps.ts";
 
 export default class CastExpression extends ExpressionBase {
 
@@ -20,7 +20,7 @@ export default class CastExpression extends ExpressionBase {
 
     check(context: Context): IType {
         const actual = this.expression.check(context);
-        assert.ok(this.type.isAssignableFrom(context, actual));
+        assert(this.type.isAssignableFrom(context, actual));
         return this.type;
     }
 

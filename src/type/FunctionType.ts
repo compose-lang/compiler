@@ -1,14 +1,14 @@
-import ParameterList from "../parameter/ParameterList";
-import IType from "./IType";
-import LEB128 from "../utils/LEB128";
-import IWasmTarget from "../compiler/IWasmTarget";
-import Context from "../context/Context";
-import UserType from "./UserType";
-import {equalArrays, equalObjects} from "../utils/ObjectUtils";
-import assert from "assert";
-import NullLiteral from "../literal/NullLiteral";
-import IExpression from "../expression/IExpression";
-import binaryen from "binaryen";
+import ParameterList from "../parameter/ParameterList.ts";
+import IType from "./IType.ts";
+import Context from "../context/Context.ts";
+import UserType from "./UserType.ts";
+import {equalArrays, equalObjects} from "../utils/ObjectUtils.ts";
+import NullLiteral from "../literal/NullLiteral.ts";
+import IExpression from "../expression/IExpression.ts";
+import {Type} from "../binaryen/binaryen_wasm.d.ts";
+/// <reference types="../binaryen/binaryen_wasm.d.ts" />
+import {createType} from "../binaryen/binaryen_wasm.js";
+import {assert} from "../../deps.ts";
 
 export default class FunctionType extends UserType {
 
@@ -54,16 +54,16 @@ export default class FunctionType extends UserType {
     }
 
     prepareContext(context: Context): Context {
-        assert.ok(false); // TODO
+        assert(false); // TODO
     }
 
     count(): number {
         return 1;
     }
 
-    asType(): number {
+    asType(): Type {
         const types = this.parameters.map(param => param.type.asType());
-        return binaryen.createType(types);
+        return createType(types);
     }
 
     toString(): string {

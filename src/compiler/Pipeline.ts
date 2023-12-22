@@ -1,11 +1,10 @@
-import CompilationUnit from "./CompilationUnit";
-import IWasmTarget from "./IWasmTarget";
-import Context from "../context/Context";
-import * as assert from "assert";
-import ComposeBuilder from "../builder/ComposeBuilder";
-import {fileURLToPath} from "url";
-import {dirname} from "path";
-import PipelineOptions from "./PipelineOptions";
+import CompilationUnit from "./CompilationUnit.ts";
+import IWasmTarget from "./IWasmTarget.ts";
+import Context from "../context/Context.ts";
+import ComposeBuilder from "../builder/ComposeBuilder.ts";
+import PipelineOptions from "./PipelineOptions.ts";
+import { dirname, writeFileSync } from "../utils/FileUtils.ts";
+import { fileURLToPath } from "../utils/URLUtils.ts";
 
 export default class Pipeline {
 
@@ -66,12 +65,20 @@ export default class Pipeline {
 
     assembleModules(): IWasmTarget[] {
         return this.units.map(unit => {
+            if(this.options.validate)
+                unit.module.validate();
             if (this.options.emitWat) {
                 const wat = unit.module.emitText();
                 console.log(wat);
+                if(this.options.dumpWatPath)
+                    writeFileSync(this.options.dumpWatPath, wat);
             }
             const wasmTarget = this.options.provideTarget(unit);
             unit.assembleModule(wasmTarget, this.options);
+            if(this.options.dumpWasmPath) {
+                const buffer = wasmTarget.asWasmBuffer();
+                writeFileSync(this.options.dumpWasmPath, buffer);
+            }
             return wasmTarget;
         })
     }

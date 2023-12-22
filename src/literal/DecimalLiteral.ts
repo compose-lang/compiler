@@ -1,6 +1,6 @@
-import LiteralBase from "./LiteralBase";
-import IType from "../type/IType";
-import Context from "../context/Context";
+import LiteralBase from "./LiteralBase.ts";
+import IType from "../type/IType.ts";
+import Context from "../context/Context.ts";
 
 export default class DecimalLiteral extends LiteralBase<number> {
 

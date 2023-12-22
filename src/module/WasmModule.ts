@@ -1,32 +1,39 @@
-import binaryen from "binaryen";
-import IFunctionDeclaration from "../declaration/IFunctionDeclaration";
-import IExpression from "../expression/IExpression";
-import Variable from "../context/Variable";
-import CompilationUnit from "../compiler/CompilationUnit";
-import * as assert from "assert";
-import Global from "./Global";
-import Prototype from "../declaration/Prototype";
+/// <reference types="../binaryen/binaryen_wasm.d.ts" />
+import {Feature, Module} from "../binaryen/binaryen_wasm.js";
+import IFunctionDeclaration from "../declaration/IFunctionDeclaration.ts";
+import IExpression from "../expression/IExpression.ts";
+import Variable from "../context/Variable.ts";
+import CompilationUnit from "../compiler/CompilationUnit.ts";
+import Global from "./Global.ts";
+import Prototype from "../declaration/Prototype.ts";
+import { assert } from "../../deps.ts";
 
-export default class WasmModule extends binaryen.Module {
+export default class WasmModule extends Module {
 
-    globals: Global[] = [];
+    globalsList: Global[] = [];
     globalsByName = new Map<string, Global>();
-    functions: IFunctionDeclaration[] = [];
+    functionsList: IFunctionDeclaration[] = [];
     functionsByName = new Map<string, Map<Prototype, number>>();
 
+    constructor(ptr?: number) {
+        super(ptr);
+        if(!ptr) {
+            this.setFeatures(Feature.GC, Feature.ReferenceTypes);
+        }
+    }
     addMemory(minPages: number, maxPages?: number) {
         maxPages = Math.max(minPages, maxPages || 0);
-        this.setMemory(minPages, maxPages);
+        this.memory.set(minPages, maxPages);
     }
 
     declareImportedGlobal(unit: CompilationUnit, variable: Variable) {
-        this.addGlobalImport(variable.name, unit.path, variable.name, variable.type.asType());
+        this.globals.addImport(variable.name, unit.path, variable.name, variable.type.asType(), false);
     }
 
     declareGlobal(unit: CompilationUnit, variable: Variable, value: IExpression, mutable: boolean, exported: boolean): number {
-        assert.ok(!this.globalsByName.has(variable.name));
-        const global = new Global(unit, this.globals.length, mutable, exported, variable, value);
-        this.globals.push(global);
+        assert(!this.globalsByName.has(variable.name));
+        const global = new Global(unit, this.globalsList.length, mutable, exported, variable, value);
+        this.globalsList.push(global);
         this.globalsByName.set(variable.name, global);
         return global.index
     }
@@ -38,7 +45,7 @@ export default class WasmModule extends binaryen.Module {
 
     setGlobalValue(variable: Variable, value: IExpression) {
         const global = this.globalsByName.get(variable.name);
-        assert.ok(global);
+        assert(global);
         global.value = value;
     }
 
@@ -54,9 +61,9 @@ export default class WasmModule extends binaryen.Module {
     declareFunction(decl: IFunctionDeclaration) {
         const prototypes = this.getPrototypesMap(decl);
         const prototype = decl.prototype();
-        assert.ok(!prototypes.has(prototype));
-        prototypes.set(prototype, this.functions.length);
-        this.functions.push(decl);
+        assert(!prototypes.has(prototype));
+        prototypes.set(prototype, this.functionsList.length);
+        this.functionsList.push(decl);
     }
 
     getFunctionByDecl(decl: IFunctionDeclaration): number {

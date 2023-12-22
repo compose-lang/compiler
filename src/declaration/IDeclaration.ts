@@ -1,10 +1,10 @@
-import ICodeFragment from "../builder/ICodeFragment";
-import Context from "../context/Context";
-import Annotation from "../builder/Annotation";
-import WasmModule from "../module/WasmModule";
-import IType from "../type/IType";
-import ExportType from "../compiler/ExportType";
-import CompilationUnit from "../compiler/CompilationUnit";
+import ICodeFragment from "../builder/ICodeFragment.ts";
+import Context from "../context/Context.ts";
+import Annotation from "../builder/Annotation.ts";
+import WasmModule from "../module/WasmModule.ts";
+import IType from "../type/IType.ts";
+import ExportType from "../compiler/ExportType.ts";
+import CompilationUnit from "../compiler/CompilationUnit.ts";
 
 export default interface IDeclaration extends ICodeFragment {
 

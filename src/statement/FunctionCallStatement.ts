@@ -1,12 +1,12 @@
-import StatementBase from "./StatementBase";
-import WasmModule from "../module/WasmModule";
-import FunctionBody from "../module/FunctionBody";
-import IType from "../type/IType";
-import Context from "../context/Context";
-import FunctionCall from "../expression/FunctionCall";
-import CompilerFlags from "../compiler/CompilerFlags";
-import IResults from "./IResults";
-import VoidType from "../type/VoidType";
+import StatementBase from "./StatementBase.ts";
+import WasmModule from "../module/WasmModule.ts";
+import FunctionBody from "../module/FunctionBody.ts";
+import IType from "../type/IType.ts";
+import Context from "../context/Context.ts";
+import FunctionCall from "../expression/FunctionCall.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
+import IResults from "./IResults.ts";
+import VoidType from "../type/VoidType.ts";
 
 export default class FunctionCallStatement extends StatementBase {
 
@@ -23,7 +23,7 @@ export default class FunctionCallStatement extends StatementBase {
 
     check(context: Context): IType {
         this.call.check(context);
-        return null;
+        return VoidType.instance;
     }
 
     declare(context: Context, module: WasmModule): void {

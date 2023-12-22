@@ -1,4 +1,4 @@
-import IValueType from "../type/IValueType";
+import IValueType from "../type/IValueType.ts";
 
 export default interface IClassMember {
     type: IValueType;

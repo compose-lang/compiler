@@ -1,5 +1,5 @@
-import {CharStream} from "antlr4";
-import Preprocessor from "./Preprocessor";
+import {CharStream} from "npm:antlr4";
+import Preprocessor from "./Preprocessor.ts";
 
 export default class PreprocessedCharStream extends CharStream {
 

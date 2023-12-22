@@ -1,7 +1,7 @@
-import LiteralBase from "./LiteralBase";
-import CharType from "../type/CharType";
-import IType from "../type/IType";
-import Context from "../context/Context";
+import LiteralBase from "./LiteralBase.ts";
+import CharType from "../type/CharType.ts";
+import IType from "../type/IType.ts";
+import Context from "../context/Context.ts";
 
 export default class CharLiteral extends LiteralBase<string> {
 

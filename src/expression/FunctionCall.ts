@@ -1,18 +1,17 @@
-import ExpressionBase from "./ExpressionBase";
-import Identifier from "../builder/Identifier";
-import WasmModule from "../module/WasmModule";
-import IType from "../type/IType";
-import Context from "../context/Context";
-import IExpression from "./IExpression";
-import FunctionBody from "../module/FunctionBody";
-import * as assert from "assert";
-import FunctionFinder from "../finder/FunctionFinder";
-import OpCode from "../compiler/OpCode";
-import IFunctionDeclaration from "../declaration/IFunctionDeclaration";
-import RestParameter from "../parameter/RestParameter";
-import IntegerLiteral from "../literal/IntegerLiteral";
-import CompilerFlags from "../compiler/CompilerFlags";
-import IResult from "./IResult";
+import ExpressionBase from "./ExpressionBase.ts";
+import Identifier from "../builder/Identifier.ts";
+import WasmModule from "../module/WasmModule.ts";
+import IType from "../type/IType.ts";
+import Context from "../context/Context.ts";
+import IExpression from "./IExpression.ts";
+import FunctionBody from "../module/FunctionBody.ts";
+import FunctionFinder from "../finder/FunctionFinder.ts";
+import IFunctionDeclaration from "../declaration/IFunctionDeclaration.ts";
+import RestParameter from "../parameter/RestParameter.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
+import IResult from "./IResult.ts";
+import { assert } from "../../deps.ts";
+import ArrayLiteral from "../literal/ArrayLiteral.ts";
 
 export default class FunctionCall extends ExpressionBase {
 
@@ -59,7 +58,7 @@ export default class FunctionCall extends ExpressionBase {
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResult {
         const decl = FunctionFinder.findDeclaration(context, this);
-        assert.ok(decl);
+        assert(decl);
         const args = this.makeArgs(context, decl);
         const argRefs = args.map(arg => arg.compile(context, module, flags, body)).map(result => result.ref);
         const result = module.call(decl.name, argRefs, decl.returnType.asType());
@@ -71,7 +70,7 @@ export default class FunctionCall extends ExpressionBase {
         const convertedArgs: IExpression[] = [];
         decl.parameters.forEach(param => {
             const actualArg = actualArgs.length > 0 ? actualArgs.shift() : param.defaultValue;
-            assert.ok(actualArg);
+            assert(actualArg);
             const paramType = param instanceof RestParameter ? param.atomicType : param.type;
             let convertedArg = paramType.convertExpression(context, actualArg);
             if(param instanceof RestParameter) {
@@ -82,8 +81,8 @@ export default class FunctionCall extends ExpressionBase {
                     const convertedArg = paramType.convertExpression(context, actualArg);
                     items.push(convertedArg);
                 }
-                // TODO compile new array + items
-                convertedArg = new IntegerLiteral("0"); // TODO placeholder to push something on the stack
+                const text = "[" + items.join(", ") + "]";
+                convertedArg = new ArrayLiteral(text, items, paramType);
             }
             convertedArgs.push(convertedArg);
         });
@@ -93,7 +92,7 @@ export default class FunctionCall extends ExpressionBase {
     private findDeclaration(context: Context) {
         this.args.forEach(arg => arg.check(context));
         const decl = FunctionFinder.findDeclaration(context, this); // will instantiate generic function if required
-        assert.ok(decl, "Could not find function '" + this.name + "' at " + this.fragment.toString());
+        assert(decl, "Could not find function '" + this.name + "' at " + this.fragment.toString());
         return decl;
     }
 

@@ -1,4 +1,4 @@
-import { Token } from 'antlr4';
+import { Token } from 'npm:antlr4';
 
 export default class Location {
 

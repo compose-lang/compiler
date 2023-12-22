@@ -1,14 +1,12 @@
-import Context from "../context/Context";
-import WasmModule from "../module/WasmModule";
-import IType from "../type/IType";
-import ExpressionBase from "./ExpressionBase";
-import IExpression from "./IExpression";
-import UnaryOperator from "./UnaryOperator";
-import FunctionBody from "../module/FunctionBody";
-import CompilerFlags from "../compiler/CompilerFlags";
-import binaryen from "binaryen";
-import IResult from "./IResult";
-import assert from "assert";
+import Context from "../context/Context.ts";
+import WasmModule from "../module/WasmModule.ts";
+import IType from "../type/IType.ts";
+import ExpressionBase from "./ExpressionBase.ts";
+import IExpression from "./IExpression.ts";
+import UnaryOperator from "./UnaryOperator.ts";
+import FunctionBody from "../module/FunctionBody.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
+import IResult from "./IResult.ts";
 
 export default class UnaryExpression extends ExpressionBase {
 

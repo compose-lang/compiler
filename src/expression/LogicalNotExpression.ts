@@ -1,10 +1,10 @@
-import ExpressionBase from "./ExpressionBase";
-import IExpression from "./IExpression";
-import Context from "../context/Context";
-import IType from "../type/IType";
-import assert from "assert";
-import BooleanType from "../type/BooleanType";
-import WasmModule from "../module/WasmModule";
+import ExpressionBase from "./ExpressionBase.ts";
+import IExpression from "./IExpression.ts";
+import Context from "../context/Context.ts";
+import IType from "../type/IType.ts";
+import BooleanType from "../type/BooleanType.ts";
+import WasmModule from "../module/WasmModule.ts";
+import { assert } from "../../deps.ts";
 
 export default class LogicalNotExpression extends ExpressionBase {
 
@@ -17,12 +17,12 @@ export default class LogicalNotExpression extends ExpressionBase {
 
     check(context: Context): IType {
         const type = this.expression.check(context);
-        assert.ok(type == BooleanType.instance, "Not a boolean at " + this.fragment.toString());
+        assert(type == BooleanType.instance, "Not a boolean at " + this.fragment.toString());
         return BooleanType.instance;
     }
 
     declare(context: Context, module: WasmModule): void {
-        assert.ok(false); // TODO
+        assert(false); // TODO
     }
 
 }

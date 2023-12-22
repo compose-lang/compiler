@@ -1,21 +1,21 @@
-import Identifier from "../builder/Identifier";
-import ImportSource from "./ImportSource";
-import CodeFragment from "../builder/CodeFragment";
-import CompilationUnit from "../compiler/CompilationUnit";
-import * as assert from "assert";
-import IDeclaration from "../declaration/IDeclaration";
-import IStatement from "../statement/IStatement";
-import DeclarationBase from "../declaration/DeclarationBase";
-import StatementBase from "../statement/StatementBase";
-import PipelineOptions from "../compiler/PipelineOptions";
-import Context from "../context/Context";
-import WasmModule from "./WasmModule";
-import CompilerFlags from "../compiler/CompilerFlags";
-import FunctionBody from "./FunctionBody";
-import FunctionDeclarationBase from "../declaration/FunctionDeclarationBase";
-import DeclareInstanceStatement from "../statement/DeclareInstanceStatement";
-import Variable from "../context/Variable";
-import InstanceModifier from "../statement/InstanceModifier";
+import Identifier from "../builder/Identifier.ts";
+import ImportSource from "./ImportSource.ts";
+import CodeFragment from "../builder/CodeFragment.ts";
+import CompilationUnit from "../compiler/CompilationUnit.ts";
+import IDeclaration from "../declaration/IDeclaration.ts";
+import IStatement from "../statement/IStatement.ts";
+import DeclarationBase from "../declaration/DeclarationBase.ts";
+import StatementBase from "../statement/StatementBase.ts";
+import PipelineOptions from "../compiler/PipelineOptions.ts";
+import Context from "../context/Context.ts";
+import WasmModule from "./WasmModule.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
+import FunctionBody from "./FunctionBody.ts";
+import FunctionDeclarationBase from "../declaration/FunctionDeclarationBase.ts";
+import DeclareInstanceStatement from "../statement/DeclareInstanceStatement.ts";
+import Variable from "../context/Variable.ts";
+import InstanceModifier from "../statement/InstanceModifier.ts";
+import {assert, assertEquals} from "../../deps.ts";
 
 export default class ImportStatement extends CodeFragment {
 
@@ -35,15 +35,15 @@ export default class ImportStatement extends CodeFragment {
         if(options.logPaths)
             console.log("Processing import of: " + this.source.value + " from: " + unit.path);
         const path = options.resolveSource(unit.path, this.source.value);
-        assert.ok(path);
+        assert(path);
         if(options.logPaths)
             console.log("Resolved import of: " + this.source.value + " from: " + unit.path + " to: " + path);
         this.importedUnit = options.sourceAdded(path);
         if(this.mainSymbol)
-            assert.equal(this.mainSymbol.value, this.importedUnit.mainExport.name);
+            assertEquals(this.mainSymbol.value, this.importedUnit.mainExport.name);
         this.childSymbols.forEach(symbol => {
             const childExport = this.importedUnit.childExports.find(child => child.name == symbol.value);
-            assert.ok(childExport);
+            assert(childExport);
         })
     }
 
@@ -68,7 +68,7 @@ export default class ImportStatement extends CodeFragment {
         else if(imported instanceof StatementBase)
             return;
         else
-            assert.ok(false); // not supported
+            assert(false); // not supported
     }
 
     check(context: Context) {
@@ -82,7 +82,7 @@ export default class ImportStatement extends CodeFragment {
         else if(imported instanceof StatementBase)
             imported.check(context);
         else
-            assert.ok(false); // not supported
+            assert(false); // not supported
     }
 
     declare(context: Context, module: WasmModule) {
@@ -96,7 +96,7 @@ export default class ImportStatement extends CodeFragment {
             const variable = new Variable(InstanceModifier.CONST, imported.id, imported.type);
             module.declareImportedGlobal(this.importedUnit, variable);
         } else
-            assert.ok(false); // not supported
+            assert(false); // not supported
     }
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody) {
@@ -110,7 +110,7 @@ export default class ImportStatement extends CodeFragment {
         else if(imported instanceof StatementBase)
             return;
         else
-            assert.ok(false); // not supported
+            assert(false); // not supported
     }
 
 }

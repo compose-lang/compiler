@@ -1,4 +1,4 @@
-import Pipeline from "./compiler/Pipeline";
+import Pipeline from "./compiler/Pipeline.ts";
 
 export default function main(...args: string[]) {
     const verb = args[0];

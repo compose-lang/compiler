@@ -1,13 +1,13 @@
-import StatementBase from "./StatementBase";
-import WasmModule from "../module/WasmModule";
-import FunctionBody from "../module/FunctionBody";
-import IType from "../type/IType";
-import Context from "../context/Context";
-import IExpression from "../expression/IExpression";
-import UnaryOperator from "../expression/UnaryOperator";
-import CompilerFlags from "../compiler/CompilerFlags";
-import IResults from "./IResults";
-import VoidType from "../type/VoidType";
+import StatementBase from "./StatementBase.ts";
+import WasmModule from "../module/WasmModule.ts";
+import FunctionBody from "../module/FunctionBody.ts";
+import IType from "../type/IType.ts";
+import Context from "../context/Context.ts";
+import IExpression from "../expression/IExpression.ts";
+import UnaryOperator from "../expression/UnaryOperator.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
+import IResults from "./IResults.ts";
+import VoidType from "../type/VoidType.ts";
 
 export default class UnaryStatement extends StatementBase {
 
@@ -23,7 +23,7 @@ export default class UnaryStatement extends StatementBase {
     check(context: Context): IType {
         const type = this.expression.check(context);
         type.checkUnaryOperator(context, this.operator);
-        return null;
+        return VoidType.instance;
     }
 
     declare(context: Context, module: WasmModule): void {

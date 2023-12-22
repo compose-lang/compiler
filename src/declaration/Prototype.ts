@@ -1,9 +1,9 @@
-import ParameterList from "../parameter/ParameterList";
-import Identifier from "../builder/Identifier";
-import FunctionType from "../type/FunctionType";
-import IType from "../type/IType";
-import GenericParameter from "./GenericParameter";
-import {equalArrays} from "../utils/ObjectUtils";
+import ParameterList from "../parameter/ParameterList.ts";
+import Identifier from "../builder/Identifier.ts";
+import FunctionType from "../type/FunctionType.ts";
+import IType from "../type/IType.ts";
+import GenericParameter from "./GenericParameter.ts";
+import {equalArrays} from "../utils/ObjectUtils.ts";
 
 export default class Prototype extends FunctionType {
 

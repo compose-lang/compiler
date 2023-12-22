@@ -1,6 +1,8 @@
-import DecimalType from "./DecimalType";
-import IWasmTarget from "../compiler/IWasmTarget";
-import NumberPrecedence from "./NumberPrecedence";
+import DecimalType from "./DecimalType.ts";
+import NumberPrecedence from "./NumberPrecedence.ts";
+import {Type} from "../binaryen/binaryen_wasm.d.ts";
+/// <reference types="../binaryen/binaryen_wasm.d.ts" />
+import {f32} from "../binaryen/binaryen_wasm.js";
 
 export default class Float32Type extends DecimalType {
 
@@ -14,8 +16,8 @@ export default class Float32Type extends DecimalType {
         return NumberPrecedence.Float32;
     }
 
-    asType(): number {
-        return 0x7D; // f32
+    asType(): Type {
+        return f32;
     }
 
 }

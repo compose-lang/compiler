@@ -1,6 +1,6 @@
-import Identifier from "../builder/Identifier";
-import IType from "../type/IType";
-import InstanceModifier from "../statement/InstanceModifier";
+import Identifier from "../builder/Identifier.ts";
+import IType from "../type/IType.ts";
+import InstanceModifier from "../statement/InstanceModifier.ts";
 
 export default class Variable {
 

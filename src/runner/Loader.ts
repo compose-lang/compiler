@@ -1,9 +1,8 @@
-import RunnableModule from "./RunnableModule";
-import ISourceLocator from "./ISourceLocator";
-import IWasmSource from "./IWasmSource";
-import assert from "assert";
-import Importer from "./Importer";
-import Imports from "./Imports";
+import RunnableModule from "./RunnableModule.ts";
+import ISourceLocator from "./ISourceLocator.ts";
+import IWasmSource from "./IWasmSource.ts";
+import Importer from "./Importer.ts";
+import Imports from "./Imports.ts";
 
 export default class Loader {
 

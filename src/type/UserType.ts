@@ -1,6 +1,6 @@
-import TypeBase from "./TypeBase";
-import IExpression from "../expression/IExpression";
-import NullLiteral from "../literal/NullLiteral";
+import TypeBase from "./TypeBase.ts";
+import IExpression from "../expression/IExpression.ts";
+import NullLiteral from "../literal/NullLiteral.ts";
 
 export default abstract class UserType extends TypeBase {
 

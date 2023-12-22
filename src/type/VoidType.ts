@@ -1,7 +1,9 @@
-import NativeType from "./NativeType";
-import IExpression from "../expression/IExpression";
-import * as assert from "assert";
-import binaryen from "binaryen";
+import NativeType from "./NativeType.ts";
+import IExpression from "../expression/IExpression.ts";
+import {Type} from "../binaryen/binaryen_wasm.d.ts";
+/// <reference types="../binaryen/binaryen_wasm.d.ts" />
+import {none} from "../binaryen/binaryen_wasm.js";
+import {assert} from "../../deps.ts";
 
 export default class VoidType extends NativeType {
 
@@ -12,14 +14,14 @@ export default class VoidType extends NativeType {
     }
 
     defaultValue(): IExpression {
-        assert.ok(false); // should never get there
+        assert(false); // should never get there
     }
 
     count(): number {
         return 0;
     }
 
-    asType(): number {
-        return binaryen.none;
+    asType(): Type {
+        return none;
     }
 }

@@ -1,12 +1,12 @@
-import StatementBase from "./StatementBase";
-import IExpression from "../expression/IExpression";
-import WasmModule from "../module/WasmModule";
-import Context from "../context/Context";
-import FunctionBody from "../module/FunctionBody";
-import IType from "../type/IType";
-import VoidType from "../type/VoidType";
-import CompilerFlags from "../compiler/CompilerFlags";
-import IResults from "./IResults";
+import StatementBase from "./StatementBase.ts";
+import IExpression from "../expression/IExpression.ts";
+import WasmModule from "../module/WasmModule.ts";
+import Context from "../context/Context.ts";
+import FunctionBody from "../module/FunctionBody.ts";
+import IType from "../type/IType.ts";
+import VoidType from "../type/VoidType.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
+import IResults from "./IResults.ts";
 
 export default class ReturnStatement extends StatementBase {
 

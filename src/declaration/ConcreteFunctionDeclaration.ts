@@ -1,18 +1,20 @@
-import FunctionDeclarationBase from "./FunctionDeclarationBase";
-import Prototype from "./Prototype";
-import Context from "../context/Context";
-import WasmModule from "../module/WasmModule";
-import IType from "../type/IType";
-import IFunctionDeclaration from "./IFunctionDeclaration";
-import * as assert from "assert";
-import Identifier from "../builder/Identifier";
-import Accessibility from "./Accessibility";
-import StatementList from "../statement/StatementList";
-import CompilationUnit from "../compiler/CompilationUnit";
-import AnyType from "../type/AnyType";
-import ParameterList from "../parameter/ParameterList";
-import CompilerFlags from "../compiler/CompilerFlags";
-import FunctionBody from "../module/FunctionBody";
+import FunctionDeclarationBase from "./FunctionDeclarationBase.ts";
+import Prototype from "./Prototype.ts";
+import Context from "../context/Context.ts";
+import WasmModule from "../module/WasmModule.ts";
+import IType from "../type/IType.ts";
+import IFunctionDeclaration from "./IFunctionDeclaration.ts";
+import Identifier from "../builder/Identifier.ts";
+import Accessibility from "./Accessibility.ts";
+import StatementList from "../statement/StatementList.ts";
+import CompilationUnit from "../compiler/CompilationUnit.ts";
+import AnyType from "../type/AnyType.ts";
+import ParameterList from "../parameter/ParameterList.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
+import FunctionBody from "../module/FunctionBody.ts";
+/// <reference types="../binaryen/binaryen_wasm.d.ts" />
+import { Function } from "../binaryen/binaryen_wasm.js";
+import { assert } from "../../deps.ts";
 
 export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase {
 
@@ -58,7 +60,7 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
         if(this.isGeneric())
             return;
         if(this.isModuleExport())
-            module.addFunctionExport(this.name, this.name); // TODO mangle name
+            module.functions.addExport(this.name, this.name); // TODO mangle name
         context = this._unit.context;
         const body = new FunctionBody();
         const local = context.newLocalContext();
@@ -68,16 +70,17 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
         const locals = body.compileLocals();
         const results = this.statements.compile(local, module, flags, body);
         const block = module.block(null, results.refs, results.type.asType());
-        const funcref = module.addFunction(this.name, this.functionType().asType(), results.type.asType(), locals, block);
+        const funcref = module.functions.add(this.name, this.functionType().asType(), results.type.asType(), locals, block);
         body.setLocalNames(funcref);
         if(flags.debug) {
             const file = module.addDebugInfoFileName(this.fragment.path);
-            body.debugFragments.forEach((fragment, ref) => module.setDebugLocation(funcref, ref, file, fragment.startLocation.line + 1, fragment.startLocation.column + 1))            ;
+            const func = new Function(funcref);
+            body.debugFragments.forEach((fragment, ref) => func.setDebugLocation(ref, file, fragment.startLocation.line + 1, fragment.startLocation.column + 1))            ;
         }
     }
 
     instantiateGeneric(typeArguments: IType[]): IFunctionDeclaration {
-        assert.ok(this.isGeneric());
+        assert(this.isGeneric());
         return GenericFunctionInstance.instantiate(this, typeArguments);
     }
 }

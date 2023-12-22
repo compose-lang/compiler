@@ -1,26 +1,27 @@
-import IType from "./IType";
-import IWasmTarget from "../compiler/IWasmTarget";
-import Context from "../context/Context";
-import IExpression from "../expression/IExpression";
-import assert from "assert";
-import Identifier from "../builder/Identifier";
-import WasmModule from "../module/WasmModule";
-import BinaryOperator from "../expression/BinaryOperator";
-import UnaryOperator from "../expression/UnaryOperator";
-import CodeFragment from "../builder/CodeFragment";
-import CompilerFlags from "../compiler/CompilerFlags";
-import IResult from "../expression/IResult";
-import FunctionBody from "../module/FunctionBody";
+import IType from "./IType.ts";
+import Context from "../context/Context.ts";
+import IExpression from "../expression/IExpression.ts";
+import Identifier from "../builder/Identifier.ts";
+import WasmModule from "../module/WasmModule.ts";
+import BinaryOperator from "../expression/BinaryOperator.ts";
+import UnaryOperator from "../expression/UnaryOperator.ts";
+import CodeFragment from "../builder/CodeFragment.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
+import IResult from "../expression/IResult.ts";
+import FunctionBody from "../module/FunctionBody.ts";
+import {Type} from "../binaryen/binaryen_wasm.d.ts";
+import {assert} from "../../deps.ts";
+
 
 export default abstract class TypeBase extends CodeFragment implements IType {
 
-    nullable: boolean;
+    nullable: boolean = false;
 
     abstract get typeName(): string;
 
     abstract count(): number;
 
-    abstract asType(): number;
+    abstract asType(): Type;
 
     isAssignableFrom(context: Context, type: IType): boolean {
         return type === this;
@@ -41,60 +42,60 @@ export default abstract class TypeBase extends CodeFragment implements IType {
     }
 
     convertTypedExpression(type: IType, expression: IExpression): IExpression {
-        assert.ok(false); // TODO
+        assert(false); // TODO
     }
 
     checkMember(context: Context, memberId: Identifier): IType {
-        assert.ok(false);
+        assert(false);
     }
 
     checkEquals(context: Context, rightType: IType): IType {
-        assert.ok(false);
+        assert(false);
     }
 
     checkCompare(context: Context, rightType: IType): IType {
-        assert.ok(false);
+        assert(false);
     }
 
     checkAdd(context: Context, rightType: IType, tryReverse: boolean): IType {
         if (tryReverse)
             return rightType.checkAdd(context, this, false);
         else
-            assert.ok(false);
+            assert(false);
     }
 
     compileAdd(context: Context, module: WasmModule, flags: CompilerFlags, left: IResult, right: IResult, tryReverse: boolean): IResult {
         if (tryReverse)
             return right.type.compileAdd(context, module, flags, left, right, false);
         else
-            assert.ok(false);
+            assert(false);
     }
 
     checkSubtract(context: Context, rightType: IType): IType {
-        assert.ok(false);
+        assert(false);
     }
 
     checkMultiply(context: Context, rightType: IType, tryReverse: boolean): IType {
         if (tryReverse)
             return rightType.checkMultiply(context, this, false);
         else
-            assert.ok(false);
+            assert(false);
     }
 
     checkBinaryBitsOperator(context: Context, operator: BinaryOperator, rightType: IType): IType {
-        assert.ok(false);
+        assert(false);
     }
 
     compileBinaryBitsOperator(context: Context, module: WasmModule, flags: CompilerFlags, left: IResult, right: IResult, operator: BinaryOperator): IResult {
-        assert.ok(false);
+        assert(false);
     }
 
     checkUnaryOperator(context: Context, operator: UnaryOperator): IType {
-        assert.ok(false);
+        assert(false);
     }
 
     compileUnaryOperator(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, expression: IExpression, operator: UnaryOperator): IResult {
-        assert.ok(false);
+        assert(false);
     }
 
 }

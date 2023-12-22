@@ -1,10 +1,10 @@
-import IType from "./IType";
-import IWasmTarget from "../compiler/IWasmTarget";
-import TypeList from "./TypeList";
-import Context from "../context/Context";
-import FunctionType from "./FunctionType";
-import UserType from "./UserType";
-import assert from "assert";
+import IType from "./IType.ts";
+import TypeList from "./TypeList.ts";
+import Context from "../context/Context.ts";
+import FunctionType from "./FunctionType.ts";
+import UserType from "./UserType.ts";
+import {Type} from "../binaryen/binaryen_wasm.d.ts";
+import {assert} from "../../deps.ts";
 
 export default class TupleType extends UserType {
 
@@ -26,8 +26,8 @@ export default class TupleType extends UserType {
         return this.validTypes().length;
     }
 
-    asType(): number {
-       assert.ok(false)
+    asType(): Type {
+       assert(false)
     }
 
     isAssignableFrom(context: Context, type: IType): boolean {
@@ -35,7 +35,7 @@ export default class TupleType extends UserType {
     }
 
     prepareContext(context: Context): Context {
-        assert.ok(false); // TODO
+        assert(false); // TODO
     }
 
     private validTypes() {

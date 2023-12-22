@@ -1,16 +1,15 @@
-import StatementBase from "./StatementBase";
-import Identifier from "../builder/Identifier";
-import IType from "../type/IType";
-import IExpression from "../expression/IExpression";
-import WasmModule from "../module/WasmModule";
-import FunctionBody from "../module/FunctionBody";
-import Context from "../context/Context";
-import OpCode from "../compiler/OpCode";
-import * as assert from "assert";
-import AssignOperator from "./AssignOperator";
-import CompilerFlags from "../compiler/CompilerFlags";
-import IResults from "./IResults";
-import VoidType from "../type/VoidType";
+import StatementBase from "./StatementBase.ts";
+import Identifier from "../builder/Identifier.ts";
+import IType from "../type/IType.ts";
+import IExpression from "../expression/IExpression.ts";
+import WasmModule from "../module/WasmModule.ts";
+import FunctionBody from "../module/FunctionBody.ts";
+import Context from "../context/Context.ts";
+import AssignOperator from "./AssignOperator.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
+import IResults from "./IResults.ts";
+import VoidType from "../type/VoidType.ts";
+import {assert} from "../../deps.ts";
 
 export default class AssignInstanceStatement extends StatementBase {
 
@@ -33,11 +32,11 @@ export default class AssignInstanceStatement extends StatementBase {
 
     check(context: Context): IType {
         const required = this.checkRequired(context);
-        assert.ok(required);
+        assert(required);
         const actual = this.expression.check(context);
-        assert.ok(required.isAssignableFrom(context, actual));
+        assert(required.isAssignableFrom(context, actual));
         // TODO check operator
-        return null;
+        return VoidType.instance;
     }
 
     private checkRequired(context: Context): IType {
@@ -49,7 +48,7 @@ export default class AssignInstanceStatement extends StatementBase {
 
     private checkMember(context: Context): IType  {
         const parentType = this.parent.check(context);
-        assert.ok(parentType);
+        assert(parentType);
         return parentType.checkMember(context, this.id);
     }
 
@@ -57,7 +56,7 @@ export default class AssignInstanceStatement extends StatementBase {
         let registered = context.getRegisteredLocal(this.id);
         if(!registered)
             registered = context.getRegisteredGlobal(this.id);
-        assert.ok(registered, "Unknown variable " + this.id.value + ", at " + this.fragment.toString());
+        assert(registered, "Unknown variable " + this.id.value + ", at " + this.fragment.toString());
         return registered.type;
     }
 
@@ -74,11 +73,11 @@ export default class AssignInstanceStatement extends StatementBase {
         const local = body.getRegisteredLocal(this.name);
         if(local) {
             // TODO compile assign operator
-            return { refs: [ module.local.set(local.index, value.ref) ], type: VoidType.instance }
+            return { refs: [ module.locals.set(local.index, value.ref) ], type: VoidType.instance }
         } else {
             const global = module.getRegisteredGlobal(this.name);
-            assert.ok(global);
-            return { refs: [ module.global.set(this.name, value.ref) ], type: VoidType.instance }
+            assert(global);
+            return { refs: [ module.globals.set(this.name, value.ref) ], type: VoidType.instance }
         }
     }
 

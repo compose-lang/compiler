@@ -1,4 +1,4 @@
-import CodeFragment from "../builder/CodeFragment";
+import CodeFragment from "../builder/CodeFragment.ts";
 
 export default class ImportSource extends CodeFragment {
 
