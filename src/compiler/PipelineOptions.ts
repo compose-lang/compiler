@@ -13,7 +13,7 @@ export default class PipelineOptions {
     declare = true;
     compile = true;
     validate = true;
-    emitWat = !CiCdUtils.isCiCd();
+    emitWat = !CiCdUtils.isRunningInCI();
     assemble = true;
     optimize = false;
     merge = false;
