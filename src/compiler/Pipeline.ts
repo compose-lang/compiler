@@ -3,9 +3,13 @@ import IWasmTarget from "./IWasmTarget.ts";
 import Context from "../context/Context.ts";
 import ComposeBuilder from "../builder/ComposeBuilder.ts";
 import PipelineOptions from "./PipelineOptions.ts";
-import { dirname, writePathSync } from "../utils/FileUtils.ts";
-import { fileURLToPath } from "../utils/URLUtils.ts";
+import { writePathSync } from "../platform/deno/FileUtils.ts";
 import CiCdUtils from "../utils/CiCdUtils.ts";
+import { FileStream } from "../platform/deno/Antlr4FileStream.ts";
+import { CharStream } from "npm:antlr4";
+
+// TODO import errors_code from "../../runtime/util/error.cots" with { type: "text" };
+const BUILTINS_CODE: string[] = [ /* errors_code as unknown as string */ ];
 
 export default class Pipeline {
 
@@ -39,7 +43,7 @@ export default class Pipeline {
             console.log("Adding source: " + path);
         let unit = this.units.find(unit => unit.path == path);
         if (!unit) {
-            unit = ComposeBuilder.parse_unit(path);
+            unit = ComposeBuilder.parse_unit_stream(new FileStream(path));
             this.addUnit(unit);
         }
         return unit;
@@ -87,14 +91,12 @@ export default class Pipeline {
 
     private static parseAndRegisterBuiltins(context: Context) {
         // parse and register cots builtins
-        ["/runtime/util/error.cots"].forEach(name => Pipeline.parseAndRegisterBuiltin(name, context));
+        BUILTINS_CODE.forEach(code => Pipeline.parseAndRegisterBuiltin(code, context));
     }
 
-    private static parseAndRegisterBuiltin(name: string, context: Context) {
-        const __filename = fileURLToPath(import.meta.url);
-        const __dirname = dirname(dirname(dirname(__filename)));
-        const path = __dirname + name;
-        const unit = ComposeBuilder.parse_unit(path);
+    private static parseAndRegisterBuiltin(code: string, context: Context) {
+        const stream = new CharStream(code);
+        const unit = ComposeBuilder.parse_unit_stream(stream);
         unit.declarations.forEach(decl => decl.register(context));
     }
 

@@ -6,7 +6,7 @@ import IFunctionDeclaration from "../declaration/IFunctionDeclaration.ts";
 import IExpression from "../expression/IExpression.ts";
 import VoidType from "../type/VoidType.ts";
 import RestParameter from "../parameter/RestParameter.ts";
-import {assert, assertEquals} from "../../deps.ts";
+import {assertTrue, assertEquals} from "../../deps.ts";
 
 enum Score {
     WORSE = -1,
@@ -169,8 +169,8 @@ class MemberSimpleFinder extends FunctionFinder {
 
     protected resolveContext(): void {
         const type = this.parent.check(this.context);
-        assert(type);
-        assert(type != VoidType.instance);
+        assertTrue(type);
+        assertTrue(type != VoidType.instance);
         this.context = type.prepareContext(this.context);
     }
 

@@ -8,7 +8,7 @@ import FunctionBody from "../module/FunctionBody.ts";
 import {BINARY_CONSTIFIERS} from "../compiler/Constifiers.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResult from "./IResult.ts";
-import { assert } from "../../deps.ts";
+import { assertTrue } from "../../deps.ts";
 
 export default class BinaryExpression extends ExpressionBase {
 
@@ -41,7 +41,7 @@ export default class BinaryExpression extends ExpressionBase {
             case BinaryOperator.BIT_XOR:
                 return leftType.checkBinaryBitsOperator(context, this.operator, rightType);
             default:
-                assert(false, "Not implemented: " + BinaryOperator[this.operator]);
+                assertTrue(false, "Not implemented: " + BinaryOperator[this.operator]);
         }
     }
 
@@ -55,7 +55,7 @@ export default class BinaryExpression extends ExpressionBase {
         const leftType = left.check(context);
         const rightType = right.check(context);
         const constifier = BINARY_CONSTIFIERS.getConstifier(leftType, rightType, this.operator);
-        assert(constifier);
+        assertTrue(constifier);
         return constifier(left, right);
     }
 
@@ -82,7 +82,7 @@ export default class BinaryExpression extends ExpressionBase {
             case BinaryOperator.BIT_XOR:
                 return leftResult.type.compileBinaryBitsOperator(context, module, flags, leftResult, rightResult, this.operator);
             default:
-                assert(false, "Not implemented: " + BinaryOperator[this.operator]);
+                assertTrue(false, "Not implemented: " + BinaryOperator[this.operator]);
         }
     }
 }

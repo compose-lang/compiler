@@ -2,7 +2,7 @@ import IType from "./IType.ts";
 import Context from "../context/Context.ts";
 import VoidType from "./VoidType.ts";
 import DecimalType from "./DecimalType.ts";
-import {assert} from "../../deps.ts";
+import {assertTrue} from "../../deps.ts";
 
 export default class TypeMap extends Map<string, IType> {
 
@@ -31,7 +31,7 @@ export default class TypeMap extends Map<string, IType> {
                 inferred = type;
             } else {
                 const common: IType | null = null; // TODO this._inferCommonBaseType(context, inferred, type);
-                // assert(common);
+                // assertTrue(common);
                 // if(common)
                     inferred = common;
                 // else
@@ -41,7 +41,7 @@ export default class TypeMap extends Map<string, IType> {
         if(inferred) {
             // second pass: check compatibility
             this.forEach((type, ) => {
-                assert(type == inferred || inferred!.isAssignableFrom(context, type))
+                assertTrue(type == inferred || inferred!.isAssignableFrom(context, type))
                 // if (type != inferred && !inferred?.isAssignableFrom(context, type)) {
                 //     context.problemListener.reportIncompatibleTypes(section, inferred!, type);
                 // }

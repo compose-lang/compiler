@@ -10,7 +10,7 @@ import TypeType from "../type/TypeType.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResult from "./IResult.ts";
 import {ExpressionRef} from "../binaryen/binaryen_wasm.d.ts";
-import { assert } from "../../deps.ts";
+import { assertTrue } from "../../deps.ts";
 
 
 export default class UnresolvedIdentifierExpression extends ExpressionBase {
@@ -70,7 +70,7 @@ export default class UnresolvedIdentifierExpression extends ExpressionBase {
     private resolve(context: Context) {
         if(!this.resolved) {
             this.resolved = this.resolveLocalVariable(context);
-            assert(this.resolved, "Could not resolveType '" + this.name + "' at " + this.fragment.toString());
+            assertTrue(this.resolved, "Could not resolveType '" + this.name + "' at " + this.fragment.toString());
         }
     }
 
@@ -144,7 +144,7 @@ class LocalVariableExpression extends ExpressionBase {
 
     check(context: Context): IType {
         const local = context.getRegisteredLocal(this.id);
-        assert(local !== null, "Could not resolveType local '" + this.name + "' at " + this.fragment.toString());
+        assertTrue(local !== null, "Could not resolveType local '" + this.name + "' at " + this.fragment.toString());
         return local.type;
     }
 
@@ -193,7 +193,7 @@ class GlobalVariableExpression extends ExpressionBase {
         if(global)
             return global.type;
         const value = context.getRegisteredGlobalValue(this.id);
-        assert(value !== null);
+        assertTrue(value !== null);
         return value.check(context);
     }
 
@@ -203,7 +203,7 @@ class GlobalVariableExpression extends ExpressionBase {
 
     constify(context: Context): IExpression {
         const value = context.getRegisteredGlobalValue(this.id);
-        assert(value);
+        assertTrue(value);
         return value.constify(context);
     }
 
@@ -244,7 +244,7 @@ class ClassExpression extends ExpressionBase {
     }
 
     declare(context: Context, module: WasmModule): void {
-        assert(false);
+        assertTrue(false);
     }
 
 }

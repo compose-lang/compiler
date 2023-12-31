@@ -1,14 +1,20 @@
 <html>
     <header>
-        <script>
-            const Deno = null;
-            function compileAndRun() {
+        <script type="module" >
+            import { compileString, Runner } from "../dist/compose-browser.js";
+
+            window.compileAndRun = function() {
+                // debugger;
                 const area = document.getElementById("compose");
                 const code = area.value;
-                alert(code);
+                const target = compileString(code);
+                const source = target.asWasmSource();
+                const runner = Runner.of(source);
+                const result = runner.runFunction("main");
+                alert(result);
+                area.value = code;
             }
         </script>
-        <script type="module" src="../dist/compose-compiler-browser.js"></script>
     </header>
     <body>
         <form>

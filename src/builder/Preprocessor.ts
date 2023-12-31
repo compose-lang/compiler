@@ -7,7 +7,7 @@ import DirectiveParser, {
     Else_if_directiveContext, End_directiveContext,
     If_directiveContext
 } from "../preprocessor/DirectiveParser.ts";
-import { assert } from "../../deps.ts";
+import { assertTrue } from "../../deps.ts";
 
 abstract class Directive {
 
@@ -148,10 +148,10 @@ class Analyzer {
             const acceptingCode = this.directives.has(directive.id) && this.directives.get(directive.id);
             this.stateStack.push({directive: directive, hasAcceptedCode: false, acceptingCode: acceptingCode});
         } else if (directive instanceof EndDirective) {
-            assert(this.stateStack.length > 0);
+            assertTrue(this.stateStack.length > 0);
             this.stateStack.pop();
         } else {
-            assert(this.stateStack.length > 0);
+            assertTrue(this.stateStack.length > 0);
             const state = this.stateStack.pop();
             const hasAcceptedCode = state.hasAcceptedCode || state.acceptingCode;
             let acceptingCode = !hasAcceptedCode;

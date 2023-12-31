@@ -2,7 +2,7 @@ import NativeType from "./NativeType.ts";
 import IExpression from "../expression/IExpression.ts";
 import NullLiteral from "../literal/NullLiteral.ts";
 import {Type} from "../binaryen/binaryen_wasm.d.ts";
-import {assert} from "../../deps.ts";
+import {assertTrue} from "../../deps.ts";
 
 export default class StringType extends NativeType {
 
@@ -17,6 +17,6 @@ export default class StringType extends NativeType {
     }
 
     asType(): Type {
-        assert(false);
+        assertTrue(false);
     }
 }

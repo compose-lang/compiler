@@ -5,7 +5,7 @@ import Runner from "../../src/runner/Runner.ts";
 
 Deno.test('compiles and runs a function using imported function',  () => {
     const code = "@ModuleImport(\"wow\") abstract function doFetch(): i32; @ModuleExport function fetch(): i32 { return wow.doFetch(); }";
-    const unit = ComposeBuilder.parse_unit(code);
+    const unit = ComposeBuilder.parse_unit_data(code);
     const pipeline = new Pipeline();
     const wasmTarget = pipeline.build([unit])[0];
     const imports = { wow: { doFetch: function() { return 17; } } };

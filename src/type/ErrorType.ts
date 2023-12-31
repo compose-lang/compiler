@@ -5,7 +5,7 @@ import Identifier from "../builder/Identifier.ts";
 import IType from "./IType.ts";
 import Context from "../context/Context.ts";
 import {Type} from "../binaryen/binaryen_wasm.d.ts";
-import {assert} from "../../deps.ts";
+import {assertTrue} from "../../deps.ts";
 import NullLiteral from "../literal/NullLiteral.ts";
 
 export default class ErrorType extends NativeType {
@@ -21,7 +21,7 @@ export default class ErrorType extends NativeType {
     }
 
     asType(): Type {
-        assert(false); // TODO
+        assertTrue(false); // TODO
     }
 
     isAssignableFrom(context: Context, type: IType): boolean {

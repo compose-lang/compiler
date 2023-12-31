@@ -15,7 +15,7 @@ import FunctionDeclarationBase from "../declaration/FunctionDeclarationBase.ts";
 import DeclareInstanceStatement from "../statement/DeclareInstanceStatement.ts";
 import Variable from "../context/Variable.ts";
 import InstanceModifier from "../statement/InstanceModifier.ts";
-import {assert, assertEquals} from "../../deps.ts";
+import {assertTrue, assertEquals} from "../../deps.ts";
 
 export default class ImportStatement extends CodeFragment {
 
@@ -35,7 +35,7 @@ export default class ImportStatement extends CodeFragment {
         if(options.logPaths)
             console.log("Processing import of: " + this.source.value + " from: " + unit.path);
         const path = options.resolveSource(unit.path, this.source.value);
-        assert(path);
+        assertTrue(path);
         if(options.logPaths)
             console.log("Resolved import of: " + this.source.value + " from: " + unit.path + " to: " + path);
         this.importedUnit = options.sourceAdded(path);
@@ -43,7 +43,7 @@ export default class ImportStatement extends CodeFragment {
             assertEquals(this.mainSymbol.value, this.importedUnit.mainExport.name);
         this.childSymbols.forEach(symbol => {
             const childExport = this.importedUnit.childExports.find(child => child.name == symbol.value);
-            assert(childExport);
+            assertTrue(childExport);
         })
     }
 
@@ -68,7 +68,7 @@ export default class ImportStatement extends CodeFragment {
         else if(imported instanceof StatementBase)
             return;
         else
-            assert(false); // not supported
+            assertTrue(false); // not supported
     }
 
     check(context: Context) {
@@ -82,7 +82,7 @@ export default class ImportStatement extends CodeFragment {
         else if(imported instanceof StatementBase)
             imported.check(context);
         else
-            assert(false); // not supported
+            assertTrue(false); // not supported
     }
 
     declare(context: Context, module: WasmModule) {
@@ -96,7 +96,7 @@ export default class ImportStatement extends CodeFragment {
             const variable = new Variable(InstanceModifier.CONST, imported.id, imported.type);
             module.declareImportedGlobal(this.importedUnit, variable);
         } else
-            assert(false); // not supported
+            assertTrue(false); // not supported
     }
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody) {
@@ -110,7 +110,7 @@ export default class ImportStatement extends CodeFragment {
         else if(imported instanceof StatementBase)
             return;
         else
-            assert(false); // not supported
+            assertTrue(false); // not supported
     }
 
 }

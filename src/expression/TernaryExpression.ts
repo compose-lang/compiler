@@ -5,7 +5,7 @@ import Context from "../context/Context.ts";
 import IExpression from "./IExpression.ts";
 import BooleanType from "../type/BooleanType.ts";
 import TypeMap from "../type/TypeMap.ts";
-import { assert } from "../../deps.ts";
+import { assertTrue } from "../../deps.ts";
 
 export default class TernaryExpression extends ExpressionBase {
 
@@ -23,7 +23,7 @@ export default class TernaryExpression extends ExpressionBase {
 
     check(context: Context): IType {
         const type = this.condition.check(context);
-        assert(type == BooleanType.instance);
+        assertTrue(type == BooleanType.instance);
         const trueType = this.ifTrue.check(context);
         const falseType = this.ifFalse.check(context);
         const typeMap = new TypeMap();

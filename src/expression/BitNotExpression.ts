@@ -8,7 +8,7 @@ import FunctionBody from "../module/FunctionBody.ts";
 import UnaryOperator from "./UnaryOperator.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResult from "./IResult.ts";
-import { assert } from "../../deps.ts";
+import { assertTrue } from "../../deps.ts";
 
 export default class BitNotExpression extends ExpressionBase {
 
@@ -21,7 +21,7 @@ export default class BitNotExpression extends ExpressionBase {
 
     check(context: Context): IType {
         const type = this.expression.check(context);
-        assert(type instanceof IntegerType);
+        assertTrue(type instanceof IntegerType);
         return type;
     }
 

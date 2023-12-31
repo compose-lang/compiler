@@ -11,7 +11,7 @@ import VoidType from "../type/VoidType.ts";
 import OpCode from "../compiler/OpCode.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResults from "./IResults.ts";
-import {assert} from "../../deps.ts";
+import {assertTrue} from "../../deps.ts";
 
 export interface IfBlock {
     condition: IExpression;
@@ -37,7 +37,7 @@ export default class IfStatement extends StatementBase {
                 typeCount ++;
             }
         }, this);
-        assert(typeCount==0 || typeCount==this.blocks.length)
+        assertTrue(typeCount==0 || typeCount==this.blocks.length)
         const result = typeMap.inferType(context);
         return result == VoidType.instance ? null : result;
     }
@@ -45,7 +45,7 @@ export default class IfStatement extends StatementBase {
     private static checkBlock(context: Context, block: IfBlock): IType {
         if(block.condition) {
             const type = block.condition.check(context);
-            assert(type == BooleanType.instance);
+            assertTrue(type == BooleanType.instance);
         }
         return block.statements.check(context.newChildContext(), null);
     }

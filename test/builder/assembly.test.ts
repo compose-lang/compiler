@@ -1,6 +1,6 @@
 import ComposeLexer from "../../src/parser/ComposeLexer.ts";
 import OpCode from "../../src/compiler/OpCode.ts";
-import { assert } from "../../deps.ts";
+import { assertTrue } from "../../deps.ts";
 
 const SYNTHETIC_TOKENS = new Set([ComposeLexer.SELECT_T])
 
@@ -10,10 +10,10 @@ Deno.test("reads literal from OpCode", () => {
     names.forEach(name => {
         type t = keyof typeof ComposeLexer;
         const token = ComposeLexer[name as t] as number;
-        assert(token);
+        assertTrue(token);
         if(!SYNTHETIC_TOKENS.has(token)) {
             const literal = ComposeLexer.literalNames[token];
-            assert(literal);
+            assertTrue(literal);
         }
     })
 })

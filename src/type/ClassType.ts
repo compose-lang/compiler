@@ -7,7 +7,7 @@ import IValueType from "./IValueType.ts";
 import NullType from "./NullType.ts";
 import BooleanType from "./BooleanType.ts";
 import {Type} from "../binaryen/binaryen_wasm.d.ts";
-import {assert} from "../../deps.ts";
+import {assertTrue} from "../../deps.ts";
 
 export default class ClassType extends UserType implements IValueType {
 
@@ -31,28 +31,28 @@ export default class ClassType extends UserType implements IValueType {
     }
 
     count(): number {
-        assert(false); // TODO
+        assertTrue(false); // TODO
     }
 
     asType(): Type {
-        assert(false); // TODO
+        assertTrue(false); // TODO
     }
 
     isAssignableFrom(context: Context, type: IType): boolean {
         if(type == NullType.instance || type.typeName == this.typeName)
             return true;
         else
-            assert(false); // TODO
+            assertTrue(false); // TODO
     }
 
     prepareContext(context: Context): Context {
-        assert(false); // TODO
+        assertTrue(false); // TODO
     }
 
     checkMember(context: Context, memberId: Identifier): IType {
         this.ensureClass(context);
         const member = this.klass.findMember(context, memberId);
-        assert(member);
+        assertTrue(member);
         return member.type;
     }
 
@@ -66,7 +66,7 @@ export default class ClassType extends UserType implements IValueType {
     private ensureClass(context: Context) {
         if(!this.klass) {
             this.klass = context.getRegisteredClass(this.id);
-            assert(this.klass, "Cannot find class '" + this.id.value + "'");
+            assertTrue(this.klass, "Cannot find class '" + this.id.value + "'");
         }
    }
 }

@@ -10,7 +10,7 @@ import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResult from "../expression/IResult.ts";
 import FunctionBody from "../module/FunctionBody.ts";
 import {Type} from "../binaryen/binaryen_wasm.d.ts";
-import {assert} from "../../deps.ts";
+import {assertTrue} from "../../deps.ts";
 
 
 export default abstract class TypeBase extends CodeFragment implements IType {
@@ -42,60 +42,60 @@ export default abstract class TypeBase extends CodeFragment implements IType {
     }
 
     convertTypedExpression(type: IType, expression: IExpression): IExpression {
-        assert(false); // TODO
+        assertTrue(false); // TODO
     }
 
     checkMember(context: Context, memberId: Identifier): IType {
-        assert(false);
+        assertTrue(false);
     }
 
     checkEquals(context: Context, rightType: IType): IType {
-        assert(false);
+        assertTrue(false);
     }
 
     checkCompare(context: Context, rightType: IType): IType {
-        assert(false);
+        assertTrue(false);
     }
 
     checkAdd(context: Context, rightType: IType, tryReverse: boolean): IType {
         if (tryReverse)
             return rightType.checkAdd(context, this, false);
         else
-            assert(false);
+            assertTrue(false);
     }
 
     compileAdd(context: Context, module: WasmModule, flags: CompilerFlags, left: IResult, right: IResult, tryReverse: boolean): IResult {
         if (tryReverse)
             return right.type.compileAdd(context, module, flags, left, right, false);
         else
-            assert(false);
+            assertTrue(false);
     }
 
     checkSubtract(context: Context, rightType: IType): IType {
-        assert(false);
+        assertTrue(false);
     }
 
     checkMultiply(context: Context, rightType: IType, tryReverse: boolean): IType {
         if (tryReverse)
             return rightType.checkMultiply(context, this, false);
         else
-            assert(false);
+            assertTrue(false);
     }
 
     checkBinaryBitsOperator(context: Context, operator: BinaryOperator, rightType: IType): IType {
-        assert(false);
+        assertTrue(false);
     }
 
     compileBinaryBitsOperator(context: Context, module: WasmModule, flags: CompilerFlags, left: IResult, right: IResult, operator: BinaryOperator): IResult {
-        assert(false);
+        assertTrue(false);
     }
 
     checkUnaryOperator(context: Context, operator: UnaryOperator): IType {
-        assert(false);
+        assertTrue(false);
     }
 
     compileUnaryOperator(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, expression: IExpression, operator: UnaryOperator): IResult {
-        assert(false);
+        assertTrue(false);
     }
 
 }

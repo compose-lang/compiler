@@ -9,7 +9,7 @@ import Variable from "../context/Variable.ts";
 import InstanceModifier from "../statement/InstanceModifier.ts";
 import ImportsType from "../type/ImportsType.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
-import { assert } from "../../deps.ts";
+import { assertTrue } from "../../deps.ts";
 
 export default class AbstractFunctionDeclaration extends FunctionDeclarationBase {
 
@@ -30,7 +30,7 @@ export default class AbstractFunctionDeclaration extends FunctionDeclarationBase
                 context.registerGlobal(global);
             }
             const type = global.type as ImportsType;
-            assert(!type.has(this.name));
+            assertTrue(!type.has(this.name));
             type.set(this.name, this);
         }
     }

@@ -10,7 +10,7 @@ import IFunctionDeclaration from "../declaration/IFunctionDeclaration.ts";
 import RestParameter from "../parameter/RestParameter.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResult from "./IResult.ts";
-import { assert } from "../../deps.ts";
+import { assertTrue } from "../../deps.ts";
 import ArrayLiteral from "../literal/ArrayLiteral.ts";
 
 export default class FunctionCall extends ExpressionBase {
@@ -58,7 +58,7 @@ export default class FunctionCall extends ExpressionBase {
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResult {
         const decl = FunctionFinder.findDeclaration(context, this);
-        assert(decl);
+        assertTrue(decl);
         const args = this.makeArgs(context, decl);
         const argRefs = args.map(arg => arg.compile(context, module, flags, body)).map(result => result.ref);
         const result = module.call(decl.name, argRefs, decl.returnType.asType());
@@ -70,7 +70,7 @@ export default class FunctionCall extends ExpressionBase {
         const convertedArgs: IExpression[] = [];
         decl.parameters.forEach(param => {
             const actualArg = actualArgs.length > 0 ? actualArgs.shift() : param.defaultValue;
-            assert(actualArg);
+            assertTrue(actualArg);
             const paramType = param instanceof RestParameter ? param.atomicType : param.type;
             let convertedArg = paramType.convertExpression(context, actualArg);
             if(param instanceof RestParameter) {
@@ -92,7 +92,7 @@ export default class FunctionCall extends ExpressionBase {
     private findDeclaration(context: Context) {
         this.args.forEach(arg => arg.check(context));
         const decl = FunctionFinder.findDeclaration(context, this); // will instantiate generic function if required
-        assert(decl, "Could not find function '" + this.name + "' at " + this.fragment.toString());
+        assertTrue(decl, "Could not find function '" + this.name + "' at " + this.fragment.toString());
         return decl;
     }
 

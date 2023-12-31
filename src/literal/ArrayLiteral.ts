@@ -10,7 +10,7 @@ import CompilerFlags from "../compiler/CompilerFlags.ts";
 import FunctionBody from "../module/FunctionBody.ts";
 import IResult from "../expression/IResult.ts";
 import HeapTypeRegistry from "../registry/HeapTypeRegistry.ts";
-import { assert } from "../../deps.ts";
+import { assertTrue } from "../../deps.ts";
 
 export default class ArrayLiteral extends LiteralBase<any[]> {
 
@@ -39,7 +39,7 @@ export default class ArrayLiteral extends LiteralBase<any[]> {
             const typeMap = new TypeMap();
             this.value.forEach(v => {
                 const elemType = v.check();
-                assert(elemType);
+                assertTrue(elemType);
                 typeMap.add(elemType);
             });
             return typeMap.inferType(context);

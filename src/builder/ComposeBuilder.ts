@@ -8,7 +8,7 @@ import {
     TerminalNode,
     Token
 } from "npm:antlr4";
-import {fileExistsSync} from "../utils/FileUtils.ts";
+import {fileExistsSync} from "../platform/deno/FileUtils.ts";
 import ComposeParser, {
     Abstract_function_declarationContext,
     AddExpressionContext,
@@ -170,8 +170,6 @@ import ImportSource from "../module/ImportSource.ts";
 import ExportType from "../compiler/ExportType.ts";
 import EnumDeclaration from "../declaration/EnumDeclaration.ts";
 import ILiteralExpression from "../literal/ILiteralExpression.ts";
-import PreprocessedFileStream from "./PreprocessedFileStream.ts";
-import PreprocessedCharStream from "./PreprocessedCharStream.ts";
 import FieldDeclaration from "../declaration/FieldDeclaration.ts";
 import MemberExpression from "../expression/MemberExpression.ts";
 import TernaryExpression from "../expression/TernaryExpression.ts";
@@ -196,10 +194,8 @@ import RestParameter from "../parameter/RestParameter.ts";
 import ArrayType from "../type/ArrayType.ts";
 import SetType from "../type/SetType.ts";
 import ParameterList from "../parameter/ParameterList.ts";
-import { assert } from "../../deps.ts";
-
-type A = { const: string }
-const a = { const: 12};
+import { assertTrue } from "../../deps.ts";
+import preprocessedStream from "./PreprocessedStream.ts";
 
 interface IndexedNode {
     __id?: number;
@@ -207,31 +203,34 @@ interface IndexedNode {
 
 export default class ComposeBuilder extends ComposeParserListener {
 
-    static parse_unit(data: string, directives?: Map<string, boolean>): CompilationUnit | null {
-        const unit = ComposeBuilder.doParse<CompilationUnit>((parser: ComposeParser) => parser.compilation_unit(), data, null, directives);
-        if(fileExistsSync(data))
-            unit.path = data;
+    static parse_unit_data(data: string, directives?: Map<string, boolean>): CompilationUnit | null {
+        return ComposeBuilder.parse_unit_stream(new CharStream(data), directives);
+    }
+
+    static parse_unit_stream(stream: CharStream, directives?: Map<string, boolean>): CompilationUnit | null {
+        const unit = ComposeBuilder.doParse<CompilationUnit>((parser: ComposeParser) => parser.compilation_unit(), stream, directives);
+        unit.path = (stream["fileName" as keyof typeof stream] as unknown as string) || "<memory>";
         return unit;
     }
 
     static parse_import(data: string): ImportStatement | null {
-        return ComposeBuilder.doParse<ImportStatement>((parser: ComposeParser) => parser.import_statement(), data,);
+        return ComposeBuilder.doParse<ImportStatement>((parser: ComposeParser) => parser.import_statement(), new CharStream(data),);
     }
 
     static parse_function_type(data: string): FunctionType | null {
-        return ComposeBuilder.doParse<FunctionType>((parser: ComposeParser) => parser.function_type(), data);
+        return ComposeBuilder.doParse<FunctionType>((parser: ComposeParser) => parser.function_type(), new CharStream(data));
     }
 
     static parse_expression(data: string): IExpression | null {
-        return ComposeBuilder.doParse<IExpression>((parser: ComposeParser) => parser.expression(), data);
+        return ComposeBuilder.doParse<IExpression>((parser: ComposeParser) => parser.expression(), new CharStream(data));
     }
 
     static parse_statement(data: string): IStatement | null {
-        return ComposeBuilder.doParse<IStatement>((parser: ComposeParser) => parser.statement(), data);
+        return ComposeBuilder.doParse<IStatement>((parser: ComposeParser) => parser.statement(), new CharStream(data));
     }
 
     static parse_instruction(data: string): Instruction | null {
-        return ComposeBuilder.doParse<Instruction>((parser: ComposeParser) => parser.instruction(), data);
+        return ComposeBuilder.doParse<Instruction>((parser: ComposeParser) => parser.instruction(), new CharStream(data));
     }
 
     static readAccessibility(ctx: ParserRuleContext) {
@@ -244,7 +243,7 @@ export default class ComposeBuilder extends ComposeParserListener {
                 case ComposeParser.PRIVATE:
                     return Accessibility.PRIVATE;
                 default:
-                    assert(false);
+                    assertTrue(false);
             }
         }
         return null;
@@ -261,11 +260,10 @@ export default class ComposeBuilder extends ComposeParserListener {
     }
 
 
-    static doParse<T>(rule: (parser: ComposeParser) => ParseTree, data?: string, stream?: CharStream, directives?: Map<string, boolean>): T | null {
+    static doParse<T>(rule: (parser: ComposeParser) => ParseTree, stream: CharStream, directives?: Map<string, boolean>): T | null {
         try {
-            const isFile = data && fileExistsSync(data);
-            const path = isFile ? data : "";
-            stream = stream || isFile ? new PreprocessedFileStream(data, directives) : new PreprocessedCharStream(data, directives);
+            const path: string = (stream["fileName" as keyof typeof stream] as unknown as string) || "<memory>";
+            stream = preprocessedStream(stream, directives);
             const lexer = new ComposeLexer(stream);
             const tokenStream = new CommonTokenStream(lexer);
             const parser = new ComposeParser(tokenStream);
@@ -274,6 +272,7 @@ export default class ComposeBuilder extends ComposeParserListener {
             const walker = new ParseTreeWalker();
             walker.walk(builder, tree);
             return builder.getNodeValue<T>(tree);
+        // deno-lint-ignore no-explicit-any
         } catch (e: any) {
             if (e instanceof Error)
                 console.log(e.stack);
@@ -584,7 +583,7 @@ export default class ComposeBuilder extends ComposeParserListener {
         const declarations = all.filter(a => a instanceof DeclarationBase); // can't use reflection on interfaces
         const mainExports = declarations.filter(decl => decl.exportType == ExportType.MAIN)
             .concat(globals.filter(stmt => stmt.exportType == ExportType.MAIN));
-        assert(mainExports.length <= 1);
+        assertTrue(mainExports.length <= 1);
         const mainExport = mainExports.length > 0 ? mainExports[0] : null;
         const childExports = declarations.filter(decl => decl.exportType == ExportType.CHILD).concat(globals.filter(stmt => stmt.exportType == ExportType.CHILD));
         this.setNodeValue(ctx, new CompilationUnit(imports, globals, declarations, mainExport, childExports));
@@ -703,7 +702,7 @@ export default class ComposeBuilder extends ComposeParserListener {
     exitIf_statement = (ctx: If_statementContext) => {
         const conditions = ctx.expression_list().map(c => this.getNodeValue<IExpression>(c), this);
         const lists = ctx.statements_list().map(c => this.getNodeValue<StatementList>(c), this);
-        assert(lists.length == conditions.length || lists.length == conditions.length + 1);
+        assertTrue(lists.length == conditions.length || lists.length == conditions.length + 1);
         const blocks: IfBlock[] = [];
         for(let i=0; i<conditions.length; i++) {
             const block: IfBlock = { condition: conditions[i], statements: lists[i] };

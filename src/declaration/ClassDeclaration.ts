@@ -12,7 +12,7 @@ import WasmModule from "../module/WasmModule.ts";
 import CompilationUnit from "../compiler/CompilationUnit.ts";
 import FieldList from "../builder/FieldList.ts";
 import IClassMember from "./IClassMember.ts";
-import { assert } from "../../deps.ts";
+import { assertTrue } from "../../deps.ts";
 
 export default class ClassDeclaration extends DeclarationBase implements IDeclaration {
 
@@ -88,7 +88,7 @@ export default class ClassDeclaration extends DeclarationBase implements IDeclar
     private findInheritedMember(context: Context, memberId: Identifier) {
         for(let i=0; i<this.parents.length; i++) {
             const parent = context.getRegisteredClass(this.parents[i]);
-            assert(parent);
+            assertTrue(parent);
             const member = parent.findMember(context, memberId);
             if(member)
                 return member;

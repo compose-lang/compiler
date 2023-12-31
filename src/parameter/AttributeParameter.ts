@@ -46,7 +46,7 @@ export default class AttributeParameter extends CodeFragment implements IParamet
     register(context: Context): void {
         // TODO
         /*const decl = context.getRegisteredAttribute(this.type.id);
-        assert(decl);
+        assertTrue(decl);
         context.registerLocal(new Variable(InstanceModifier.LET, this.type.id, decl.type));*/
     }
 

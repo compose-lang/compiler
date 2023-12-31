@@ -4,7 +4,7 @@ import IExpression from "../expression/IExpression.ts";
 import Context from "../context/Context.ts";
 import HeapTypeRegistry from "../registry/HeapTypeRegistry.ts";
 import {Type} from "../binaryen/binaryen_wasm.d.ts";
-import {assert} from "../../deps.ts";
+import {assertTrue} from "../../deps.ts";
 
 
 export default class ArrayType extends CollectionType {
@@ -14,7 +14,7 @@ export default class ArrayType extends CollectionType {
     }
 
     defaultValue(): IExpression {
-        assert(false); // TODO
+        assertTrue(false); // TODO
     }
 
     asType(): Type {

@@ -11,7 +11,7 @@ import IGlobalStatement from "./IGlobalStatement.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResults from "./IResults.ts";
 import VoidType from "../type/VoidType.ts";
-import {assert} from "../../deps.ts";
+import {assertTrue} from "../../deps.ts";
 
 export default class DeclareInstanceStatement extends StatementBase implements IGlobalStatement {
 
@@ -45,10 +45,10 @@ export default class DeclareInstanceStatement extends StatementBase implements I
 
     private _check(context: Context): IType {
         if(context.isGlobal())
-            assert(this.expression.isConst(context));
+            assertTrue(this.expression.isConst(context));
         let type = this.expression.check(context);
         if(this.type) {
-            assert(this.type.isAssignableFrom(context, type));
+            assertTrue(this.type.isAssignableFrom(context, type));
             this.expression.resolveType(context, this.type);
             type = this.type;
         }
@@ -59,8 +59,8 @@ export default class DeclareInstanceStatement extends StatementBase implements I
     declare(context: Context, module: WasmModule): void {
         if(context.isGlobal()) {
             const variable = context.getRegisteredLocal(this.id);
-            assert(variable !== null);
-            assert(this.unit);
+            assertTrue(variable !== null);
+            assertTrue(this.unit);
             module.declareGlobal(this.unit, variable, this.expression, this.modifier == InstanceModifier.LET, this.isModuleExport());
         } else
             this._check(context);
@@ -76,7 +76,7 @@ export default class DeclareInstanceStatement extends StatementBase implements I
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults {
         const local = body.getRegisteredLocal(this.name);
-        assert(local);
+        assertTrue(local);
         const value = this.expression.compile(context, module, flags, body);
         const result = module.locals.set(local.index, value.ref);
         return { refs: [result], type: VoidType.instance };

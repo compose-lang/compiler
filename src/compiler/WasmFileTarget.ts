@@ -1,7 +1,7 @@
 import WasmTargetBase from "./WasmTargetBase.ts";
 import WasmFileSource from "../runner/WasmFileSource.ts";
-import { assert } from "../../deps.ts";
-import { writeFileSync, openFileSync, closeFileSync, readPathSync } from "../utils/FileUtils.ts";
+import { assertTrue } from "../../deps.ts";
+import { writeFileSync, openFileSync, closeFileSync, readPathSync } from "../platform/deno/FileUtils.ts";
 
 export default class WasmFileTarget extends WasmTargetBase {
 
@@ -14,12 +14,12 @@ export default class WasmFileTarget extends WasmTargetBase {
     }
 
     open(): void {
-        assert(!this.file);
+        assertTrue(!this.file);
         this.file = openFileSync(this.targetPath, { write: true, create: true, truncate: true });
     }
 
     close(): void {
-        assert(this.file);
+        assertTrue(this.file);
         closeFileSync(this.file);
         this.file = null;
     }

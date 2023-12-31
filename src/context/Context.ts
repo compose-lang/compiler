@@ -10,8 +10,7 @@ import ImportsType from "../type/ImportsType.ts";
 import IExpression from "../expression/IExpression.ts";
 import AssertFunction from "../builtins/AssertFunction.ts";
 import CompilationUnit from "../compiler/CompilationUnit.ts";
-import {assertFalse} from "https://deno.land/std@0.209.0/assert/assert_false.ts";
-import {assert} from "../../deps.ts";
+import {assertTrue, assertFalse} from "../../deps.ts";
 
 export default class Context {
 
@@ -80,12 +79,12 @@ export default class Context {
     }
 
     registerClass(klass: ClassDeclaration) {
-        assert(!this.classes.has(klass.name) && !this.enums.has(klass.name));
+        assertTrue(!this.classes.has(klass.name) && !this.enums.has(klass.name));
         this.classes.set(klass.name, klass);
     }
 
     registerEnum(decl: EnumDeclaration) {
-        assert(!this.classes.has(decl.name) && !this.enums.has(decl.name));
+        assertTrue(!this.classes.has(decl.name) && !this.enums.has(decl.name));
         this.enums.set(decl.name, decl);
     }
 
@@ -94,7 +93,7 @@ export default class Context {
             this.functions.set(decl.name, new Map<string, IFunctionDeclaration>());
         const protos = this.functions.get(decl.name);
         const proto = decl.functionType().toString();
-        assert(!protos.has(proto));
+        assertTrue(!protos.has(proto));
         protos.set(proto, decl);
     }
 

@@ -6,7 +6,7 @@ import IType from "./IType.ts";
 import {Type} from "../binaryen/binaryen_wasm.d.ts";
 /// <reference types="../binaryen/binaryen_wasm.d.ts" />
 import {auto} from "../binaryen/binaryen_wasm.js";
-import {assert} from "../../deps.ts";
+import {assertTrue} from "../../deps.ts";
 
 export default class MissingType extends NativeType implements IValueType {
 
@@ -21,11 +21,11 @@ export default class MissingType extends NativeType implements IValueType {
     }
 
     defaultValue(): IExpression {
-        assert(false); // should never get there
+        assertTrue(false); // should never get there
     }
 
     count(): number {
-        assert(false); // should never get there
+        assertTrue(false); // should never get there
     }
 
     asType(): Type {

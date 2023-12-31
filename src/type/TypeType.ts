@@ -2,7 +2,7 @@ import IType from "./IType.ts";
 import Context from "../context/Context.ts";
 import UserType from "./UserType.ts";
 import {Type} from "../binaryen/binaryen_wasm.d.ts";
-import {assert} from "../../deps.ts";
+import {assertTrue} from "../../deps.ts";
 
 export default class TypeType extends UserType {
 
@@ -26,11 +26,11 @@ export default class TypeType extends UserType {
     }
 
     count(): number {
-        assert(false); // TODO will we ever need this ?
+        assertTrue(false); // TODO will we ever need this ?
     }
 
     asType(): Type {
-        assert(false); // TODO will we ever need this ?
+        assertTrue(false); // TODO will we ever need this ?
     }
 
 }

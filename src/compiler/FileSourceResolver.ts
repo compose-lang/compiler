@@ -1,4 +1,4 @@
-import { dirname, fileExistsSync} from "../utils/FileUtils.ts";
+import { dirname, fileExistsSync} from "../platform/deno/FileUtils.ts";
 
 const FileSourceResolver = (unitPath: string, importSource: string) => {
     let dirPath = dirname(unitPath);

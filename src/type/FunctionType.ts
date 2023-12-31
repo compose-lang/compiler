@@ -8,7 +8,7 @@ import IExpression from "../expression/IExpression.ts";
 import {Type} from "../binaryen/binaryen_wasm.d.ts";
 /// <reference types="../binaryen/binaryen_wasm.d.ts" />
 import {createType} from "../binaryen/binaryen_wasm.js";
-import {assert} from "../../deps.ts";
+import {assertTrue} from "../../deps.ts";
 
 export default class FunctionType extends UserType {
 
@@ -54,7 +54,7 @@ export default class FunctionType extends UserType {
     }
 
     prepareContext(context: Context): Context {
-        assert(false); // TODO
+        assertTrue(false); // TODO
     }
 
     count(): number {

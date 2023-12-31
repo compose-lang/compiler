@@ -5,7 +5,7 @@ import Context from "../context/Context.ts";
 import WasmModule from "../module/WasmModule.ts";
 import IWasmTarget from "./IWasmTarget.ts";
 import PipelineOptions from "./PipelineOptions.ts";
-import { writeFileSync } from "../utils/FileUtils.ts";
+import { writePathSync } from "../platform/deno/FileUtils.ts";
 
 export default class CompilationUnit {
 
@@ -31,9 +31,11 @@ export default class CompilationUnit {
     }
 
     set path(value: string) {
-        if(value == "<memory>")
-            throw new Error("Changing path from " + this._path + " to <memory>");
-        this._path = value;
+        if (value != this._path) {
+            if (value == "<memory>")
+                throw new Error("Changing path from " + this._path + " to <memory>");
+            this._path = value;
+        }
     }
 
    processImports(options: PipelineOptions) {
@@ -104,7 +106,7 @@ export default class CompilationUnit {
             wasmTarget.open();
             wasmTarget.writeUint8Array(wasm.binary);
             wasmTarget.close();
-            writeFileSync(mapFilePath, wasm.sourceMap);
+            writePathSync(mapFilePath, wasm.sourceMap);
         } else {
             const binary = this.module.emitBinary();
             wasmTarget.open();

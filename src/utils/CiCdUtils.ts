@@ -1,4 +1,4 @@
-import { getEnv } from "./ProcessUtils.ts";
+import { getEnv } from "../platform/deno/ProcessUtils.ts";
 
 export default abstract class CiCdUtils {
 

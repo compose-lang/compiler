@@ -6,7 +6,7 @@ import Imports from "./Imports.ts";
 
 export default class Runner {
 
-    static of(source: IWasmSource, externals?: WebAssembly.Imports, sourceLocator?: ISourceLocator): Runner {
+    public static of(source: IWasmSource, externals?: WebAssembly.Imports, sourceLocator?: ISourceLocator): Runner {
         const runnables: RunnableModule[] = [];
         const imports: Imports = {};
         if(externals) {

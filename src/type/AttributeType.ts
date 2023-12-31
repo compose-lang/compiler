@@ -3,7 +3,7 @@ import Identifier from "../builder/Identifier.ts";
 import Context from "../context/Context.ts";
 import UserType from "./UserType.ts";
 import {Type} from "../binaryen/binaryen_wasm.d.ts";
-import {assert} from "../../deps.ts";
+import {assertTrue} from "../../deps.ts";
 
 export default class AttributeType extends UserType {
 
@@ -20,19 +20,19 @@ export default class AttributeType extends UserType {
     }
 
     count(): number {
-        assert(false); // TODO
+        assertTrue(false); // TODO
     }
 
     asType(): Type {
-        assert(false); // TODO
+        assertTrue(false); // TODO
     }
 
     isAssignableFrom(context: Context, type: IType): boolean {
-        assert(false); // TODO
+        assertTrue(false); // TODO
     }
 
     prepareContext(context: Context): Context {
-        assert(false); // TODO
+        assertTrue(false); // TODO
     }
 
 }

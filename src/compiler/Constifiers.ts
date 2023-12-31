@@ -3,7 +3,7 @@ import BinaryOperator from "../expression/BinaryOperator.ts";
 import Int32Type from "../type/Int32Type.ts";
 import IType from "../type/IType.ts";
 import IntegerLiteral from "../literal/IntegerLiteral.ts";
-import { assert } from "../../deps.ts"
+import { assertTrue } from "../../deps.ts"
 
 type IConstifier = (left: IExpression, right: IExpression) => IExpression;
 
@@ -27,15 +27,15 @@ class BinaryConstifiers extends Map<string, Map<string,Map<BinaryOperator,IConst
         if(!leftMap.has(rightType.typeName))
             leftMap.set(rightType.typeName, new Map<BinaryOperator, IConstifier>());
         const rightMap = leftMap.get(rightType.typeName);
-        assert(!rightMap.has(operator));
+        assertTrue(!rightMap.has(operator));
         rightMap.set(operator, constifier);
     }
 
     static constifyInt32PlusInt32(left: IExpression, right: IExpression) {
-        assert(left instanceof IntegerLiteral);
-        const leftValue = left.value;
-        assert(right instanceof IntegerLiteral);
-        const rightValue = right.value;
+        assertTrue(left instanceof IntegerLiteral);
+        const leftValue = (left as IntegerLiteral).value;
+        assertTrue(right instanceof IntegerLiteral);
+        const rightValue = (right as IntegerLiteral).value;
         return new IntegerLiteral(Number(leftValue + rightValue).toString(10));
     }
 

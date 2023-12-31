@@ -6,7 +6,7 @@ import FunctionBody from "../module/FunctionBody.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import ComposeLexer from "../parser/ComposeLexer.ts";
 import {ExpressionRef} from "../binaryen/binaryen_wasm.d.ts";
-import {assert} from "../../deps.ts";
+import {assertTrue} from "../../deps.ts";
 
 export interface IIndexable {
     [key: string]: any;
@@ -46,7 +46,7 @@ export default class Instruction {
         const name = OpCode[this.opcode];
         const token = ComposeLexer[name as keyof typeof ComposeLexer] as number;
         let literal = ComposeLexer.literalNames[token];
-        assert(literal)
+        assertTrue(literal)
         literal = literal.substring(1, literal.length - 1)
         const parts = literal.split("\.");
         let source = module as IIndexable;

@@ -5,7 +5,7 @@ import Runner from "../../src/runner/Runner.ts";
 
 Deno.test('constifys binary op',  () => {
     const pipeline = new Pipeline();
-    const unit = ComposeBuilder.parse_unit("@ModuleExport const SL_BITS: u32 = 4 + 4;");
+    const unit = ComposeBuilder.parse_unit_data("@ModuleExport const SL_BITS: u32 = 4 + 4;");
     const wasmTarget = pipeline.build([unit])[0];
     const runner = Runner.of(wasmTarget.asWasmSource());
     const result = runner.readGlobal<number>("SL_BITS");
@@ -14,7 +14,7 @@ Deno.test('constifys binary op',  () => {
 
 Deno.test('constifys global',  () => {
     const pipeline = new Pipeline();
-    const unit = ComposeBuilder.parse_unit("const AL_BITS: u32 = 4; @ModuleExport const SL_BITS: u32 = 4 + AL_BITS;");
+    const unit = ComposeBuilder.parse_unit_data("const AL_BITS: u32 = 4; @ModuleExport const SL_BITS: u32 = 4 + AL_BITS;");
     const wasmTarget = pipeline.build([unit])[0];
     const runner = Runner.of(wasmTarget.asWasmSource());
     const result = runner.readGlobal<number>("SL_BITS");
@@ -23,7 +23,7 @@ Deno.test('constifys global',  () => {
 
 Deno.test('constifys forward global',  () => {
     const pipeline = new Pipeline();
-    const unit = ComposeBuilder.parse_unit("@ModuleExport let SL_BITS: u32 = 4 + AL_BITS; const AL_BITS: u32 = 4;");
+    const unit = ComposeBuilder.parse_unit_data("@ModuleExport let SL_BITS: u32 = 4 + AL_BITS; const AL_BITS: u32 = 4;");
     const wasmTarget = pipeline.build([unit])[0];
     const runner = Runner.of(wasmTarget.asWasmSource());
     const result = runner.readGlobal<number>("SL_BITS");

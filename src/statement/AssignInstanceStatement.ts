@@ -9,7 +9,7 @@ import AssignOperator from "./AssignOperator.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResults from "./IResults.ts";
 import VoidType from "../type/VoidType.ts";
-import {assert} from "../../deps.ts";
+import {assertTrue} from "../../deps.ts";
 
 export default class AssignInstanceStatement extends StatementBase {
 
@@ -32,9 +32,9 @@ export default class AssignInstanceStatement extends StatementBase {
 
     check(context: Context): IType {
         const required = this.checkRequired(context);
-        assert(required);
+        assertTrue(required);
         const actual = this.expression.check(context);
-        assert(required.isAssignableFrom(context, actual));
+        assertTrue(required.isAssignableFrom(context, actual));
         // TODO check operator
         return VoidType.instance;
     }
@@ -48,7 +48,7 @@ export default class AssignInstanceStatement extends StatementBase {
 
     private checkMember(context: Context): IType  {
         const parentType = this.parent.check(context);
-        assert(parentType);
+        assertTrue(parentType);
         return parentType.checkMember(context, this.id);
     }
 
@@ -56,7 +56,7 @@ export default class AssignInstanceStatement extends StatementBase {
         let registered = context.getRegisteredLocal(this.id);
         if(!registered)
             registered = context.getRegisteredGlobal(this.id);
-        assert(registered, "Unknown variable " + this.id.value + ", at " + this.fragment.toString());
+        assertTrue(registered, "Unknown variable " + this.id.value + ", at " + this.fragment.toString());
         return registered.type;
     }
 
@@ -76,7 +76,7 @@ export default class AssignInstanceStatement extends StatementBase {
             return { refs: [ module.locals.set(local.index, value.ref) ], type: VoidType.instance }
         } else {
             const global = module.getRegisteredGlobal(this.name);
-            assert(global);
+            assertTrue(global);
             return { refs: [ module.globals.set(this.name, value.ref) ], type: VoidType.instance }
         }
     }

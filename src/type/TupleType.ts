@@ -4,7 +4,7 @@ import Context from "../context/Context.ts";
 import FunctionType from "./FunctionType.ts";
 import UserType from "./UserType.ts";
 import {Type} from "../binaryen/binaryen_wasm.d.ts";
-import {assert} from "../../deps.ts";
+import {assertTrue} from "../../deps.ts";
 
 export default class TupleType extends UserType {
 
@@ -27,7 +27,7 @@ export default class TupleType extends UserType {
     }
 
     asType(): Type {
-       assert(false)
+       assertTrue(false)
     }
 
     isAssignableFrom(context: Context, type: IType): boolean {
@@ -35,7 +35,7 @@ export default class TupleType extends UserType {
     }
 
     prepareContext(context: Context): Context {
-        assert(false); // TODO
+        assertTrue(false); // TODO
     }
 
     private validTypes() {

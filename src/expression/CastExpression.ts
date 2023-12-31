@@ -4,7 +4,7 @@ import IType from "../type/IType.ts";
 import Context from "../context/Context.ts";
 import IExpression from "./IExpression.ts";
 import IValueType from "../type/IValueType.ts";
-import { assert } from "../../deps.ts";
+import { assertTrue } from "../../deps.ts";
 
 export default class CastExpression extends ExpressionBase {
 
@@ -20,7 +20,7 @@ export default class CastExpression extends ExpressionBase {
 
     check(context: Context): IType {
         const actual = this.expression.check(context);
-        assert(this.type.isAssignableFrom(context, actual));
+        assertTrue(this.type.isAssignableFrom(context, actual));
         return this.type;
     }
 

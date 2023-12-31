@@ -6,7 +6,7 @@ import Variable from "../context/Variable.ts";
 import CompilationUnit from "../compiler/CompilationUnit.ts";
 import Global from "./Global.ts";
 import Prototype from "../declaration/Prototype.ts";
-import { assert } from "../../deps.ts";
+import { assertTrue } from "../../deps.ts";
 
 export default class WasmModule extends Module {
 
@@ -31,7 +31,7 @@ export default class WasmModule extends Module {
     }
 
     declareGlobal(unit: CompilationUnit, variable: Variable, value: IExpression, mutable: boolean, exported: boolean): number {
-        assert(!this.globalsByName.has(variable.name));
+        assertTrue(!this.globalsByName.has(variable.name));
         const global = new Global(unit, this.globalsList.length, mutable, exported, variable, value);
         this.globalsList.push(global);
         this.globalsByName.set(variable.name, global);
@@ -45,7 +45,7 @@ export default class WasmModule extends Module {
 
     setGlobalValue(variable: Variable, value: IExpression) {
         const global = this.globalsByName.get(variable.name);
-        assert(global);
+        assertTrue(global);
         global.value = value;
     }
 
@@ -61,7 +61,7 @@ export default class WasmModule extends Module {
     declareFunction(decl: IFunctionDeclaration) {
         const prototypes = this.getPrototypesMap(decl);
         const prototype = decl.prototype();
-        assert(!prototypes.has(prototype));
+        assertTrue(!prototypes.has(prototype));
         prototypes.set(prototype, this.functionsList.length);
         this.functionsList.push(decl);
     }

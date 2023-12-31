@@ -8,7 +8,6 @@ import VoidType from "../type/VoidType.ts";
 import AnyType from "../type/AnyType.ts";
 import CompilationUnit from "../compiler/CompilationUnit.ts";
 import ParameterList from "../parameter/ParameterList.ts";
-
 export default class AssertFunction extends NativeFunctionDeclaration {
 
     constructor(unit: CompilationUnit) {

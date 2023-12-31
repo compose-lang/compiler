@@ -1,4 +1,4 @@
-import { readFileSync, statSync } from "../utils/FileUtils.ts";
+import { readFileSync, statSync } from "../platform/deno/FileUtils.ts";
 import IWasmSource from "./IWasmSource.ts";
 
 export default class WasmFileSource implements IWasmSource {

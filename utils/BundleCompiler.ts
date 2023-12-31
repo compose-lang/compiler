@@ -1,49 +1,59 @@
 /// <reference types="https://deno.land/x/esbuild@v0.19.10/mod.d.ts" />
 import { build, stop, BuildOptions, Plugin, PluginBuild } from "https://deno.land/x/esbuild@v0.19.10/mod.js";
-import { dirname } from "../src/utils/FileUtils.ts";
-import ignorePlugin from "npm:esbuild-plugin-ignore";
+import { dirname } from "../src/platform/deno/FileUtils.ts";
 
-// const node_modules_path = dirname(new URL('.', import.meta.url).pathname) + "/node_modules/";
+const project_path = dirname(new URL('.', import.meta.url).pathname) + "/";
+const sources_path = project_path + "src/";
+const node_modules_path = project_path + "node_modules/";
 
 const resolveModulesForNode: Plugin = {
-    name: "NpmModuleResolver",
+    name: "NodeResolver",
     setup: (build: PluginBuild) => {
         build.onResolve({ filter: /npm:antlr4/ }, _args => {
             return { path: "antlr4", external: true }
+        });
+        build.onResolve({ filter: /\.\.\/platform\/deno\// }, _args => {
+            const path = _args.path.replace("../", sources_path).replace("/deno/", "/node/");
+            return { path }
+        });
+        build.onResolve({ filter: /\.\/src\/platform\/deno\// }, _args => {
+            const path = _args.path.replace("./src/", sources_path).replace("/deno/", "/node/");
+            return { path }
         });
     }
 }
 
 const resolveModulesForBrowser: Plugin = {
-    name: "BinaryenWebModuleResolver",
+    name: "BrowserResolver",
     setup: (build: PluginBuild) => {
         build.onResolve({ filter: /npm:antlr4/ }, _args => {
-            return { path: "../node_modules/antlr4/dist/antlr4.web.mjs", external: true }
+            return { path: node_modules_path + "antlr4/dist/antlr4.web.mjs" }
         });
         build.onResolve({ filter: /\.\/binaryen_raw_wasm\.js/ }, args => {
             return { path: dirname(args.importer) + "/binaryen_raw_wasm_browser.js" };
         });
-        build.onResolve({ filter:/https:\/\/deno.land\/std@0.209.0\/assert\//}, _args => {
-            return { path: dirname(new URL('.', import.meta.url).pathname) + "/src/utils/WebAssert.ts"}
-        })
+        build.onResolve({ filter: /\.\.\/platform\/deno\// }, _args => {
+            const path = _args.path.replace("../", sources_path).replace("/deno/", "/browser/");
+            return { path }
+        });
+        build.onResolve({ filter: /\.\/src\/platform\/deno\// }, _args => {
+            const path = _args.path.replace("./src/", sources_path).replace("/deno/", "/browser/");
+            return { path }
+        });
     }
 }
 
 async function minify() {
     const options: BuildOptions = {
-        entryPoints: [ "../src/compiler/Compiler.ts" ],
         bundle: true,
         minify: true,
+        sourcemap: true,
         format: "esm"
     };
-    const nodeOptions = Object.assign({}, options,  { platform: "node", outfile: "../dist/compose-compiler-node.js", plugins: [ resolveModulesForNode ] });
-    const webOptions = Object.assign({}, options,  { target: "chrome119", outfile: "../dist/compose-compiler-browser.js", plugins: [ resolveModulesForBrowser,
-            ignorePlugin([{
-                resourceRegExp: /https:\/\/deno.land/
-            }])
-        ] });
+    const nodeOptions = Object.assign({}, options,  { platform: "node", entryPoints: ["../src/index.node.ts"], outfile: "../dist/compose-node.js", plugins: [ resolveModulesForNode ] });
+    const browserOptions = Object.assign({}, options,  { target: "chrome119", entryPoints: ["../src/index.browser.ts"], outfile: "../dist/compose-browser.js", plugins: [ resolveModulesForBrowser ] });
     await build(nodeOptions);
-    await build(webOptions);
+    await build(browserOptions);
     stop();
 }
 

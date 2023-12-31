@@ -10,7 +10,7 @@ import UnaryOperator from "../expression/UnaryOperator.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResult from "../expression/IResult.ts";
 import {Type} from "../binaryen/binaryen_wasm.d.ts";
-import {assert} from "../../deps.ts";
+import {assertTrue} from "../../deps.ts";
 
 export default class ImportsType extends Map<string, IFunctionDeclaration> implements IType {
 
@@ -23,23 +23,23 @@ export default class ImportsType extends Map<string, IFunctionDeclaration> imple
     }
 
     isAssignableFrom(context: Context, type: IType): boolean {
-        assert(false, "Should never get there!");
+        assertTrue(false, "Should never get there!");
     }
 
     defaultValue(): IExpression {
-        assert(false, "Should never get there!");
+        assertTrue(false, "Should never get there!");
     }
 
     convertExpression(context: Context, expression: IExpression): IExpression {
-        assert(false, "Should never get there!");
+        assertTrue(false, "Should never get there!");
     }
 
     count(): number {
-        assert(false, "Should never get there!");
+        assertTrue(false, "Should never get there!");
     }
 
     asType(): Type {
-        assert(false, "Should never get there!");
+        assertTrue(false, "Should never get there!");
     }
 
     prepareContext(context: Context): Context {
@@ -47,47 +47,47 @@ export default class ImportsType extends Map<string, IFunctionDeclaration> imple
     }
 
     checkMember(context: Context, memberId: Identifier): IType {
-        assert(false, "Should never get there!");
+        assertTrue(false, "Should never get there!");
     }
 
     checkEquals(context: Context, rightType: IType): IType {
-        assert(false, "Should never get there!");
+        assertTrue(false, "Should never get there!");
     }
 
     checkCompare(context: Context, rightType: IType): IType {
-        assert(false, "Should never get there!");
+        assertTrue(false, "Should never get there!");
     }
 
     checkAdd(context: Context, rightType: IType, tryReverse: boolean): IType {
-        assert(false, "Should never get there!");
+        assertTrue(false, "Should never get there!");
     }
 
     checkSubtract(context: Context, rightType: IType): IType {
-        assert(false, "Should never get there!");
+        assertTrue(false, "Should never get there!");
     }
 
     checkMultiply(context: Context, rightType: IType, tryReverse: boolean): IType {
-        assert(false, "Should never get there!");
+        assertTrue(false, "Should never get there!");
     }
 
     compileAdd(context: Context, module: WasmModule, flags: CompilerFlags, left: IResult, right: IResult, tryReverse: boolean): IResult {
-        assert(false, "Should never get there!");
+        assertTrue(false, "Should never get there!");
     }
 
     checkBinaryBitsOperator(context: Context, operator: BinaryOperator, rightType: IType): IType {
-        assert(false, "Should never get there!");
+        assertTrue(false, "Should never get there!");
     }
 
     compileBinaryBitsOperator(context: Context, module: WasmModule, flags: CompilerFlags, left: IResult, right: IResult, operator: BinaryOperator): IResult {
-        assert(false, "Should never get there!");
+        assertTrue(false, "Should never get there!");
     }
 
     checkUnaryOperator(context: Context, operator: UnaryOperator): IType {
-        assert(false, "Should never get there!");
+        assertTrue(false, "Should never get there!");
     }
 
     compileUnaryOperator(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, expression: IExpression, operator: UnaryOperator): IResult {
-        assert(false, "Should never get there!");
+        assertTrue(false, "Should never get there!");
     }
 
 }

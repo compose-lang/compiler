@@ -1,4 +1,4 @@
-import {assert, assertEquals} from "../../deps.ts";
+import {assertTrue, assertEquals} from "../../deps.ts";
 import ComposeBuilder from "../../src/builder/ComposeBuilder.ts";
 import FunctionType from "../../src/type/FunctionType.ts";
 import TupleType from "../../src/type/TupleType.ts";
@@ -54,7 +54,7 @@ Deno.test('parses prototype: () => (a => b)',  () => {
     const type = ComposeBuilder.parse_function_type("() => (a => b)");
     assertEquals(type.parameters.length, 0);
     const type2 = type.returnType;
-    assert(type2 instanceof FunctionType);
+    assertTrue(type2 instanceof FunctionType);
     assertEquals(type2.parameters.length, 1);
     assertEquals("a", type2.parameters[0].name);
     assertEquals(type2.returnType.typeName, "b");
@@ -64,9 +64,9 @@ Deno.test('parses prototype: () => string, (a => b)',  () => {
     const type = ComposeBuilder.parse_function_type("() => string, (a => b)");
     assertEquals(type.parameters.length, 0);
     const multi = type.returnType;
-    assert(multi instanceof TupleType);
+    assertTrue(multi instanceof TupleType);
     const type2 = multi.types[1];
-    assert(type2 instanceof FunctionType);
+    assertTrue(type2 instanceof FunctionType);
     assertEquals(type2.parameters.length, 1);
     assertEquals("a", type2.parameters[0].name);
     assertEquals(type2.returnType.typeName, "b");
@@ -76,9 +76,9 @@ Deno.test('parses prototype: () => string, a => b',  () => {
     const type = ComposeBuilder.parse_function_type("() => string, a => b");
     assertEquals(type.parameters.length, 0);
     const multi = type.returnType;
-    assert(multi instanceof TupleType);
+    assertTrue(multi instanceof TupleType);
     const type2 = multi.types[1];
-    assert(type2 instanceof FunctionType);
+    assertTrue(type2 instanceof FunctionType);
     assertEquals(type2.parameters.length, 1);
     assertEquals("a", type2.parameters[0].name);
     assertEquals(type2.returnType.typeName, "b");
@@ -88,7 +88,7 @@ Deno.test('parses prototype: (x: a => b) => void',  () => {
     const type = ComposeBuilder.parse_function_type("(x: a => b) => void");
     assertEquals(type.parameters.length, 1);
     const type2 = type.parameters[0].type;
-    assert(type2 instanceof FunctionType);
+    assertTrue(type2 instanceof FunctionType);
     assertEquals(type2.parameters.length, 1);
     assertEquals("a", type2.parameters[0].name);
     assertEquals(type2.returnType.typeName, "b");

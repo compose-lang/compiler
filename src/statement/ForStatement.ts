@@ -9,7 +9,7 @@ import StatementList from "./StatementList.ts";
 import VoidType from "../type/VoidType.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResults from "./IResults.ts";
-import {assert} from "../../deps.ts";
+import {assertTrue} from "../../deps.ts";
 
 export default class ForStatement extends StatementBase {
 
@@ -43,11 +43,11 @@ export default class ForStatement extends StatementBase {
     }
 
     rehearse(context: Context, module: WasmModule, body: FunctionBody): void {
-        assert(false); // TODO
+        assertTrue(false); // TODO
     }
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults {
-        assert(false); // TODO
+        assertTrue(false); // TODO
     }
 
 }

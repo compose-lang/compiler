@@ -4,7 +4,7 @@ import IType from "../type/IType.ts";
 import Context from "../context/Context.ts";
 import IExpression from "./IExpression.ts";
 import BooleanType from "../type/BooleanType.ts";
-import { assert } from "../../deps.ts";
+import { assertTrue } from "../../deps.ts";
 
 export default abstract class LogicalExpression extends ExpressionBase {
 
@@ -19,9 +19,9 @@ export default abstract class LogicalExpression extends ExpressionBase {
 
     check(context: Context): IType {
         const leftType = this.left.check(context);
-        assert(leftType == BooleanType.instance);
+        assertTrue(leftType == BooleanType.instance);
         const rightType = this.right.check(context);
-        assert(rightType == BooleanType.instance);
+        assertTrue(rightType == BooleanType.instance);
         return BooleanType.instance;
     }
 

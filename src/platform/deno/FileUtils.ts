@@ -1,10 +1,6 @@
-import {stringToArrayBuffer} from "./StringUtils.ts";
-let fs: typeof import("https://deno.land/std@0.209.0/fs/mod.ts");
-let paths: typeof import("https://deno.land/std@0.209.0/path/mod.ts");
-if(Deno) {
-    fs = await import("https://deno.land/std@0.209.0/fs/mod.ts");
-    paths = await import("https://deno.land/std@0.209.0/path/mod.ts");
-}
+import {stringToArrayBuffer} from "../../utils/StringUtils.ts";
+import * as fs from "https://deno.land/std@0.209.0/fs/mod.ts";
+import * as paths from "https://deno.land/std@0.209.0/path/mod.ts";
 
 export function fileExistsSync(path: string) {
     return fs.existsSync(path);

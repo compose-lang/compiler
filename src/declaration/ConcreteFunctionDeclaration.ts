@@ -14,7 +14,7 @@ import CompilerFlags from "../compiler/CompilerFlags.ts";
 import FunctionBody from "../module/FunctionBody.ts";
 /// <reference types="../binaryen/binaryen_wasm.d.ts" />
 import { Function } from "../binaryen/binaryen_wasm.js";
-import { assert } from "../../deps.ts";
+import { assertTrue } from "../../deps.ts";
 
 export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase {
 
@@ -80,7 +80,7 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
     }
 
     instantiateGeneric(typeArguments: IType[]): IFunctionDeclaration {
-        assert(this.isGeneric());
+        assertTrue(this.isGeneric());
         return GenericFunctionInstance.instantiate(this, typeArguments);
     }
 }
