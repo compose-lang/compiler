@@ -29,9 +29,6 @@ const resolveModulesForBrowser: Plugin = {
         build.onResolve({ filter: /npm:antlr4/ }, _args => {
             return { path: node_modules_path + "antlr4/dist/antlr4.web.mjs" }
         });
-        build.onResolve({ filter: /\.\/binaryen_raw_wasm\.js/ }, args => {
-            return { path: dirname(args.importer) + "/binaryen_raw_wasm_browser.js" };
-        });
         build.onResolve({ filter: /\.\.\/platform\/deno\// }, _args => {
             const path = _args.path.replace("../", sources_path).replace("/deno/", "/browser/");
             return { path }
