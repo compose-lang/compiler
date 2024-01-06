@@ -43,7 +43,7 @@ export default class FunctionBody {
     }
 
     compileLocals(): number[] {
-        return this.locals.map(local => local.type.asType());
+        return this.locals.filter(local => local.scope == LocalScope.LOCAL).map(local => local.type.asType());
     }
 
     setLocalNames(ref: FunctionRef) {
