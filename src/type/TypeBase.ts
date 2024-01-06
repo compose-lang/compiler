@@ -15,7 +15,7 @@ import {assertTrue} from "../../deps.ts";
 
 export default abstract class TypeBase extends CodeFragment implements IType {
 
-    nullable: boolean = false;
+    nullable = false;
 
     abstract get typeName(): string;
 
@@ -46,6 +46,10 @@ export default abstract class TypeBase extends CodeFragment implements IType {
     }
 
     checkMember(context: Context, memberId: Identifier): IType {
+        assertTrue(false);
+    }
+
+    checkItem(context: Context, item: IExpression): IType {
         assertTrue(false);
     }
 

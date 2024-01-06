@@ -1243,6 +1243,7 @@ export declare class Module {
     };
     get arrays(): {
         fromValues: (heapType: HeapType, values: ExpressionRef[]) => ExpressionRef;
+        getItem: (array: ExpressionRef, item: ExpressionRef, type: Type, signed: boolean) => ExpressionRef;
     };
 }
 export declare class Relooper {

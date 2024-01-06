@@ -5,7 +5,7 @@ import Context from "../context/Context.ts";
 import HeapTypeRegistry from "../registry/HeapTypeRegistry.ts";
 import {Type} from "../binaryen/binaryen_wasm.d.ts";
 import {assertTrue} from "../../deps.ts";
-
+import {IntegerType} from "./index.ts";
 
 export default class ArrayType extends CollectionType {
 
@@ -24,5 +24,11 @@ export default class ArrayType extends CollectionType {
 
     isAssignableFrom(context: Context, type: IType): boolean {
         return type instanceof ArrayType && this.elementType.isAssignableFrom(context, type.elementType);
+    }
+
+    checkItem(context: Context, item: IExpression): IType {
+        const itemType = item.check(context);
+        assertTrue(itemType instanceof IntegerType)
+        return this.elementType;
     }
 }

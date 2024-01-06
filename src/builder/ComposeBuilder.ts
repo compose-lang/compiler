@@ -66,7 +66,7 @@ import ComposeParser, {
     Import_statementContext,
     InstructionContext,
     Integer_typeContext,
-    IntegerLiteralContext,
+    IntegerLiteralContext, ItemExpressionContext,
     List_literalContext,
     ListLiteralContext,
     LiteralExpressionContext,
@@ -196,6 +196,7 @@ import SetType from "../type/SetType.ts";
 import ParameterList from "../parameter/ParameterList.ts";
 import { assertTrue } from "../../deps.ts";
 import preprocessedStream from "./PreprocessedStream.ts";
+import ItemExpression from "../expression/ItemExpression.ts";
 
 interface IndexedNode {
     __id?: number;
@@ -886,6 +887,12 @@ export default class ComposeBuilder extends ComposeParserListener {
         const parent = this.getNodeValue<IExpression>(ctx._parent);
         const id = this.getNodeValue<Identifier>(ctx._member);
         this.setNodeValue(ctx, new MemberExpression(parent, id));
+    }
+
+    exitItemExpression = (ctx: ItemExpressionContext) => {
+        const parent = this.getNodeValue<IExpression>(ctx._parent);
+        const item = this.getNodeValue<IExpression>(ctx._item);
+        this.setNodeValue(ctx, new ItemExpression(parent, item));
     }
 
     exitTernaryExpression = (ctx: TernaryExpressionContext) => {

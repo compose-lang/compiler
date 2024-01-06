@@ -50,6 +50,10 @@ export default class ImportsType extends Map<string, IFunctionDeclaration> imple
         assertTrue(false, "Should never get there!");
     }
 
+    checkItem(context: Context, item: IExpression): IType {
+        assertTrue(false, "Should never get there!");
+    }
+
     checkEquals(context: Context, rightType: IType): IType {
         assertTrue(false, "Should never get there!");
     }

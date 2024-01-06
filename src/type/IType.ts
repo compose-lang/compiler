@@ -24,6 +24,7 @@ export default interface IType {
     prepareContext(context: Context): Context;
 
     checkMember(context: Context, memberId: Identifier): IType;
+    checkItem(context: Context, item: IExpression): IType;
 
     checkEquals(context: Context, rightType: IType): IType;
 
