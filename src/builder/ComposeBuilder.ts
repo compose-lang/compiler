@@ -8,7 +8,6 @@ import {
     TerminalNode,
     Token
 } from "npm:antlr4";
-import {fileExistsSync} from "../platform/deno/FileUtils.ts";
 import ComposeParser, {
     Abstract_function_declarationContext,
     AddExpressionContext,
@@ -16,6 +15,7 @@ import ComposeParser, {
     AnnotationContext,
     Any_typeContext, ArrayTypeContext,
     Assign_instance_statementContext,
+    Assign_item_statementContext,
     Attribute_declarationContext,
     Attribute_refContext,
     Attribute_type_or_nullContext,
@@ -155,6 +155,7 @@ import DeclarationBase from "../declaration/DeclarationBase.ts";
 import DeclareInstanceStatement from "../statement/DeclareInstanceStatement.ts";
 import AssignOperator from "../statement/AssignOperator.ts";
 import AssignInstanceStatement from "../statement/AssignInstanceStatement.ts";
+import AssignItemStatement from "../statement/AssignItemStatement.ts";
 import TupleType from "../type/TupleType.ts";
 import FunctionCallStatement from "../statement/FunctionCallStatement.ts";
 import GenericParameter from "../declaration/GenericParameter.ts";
@@ -783,6 +784,14 @@ export default class ComposeBuilder extends ComposeParserListener {
         const op = this.getNodeValue<AssignOperator>(ctx.assign_op());
         const exp = this.getNodeValue<IExpression>(ctx._value);
         this.setNodeValue(ctx, new AssignInstanceStatement(parent, id, op, exp));
+    }
+
+    exitAssign_item_statement = (ctx: Assign_item_statementContext) => {
+        const parent = this.getNodeValue<IExpression>(ctx._parent);
+        const item = this.getNodeValue<IExpression>(ctx._item);
+        const op = this.getNodeValue<AssignOperator>(ctx.assign_op());
+        const exp = this.getNodeValue<IExpression>(ctx._value);
+        this.setNodeValue(ctx, new AssignItemStatement(parent, item, op, exp));
     }
 
     exitFunction_call_statement = (ctx: Function_call_statementContext) => {

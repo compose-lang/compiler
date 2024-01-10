@@ -350,7 +350,7 @@ assign_op:
     ;
 
 assign_item_statement:
-    expression LPAR expression RPAR assign_op expression
+    parent = expression LBRAK item = expression RBRAK assign_op value = expression
     ;
 
 return_statement:

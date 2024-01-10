@@ -60,7 +60,7 @@ export default class ArrayLiteral extends LiteralBase<any[]> {
         const elemType = this.type.elementType.asType();
         const types = HeapTypeRegistry.instance.getArrayType(elemType, true);
         const values = this.value.map(v => v.compile(context, module, flags, body)).map(r => r.ref);
-        const ref = module.arrays.fromValues(types[1], values);
+        const ref = module.arrays.newFromValues(types[1], values);
         return { ref, type: this.type }
     }
 

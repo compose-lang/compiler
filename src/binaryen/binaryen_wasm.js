@@ -1790,7 +1790,8 @@ export class Module {
     }
     get arrays() {
         return {
-            fromValues: (heapType, values) => {
+            newWithInit: (heapType, size, init) => JSModule['BinaryenArrayNew'](this.ptr, heapType, size, init),
+            newFromValues: (heapType, values) => {
                 const ptr = _malloc(Math.max(8, values.length * 4));
                 let offset = ptr;
                 values.forEach(value => {
@@ -1801,7 +1802,10 @@ export class Module {
                 _free(ptr);
                 return result;
             },
-            getItem: (array, item, type, signed) => JSModule['_BinaryenArrayGet'](this.ptr, array, item, type, signed)
+            copy: (destArray, destItem, srcArray, srcItem, numItems) => JSModule['_BinaryenArrayCopy'](this.ptr, destArray, destItem, srcArray, srcItem, numItems),
+            getItem: (array, item, type, signed) => JSModule['_BinaryenArrayGet'](this.ptr, array, item, type, signed),
+            setItem: (array, item, value) => JSModule['_BinaryenArraySet'](this.ptr, array, item, value),
+            length: (array) => JSModule['_BinaryenArrayLen'](this.ptr, array)
         };
     }
 }

@@ -1242,8 +1242,12 @@ export declare class Module {
         emitText: (expression: ExpressionRef) => string;
     };
     get arrays(): {
-        fromValues: (heapType: HeapType, values: ExpressionRef[]) => ExpressionRef;
+        newWithInit: (heapType: HeapType, size: ExpressionRef, init: ExpressionRef) => ExpressionRef;
+        newFromValues: (heapType: HeapType, values: ExpressionRef[]) => ExpressionRef;
+        copy: (destArray: ExpressionRef, destItem: ExpressionRef, srcArray: ExpressionRef, srcItem: ExpressionRef, numItems: ExpressionRef) => ExpressionRef;
         getItem: (array: ExpressionRef, item: ExpressionRef, type: Type, signed: boolean) => ExpressionRef;
+        setItem: (array: ExpressionRef, item: ExpressionRef, value: ExpressionRef) => ExpressionRef;
+        length: (array: ExpressionRef) => ExpressionRef;
     };
 }
 export declare class Relooper {
