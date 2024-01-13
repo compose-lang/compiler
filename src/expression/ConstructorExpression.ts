@@ -51,8 +51,7 @@ export default class ConstructorExpression extends ExpressionBase {
         const struct = context.getRegisteredStructBase(this.id);
         const type= struct.itype;
         // TODO for now, assume all fields are populated in correct sequence with correct type
-        const fields = this.args.map(args => args.compile(context, module, flags, body));
-        const fieldRefs = fields.map(res => res.ref );
+        const fieldRefs = this.args.map(args => args.compile(context, module, flags, body)).map(res => res.ref );
         const gcType = HeapTypeRegistry.instance.getStructGCType(context, type, true);
         const ref = module.structs.newFromFields(gcType.heapType, fieldRefs);
         return { ref, type };
