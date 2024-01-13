@@ -29,7 +29,7 @@ export default class ComposeLexer extends Lexer {
 	public static readonly ENUM = 15;
 	public static readonly EXTENDS = 16;
 	public static readonly FUNCTION = 17;
-	public static readonly RECORD = 18;
+	public static readonly STRUCT = 18;
 	public static readonly STATIC = 19;
 	public static readonly ABSTRACT = 20;
 	public static readonly NATIVE = 21;
@@ -609,7 +609,7 @@ export default class ComposeLexer extends Lexer {
                                                             "'class'", "'enum'", 
                                                             "'extends'", 
                                                             "'function'", 
-                                                            "'record'", 
+                                                            "'struct'", 
                                                             "'static'", 
                                                             "'abstract'", 
                                                             "'native'", 
@@ -1140,7 +1140,7 @@ export default class ComposeLexer extends Lexer {
                                                              "CLASS", "ENUM", 
                                                              "EXTENDS", 
                                                              "FUNCTION", 
-                                                             "RECORD", "STATIC", 
+                                                             "STRUCT", "STATIC", 
                                                              "ABSTRACT", 
                                                              "NATIVE", "PUBLIC", 
                                                              "PROTECTED", 
@@ -1660,7 +1660,7 @@ export default class ComposeLexer extends Lexer {
 
 	public static readonly ruleNames: string[] = [
 		"I32", "I64", "U32", "U64", "F32", "F64", "V128", "STRING", "BOOLEAN", 
-		"ANY", "VOID", "ATTRIBUTE", "CLASS", "ENUM", "EXTENDS", "FUNCTION", "RECORD", 
+		"ANY", "VOID", "ATTRIBUTE", "CLASS", "ENUM", "EXTENDS", "FUNCTION", "STRUCT", 
 		"STATIC", "ABSTRACT", "NATIVE", "PUBLIC", "PROTECTED", "PRIVATE", "CONST", 
 		"LET", "NEW", "GET", "SET", "FROM", "SWITCH", "CASE", "FOR", "DO", "WHILE", 
 		"BREAK", "FINALLY", "THIS", "SUPER", "TYPE_OF", "INSTANCE_OF", "EXPORT", 
@@ -2830,9 +2830,9 @@ export default class ComposeLexer extends Lexer {
 	5,101,0,0,1335,1336,5,110,0,0,1336,1337,5,100,0,0,1337,1338,5,115,0,0,1338,
 	30,1,0,0,0,1339,1340,5,102,0,0,1340,1341,5,117,0,0,1341,1342,5,110,0,0,
 	1342,1343,5,99,0,0,1343,1344,5,116,0,0,1344,1345,5,105,0,0,1345,1346,5,
-	111,0,0,1346,1347,5,110,0,0,1347,32,1,0,0,0,1348,1349,5,114,0,0,1349,1350,
-	5,101,0,0,1350,1351,5,99,0,0,1351,1352,5,111,0,0,1352,1353,5,114,0,0,1353,
-	1354,5,100,0,0,1354,34,1,0,0,0,1355,1356,5,115,0,0,1356,1357,5,116,0,0,
+	111,0,0,1346,1347,5,110,0,0,1347,32,1,0,0,0,1348,1349,5,115,0,0,1349,1350,
+	5,116,0,0,1350,1351,5,114,0,0,1351,1352,5,117,0,0,1352,1353,5,99,0,0,1353,
+	1354,5,116,0,0,1354,34,1,0,0,0,1355,1356,5,115,0,0,1356,1357,5,116,0,0,
 	1357,1358,5,97,0,0,1358,1359,5,116,0,0,1359,1360,5,105,0,0,1360,1361,5,
 	99,0,0,1361,36,1,0,0,0,1362,1363,5,97,0,0,1363,1364,5,98,0,0,1364,1365,
 	5,115,0,0,1365,1366,5,116,0,0,1366,1367,5,114,0,0,1367,1368,5,97,0,0,1368,

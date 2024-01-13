@@ -3,7 +3,7 @@ import ComposeBuilder from "../../src/builder/ComposeBuilder.ts";
 import Runner from "../../src/runner/Runner.ts";
 import {assertEquals, assertTrue} from "../../deps.ts";
 
-Deno.test('returns an opaque i32 array',  () => {
+Deno.test('returns an opaque i32 array ref',  () => {
     const pipeline = new Pipeline();
     const unit = ComposeBuilder.parse_unit_data("@ModuleExport function stuff(): i32[] { const a:i32[] = [ 3, 5 ]; return a; }");
     const wasmTarget = pipeline.build([unit])[0];

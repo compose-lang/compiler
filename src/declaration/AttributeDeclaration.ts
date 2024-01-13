@@ -16,7 +16,7 @@ export default class AttributeDeclaration extends DeclarationBase implements IDe
     }
 
     register(context: Context): void {
-        // TODO
+        context.registerAttribute(this);
     }
 
     check(context: Context): IType {

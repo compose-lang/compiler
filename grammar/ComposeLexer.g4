@@ -19,7 +19,7 @@ CLASS: 'class';
 ENUM: 'enum';
 EXTENDS: 'extends';
 FUNCTION: 'function';
-RECORD: 'record';
+STRUCT: 'struct';
 
 STATIC: 'static';
 ABSTRACT: 'abstract';

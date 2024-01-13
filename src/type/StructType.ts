@@ -7,27 +7,22 @@ import NullType from "./NullType.ts";
 import BooleanType from "./BooleanType.ts";
 import {Type} from "../binaryen/binaryen_wasm.d.ts";
 import {assertTrue} from "../../deps.ts";
+import StructDeclaration from "../declaration/StructDeclaration.ts";
+import StructTypeBase from "./StructTypeBase.ts";
+import ClassDeclaration from "../declaration/ClassDeclaration.ts";
 
-export default class StructType extends UserType implements IValueType {
+export default class StructType extends StructTypeBase implements IValueType {
 
-    nullable = false;
-    id: Identifier;
+    struct: StructDeclaration;
 
-    constructor(id: Identifier) {
-        super();
-        this.id = id;
+    constructor(id: Identifier, struct?: StructDeclaration) {
+        super(id);
+        this.struct = struct || null;
     }
 
-    get typeName(): string {
-        return this.id.value;
-    }
-
-    count(): number {
-        assertTrue(false); // TODO
-    }
-
-    asType(): Type {
-        assertTrue(false); // TODO
+    getDeclaration(context: Context): StructDeclaration {
+        this.ensureDeclaration(context);
+        return this.struct;
     }
 
     isAssignableFrom(context: Context, type: IType): boolean {
@@ -41,11 +36,17 @@ export default class StructType extends UserType implements IValueType {
         assertTrue(false); // TODO
     }
 
-    checkEquals(context: Context, rightType: IType): IType {
-        if(this.typeName == rightType.typeName || rightType == NullType.instance)
-            return BooleanType.instance;
-        else
-            return super.checkEquals(context, rightType);
+    checkMember(context: Context, memberId: Identifier): IType {
+        this.ensureDeclaration(context);
+        const member = this.struct.findMember(context, memberId);
+        assertTrue(member);
+        return member.type;
     }
 
+     private ensureDeclaration(context: Context) {
+        if(!this.struct) {
+            this.struct = context.getRegisteredStruct(this.id);
+            assertTrue(this.struct, "Cannot find record '" + this.id.value + "'");
+        }
+    }
 }

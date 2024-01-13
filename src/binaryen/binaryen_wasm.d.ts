@@ -1243,11 +1243,14 @@ export declare class Module {
     };
     get arrays(): {
         newWithInit: (heapType: HeapType, size: ExpressionRef, init: ExpressionRef) => ExpressionRef;
-        newFromValues: (heapType: HeapType, values: ExpressionRef[]) => ExpressionRef;
+        newFromItems: (heapType: HeapType, values: ExpressionRef[]) => ExpressionRef;
         copy: (destArray: ExpressionRef, destItem: ExpressionRef, srcArray: ExpressionRef, srcItem: ExpressionRef, numItems: ExpressionRef) => ExpressionRef;
         getItem: (array: ExpressionRef, item: ExpressionRef, type: Type, signed: boolean) => ExpressionRef;
         setItem: (array: ExpressionRef, item: ExpressionRef, value: ExpressionRef) => ExpressionRef;
         length: (array: ExpressionRef) => ExpressionRef;
+    };
+    get structs(): {
+        newFromFields: (heapType: HeapType, values: ExpressionRef[]) => ExpressionRef;
     };
 }
 export declare class Relooper {
@@ -1276,11 +1279,17 @@ export interface TypeBuilderResult {
     errorIndex: number | null;
     errorReason: number | null;
 }
+export interface FieldType {
+    type: Type;
+    packedType: PackedType;
+    mutable: boolean;
+}
 export declare class TypeBuilder {
     static typeFromTempHeapType(heapType: HeapType, nullable: boolean): Type;
     readonly ref: TypeBuilderRef;
     constructor(slots: number);
-    setArrayType(slot: number, elementType: Type, elementPackedType: PackedType, mutable: boolean): TypeBuilder;
+    setArrayType(slot: number, elementType: FieldType): TypeBuilder;
+    setStructType(slot: number, fieldTypes: FieldType[]): TypeBuilder;
     getTempHeapType(slot: number): HeapType;
     buildAndDispose(): TypeBuilderResult;
 }

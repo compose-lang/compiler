@@ -1791,7 +1791,7 @@ export class Module {
     get arrays() {
         return {
             newWithInit: (heapType, size, init) => JSModule['BinaryenArrayNew'](this.ptr, heapType, size, init),
-            newFromValues: (heapType, values) => {
+            newFromItems: (heapType, values) => {
                 const ptr = _malloc(Math.max(8, values.length * 4));
                 let offset = ptr;
                 values.forEach(value => {
@@ -1806,6 +1806,21 @@ export class Module {
             getItem: (array, item, type, signed) => JSModule['_BinaryenArrayGet'](this.ptr, array, item, type, signed),
             setItem: (array, item, value) => JSModule['_BinaryenArraySet'](this.ptr, array, item, value),
             length: (array) => JSModule['_BinaryenArrayLen'](this.ptr, array)
+        };
+    }
+    get structs() {
+        return {
+            newFromFields: (heapType, values) => {
+                const ptr = _malloc(4 * values.length);
+                let offset = ptr;
+                values.forEach(value => {
+                    __i32_store(offset, value);
+                    offset += 4;
+                });
+                const result = JSModule['_BinaryenStructNew'](this.ptr, ptr, values.length, heapType);
+                _free(ptr);
+                return result;
+            }
         };
     }
 }
@@ -1856,8 +1871,28 @@ export class TypeBuilder {
     constructor(slots) {
         this.ref = JSModule['_TypeBuilderCreate'](slots);
     }
-    setArrayType(slot, elementType, elementPackedType, mutable) {
-        JSModule['_TypeBuilderSetArrayType'](this.ref, slot, elementType, elementPackedType, mutable);
+    setArrayType(slot, elementType) {
+        JSModule['_TypeBuilderSetArrayType'](this.ref, slot, elementType.type, elementType.packedType, elementType.mutable);
+        return this;
+    }
+    setStructType(slot, fieldTypes) {
+        const types = _malloc(4 * fieldTypes.length);
+        const packedTypes = _malloc(4 * fieldTypes.length);
+        // assume sizeof(bool) is 4
+        const mutables = _malloc(4 * fieldTypes.length);
+        let typesPtr = types, packedTypesPtr = packedTypes, mutablesPtr = mutables;
+        fieldTypes.forEach(field => {
+            __i32_store(typesPtr, field.type);
+            typesPtr += 4;
+            __i32_store(packedTypesPtr, field.packedType);
+            packedTypesPtr += 4;
+            __i32_store(mutablesPtr, field.mutable ? 1 : 0);
+            mutablesPtr += 4;
+        });
+        JSModule['_TypeBuilderSetStructType'](this.ref, slot, types, packedTypes, mutables, fieldTypes.length);
+        _free(mutables);
+        _free(packedTypes);
+        _free(types);
         return this;
     }
     getTempHeapType(slot) {

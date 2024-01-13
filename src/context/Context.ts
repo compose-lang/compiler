@@ -11,7 +11,8 @@ import IExpression from "../expression/IExpression.ts";
 import AssertFunction from "../builtins/AssertFunction.ts";
 import CompilationUnit from "../compiler/CompilationUnit.ts";
 import {assertTrue, assertFalse} from "../../deps.ts";
-import RecordDeclaration from "../declaration/RecordDeclaration.ts";
+import StructDeclaration from "../declaration/StructDeclaration.ts";
+import StructDeclarationBase from "../declaration/StructDeclarationBase.ts";
 
 export default class Context {
 
@@ -27,7 +28,7 @@ export default class Context {
     calling: Context | null = null;
     parent: Context | null = null;
     attributes = new Map<string, AttributeDeclaration>();
-    records = new Map<string, RecordDeclaration>();
+    structs = new Map<string, StructDeclaration>();
     classes = new Map<string, ClassDeclaration>();
     enums = new Map<string, EnumDeclaration>();
     functions = new Map<string, Map<string, IFunctionDeclaration>>();
@@ -80,18 +81,22 @@ export default class Context {
         new AssertFunction(unit).register(this);
     }
 
-    registerRecord(record: RecordDeclaration) {
-        assertTrue(!this.records.has(record.name) && !this.classes.has(record.name) && !this.enums.has(record.name));
-        this.records.set(record.name, record);
+    registerAttribute(attr: AttributeDeclaration) {
+        assertTrue(!this.attributes.has(attr.name));
+        this.attributes.set(attr.name, attr);
+    }
+    registerStruct(struct: StructDeclaration) {
+        assertTrue(!this.structs.has(struct.name) && !this.classes.has(struct.name) && !this.enums.has(struct.name));
+        this.structs.set(struct.name, struct);
     }
 
     registerClass(klass: ClassDeclaration) {
-        assertTrue(!this.records.has(klass.name) && !this.classes.has(klass.name) && !this.enums.has(klass.name));
+        assertTrue(!this.structs.has(klass.name) && !this.classes.has(klass.name) && !this.enums.has(klass.name));
         this.classes.set(klass.name, klass);
     }
 
     registerEnum(decl: EnumDeclaration) {
-        assertTrue(!this.records.has(decl.name) && !this.classes.has(decl.name) && !this.enums.has(decl.name));
+        assertTrue(!this.structs.has(decl.name) && !this.classes.has(decl.name) && !this.enums.has(decl.name));
         this.enums.set(decl.name, decl);
     }
 
@@ -170,14 +175,22 @@ export default class Context {
             return null;
     }
 
-    getRegisteredRecord(id: Identifier): RecordDeclaration {
-        const result = this.records.get(id.value) || null;
+    getRegisteredStructBase(id: Identifier): StructDeclarationBase {
+        const record = this.getRegisteredStruct(id);
+        if (record != null)
+            return record;
+        else
+            return this.getRegisteredClass(id);
+    }
+
+    getRegisteredStruct(id: Identifier): StructDeclaration {
+        const result = this.structs.get(id.value) || null;
         if(result)
             return result
         else if(this.parent)
-            return this.parent.getRegisteredRecord(id);
+            return this.parent.getRegisteredStruct(id);
         else if(this.globals && this.globals != this)
-            return this.globals.getRegisteredRecord(id);
+            return this.globals.getRegisteredStruct(id);
         else
             return null;
     }

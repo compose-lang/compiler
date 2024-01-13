@@ -36,7 +36,7 @@ export default class ComposeParser extends BaseParser {
 	public static readonly ENUM = 15;
 	public static readonly EXTENDS = 16;
 	public static readonly FUNCTION = 17;
-	public static readonly RECORD = 18;
+	public static readonly STRUCT = 18;
 	public static readonly STATIC = 19;
 	public static readonly ABSTRACT = 20;
 	public static readonly NATIVE = 21;
@@ -634,15 +634,15 @@ export default class ComposeParser extends BaseParser {
 	public static readonly RULE_attribute_type = 28;
 	public static readonly RULE_attribute_type_or_null = 29;
 	public static readonly RULE_attribute_ref = 30;
-	public static readonly RULE_struct_type = 31;
-	public static readonly RULE_struct_ref = 32;
+	public static readonly RULE_user_type = 31;
+	public static readonly RULE_user_ref = 32;
 	public static readonly RULE_function_type = 33;
 	public static readonly RULE_function_type_or_null = 34;
 	public static readonly RULE_return_type = 35;
 	public static readonly RULE_return_types = 36;
 	public static readonly RULE_parameter = 37;
 	public static readonly RULE_class_declaration = 38;
-	public static readonly RULE_record_declaration = 39;
+	public static readonly RULE_struct_declaration = 39;
 	public static readonly RULE_accessibility = 40;
 	public static readonly RULE_field_declaration = 41;
 	public static readonly RULE_function_declaration = 42;
@@ -694,7 +694,7 @@ export default class ComposeParser extends BaseParser {
                                                             "'class'", "'enum'", 
                                                             "'extends'", 
                                                             "'function'", 
-                                                            "'record'", 
+                                                            "'struct'", 
                                                             "'static'", 
                                                             "'abstract'", 
                                                             "'native'", 
@@ -1225,7 +1225,7 @@ export default class ComposeParser extends BaseParser {
                                                              "CLASS", "ENUM", 
                                                              "EXTENDS", 
                                                              "FUNCTION", 
-                                                             "RECORD", "STATIC", 
+                                                             "STRUCT", "STATIC", 
                                                              "ABSTRACT", 
                                                              "NATIVE", "PUBLIC", 
                                                              "PROTECTED", 
@@ -1749,8 +1749,8 @@ export default class ComposeParser extends BaseParser {
 		"any_type", "boolean_type", "number_type", "integer_type", "decimal_type", 
 		"i32_type", "i64_type", "u32_type", "u64_type", "f32_type", "f64_type", 
 		"string_type", "void_type", "attribute_type", "attribute_type_or_null", 
-		"attribute_ref", "struct_type", "struct_ref", "function_type", "function_type_or_null", 
-		"return_type", "return_types", "parameter", "class_declaration", "record_declaration", 
+		"attribute_ref", "user_type", "user_ref", "function_type", "function_type_or_null", 
+		"return_type", "return_types", "parameter", "class_declaration", "struct_declaration", 
 		"accessibility", "field_declaration", "function_declaration", "abstract_function_declaration", 
 		"concrete_function_declaration", "native_function_declaration", "function_prototype", 
 		"generic_parameter", "statement", "embeddable_statement", "standalone_statement", 
@@ -2154,7 +2154,7 @@ export default class ComposeParser extends BaseParser {
 			case 2:
 				{
 				this.state = 240;
-				this.record_declaration();
+				this.struct_declaration();
 				}
 				break;
 			case 3:
@@ -2429,11 +2429,11 @@ export default class ComposeParser extends BaseParser {
 				break;
 			case 2:
 				{
-				localctx = new StructTypeContext(this, localctx);
+				localctx = new UserTypeContext(this, localctx);
 				this._ctx = localctx;
 				_prevctx = localctx;
 				this.state = 282;
-				this.struct_type();
+				this.user_type();
 				}
 				break;
 			}
@@ -3091,14 +3091,14 @@ export default class ComposeParser extends BaseParser {
 		return localctx;
 	}
 	// @RuleVersion(0)
-	public struct_type(): Struct_typeContext {
-		let localctx: Struct_typeContext = new Struct_typeContext(this, this._ctx, this.state);
-		this.enterRule(localctx, 62, ComposeParser.RULE_struct_type);
+	public user_type(): User_typeContext {
+		let localctx: User_typeContext = new User_typeContext(this, this._ctx, this.state);
+		this.enterRule(localctx, 62, ComposeParser.RULE_user_type);
 		try {
 			this.enterOuterAlt(localctx, 1);
 			{
 			this.state = 353;
-			this.struct_ref();
+			this.user_ref();
 			}
 		}
 		catch (re) {
@@ -3116,9 +3116,9 @@ export default class ComposeParser extends BaseParser {
 		return localctx;
 	}
 	// @RuleVersion(0)
-	public struct_ref(): Struct_refContext {
-		let localctx: Struct_refContext = new Struct_refContext(this, this._ctx, this.state);
-		this.enterRule(localctx, 64, ComposeParser.RULE_struct_ref);
+	public user_ref(): User_refContext {
+		let localctx: User_refContext = new User_refContext(this, this._ctx, this.state);
+		this.enterRule(localctx, 64, ComposeParser.RULE_user_ref);
 		try {
 			this.enterOuterAlt(localctx, 1);
 			{
@@ -3469,7 +3469,7 @@ export default class ComposeParser extends BaseParser {
 			this.state = 422;
 			this.match(ComposeParser.CLASS);
 			this.state = 423;
-			localctx._id = this.struct_ref();
+			localctx._id = this.user_ref();
 			this.state = 435;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
@@ -3508,7 +3508,7 @@ export default class ComposeParser extends BaseParser {
 				this.state = 437;
 				this.match(ComposeParser.EXTENDS);
 				this.state = 438;
-				this.struct_ref();
+				this.user_ref();
 				this.state = 443;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
@@ -3518,7 +3518,7 @@ export default class ComposeParser extends BaseParser {
 					this.state = 439;
 					this.match(ComposeParser.COMMA);
 					this.state = 440;
-					this.struct_ref();
+					this.user_ref();
 					}
 					}
 					this.state = 445;
@@ -3581,17 +3581,17 @@ export default class ComposeParser extends BaseParser {
 		return localctx;
 	}
 	// @RuleVersion(0)
-	public record_declaration(): Record_declarationContext {
-		let localctx: Record_declarationContext = new Record_declarationContext(this, this._ctx, this.state);
-		this.enterRule(localctx, 78, ComposeParser.RULE_record_declaration);
+	public struct_declaration(): Struct_declarationContext {
+		let localctx: Struct_declarationContext = new Struct_declarationContext(this, this._ctx, this.state);
+		this.enterRule(localctx, 78, ComposeParser.RULE_struct_declaration);
 		let _la: number;
 		try {
 			this.enterOuterAlt(localctx, 1);
 			{
 			this.state = 463;
-			this.match(ComposeParser.RECORD);
+			this.match(ComposeParser.STRUCT);
 			this.state = 464;
-			localctx._id = this.struct_ref();
+			localctx._id = this.user_ref();
 			this.state = 476;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
@@ -3630,7 +3630,7 @@ export default class ComposeParser extends BaseParser {
 				this.state = 478;
 				this.match(ComposeParser.EXTENDS);
 				this.state = 479;
-				this.struct_ref();
+				this.user_ref();
 				this.state = 484;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
@@ -3640,7 +3640,7 @@ export default class ComposeParser extends BaseParser {
 					this.state = 480;
 					this.match(ComposeParser.COMMA);
 					this.state = 481;
-					this.struct_ref();
+					this.user_ref();
 					}
 					}
 					this.state = 486;
@@ -4202,7 +4202,7 @@ export default class ComposeParser extends BaseParser {
 			this.enterOuterAlt(localctx, 1);
 			{
 			this.state = 623;
-			this.struct_ref();
+			this.user_ref();
 			this.state = 626;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
@@ -6981,7 +6981,7 @@ export default class ComposeParser extends BaseParser {
 		case 30:
 			return this.attribute_ref_sempred(localctx as Attribute_refContext, predIndex);
 		case 32:
-			return this.struct_ref_sempred(localctx as Struct_refContext, predIndex);
+			return this.user_ref_sempred(localctx as User_refContext, predIndex);
 		case 35:
 			return this.return_type_sempred(localctx as Return_typeContext, predIndex);
 		case 43:
@@ -7013,7 +7013,7 @@ export default class ComposeParser extends BaseParser {
 		}
 		return true;
 	}
-	private struct_ref_sempred(localctx: Struct_refContext, predIndex: number): boolean {
+	private user_ref_sempred(localctx: User_refContext, predIndex: number): boolean {
 		switch (predIndex) {
 		case 3:
 			return  this.willBeUppercase() ;
@@ -7704,8 +7704,8 @@ export class DeclarationContext extends ParserRuleContext {
 	public attribute_declaration(): Attribute_declarationContext {
 		return this.getTypedRuleContext(Attribute_declarationContext, 0) as Attribute_declarationContext;
 	}
-	public record_declaration(): Record_declarationContext {
-		return this.getTypedRuleContext(Record_declarationContext, 0) as Record_declarationContext;
+	public struct_declaration(): Struct_declarationContext {
+		return this.getTypedRuleContext(Struct_declarationContext, 0) as Struct_declarationContext;
 	}
 	public class_declaration(): Class_declarationContext {
 		return this.getTypedRuleContext(Class_declarationContext, 0) as Class_declarationContext;
@@ -7952,25 +7952,6 @@ export class ArrayTypeContext extends Value_typeContext {
 		}
 	}
 }
-export class StructTypeContext extends Value_typeContext {
-	constructor(parser: ComposeParser, ctx: Value_typeContext) {
-		super(parser, ctx.parentCtx, ctx.invokingState);
-		super.copyFrom(ctx);
-	}
-	public struct_type(): Struct_typeContext {
-		return this.getTypedRuleContext(Struct_typeContext, 0) as Struct_typeContext;
-	}
-	public enterRule(listener: ComposeParserListener): void {
-	    if(listener.enterStructType) {
-	 		listener.enterStructType(this);
-		}
-	}
-	public exitRule(listener: ComposeParserListener): void {
-	    if(listener.exitStructType) {
-	 		listener.exitStructType(this);
-		}
-	}
-}
 export class SetTypeContext extends Value_typeContext {
 	constructor(parser: ComposeParser, ctx: Value_typeContext) {
 		super(parser, ctx.parentCtx, ctx.invokingState);
@@ -8012,6 +7993,25 @@ export class NativeTypeContext extends Value_typeContext {
 	public exitRule(listener: ComposeParserListener): void {
 	    if(listener.exitNativeType) {
 	 		listener.exitNativeType(this);
+		}
+	}
+}
+export class UserTypeContext extends Value_typeContext {
+	constructor(parser: ComposeParser, ctx: Value_typeContext) {
+		super(parser, ctx.parentCtx, ctx.invokingState);
+		super.copyFrom(ctx);
+	}
+	public user_type(): User_typeContext {
+		return this.getTypedRuleContext(User_typeContext, 0) as User_typeContext;
+	}
+	public enterRule(listener: ComposeParserListener): void {
+	    if(listener.enterUserType) {
+	 		listener.enterUserType(this);
+		}
+	}
+	public exitRule(listener: ComposeParserListener): void {
+	    if(listener.exitUserType) {
+	 		listener.exitUserType(this);
 		}
 	}
 }
@@ -8488,31 +8488,31 @@ export class Attribute_refContext extends ParserRuleContext {
 }
 
 
-export class Struct_typeContext extends ParserRuleContext {
+export class User_typeContext extends ParserRuleContext {
 	constructor(parser?: ComposeParser, parent?: ParserRuleContext, invokingState?: number) {
 		super(parent, invokingState);
     	this.parser = parser;
 	}
-	public struct_ref(): Struct_refContext {
-		return this.getTypedRuleContext(Struct_refContext, 0) as Struct_refContext;
+	public user_ref(): User_refContext {
+		return this.getTypedRuleContext(User_refContext, 0) as User_refContext;
 	}
     public get ruleIndex(): number {
-    	return ComposeParser.RULE_struct_type;
+    	return ComposeParser.RULE_user_type;
 	}
 	public enterRule(listener: ComposeParserListener): void {
-	    if(listener.enterStruct_type) {
-	 		listener.enterStruct_type(this);
+	    if(listener.enterUser_type) {
+	 		listener.enterUser_type(this);
 		}
 	}
 	public exitRule(listener: ComposeParserListener): void {
-	    if(listener.exitStruct_type) {
-	 		listener.exitStruct_type(this);
+	    if(listener.exitUser_type) {
+	 		listener.exitUser_type(this);
 		}
 	}
 }
 
 
-export class Struct_refContext extends ParserRuleContext {
+export class User_refContext extends ParserRuleContext {
 	constructor(parser?: ComposeParser, parent?: ParserRuleContext, invokingState?: number) {
 		super(parent, invokingState);
     	this.parser = parser;
@@ -8521,16 +8521,16 @@ export class Struct_refContext extends ParserRuleContext {
 		return this.getToken(ComposeParser.IDENTIFIER, 0);
 	}
     public get ruleIndex(): number {
-    	return ComposeParser.RULE_struct_ref;
+    	return ComposeParser.RULE_user_ref;
 	}
 	public enterRule(listener: ComposeParserListener): void {
-	    if(listener.enterStruct_ref) {
-	 		listener.enterStruct_ref(this);
+	    if(listener.enterUser_ref) {
+	 		listener.enterUser_ref(this);
 		}
 	}
 	public exitRule(listener: ComposeParserListener): void {
-	    if(listener.exitStruct_ref) {
-	 		listener.exitStruct_ref(this);
+	    if(listener.exitUser_ref) {
+	 		listener.exitUser_ref(this);
 		}
 	}
 }
@@ -8775,7 +8775,7 @@ export class FunctionParameterContext extends ParameterContext {
 
 
 export class Class_declarationContext extends ParserRuleContext {
-	public _id!: Struct_refContext;
+	public _id!: User_refContext;
 	constructor(parser?: ComposeParser, parent?: ParserRuleContext, invokingState?: number) {
 		super(parent, invokingState);
     	this.parser = parser;
@@ -8789,11 +8789,11 @@ export class Class_declarationContext extends ParserRuleContext {
 	public RCURL(): TerminalNode {
 		return this.getToken(ComposeParser.RCURL, 0);
 	}
-	public struct_ref_list(): Struct_refContext[] {
-		return this.getTypedRuleContexts(Struct_refContext) as Struct_refContext[];
+	public user_ref_list(): User_refContext[] {
+		return this.getTypedRuleContexts(User_refContext) as User_refContext[];
 	}
-	public struct_ref(i: number): Struct_refContext {
-		return this.getTypedRuleContext(Struct_refContext, i) as Struct_refContext;
+	public user_ref(i: number): User_refContext {
+		return this.getTypedRuleContext(User_refContext, i) as User_refContext;
 	}
 	public accessibility(): AccessibilityContext {
 		return this.getTypedRuleContext(AccessibilityContext, 0) as AccessibilityContext;
@@ -8850,23 +8850,23 @@ export class Class_declarationContext extends ParserRuleContext {
 }
 
 
-export class Record_declarationContext extends ParserRuleContext {
-	public _id!: Struct_refContext;
+export class Struct_declarationContext extends ParserRuleContext {
+	public _id!: User_refContext;
 	constructor(parser?: ComposeParser, parent?: ParserRuleContext, invokingState?: number) {
 		super(parent, invokingState);
     	this.parser = parser;
 	}
-	public RECORD(): TerminalNode {
-		return this.getToken(ComposeParser.RECORD, 0);
+	public STRUCT(): TerminalNode {
+		return this.getToken(ComposeParser.STRUCT, 0);
 	}
 	public SEMI(): TerminalNode {
 		return this.getToken(ComposeParser.SEMI, 0);
 	}
-	public struct_ref_list(): Struct_refContext[] {
-		return this.getTypedRuleContexts(Struct_refContext) as Struct_refContext[];
+	public user_ref_list(): User_refContext[] {
+		return this.getTypedRuleContexts(User_refContext) as User_refContext[];
 	}
-	public struct_ref(i: number): Struct_refContext {
-		return this.getTypedRuleContext(Struct_refContext, i) as Struct_refContext;
+	public user_ref(i: number): User_refContext {
+		return this.getTypedRuleContext(User_refContext, i) as User_refContext;
 	}
 	public LPAR(): TerminalNode {
 		return this.getToken(ComposeParser.LPAR, 0);
@@ -8890,16 +8890,16 @@ export class Record_declarationContext extends ParserRuleContext {
 		return this.getToken(ComposeParser.COMMA, i);
 	}
     public get ruleIndex(): number {
-    	return ComposeParser.RULE_record_declaration;
+    	return ComposeParser.RULE_struct_declaration;
 	}
 	public enterRule(listener: ComposeParserListener): void {
-	    if(listener.enterRecord_declaration) {
-	 		listener.enterRecord_declaration(this);
+	    if(listener.enterStruct_declaration) {
+	 		listener.enterStruct_declaration(this);
 		}
 	}
 	public exitRule(listener: ComposeParserListener): void {
-	    if(listener.exitRecord_declaration) {
-	 		listener.exitRecord_declaration(this);
+	    if(listener.exitStruct_declaration) {
+	 		listener.exitStruct_declaration(this);
 		}
 	}
 }
@@ -9208,8 +9208,8 @@ export class Generic_parameterContext extends ParserRuleContext {
 		super(parent, invokingState);
     	this.parser = parser;
 	}
-	public struct_ref(): Struct_refContext {
-		return this.getTypedRuleContext(Struct_refContext, 0) as Struct_refContext;
+	public user_ref(): User_refContext {
+		return this.getTypedRuleContext(User_refContext, 0) as User_refContext;
 	}
 	public EXTENDS(): TerminalNode {
 		return this.getToken(ComposeParser.EXTENDS, 0);

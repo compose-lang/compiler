@@ -79,7 +79,7 @@ import ComposeParser, {
     Number_typeContext,
     OrExpressionContext,
     ParenthesisExpressionContext, PostDecrementExpressionContext, PostIncrementExpressionContext,
-    PreCastExpressionContext, PreDecrementExpressionContext, PreIncrementExpressionContext, Record_declarationContext,
+    PreCastExpressionContext, PreDecrementExpressionContext, PreIncrementExpressionContext,
     Return_statementContext,
     Return_typeContext,
     Return_typesContext,
@@ -90,14 +90,15 @@ import ComposeParser, {
     StatementContext,
     StatementsContext,
     String_typeContext,
-    StringLiteralContext, Struct_refContext, Struct_typeContext, StructTypeContext,
+    StringLiteralContext,
+    Struct_declarationContext,
     TernaryExpressionContext,
     Throw_statementContext,
     TypedParameterContext,
     U32_typeContext,
     U64_typeContext, Unary_statementContext,
     UnaryBitNotExpressionContext,
-    UnaryNotExpressionContext,
+    UnaryNotExpressionContext, User_refContext, User_typeContext, UserTypeContext,
     Value_type_or_nullContext
 } from "../parser/ComposeParser.ts";
 import ComposeLexer from "../parser/ComposeLexer.ts";
@@ -195,8 +196,9 @@ import ParameterList from "../parameter/ParameterList.ts";
 import { assertTrue } from "../../deps.ts";
 import preprocessedStream from "./PreprocessedStream.ts";
 import ItemExpression from "../expression/ItemExpression.ts";
-import StructType from "../type/StructType.ts";
-import RecordDeclaration from "../declaration/RecordDeclaration.ts";
+import StructTypeBase from "../type/StructTypeBase.ts";
+import StructDeclaration from "../declaration/StructDeclaration.ts";
+import UnresolvedUserType from "../type/UnresolvedUserType.ts";
 
 interface IndexedNode {
     __id?: number;
@@ -379,12 +381,12 @@ export default class ComposeBuilder extends ComposeParserListener {
         this.setNodeValue(ctx, new Identifier(ctx.IDENTIFIER().getText()));
     }
 
-    exitStruct_type = (ctx: Struct_typeContext) => {
-        const id = this.getNodeValue<Identifier>(ctx.struct_ref());
-        this.setNodeValue(ctx, new StructType(id));
+    exitUser_type = (ctx: User_typeContext) => {
+        const id = this.getNodeValue<Identifier>(ctx.user_ref());
+        this.setNodeValue(ctx, new UnresolvedUserType(id));
     }
 
-    exitStruct_ref = (ctx: Struct_refContext) => {
+    exitUser_ref = (ctx: User_refContext) => {
         this.setNodeValue(ctx, new Identifier(ctx.IDENTIFIER().getText()));
     }
 
@@ -404,7 +406,7 @@ export default class ComposeBuilder extends ComposeParserListener {
         this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
     }
 
-    exitStructType = (ctx: StructTypeContext) => {
+    exitUserType = (ctx: UserTypeContext) => {
         this.setNodeValue(ctx, this.getNodeValue(ctx.getChild(0)));
     }
 
@@ -461,14 +463,14 @@ export default class ComposeBuilder extends ComposeParserListener {
         this.setNodeValue(ctx, new AttributeDeclaration(id, type));
     }
 
-    exitRecord_declaration = (ctx: Record_declarationContext) => {
+    exitStruct_declaration = (ctx: Struct_declarationContext) => {
         const id = this.getNodeValue<Identifier>(ctx._id);
         const attributes = ctx.attribute_ref_list()
             .map(child => this.getNodeValue<Identifier>(child), this);
-        const parents = ctx.struct_ref_list()
-            .slice(1) // skip id which is also a class_type
+        const parents = ctx.user_ref_list()
+            .slice(1) // skip id which is also a user_ref
             .map(child => this.getNodeValue<Identifier>(child), this);
-        this.setNodeValue(ctx, new RecordDeclaration(id, attributes, parents));
+        this.setNodeValue(ctx, new StructDeclaration(id, attributes, parents));
     }
 
     exitClass_declaration = (ctx: Class_declarationContext) => {
@@ -478,8 +480,8 @@ export default class ComposeBuilder extends ComposeParserListener {
             .map(child => this.getNodeValue<Identifier>(child), this);
         const fields = ctx.field_declaration_list()
             .map(child => this.getNodeValue<FieldDeclaration>(child), this);
-        const parents = ctx.struct_ref_list()
-            .slice(1) // skip id which is also a class_type
+        const parents = ctx.user_ref_list()
+            .slice(1) // skip id which is also a user_ref
             .map(child => this.getNodeValue<Identifier>(child), this);
         const functions = ctx.function_declaration_list()
             .map(child => this.getNodeValue<FunctionDeclarationBase>(child), this);
@@ -537,7 +539,7 @@ export default class ComposeBuilder extends ComposeParserListener {
     }
 
     exitGeneric_parameter = (ctx: Generic_parameterContext) => {
-        const id = this.getNodeValue<Identifier>(ctx.struct_ref());
+        const id = this.getNodeValue<Identifier>(ctx.user_ref());
         const constraint = this.getNodeValue<IType>(ctx.value_type());
         this.setNodeValue(ctx, new GenericParameter(id, constraint));
     }

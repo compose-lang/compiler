@@ -28,7 +28,7 @@ export default class ErrorType extends NativeType {
         if(type.typeName == this.typeName)
             return true;
         else if(type instanceof ClassType) {
-            const klass = type.getClass(context);
+            const klass = type.getDeclaration(context);
             return klass.hasParent(context, new Identifier("Error"));
         } else
             return super.isAssignableFrom(context, type);

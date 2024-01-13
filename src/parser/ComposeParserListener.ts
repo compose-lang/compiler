@@ -3,12 +3,7 @@
 import {ParseTreeListener} from "npm:antlr4";
 
 
-import {
-	Compilation_unitContext,
-	Record_declarationContext, Struct_refContext,
-	Struct_typeContext,
-	StructTypeContext
-} from "./ComposeParser.ts";
+import { Compilation_unitContext } from "./ComposeParser.ts";
 import { PreambleContext } from "./ComposeParser.ts";
 import { Import_statementContext } from "./ComposeParser.ts";
 import { Import_sourceContext } from "./ComposeParser.ts";
@@ -23,6 +18,7 @@ import { AnnotationContext } from "./ComposeParser.ts";
 import { ArrayTypeContext } from "./ComposeParser.ts";
 import { SetTypeContext } from "./ComposeParser.ts";
 import { NativeTypeContext } from "./ComposeParser.ts";
+import { UserTypeContext } from "./ComposeParser.ts";
 import { Value_type_or_nullContext } from "./ComposeParser.ts";
 import { Native_typeContext } from "./ComposeParser.ts";
 import { Any_typeContext } from "./ComposeParser.ts";
@@ -41,6 +37,8 @@ import { Void_typeContext } from "./ComposeParser.ts";
 import { Attribute_typeContext } from "./ComposeParser.ts";
 import { Attribute_type_or_nullContext } from "./ComposeParser.ts";
 import { Attribute_refContext } from "./ComposeParser.ts";
+import { User_typeContext } from "./ComposeParser.ts";
+import { User_refContext } from "./ComposeParser.ts";
 import { Function_typeContext } from "./ComposeParser.ts";
 import { Function_type_or_nullContext } from "./ComposeParser.ts";
 import { Return_typeContext } from "./ComposeParser.ts";
@@ -49,6 +47,7 @@ import { AttributeParameterContext } from "./ComposeParser.ts";
 import { TypedParameterContext } from "./ComposeParser.ts";
 import { FunctionParameterContext } from "./ComposeParser.ts";
 import { Class_declarationContext } from "./ComposeParser.ts";
+import { Struct_declarationContext } from "./ComposeParser.ts";
 import { AccessibilityContext } from "./ComposeParser.ts";
 import { Field_declarationContext } from "./ComposeParser.ts";
 import { Function_declarationContext } from "./ComposeParser.ts";
@@ -271,18 +270,6 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 */
 	exitArrayType?: (ctx: ArrayTypeContext) => void;
 	/**
-	 * Enter a parse tree produced by the `StructType`
-	 * labeled alternative in `ComposeParser.value_type`.
-	 * @param ctx the parse tree
-	 */
-	enterStructType?: (ctx: StructTypeContext) => void;
-	/**
-	 * Exit a parse tree produced by the `StructType`
-	 * labeled alternative in `ComposeParser.value_type`.
-	 * @param ctx the parse tree
-	 */
-	exitStructType?: (ctx: StructTypeContext) => void;
-	/**
 	 * Enter a parse tree produced by the `SetType`
 	 * labeled alternative in `ComposeParser.value_type`.
 	 * @param ctx the parse tree
@@ -306,6 +293,18 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitNativeType?: (ctx: NativeTypeContext) => void;
+	/**
+	 * Enter a parse tree produced by the `UserType`
+	 * labeled alternative in `ComposeParser.value_type`.
+	 * @param ctx the parse tree
+	 */
+	enterUserType?: (ctx: UserTypeContext) => void;
+	/**
+	 * Exit a parse tree produced by the `UserType`
+	 * labeled alternative in `ComposeParser.value_type`.
+	 * @param ctx the parse tree
+	 */
+	exitUserType?: (ctx: UserTypeContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.value_type_or_null`.
 	 * @param ctx the parse tree
@@ -487,25 +486,25 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 */
 	exitAttribute_ref?: (ctx: Attribute_refContext) => void;
 	/**
-	 * Enter a parse tree produced by `ComposeParser.struct_type`.
+	 * Enter a parse tree produced by `ComposeParser.user_type`.
 	 * @param ctx the parse tree
 	 */
-	enterStruct_type?: (ctx: Struct_typeContext) => void;
+	enterUser_type?: (ctx: User_typeContext) => void;
 	/**
-	 * Exit a parse tree produced by `ComposeParser.struct_type`.
+	 * Exit a parse tree produced by `ComposeParser.user_type`.
 	 * @param ctx the parse tree
 	 */
-	exitStruct_type?: (ctx: Struct_typeContext) => void;
+	exitUser_type?: (ctx: User_typeContext) => void;
 	/**
-	 * Enter a parse tree produced by `ComposeParser.struct_ref`.
+	 * Enter a parse tree produced by `ComposeParser.user_ref`.
 	 * @param ctx the parse tree
 	 */
-	enterStruct_ref?: (ctx: Struct_refContext) => void;
+	enterUser_ref?: (ctx: User_refContext) => void;
 	/**
-	 * Exit a parse tree produced by `ComposeParser.struct_ref`.
+	 * Exit a parse tree produced by `ComposeParser.user_ref`.
 	 * @param ctx the parse tree
 	 */
-	exitStruct_ref?: (ctx: Struct_refContext) => void;
+	exitUser_ref?: (ctx: User_refContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.function_type`.
 	 * @param ctx the parse tree
@@ -593,15 +592,15 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 */
 	exitClass_declaration?: (ctx: Class_declarationContext) => void;
 	/**
-	 * Enter a parse tree produced by `ComposeParser.record_declaration`.
+	 * Enter a parse tree produced by `ComposeParser.struct_declaration`.
 	 * @param ctx the parse tree
 	 */
-	enterRecord_declaration?: (ctx: Record_declarationContext) => void;
+	enterStruct_declaration?: (ctx: Struct_declarationContext) => void;
 	/**
-	 * Exit a parse tree produced by `ComposeParser.record_declaration`.
+	 * Exit a parse tree produced by `ComposeParser.struct_declaration`.
 	 * @param ctx the parse tree
 	 */
-	exitRecord_declaration?: (ctx: Record_declarationContext) => void;
+	exitStruct_declaration?: (ctx: Struct_declarationContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.accessibility`.
 	 * @param ctx the parse tree
