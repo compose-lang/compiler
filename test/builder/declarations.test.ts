@@ -24,8 +24,8 @@ Deno.test('parses an attribute declaration ',  () => {
     assertEquals(unit.declarations[0].type.typeName, "string");
 });
 
-Deno.test('parses a record declaration', () => {
-    const unit = ComposeBuilder.parse_unit_data("record Thing(a, b) extends C, D;");
+Deno.test('parses a struct declaration', () => {
+    const unit = ComposeBuilder.parse_unit_data("struct Thing(a, b) extends C, D;");
     assertTrue(unit);
     assertEquals(unit.declarations.length, 1);
     assertTrue(unit.declarations[0] instanceof StructDeclaration);
