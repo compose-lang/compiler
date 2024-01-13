@@ -9,6 +9,7 @@ import OpCode from "../../src/compiler/OpCode.ts";
 import ImportStatement from "../../src/module/ImportStatement.ts";
 import IfStatement from "../../src/statement/IfStatement.ts";
 import { assertTrue, assertEquals } from "../../deps.ts";
+import AssignItemStatement from "../../src/statement/AssignItemStatement.ts";
 
 Deno.test('parses a declare statement',  () => {
     const stmts = ComposeBuilder.parse_statement("const a = 2, b: i64 = 3;");
@@ -26,6 +27,15 @@ Deno.test('parses a declare statement',  () => {
 Deno.test('parses an assign statement',  () => {
     const stmt = ComposeBuilder.parse_statement("a = 2;");
     assertTrue(stmt instanceof AssignInstanceStatement);
+    assertTrue(stmt.expression instanceof IntegerLiteral);
+    assertEquals(stmt.expression.value, 2);
+});
+
+Deno.test('parses an assign item statement',  () => {
+    const stmt = ComposeBuilder.parse_statement("a[1] = 2;");
+    assertTrue(stmt instanceof AssignItemStatement);
+    assertTrue(stmt.item instanceof IntegerLiteral);
+    assertEquals(stmt.item.value, 1);
     assertTrue(stmt.expression instanceof IntegerLiteral);
     assertEquals(stmt.expression.value, 2);
 });

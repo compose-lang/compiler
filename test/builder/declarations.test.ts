@@ -12,6 +12,7 @@ import Accessibility from "../../src/declaration/Accessibility.ts";
 import Int32Type from "../../src/type/Int32Type.ts";
 import RestParameter from "../../src/parameter/RestParameter.ts";
 import { assertTrue, assertEquals } from "../../deps.ts";
+import RecordDeclaration from "../../src/declaration/RecordDeclaration.ts";
 
 
 Deno.test('parses an attribute declaration ',  () => {
@@ -21,6 +22,16 @@ Deno.test('parses an attribute declaration ',  () => {
     assertTrue(unit.declarations[0] instanceof AttributeDeclaration);
     assertEquals(unit.declarations[0].name, "text");
     assertEquals(unit.declarations[0].type.typeName, "string");
+});
+
+Deno.test('parses a record declaration', () => {
+    const unit = ComposeBuilder.parse_unit_data("record Thing(a, b) extends C, D;");
+    assertTrue(unit);
+    assertEquals(unit.declarations.length, 1);
+    assertTrue(unit.declarations[0] instanceof RecordDeclaration);
+    assertEquals(unit.declarations[0].name, "Thing");
+    assertEquals(unit.declarations[0].attributes.map(a => a.value), ["a", "b"]);
+    assertEquals(unit.declarations[0].parents.map(a => a.value), ["C", "D"]);
 });
 
 Deno.test('parses a class declaration ',  () => {
@@ -224,3 +235,5 @@ Deno.test('parses rest parameters',  () => {
     assertTrue(param instanceof RestParameter);
     assertEquals(param.atomicType, Int32Type.instance);
 });
+
+

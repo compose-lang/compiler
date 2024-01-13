@@ -43,6 +43,7 @@ declaration:
     annotation*
     (EXPORT DEFAULT?)?
     ( attribute_declaration
+    | record_declaration
     | class_declaration
     | function_declaration[false]
     | enum_declaration )
@@ -70,7 +71,7 @@ annotation:
 
 value_type:
     native_type                 #NativeType
-    | class_type                #ClassType
+    | struct_type               #StructType
     | value_type LBRAK RBRAK    #ArrayType
     | value_type LT GT          #SetType
     ;
@@ -155,11 +156,11 @@ attribute_ref:
     { this.willBeLowercase() }? IDENTIFIER | plain_opcode
     ;
 
-class_type:
-    class_ref
+struct_type:
+    struct_ref
     ;
 
-class_ref:
+struct_ref:
     { this.willBeUppercase() }? IDENTIFIER
     ;
 
@@ -192,12 +193,18 @@ parameter:
     ;
 
 class_declaration:
-    accessibility? ABSTRACT? CLASS id = class_ref ( LPAR attribute_ref (COMMA attribute_ref)* RPAR )?
-            ( EXTENDS class_ref (COMMA class_ref)* )?
+    accessibility? ABSTRACT? CLASS id = struct_ref ( LPAR attribute_ref (COMMA attribute_ref)* RPAR )?
+            ( EXTENDS struct_ref (COMMA struct_ref)* )?
         LCURL
             field_declaration*
             function_declaration[true]*
         RCURL
+    ;
+
+record_declaration:
+    RECORD id = struct_ref ( LPAR attribute_ref (COMMA attribute_ref)* RPAR )?
+        ( EXTENDS struct_ref (COMMA struct_ref)* )?
+        SEMI
     ;
 
 accessibility:
@@ -238,7 +245,7 @@ function_prototype[boolean mandatory_return]:
     ;
 
 generic_parameter:
-    class_ref ( EXTENDS value_type )?
+    struct_ref ( EXTENDS value_type )?
     ;
 
 

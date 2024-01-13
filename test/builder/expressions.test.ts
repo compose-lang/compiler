@@ -4,6 +4,7 @@ import FunctionCall from "../../src/expression/FunctionCall.ts";
 import BinaryExpression from "../../src/expression/BinaryExpression.ts";
 import BinaryOperator from "../../src/expression/BinaryOperator.ts";
 import { assertTrue, assertEquals } from "../../deps.ts";
+import ItemExpression from "../../src/expression/ItemExpression.ts";
 
 Deno.test('parses a variable',  () => {
     const exp = ComposeBuilder.parse_expression("my_var");
@@ -36,3 +37,7 @@ Deno.test('parses a plus expression',  () => {
     assertEquals(exp.operator, BinaryOperator.PLUS);
 });
 
+Deno.test('parses an array item expression',  () => {
+    const exp = ComposeBuilder.parse_expression("a[2]");
+    assertTrue(exp instanceof ItemExpression);
+});
