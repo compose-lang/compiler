@@ -33,8 +33,8 @@ export default class ConstructorExpression extends ExpressionBase {
     }
 
     check(context: Context): IType {
-        const klass = context.getRegisteredClass(this.id);
-        return new ClassType(this.id, klass);
+        const struct = context.getRegisteredStructBase(this.id);
+        return struct.getIType(context);
     }
 
     declare(context: Context, module: WasmModule): void {
@@ -49,7 +49,7 @@ export default class ConstructorExpression extends ExpressionBase {
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResult {
         const struct = context.getRegisteredStructBase(this.id);
-        const type= struct.itype;
+        const type = struct.getIType(context);
         // TODO for now, assume all fields are populated in correct sequence with correct type
         const fieldRefs = this.args.map(args => args.compile(context, module, flags, body)).map(res => res.ref );
         const gcType = HeapTypeRegistry.instance.getStructGCType(context, type, true);

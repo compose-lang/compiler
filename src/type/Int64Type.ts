@@ -3,6 +3,7 @@ import NumberPrecedence from "./NumberPrecedence.ts";
 import {Type} from "../binaryen/binaryen_wasm.d.ts";
 /// <reference types="../binaryen/binaryen_wasm.d.ts" />
 import {i64} from "../binaryen/binaryen_wasm.js";
+import Context from "../context/Context.ts";
 
 export default class Int64Type extends IntegerType {
 
@@ -16,7 +17,7 @@ export default class Int64Type extends IntegerType {
         return NumberPrecedence.Int64;
     }
 
-    asType(): Type {
+    asType(context: Context): Type {
         return i64;
     }
 

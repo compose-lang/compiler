@@ -24,11 +24,7 @@ export default class MissingType extends NativeType implements IValueType {
         assertTrue(false); // should never get there
     }
 
-    count(): number {
-        assertTrue(false); // should never get there
-    }
-
-    asType(): Type {
+    asType(context: Context): Type {
         return auto;
     }
 

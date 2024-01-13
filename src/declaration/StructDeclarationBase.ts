@@ -25,7 +25,7 @@ export default abstract class StructDeclarationBase extends DeclarationBase impl
         return this.id.value;
     }
 
-    abstract get itype(): StructTypeBase;
+    abstract getIType(context: Context): StructTypeBase;
 
     hasParent(context: Context, parent: Identifier): boolean {
         return this.parents.some(p => p.value == parent.value)
@@ -39,6 +39,11 @@ export default abstract class StructDeclarationBase extends DeclarationBase impl
             return context.getRegisteredAttribute(memberId);
         else
             return this.findInheritedMember(context, memberId);
+    }
+
+    getMemberIndex(context: Context, memberId: Identifier) {
+        const name = memberId.value;
+        return this.attributes.findIndex(a => a.value == name);
     }
 
 
@@ -80,7 +85,7 @@ export default abstract class StructDeclarationBase extends DeclarationBase impl
                 .forEach(attr => {
                     namesSet.add(attr.value);
                     const decl = context.getRegisteredAttribute(attr);
-                    const fieldType = { type: decl.type.asType(), packedType: PackedType.NotPacked, mutable: true };
+                    const fieldType = { type: decl.type.asType(context), packedType: PackedType.NotPacked, mutable: true };
                     fieldTypes.push(fieldType);
                 });
         }

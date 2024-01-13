@@ -25,11 +25,7 @@ export default class TypeType extends UserType {
         return context.newStaticContext(this.type);
     }
 
-    count(): number {
-        assertTrue(false); // TODO will we ever need this ?
-    }
-
-    asType(): Type {
+    asType(context: Context): Type {
         assertTrue(false); // TODO will we ever need this ?
     }
 

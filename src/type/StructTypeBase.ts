@@ -24,12 +24,8 @@ export default abstract class StructTypeBase extends UserType implements IValueT
         return this.id.value;
     }
 
-    count(): number {
-        assertTrue(false); // TODO
-    }
-
-    asType(): Type {
-        const gcType = HeapTypeRegistry.instance.getStructGCType(null,  this,  true);
+    asType(context: Context): Type {
+        const gcType = HeapTypeRegistry.instance.getStructGCType(context,  this,  true);
         return gcType.type;
     }
 
@@ -56,5 +52,10 @@ export default abstract class StructTypeBase extends UserType implements IValueT
     getFieldTypes(context): FieldType[] {
         return this.getDeclaration(context).getFieldTypes(context);
     }
+
+    getMemberIndex(context: Context, id: Identifier) {
+        return this.getDeclaration(context).getMemberIndex(context, id);
+    }
+
 
 }

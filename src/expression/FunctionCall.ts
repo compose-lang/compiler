@@ -61,7 +61,7 @@ export default class FunctionCall extends ExpressionBase {
         assertTrue(decl);
         const args = this.makeArgs(context, decl);
         const argRefs = args.map(arg => arg.compile(context, module, flags, body)).map(result => result.ref);
-        const result = module.call(decl.name, argRefs, decl.returnType.asType());
+        const result = module.call(decl.name, argRefs, decl.returnType.asType(context));
         return { ref: result, type: decl.returnType };
     }
 

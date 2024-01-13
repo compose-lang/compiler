@@ -10,6 +10,7 @@ import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResults from "./IResults.ts";
 import VoidType from "../type/VoidType.ts";
 import {assertTrue} from "../../deps.ts";
+import StructTypeBase from "../type/StructTypeBase.ts";
 
 export default class AssignInstanceStatement extends StatementBase {
 
@@ -69,6 +70,22 @@ export default class AssignInstanceStatement extends StatementBase {
     }
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults {
+        if (this.parent)
+            return this.compileMember(context, module, flags, body);
+        else
+            return this.compileInstance(context, module, flags, body);
+    }
+
+    compileMember(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults {
+        const value = this.expression.compile(context, module, flags, body);
+        const struct = this.parent.compile(context, module, flags, body);
+        assertTrue(struct.type instanceof StructTypeBase);
+        const type = struct.type.checkMember(context, this.id);
+        const index = struct.type.getMemberIndex(context, this.id);
+        return { refs: [module.structs.setMember(struct.ref, index, value.ref) ], type };
+    }
+
+    compileInstance(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults {
         const value = this.expression.compile(context, module, flags, body);
         const local = body.getRegisteredLocal(this.name);
         if(local) {

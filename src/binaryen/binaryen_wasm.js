@@ -1820,7 +1820,9 @@ export class Module {
                 const result = JSModule['_BinaryenStructNew'](this.ptr, ptr, values.length, heapType);
                 _free(ptr);
                 return result;
-            }
+            },
+            getMember: (struct, memberIndex, resultType, signed) => JSModule['_BinaryenStructGet'](this.ptr, memberIndex, struct, resultType, signed),
+            setMember: (struct, memberIndex, value) => JSModule['_BinaryenStructSet'](this.ptr, memberIndex, struct, value)
         };
     }
 }

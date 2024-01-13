@@ -85,8 +85,8 @@ export default class IfStatement extends StatementBase {
                 ifFalse = this.compileBlock(context, module, flags, body, typeMap, block, remaining);
             }
             const ref = module.if(condition.ref,
-                module.block(null, ifTrue.refs!, ifTrue.type.asType()),
-                ifFalse.refs ? module.block(null, ifFalse.refs!, ifFalse.type.asType()) : undefined
+                module.block(null, ifTrue.refs!, ifTrue.type.asType(context)),
+                ifFalse.refs ? module.block(null, ifFalse.refs!, ifFalse.type.asType(context)) : undefined
                 )
             return { refs: [ref], type: typeMap.inferType(context) };
         } else { // final else

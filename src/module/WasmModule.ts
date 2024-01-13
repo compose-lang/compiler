@@ -27,7 +27,7 @@ export default class WasmModule extends Module {
     }
 
     declareImportedGlobal(unit: CompilationUnit, variable: Variable) {
-        this.globals.addImport(variable.name, unit.path, variable.name, variable.type.asType(), false);
+        this.globals.addImport(variable.name, unit.path, variable.name, variable.type.asType(unit.context), false);
     }
 
     declareGlobal(unit: CompilationUnit, variable: Variable, value: IExpression, mutable: boolean, exported: boolean): number {

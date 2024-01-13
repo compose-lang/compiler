@@ -67,10 +67,10 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
         this.parameters.rehearse(local, module, body);
         this.statements.rehearse(local, module, body);
         // parameters are compiled by function call
-        const locals = body.compileLocals();
+        const locals = body.compileLocals(context);
         const results = this.statements.compile(local, module, flags, body);
-        const block = module.block(null, results.refs, results.type.asType());
-        const funcref = module.functions.add(this.name, this.functionType().asType(), results.type.asType(), locals, block);
+        const block = module.block(null, results.refs, results.type.asType(context));
+        const funcref = module.functions.add(this.name, this.functionType().asType(context), results.type.asType(context), locals, block);
         body.setLocalNames(funcref);
         if(flags.debug) {
             const file = module.addDebugInfoFileName(this.fragment.path);

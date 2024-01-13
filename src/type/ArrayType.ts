@@ -19,8 +19,8 @@ export default class ArrayType extends CollectionType {
         assertTrue(false); // TODO
     }
 
-    asType(): Type {
-        const elementType = { type: this.elementType.asType(), packedType: PackedType.NotPacked, mutable: true };
+    asType(context: Context): Type {
+        const elementType = { type: this.elementType.asType(context), packedType: PackedType.NotPacked, mutable: true };
         const gcType = HeapTypeRegistry.instance.getArrayGCType(elementType, true);
         return gcType.type;
     }

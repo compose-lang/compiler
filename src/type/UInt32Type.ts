@@ -25,7 +25,7 @@ export default class UInt32Type extends IntegerType {
         return NumberPrecedence.UInt32;
     }
 
-    asType(): Type {
+    asType(context: Context): Type {
         return i32;
     }
 

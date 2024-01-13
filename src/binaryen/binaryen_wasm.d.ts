@@ -1251,6 +1251,8 @@ export declare class Module {
     };
     get structs(): {
         newFromFields: (heapType: HeapType, values: ExpressionRef[]) => ExpressionRef;
+        getMember: (struct: ExpressionRef, memberIndex: number, resultType: Type, signed: boolean) => any;
+        setMember: (struct: ExpressionRef, memberIndex: number, value: ExpressionRef) => any;
     };
 }
 export declare class Relooper {

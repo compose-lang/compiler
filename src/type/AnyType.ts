@@ -22,11 +22,7 @@ export default class AnyType extends NativeType implements IValueType {
         assertTrue(false); // should never get there
     }
 
-    count(): number {
-        assertTrue(false); // should never get there
-    }
-
-    asType(): Type {
+    asType(context: Context): Type {
         assertTrue(false); // should never get there
     }
 

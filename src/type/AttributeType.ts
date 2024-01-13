@@ -19,11 +19,7 @@ export default class AttributeType extends UserType {
         return this.id.value;
     }
 
-    count(): number {
-        assertTrue(false); // TODO
-    }
-
-    asType(): Type {
+    asType(context: Context): Type {
         assertTrue(false); // TODO
     }
 

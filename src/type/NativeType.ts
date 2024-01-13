@@ -1,6 +1,7 @@
 import IExpression from "../expression/IExpression.ts";
 import TypeBase from "./TypeBase.ts";
 import {Type} from "../binaryen/binaryen_wasm.d.ts";
+import Context from "../context/Context.ts";
 
 export default abstract class NativeType extends TypeBase {
 
@@ -16,11 +17,6 @@ export default abstract class NativeType extends TypeBase {
     }
 
     abstract defaultValue(): IExpression;
-
-    count(): number {
-        return 1;
-    }
-
-    abstract asType(): Type;
+    abstract asType(context: Context): Type;
 
 }

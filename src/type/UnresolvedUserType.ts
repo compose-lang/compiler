@@ -1,6 +1,7 @@
 import UserType from "./UserType.ts";
 import Identifier from "../builder/Identifier.ts";
 import { Type } from "../binaryen/binaryen_wasm.d.ts";
+import Context from "../context/Context.ts";
 
 export default class UnresolvedUserType extends UserType {
 
@@ -17,12 +18,8 @@ export default class UnresolvedUserType extends UserType {
         return this.id.value;
     }
 
-    asType(): Type {
+    asType(context: Context): Type {
         return undefined;
-    }
-
-    count(): number {
-        return 0;
     }
 
 }

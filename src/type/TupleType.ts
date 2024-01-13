@@ -22,11 +22,7 @@ export default class TupleType extends UserType {
         return FunctionType.flatten(returns);
     }
 
-    count(): number {
-        return this.validTypes().length;
-    }
-
-    asType(): Type {
+    asType(context: Context): Type {
        assertTrue(false)
     }
 
@@ -38,8 +34,8 @@ export default class TupleType extends UserType {
         assertTrue(false); // TODO
     }
 
-    private validTypes() {
-        return this.types.filter(type => type.asType() > 0);
+    private validTypes(context: Context) {
+        return this.types.filter(type => type.asType(context) > 0);
     }
 }
 

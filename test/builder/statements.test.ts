@@ -24,12 +24,21 @@ Deno.test('parses a declare statement',  () => {
     assertEquals(stmts[1].expression.value, 3);
 });
 
-Deno.test('parses an assign statement',  () => {
+Deno.test('parses an assign instance statement',  () => {
     const stmt = ComposeBuilder.parse_statement("a = 2;");
     assertTrue(stmt instanceof AssignInstanceStatement);
     assertTrue(stmt.expression instanceof IntegerLiteral);
     assertEquals(stmt.expression.value, 2);
 });
+
+Deno.test('parses an assign member statement',  () => {
+    const stmt = ComposeBuilder.parse_statement("a.b = 2;");
+    assertTrue(stmt instanceof AssignInstanceStatement);
+    assertEquals(stmt.id.value, "b");
+    assertTrue(stmt.expression instanceof IntegerLiteral);
+    assertEquals(stmt.expression.value, 2);
+});
+
 
 Deno.test('parses an assign item statement',  () => {
     const stmt = ComposeBuilder.parse_statement("a[1] = 2;");
@@ -39,6 +48,7 @@ Deno.test('parses an assign item statement',  () => {
     assertTrue(stmt.expression instanceof IntegerLiteral);
     assertEquals(stmt.expression.value, 2);
 });
+
 
 Deno.test('parses a return statement',  () => {
     const stmt = ComposeBuilder.parse_statement("return 2;");

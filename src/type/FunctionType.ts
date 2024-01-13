@@ -57,12 +57,8 @@ export default class FunctionType extends UserType {
         assertTrue(false); // TODO
     }
 
-    count(): number {
-        return 1;
-    }
-
-    asType(): Type {
-        const types = this.parameters.map(param => param.type.asType());
+    asType(context: Context): Type {
+        const types = this.parameters.map(param => param.type.asType(context));
         return createType(types);
     }
 

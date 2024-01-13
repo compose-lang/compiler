@@ -25,7 +25,7 @@ export default class Int32Type extends IntegerType {
         return NumberPrecedence.Int32;
     }
 
-    asType(): Type {
+    asType(context: Context): Type {
         return i32;
     }
 
@@ -65,7 +65,7 @@ export default class Int32Type extends IntegerType {
                 refs.push(value.ref);
                 value = expression.compile(context, module, flags, body);
                 refs.push(value.ref);
-                return {ref: module.block(null, refs, value.type.asType()), type: value.type};
+                return {ref: module.block(null, refs, value.type.asType(context)), type: value.type};
             }
             case UnaryOperator.PRE_DEC: {
                 const refs: number[] = [];
@@ -75,7 +75,7 @@ export default class Int32Type extends IntegerType {
                 refs.push(value.ref);
                 value = expression.compile(context, module, flags, body);
                 refs.push(value.ref);
-                return {ref: module.block(null, refs, value.type.asType()), type: value.type};
+                return {ref: module.block(null, refs, value.type.asType(context)), type: value.type};
             }
             case UnaryOperator.POST_INC: {
                 const refs: number[] = [];
@@ -86,7 +86,7 @@ export default class Int32Type extends IntegerType {
                 const result = module.i32.add(value.ref, module.i32.const(1));
                 value = expression.compileAssign(context, module, flags, body, result);
                 refs.push(value.ref);
-                return {ref: module.block(null, refs, value.type.asType()), type};
+                return {ref: module.block(null, refs, value.type.asType(context)), type};
             }
             case UnaryOperator.POST_DEC: {
                 const refs: number[] = [];
@@ -97,7 +97,7 @@ export default class Int32Type extends IntegerType {
                 const result = module.i32.sub(value.ref, module.i32.const(1));
                 value = expression.compileAssign(context, module, flags, body, result);
                 refs.push(value.ref);
-                return {ref: module.block(null, refs, value.type.asType()), type};
+                return {ref: module.block(null, refs, value.type.asType(context)), type};
             }
             case UnaryOperator.BIT_NOT: {
                 const value = expression.compile(context, module, flags, body);

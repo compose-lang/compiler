@@ -12,7 +12,7 @@ export default class StructDeclaration extends StructDeclarationBase implements 
         super(id, attributes, parents);
     }
 
-    get itype() {
+    getIType(context: Context) {
         return new StructType(this.id, this);
     }
     register(context: Context): void {

@@ -196,7 +196,6 @@ import ParameterList from "../parameter/ParameterList.ts";
 import { assertTrue } from "../../deps.ts";
 import preprocessedStream from "./PreprocessedStream.ts";
 import ItemExpression from "../expression/ItemExpression.ts";
-import StructTypeBase from "../type/StructTypeBase.ts";
 import StructDeclaration from "../declaration/StructDeclaration.ts";
 import UnresolvedUserType from "../type/UnresolvedUserType.ts";
 

@@ -4,6 +4,7 @@ import Fragment from "../builder/Fragment.ts";
 import {ExpressionRef, FunctionRef} from "../binaryen/binaryen_wasm.d.ts";
 /// <reference types="../binaryen/binaryen_wasm.d.ts" />
 import { Function } from "../binaryen/binaryen_wasm.js";
+import Context from "../context/Context.ts";
 
 enum LocalScope {
     PARAM,
@@ -42,8 +43,8 @@ export default class FunctionBody {
         return this.localsMap.get(name)
     }
 
-    compileLocals(): number[] {
-        return this.locals.filter(local => local.scope == LocalScope.LOCAL).map(local => local.type.asType());
+    compileLocals(context: Context): number[] {
+        return this.locals.filter(local => local.scope == LocalScope.LOCAL).map(local => local.type.asType(context));
     }
 
     setLocalNames(ref: FunctionRef) {

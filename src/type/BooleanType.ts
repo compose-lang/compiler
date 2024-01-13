@@ -3,6 +3,7 @@ import IValueType from "./IValueType.ts";
 import BooleanLiteral from "../literal/BooleanLiteral.ts";
 import IExpression from "../expression/IExpression.ts";
 import {Type} from "../binaryen/binaryen_wasm.d.ts";
+import Context from "../context/Context.ts";
 
 export default class BooleanType extends NativeType implements IValueType {
 
@@ -16,7 +17,7 @@ export default class BooleanType extends NativeType implements IValueType {
         return new BooleanLiteral("false");
     }
 
-    asType(): Type {
+    asType(context: Context): Type {
         return 0x7F; // i32
     }
 

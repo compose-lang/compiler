@@ -17,9 +17,7 @@ export default interface IType {
     isAssignableFrom(context: Context, type: IType): boolean;
     defaultValue(): IExpression;
 
-    count(): number;
-
-    asType(): Type;
+    asType(context: Context): Type;
 
     prepareContext(context: Context): Context;
 

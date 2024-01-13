@@ -3,6 +3,7 @@ import NumberPrecedence from "./NumberPrecedence.ts";
 import {Type} from "../binaryen/binaryen_wasm.d.ts";
 /// <reference types="../binaryen/binaryen_wasm.d.ts" />
 import {f64} from "../binaryen/binaryen_wasm.js";
+import Context from "../context/Context.ts";
 
 export default class Float64Type extends DecimalType {
 
@@ -16,7 +17,7 @@ export default class Float64Type extends DecimalType {
         return NumberPrecedence.Float64;
     }
 
-    asType(): Type {
+    asType(context: Context): Type {
         return f64;
     }
 

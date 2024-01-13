@@ -20,7 +20,7 @@ export default class ErrorType extends NativeType {
         return new NullLiteral();
     }
 
-    asType(): Type {
+    asType(context: Context): Type {
         assertTrue(false); // TODO
     }
 

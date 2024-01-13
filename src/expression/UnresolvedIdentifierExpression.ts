@@ -158,7 +158,7 @@ class LocalVariableExpression extends ExpressionBase {
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResult {
         const local = body.getRegisteredLocal(this.name);
-        const value = module.locals.get(local.index, local.type.asType());
+        const value = module.locals.get(local.index, local.type.asType(context));
         return { ref: value, type: local.type };
     }
 
@@ -217,7 +217,7 @@ class GlobalVariableExpression extends ExpressionBase {
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResult {
         const global = context.getRegisteredGlobal(this.id);
-        return { ref: module.globals.get(global.name, global.type.asType()), type: global.type };
+        return { ref: module.globals.get(global.name, global.type.asType(context)), type: global.type };
     }
 }
 

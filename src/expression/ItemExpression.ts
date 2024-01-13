@@ -44,7 +44,7 @@ export default class ItemExpression extends ExpressionBase {
             // TODO cast item ?
             const elemType = parent.type.elementType;
             const signed = false; // non-packed cannot be signed elemType==Int32Type.instance || elemType==Int64Type.instance;
-            const ref = module.arrays.getItem(parent.ref, item.ref, elemType.asType(), signed);
+            const ref = module.arrays.getItem(parent.ref, item.ref, elemType.asType(context), signed);
             return { ref, type: parent.type.elementType };
         } else
             assertFalse(true, "Not supported yet!")

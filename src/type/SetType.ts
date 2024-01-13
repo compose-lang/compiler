@@ -3,6 +3,7 @@ import IType from "./IType.ts";
 import IExpression from "../expression/IExpression.ts";
 import {Type} from "../binaryen/binaryen_wasm.d.ts";
 import {assertTrue} from "../../deps.ts";
+import Context from "../context/Context.ts";
 
 export default class SetType extends CollectionType {
 
@@ -14,7 +15,7 @@ export default class SetType extends CollectionType {
         assertTrue(false); // TODO
     }
 
-    asType(): Type {
+    asType(context: Context): Type {
         assertTrue(false); // TODO
     }
 }

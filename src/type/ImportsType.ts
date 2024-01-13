@@ -34,11 +34,7 @@ export default class ImportsType extends Map<string, IFunctionDeclaration> imple
         assertTrue(false, "Should never get there!");
     }
 
-    count(): number {
-        assertTrue(false, "Should never get there!");
-    }
-
-    asType(): Type {
+    asType(context: Context): Type {
         assertTrue(false, "Should never get there!");
     }
 
