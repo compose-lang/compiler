@@ -7174,6 +7174,14 @@ Module["FS_createLazyFile"] = FS.createLazyFile;
 
 Module["FS_createDevice"] = FS.createDevice;
 
+Module["stackAlloc"] = stackAlloc;
+
+Module["stackSave"] = stackSave;
+
+Module["stackRestore"] = stackRestore;
+
+Module["UTF8ToString"] = UTF8ToString;
+
 Module["stringToAscii"] = stringToAscii;
 
 Module["FS_createPreloadedFile"] = FS.createPreloadedFile;
@@ -7239,14 +7247,8 @@ function swapOut(writer) {
 
 Module["utils"] = {
  "swapOut": swapOut,
- "stringToAscii": stringToAscii,
- "stackSave": stackSave,
- "stackAlloc": stackAlloc,
- "stackRestore": stackRestore,
- "allocateUTF8OnStack": allocateUTF8OnStack,
  "_BinaryenSizeofLiteral": _BinaryenSizeofLiteral,
- "_BinaryenSizeofAllocateAndWriteResult": _BinaryenSizeofAllocateAndWriteResult,
- "UTF8ToString": UTF8ToString
+ "_BinaryenSizeofAllocateAndWriteResult": _BinaryenSizeofAllocateAndWriteResult
 };
 
 
