@@ -11,6 +11,7 @@ import IResult from "../expression/IResult.ts";
 import FunctionBody from "../module/FunctionBody.ts";
 import {Type} from "../binaryen/binaryen_wasm.d.ts";
 import {assertTrue} from "../../deps.ts";
+import TypeInfo from "../reflection/TypeInfo.ts";
 
 
 export default abstract class TypeBase extends CodeFragment implements IType {
@@ -20,6 +21,7 @@ export default abstract class TypeBase extends CodeFragment implements IType {
     abstract get typeName(): string;
 
     abstract asType(context: Context): Type;
+    abstract asTypeInfo(context: Context): TypeInfo;
 
     isAssignableFrom(context: Context, type: IType): boolean {
         return type === this;

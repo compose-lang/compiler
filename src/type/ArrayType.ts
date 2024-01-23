@@ -8,9 +8,10 @@ import { PackedType } from "../binaryen/binaryen_wasm.js";
 import { Type } from "../binaryen/binaryen_wasm.d.ts";
 import {assertTrue} from "../../deps.ts";
 import {IntegerType} from "./index.ts";
+import TypeInfo from "../reflection/TypeInfo.ts";
+import ReflectionRegistry from "../registry/ReflectionRegistry.ts";
 
 export default class ArrayType extends CollectionType {
-
     constructor(elementType: IType) {
         super("array<" + elementType.typeName + ">", elementType);
     }
@@ -21,8 +22,14 @@ export default class ArrayType extends CollectionType {
 
     asType(context: Context): Type {
         const elementType = { type: this.elementType.asType(context), packedType: PackedType.NotPacked, mutable: true };
-        const gcType = HeapTypeRegistry.instance.getArrayGCType(elementType, true);
+        const arrayType = HeapTypeRegistry.instance.getArrayGCType(elementType, true);
+        const valueType = { type: arrayType.type, packedType: PackedType.NotPacked, mutable: true };
+        const gcType = HeapTypeRegistry.instance.getWrapperGCType(valueType, true);
         return gcType.type;
+    }
+
+    asTypeInfo(context: Context): TypeInfo {
+        return ReflectionRegistry.instance.getArrayTypeInfo(context, this.elementType);
     }
 
     isAssignableFrom(context: Context, type: IType): boolean {

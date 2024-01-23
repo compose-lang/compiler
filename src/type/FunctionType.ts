@@ -9,6 +9,7 @@ import {Type} from "../binaryen/binaryen_wasm.d.ts";
 /// <reference types="../binaryen/binaryen_wasm.d.ts" />
 import {createType} from "../binaryen/binaryen_wasm.js";
 import {assertTrue} from "../../deps.ts";
+import TypeInfo from "../reflection/TypeInfo.ts";
 
 export default class FunctionType extends UserType {
 
@@ -60,6 +61,10 @@ export default class FunctionType extends UserType {
     asType(context: Context): Type {
         const types = this.parameters.map(param => param.type.asType(context));
         return createType(types);
+    }
+
+    asTypeInfo(context: Context): TypeInfo {
+        assertTrue(false); // should never get there
     }
 
     toString(): string {

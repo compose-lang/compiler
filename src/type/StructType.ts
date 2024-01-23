@@ -1,15 +1,11 @@
 import IType from "./IType.ts";
 import Identifier from "../builder/Identifier.ts";
 import Context from "../context/Context.ts";
-import UserType from "./UserType.ts";
 import IValueType from "./IValueType.ts";
 import NullType from "./NullType.ts";
-import BooleanType from "./BooleanType.ts";
-import {Type} from "../binaryen/binaryen_wasm.d.ts";
 import {assertTrue} from "../../deps.ts";
 import StructDeclaration from "../declaration/StructDeclaration.ts";
 import StructTypeBase from "./StructTypeBase.ts";
-import ClassDeclaration from "../declaration/ClassDeclaration.ts";
 
 export default class StructType extends StructTypeBase implements IValueType {
 

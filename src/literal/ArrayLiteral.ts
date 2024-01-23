@@ -11,8 +11,10 @@ import FunctionBody from "../module/FunctionBody.ts";
 import IResult from "../expression/IResult.ts";
 import HeapTypeRegistry from "../registry/HeapTypeRegistry.ts";
 import { assertTrue } from "../../deps.ts";
+import { ExpressionRef } from "../binaryen/binaryen_wasm.d.ts";
 /// <reference types="../binaryen/binaryen_wasm.d.ts" />
-import { PackedType } from "../binaryen/binaryen_wasm.js";
+import { PackedType, TypeBuilder } from "../binaryen/binaryen_wasm.js";
+import ReflectionRegistry from "../registry/ReflectionRegistry.ts";
 
 export default class ArrayLiteral extends LiteralBase<any[]> {
 
@@ -59,11 +61,18 @@ export default class ArrayLiteral extends LiteralBase<any[]> {
     }
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResult {
-        const elemType = { type: this.type.elementType.asType(context), packedType: PackedType.NotPacked, mutable: true };
-        const gcType = HeapTypeRegistry.instance.getArrayGCType(elemType, true);
-        const valueRefs = this.value.map(v => v.compile(context, module, flags, body)).map(r => r.ref);
-        const ref = module.arrays.newFromItems(gcType.heapType, valueRefs);
-        return { ref, type: this.type }
+        const itemsRef = this.compileItems(context, module, flags, body);
+        const arrayType = this.type.asType(context);
+        const arrayHeapType = TypeBuilder.heapTypeFromType(arrayType);
+        const arrayInfo = ReflectionRegistry.instance.getArrayTypeInfo(context, this.type.elementType);
+        const structRef = module.structs.newFromFields(arrayHeapType, [ module.i32.const(arrayInfo.typeIndex), itemsRef ]);
+        return { ref: structRef, type: this.type }
     }
 
+    private compileItems(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): ExpressionRef {
+        const elemType = {type: this.type.elementType.asType(context), packedType: PackedType.NotPacked, mutable: true};
+        const arrayGCType = HeapTypeRegistry.instance.getArrayGCType(elemType, true);
+        const valueRefs = this.value.map(v => v.compile(context, module, flags, body)).map(r => r.ref);
+        return module.arrays.newFromItems(arrayGCType.heapType, valueRefs);
+    }
 }

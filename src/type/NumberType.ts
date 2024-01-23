@@ -8,10 +8,16 @@ import BooleanType from "./BooleanType.ts";
 import IResult from "../expression/IResult.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import MissingType from "./MissingType.ts";
+import TypeInfo from "../reflection/TypeInfo.ts";
+import ReflectionRegistry from "../registry/ReflectionRegistry.ts";
 
 export default abstract class NumberType extends NativeType implements IValueType {
 
     abstract get precedence(): NumberPrecedence;
+
+    asTypeInfo(context: Context): TypeInfo {
+        return ReflectionRegistry.instance.getNativeTypeInfo(this);
+    }
 
     isAssignableFrom(context: Context, type: IType): boolean {
         return type instanceof NumberType || type === MissingType.instance;

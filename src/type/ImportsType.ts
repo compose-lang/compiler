@@ -11,6 +11,7 @@ import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResult from "../expression/IResult.ts";
 import {Type} from "../binaryen/binaryen_wasm.d.ts";
 import {assertTrue} from "../../deps.ts";
+import TypeInfo from "../reflection/TypeInfo.ts";
 
 export default class ImportsType extends Map<string, IFunctionDeclaration> implements IType {
 
@@ -36,6 +37,10 @@ export default class ImportsType extends Map<string, IFunctionDeclaration> imple
 
     asType(context: Context): Type {
         assertTrue(false, "Should never get there!");
+    }
+
+    asTypeInfo(context: Context): TypeInfo {
+        assertTrue(false); // should never get there
     }
 
     prepareContext(context: Context): Context {

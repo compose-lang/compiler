@@ -6,10 +6,10 @@ import IExpression from "./IExpression.ts";
 import FunctionBody from "../module/FunctionBody.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResult from "./IResult.ts";
-import Int32Type from "../type/Int32Type.ts";
-import Int64Type from "../type/Int64Type.ts";
 import ArrayType from "../type/ArrayType.ts";
 import {assertFalse} from "../platform/deno/AssertUtils.ts";
+/// <reference types="../binaryen/binaryen_wasm.d.ts" />
+import {TypeBuilder} from "../binaryen/binaryen_wasm.js";
 
 export default class ItemExpression extends ExpressionBase {
 
@@ -41,10 +41,14 @@ export default class ItemExpression extends ExpressionBase {
         const parent = this.parent.compile(context, module, flags, body);
         const item = this.item.compile(context, module, flags, body);
         if (parent.type instanceof ArrayType) {
-            // TODO cast item ?
-            const elemType = parent.type.elementType;
+            const wrapperType = parent.type.asType(context);
+            const wrapperHeapType = TypeBuilder.heapTypeFromType(wrapperType);
+            const arrayType = TypeBuilder.structMemberType(wrapperHeapType, 1);
+            const arrayHeapType = TypeBuilder.heapTypeFromType(arrayType);
+            const arrayRef = module.structs.getMember(parent.ref, 1, arrayType, false)
+            const elemType = TypeBuilder.arrayElementType(arrayHeapType);
             const signed = false; // non-packed cannot be signed elemType==Int32Type.instance || elemType==Int64Type.instance;
-            const ref = module.arrays.getItem(parent.ref, item.ref, elemType.asType(context), signed);
+            const ref = module.arrays.getItem(arrayRef, item.ref, elemType, signed);
             return { ref, type: parent.type.elementType };
         } else
             assertFalse(true, "Not supported yet!")

@@ -17,6 +17,5 @@ export default abstract class NativeType extends TypeBase {
     }
 
     abstract defaultValue(): IExpression;
-    abstract asType(context: Context): Type;
 
 }

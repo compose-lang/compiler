@@ -1242,7 +1242,7 @@ export declare class Module {
         emitText: (expression: ExpressionRef) => string;
     };
     get arrays(): {
-        newWithInit: (heapType: HeapType, size: ExpressionRef, init: ExpressionRef) => ExpressionRef;
+        newFromInit: (heapType: HeapType, size: ExpressionRef, init: ExpressionRef) => ExpressionRef;
         newFromItems: (heapType: HeapType, values: ExpressionRef[]) => ExpressionRef;
         copy: (destArray: ExpressionRef, destItem: ExpressionRef, srcArray: ExpressionRef, srcItem: ExpressionRef, numItems: ExpressionRef) => ExpressionRef;
         getItem: (array: ExpressionRef, item: ExpressionRef, type: Type, signed: boolean) => ExpressionRef;
@@ -1288,6 +1288,10 @@ export interface FieldType {
 }
 export declare class TypeBuilder {
     static typeFromTempHeapType(heapType: HeapType, nullable: boolean): Type;
+    static heapTypeFromType(type: Type): HeapType;
+    static arrayElementType(heapType: HeapType): Type;
+    static structMemberCount(heapType: HeapType): number;
+    static structMemberType(heapType: HeapType, index: number): Type;
     readonly ref: TypeBuilderRef;
     constructor(slots: number);
     setArrayType(slot: number, elementType: FieldType): TypeBuilder;

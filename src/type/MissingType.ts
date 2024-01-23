@@ -7,6 +7,7 @@ import {Type} from "../binaryen/binaryen_wasm.d.ts";
 /// <reference types="../binaryen/binaryen_wasm.d.ts" />
 import {auto} from "../binaryen/binaryen_wasm.js";
 import {assertTrue} from "../../deps.ts";
+import TypeInfo from "../reflection/TypeInfo.ts";
 
 export default class MissingType extends NativeType implements IValueType {
 
@@ -26,6 +27,10 @@ export default class MissingType extends NativeType implements IValueType {
 
     asType(context: Context): Type {
         return auto;
+    }
+
+    asTypeInfo(context: Context): TypeInfo {
+        assertTrue(false); // should never get there
     }
 
 }

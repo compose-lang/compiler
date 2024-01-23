@@ -5,6 +5,7 @@ import Context from "../context/Context.ts";
 import IType from "./IType.ts";
 import {Type} from "../binaryen/binaryen_wasm.d.ts";
 import {assertTrue} from "../../deps.ts";
+import TypeInfo from "../reflection/TypeInfo.ts";
 
 export default class AnyType extends NativeType implements IValueType {
 
@@ -23,6 +24,10 @@ export default class AnyType extends NativeType implements IValueType {
     }
 
     asType(context: Context): Type {
+        assertTrue(false); // should never get there
+    }
+
+    asTypeInfo(context: Context): TypeInfo {
         assertTrue(false); // should never get there
     }
 

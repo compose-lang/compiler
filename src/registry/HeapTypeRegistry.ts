@@ -1,6 +1,6 @@
-import {Type, HeapType, FieldType} from "../binaryen/binaryen_wasm.d.ts";
+import { FieldType, HeapType, Type } from "../binaryen/binaryen_wasm.d.ts";
 /// <reference types="../binaryen/binaryen_wasm.d.ts" />
-import {TypeBuilder} from "../binaryen/binaryen_wasm.js";
+import { PackedType, i32, TypeBuilder } from "../binaryen/binaryen_wasm.js";
 import StructTypeBase from "../type/StructTypeBase.ts";
 import Context from "../context/Context.ts";
 
@@ -13,8 +13,13 @@ export default class HeapTypeRegistry {
 
     static readonly instance = new HeapTypeRegistry();
 
-    arrayTypesMap = new Map<FieldType, HeapType>();
-    structTypesMap = new Map<StructTypeBase, HeapType>();
+    private static fieldTypeName(fieldType: FieldType): string {
+        return `${fieldType.type}/${fieldType.packedType}/${fieldType.mutable}`
+    }
+
+    arrayTypesMap = new Map<string, HeapType>();
+    wrapperTypesMap = new Map<string, HeapType>();
+    structTypesMap = new Map<string, HeapType>();
     heapTypesMap = new Map<HeapType, Type>();
 
     private constructor() {
@@ -22,25 +27,39 @@ export default class HeapTypeRegistry {
 
     // TODO set heap type name using BinaryenModuleSetTypeName
     getArrayGCType(elementType: FieldType, nullable = true): GCType {
-        if (!this.arrayTypesMap.has(elementType)) {
+        const elementTypeName = HeapTypeRegistry.fieldTypeName(elementType);
+        if (!this.arrayTypesMap.has(elementTypeName)) {
             const builder = new TypeBuilder(1);
             builder.setArrayType(0, elementType);
             const result = builder.buildAndDispose();
-            this.arrayTypesMap.set(elementType, result.heapTypes[0]);
+            this.arrayTypesMap.set(elementTypeName, result.heapTypes[0]);
         }
-        const heapType = this.arrayTypesMap.get(elementType)!;
+        const heapType = this.arrayTypesMap.get(elementTypeName)!;
+        return { type: this.getTypeFromHeapType(heapType, nullable), heapType };
+    }
+
+    getWrapperGCType(fieldType: FieldType, nullable = true): GCType {
+        const wrappedTypeName = HeapTypeRegistry.fieldTypeName(fieldType);
+        if (!this.wrapperTypesMap.has(wrappedTypeName)) {
+            const builder = new TypeBuilder(1);
+            const typeInfoField: FieldType = { type: i32, packedType: PackedType.NotPacked, mutable: false };
+            builder.setStructType(0, [ typeInfoField, fieldType]);
+            const result = builder.buildAndDispose();
+            this.wrapperTypesMap.set(wrappedTypeName, result.heapTypes[0]);
+        }
+        const heapType = this.wrapperTypesMap.get(wrappedTypeName)!;
         return { type: this.getTypeFromHeapType(heapType, nullable), heapType };
     }
 
     getStructGCType(context: Context, structType: StructTypeBase, nullable = true): GCType {
-        if (!this.structTypesMap.has(structType)) {
+        if (!this.structTypesMap.has(structType.typeName)) {
             const builder = new TypeBuilder(1);
             const fieldTypes = structType.getFieldTypes(context);
             builder.setStructType(0, fieldTypes);
             const result = builder.buildAndDispose();
-            this.structTypesMap.set(structType, result.heapTypes[0]);
+            this.structTypesMap.set(structType.typeName, result.heapTypes[0]);
         }
-        const heapType = this.structTypesMap.get(structType)!;
+        const heapType = this.structTypesMap.get(structType.typeName)!;
         return { type: this.getTypeFromHeapType(heapType, nullable), heapType };
     }
 
@@ -51,5 +70,9 @@ export default class HeapTypeRegistry {
             this.heapTypesMap.set(heapType, type)
         }
         return this.heapTypesMap.get(heapType)!;
+    }
+
+    getHeapTypeFromType(type: Type): HeapType {
+        return TypeBuilder.heapTypeFromType(type);
     }
 }

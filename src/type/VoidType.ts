@@ -5,6 +5,8 @@ import {Type} from "../binaryen/binaryen_wasm.d.ts";
 import {none} from "../binaryen/binaryen_wasm.js";
 import {assertTrue} from "../../deps.ts";
 import Context from "../context/Context.ts";
+import TypeInfo from "../reflection/TypeInfo.ts";
+import ReflectionRegistry from "../registry/ReflectionRegistry.ts";
 
 export default class VoidType extends NativeType {
 
@@ -20,5 +22,9 @@ export default class VoidType extends NativeType {
 
     asType(context: Context): Type {
         return none;
+    }
+
+    asTypeInfo(context: Context): TypeInfo {
+        return ReflectionRegistry.instance.getNativeTypeInfo(none);
     }
 }

@@ -8,7 +8,10 @@ import AssignOperator from "./AssignOperator.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResults from "./IResults.ts";
 import VoidType from "../type/VoidType.ts";
-import {assertTrue} from "../../deps.ts";
+import {assertFalse, assertTrue} from "../../deps.ts";
+import ArrayType from "../type/ArrayType.ts";
+/// <reference types="../binaryen/binaryen_wasm.d.ts" />
+import {TypeBuilder} from "../binaryen/binaryen_wasm.js";
 
 export default class AssignItemStatement extends StatementBase {
 
@@ -49,11 +52,18 @@ export default class AssignItemStatement extends StatementBase {
     }
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults {
-        const array= this.parent.compile(context,  module, flags, body);
+        const parent= this.parent.compile(context,  module, flags, body);
         const item= this.item.compile(context,  module, flags, body);
         const value= this.expression.compile(context, module, flags, body);
-        const ref= module.arrays.setItem(array.ref, item.ref, value.ref);
-        return { refs: [ ref ], type: VoidType.instance };
+        if (parent.type instanceof ArrayType) {
+            const wrapperType = parent.type.asType(context);
+            const wrapperHeapType = TypeBuilder.heapTypeFromType(wrapperType);
+            const arrayType = TypeBuilder.structMemberType(wrapperHeapType, 1);
+            const arrayRef = module.structs.getMember(parent.ref, 1, arrayType, false)
+            const ref= module.arrays.setItem(arrayRef, item.ref, value.ref);
+            return { refs: [ ref ], type: VoidType.instance };
+        } else
+            assertFalse(true, "Not supported yet!")
     }
 
 }

@@ -4,6 +4,7 @@ import NullLiteral from "../literal/NullLiteral.ts";
 import {Type} from "../binaryen/binaryen_wasm.d.ts";
 import {assertTrue} from "../../deps.ts";
 import Context from "../context/Context.ts";
+import TypeInfo from "../reflection/TypeInfo.ts";
 
 export default class StringType extends NativeType {
 
@@ -18,6 +19,10 @@ export default class StringType extends NativeType {
     }
 
     asType(context: Context): Type {
+        assertTrue(false);
+    }
+
+    asTypeInfo(context: Context): TypeInfo {
         assertTrue(false);
     }
 }

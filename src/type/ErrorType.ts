@@ -7,6 +7,7 @@ import Context from "../context/Context.ts";
 import {Type} from "../binaryen/binaryen_wasm.d.ts";
 import {assertTrue} from "../../deps.ts";
 import NullLiteral from "../literal/NullLiteral.ts";
+import TypeInfo from "../reflection/TypeInfo.ts";
 
 export default class ErrorType extends NativeType {
 
@@ -21,6 +22,10 @@ export default class ErrorType extends NativeType {
     }
 
     asType(context: Context): Type {
+        assertTrue(false); // TODO
+    }
+
+    asTypeInfo(context: Context): TypeInfo {
         assertTrue(false); // TODO
     }
 

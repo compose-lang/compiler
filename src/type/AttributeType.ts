@@ -4,6 +4,7 @@ import Context from "../context/Context.ts";
 import UserType from "./UserType.ts";
 import {Type} from "../binaryen/binaryen_wasm.d.ts";
 import {assertTrue} from "../../deps.ts";
+import TypeInfo from "../reflection/TypeInfo.ts";
 
 export default class AttributeType extends UserType {
 
@@ -20,6 +21,10 @@ export default class AttributeType extends UserType {
     }
 
     asType(context: Context): Type {
+        assertTrue(false); // TODO
+    }
+
+    asTypeInfo(context: Context): TypeInfo {
         assertTrue(false); // TODO
     }
 

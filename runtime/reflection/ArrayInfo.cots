@@ -1,0 +1,7 @@
+import TypeInfo from "./TypeInfo"
+
+export default class ArrayInfo extends TypeInfo {
+    get elementType(): TypeInfo {
+        return null;
+    }
+}

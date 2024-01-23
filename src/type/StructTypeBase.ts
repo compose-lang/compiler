@@ -9,6 +9,8 @@ import { FieldType, Type} from "../binaryen/binaryen_wasm.d.ts";
 import {assertTrue} from "../../deps.ts";
 import StructDeclarationBase from "../declaration/StructDeclarationBase.ts";
 import HeapTypeRegistry from "../registry/HeapTypeRegistry.ts";
+import TypeInfo from "../reflection/TypeInfo.ts";
+import ReflectionRegistry from "../registry/ReflectionRegistry.ts";
 
 export default abstract class StructTypeBase extends UserType implements IValueType {
 
@@ -27,6 +29,10 @@ export default abstract class StructTypeBase extends UserType implements IValueT
     asType(context: Context): Type {
         const gcType = HeapTypeRegistry.instance.getStructGCType(context,  this,  true);
         return gcType.type;
+    }
+
+    asTypeInfo(context: Context): TypeInfo {
+        return ReflectionRegistry.instance.getAtomicTypeInfo(this);
     }
 
     isAssignableFrom(context: Context, type: IType): boolean {
