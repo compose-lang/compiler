@@ -1,0 +1,4 @@
+import { name } from "../common/attributes"
+
+export default abstract class TypeInfo(name) {
+}

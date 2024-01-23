@@ -1,4 +1,0 @@
-import { name } from "./attributes"
-
-export default abstract class BaseInfo(name) {
-}

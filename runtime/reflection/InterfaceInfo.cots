@@ -1,7 +1,13 @@
-import BaseInfo from "./BaseInfo"
+import TypeInfo from "./TypeInfo"
 
-export class InterfaceInfo extends BaseInfo {
-    parents: InterfaceInfo[];
-    attributes: AttributeInfo[];
-    methods: MethodInfo[];
+export default class InterfaceInfo extends TypeInfo {
+    get parents(): InterfaceInfo[] {
+        return [];
+    }
+    get attributes(): AttributeInfo[] {
+        return [];
+    }
+    get methods(): MethodInfo[] {
+        return [];
+    }
 }

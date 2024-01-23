@@ -1,6 +1,4 @@
-import BaseInfo from "./BaseInfo"
+import TypeInfo from "./TypeInfo"
 
-export class AttributeInfo extends BaseInfo {
-}
-
+export default class AttributeInfo extends TypeInfo {
 }
