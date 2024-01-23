@@ -1,0 +1,6 @@
+import BaseInfo from "./BaseInfo"
+
+export class StructInfo extends BaseInfo {
+    parents: StructInfo[];
+    attributes: AttributeInfo[];
+}

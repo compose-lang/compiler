@@ -1,0 +1,6 @@
+import BaseInfo from "./BaseInfo"
+
+export class AttributeInfo extends BaseInfo {
+}
+
+}
