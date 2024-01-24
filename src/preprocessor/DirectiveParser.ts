@@ -46,30 +46,30 @@ export default class DirectiveParser extends Parser {
 	public static readonly RULE_end_directive = 4;
 	public static readonly RULE_value = 5;
 	public static readonly RULE_trailer = 6;
-	public static readonly literalNames: (string | null)[] = [ null, "'#if'",
-                                                            "'#IF'", "'#else if'",
-                                                            "'#elif'", "'#ELSE IF'",
-                                                            "'#ELIF'", "'#else'",
-                                                            "'#ELSE'", "'#end'",
-                                                            "'#endif'",
-                                                            "'#END'", "'#ENDIF'",
-                                                            "'true'", "'TRUE'",
-                                                            "'1'", "'false'",
+	public static readonly literalNames: (string | null)[] = [ null, "'#if'", 
+                                                            "'#IF'", "'#else if'", 
+                                                            "'#elif'", "'#ELSE IF'", 
+                                                            "'#ELIF'", "'#else'", 
+                                                            "'#ELSE'", "'#end'", 
+                                                            "'#endif'", 
+                                                            "'#END'", "'#ENDIF'", 
+                                                            "'true'", "'TRUE'", 
+                                                            "'1'", "'false'", 
                                                             "'FALSE'", "'0'" ];
-	public static readonly symbolicNames: (string | null)[] = [ null, null,
-                                                             null, null,
-                                                             null, null,
-                                                             null, null,
-                                                             null, null,
-                                                             null, null,
-                                                             null, null,
-                                                             null, null,
-                                                             null, null,
-                                                             null, "IDENTIFIER",
+	public static readonly symbolicNames: (string | null)[] = [ null, null, 
+                                                             null, null, 
+                                                             null, null, 
+                                                             null, null, 
+                                                             null, null, 
+                                                             null, null, 
+                                                             null, null, 
+                                                             null, null, 
+                                                             null, null, 
+                                                             null, "IDENTIFIER", 
                                                              "WS", "TRAILER" ];
 	// tslint:disable:no-trailing-whitespace
 	public static readonly ruleNames: string[] = [
-		"directive", "if_directive", "else_if_directive", "else_directive", "end_directive",
+		"directive", "if_directive", "else_if_directive", "else_directive", "end_directive", 
 		"value", "trailer",
 	];
 	public get grammarFileName(): string { return "Directive.g4"; }

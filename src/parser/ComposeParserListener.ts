@@ -1,6 +1,6 @@
 // Generated from ComposeParser.g4 by ANTLR 4.13.1
 
-import {ParseTreeListener} from "npm:antlr4";
+import {ParseTreeListener} from 'npm:antlr4';
 
 
 import { Compilation_unitContext } from "./ComposeParser.ts";
@@ -23,11 +23,16 @@ import { Value_type_or_nullContext } from "./ComposeParser.ts";
 import { Native_typeContext } from "./ComposeParser.ts";
 import { Any_typeContext } from "./ComposeParser.ts";
 import { Boolean_typeContext } from "./ComposeParser.ts";
+import { Char_typeContext } from "./ComposeParser.ts";
 import { Number_typeContext } from "./ComposeParser.ts";
 import { Integer_typeContext } from "./ComposeParser.ts";
 import { Decimal_typeContext } from "./ComposeParser.ts";
+import { I8_typeContext } from "./ComposeParser.ts";
+import { I16_typeContext } from "./ComposeParser.ts";
 import { I32_typeContext } from "./ComposeParser.ts";
 import { I64_typeContext } from "./ComposeParser.ts";
+import { U8_typeContext } from "./ComposeParser.ts";
+import { U16_typeContext } from "./ComposeParser.ts";
 import { U32_typeContext } from "./ComposeParser.ts";
 import { U64_typeContext } from "./ComposeParser.ts";
 import { F32_typeContext } from "./ComposeParser.ts";
@@ -346,6 +351,16 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 */
 	exitBoolean_type?: (ctx: Boolean_typeContext) => void;
 	/**
+	 * Enter a parse tree produced by `ComposeParser.char_type`.
+	 * @param ctx the parse tree
+	 */
+	enterChar_type?: (ctx: Char_typeContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.char_type`.
+	 * @param ctx the parse tree
+	 */
+	exitChar_type?: (ctx: Char_typeContext) => void;
+	/**
 	 * Enter a parse tree produced by `ComposeParser.number_type`.
 	 * @param ctx the parse tree
 	 */
@@ -376,6 +391,26 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 */
 	exitDecimal_type?: (ctx: Decimal_typeContext) => void;
 	/**
+	 * Enter a parse tree produced by `ComposeParser.i8_type`.
+	 * @param ctx the parse tree
+	 */
+	enterI8_type?: (ctx: I8_typeContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.i8_type`.
+	 * @param ctx the parse tree
+	 */
+	exitI8_type?: (ctx: I8_typeContext) => void;
+	/**
+	 * Enter a parse tree produced by `ComposeParser.i16_type`.
+	 * @param ctx the parse tree
+	 */
+	enterI16_type?: (ctx: I16_typeContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.i16_type`.
+	 * @param ctx the parse tree
+	 */
+	exitI16_type?: (ctx: I16_typeContext) => void;
+	/**
 	 * Enter a parse tree produced by `ComposeParser.i32_type`.
 	 * @param ctx the parse tree
 	 */
@@ -395,6 +430,26 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitI64_type?: (ctx: I64_typeContext) => void;
+	/**
+	 * Enter a parse tree produced by `ComposeParser.u8_type`.
+	 * @param ctx the parse tree
+	 */
+	enterU8_type?: (ctx: U8_typeContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.u8_type`.
+	 * @param ctx the parse tree
+	 */
+	exitU8_type?: (ctx: U8_typeContext) => void;
+	/**
+	 * Enter a parse tree produced by `ComposeParser.u16_type`.
+	 * @param ctx the parse tree
+	 */
+	enterU16_type?: (ctx: U16_typeContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.u16_type`.
+	 * @param ctx the parse tree
+	 */
+	exitU16_type?: (ctx: U16_typeContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.u32_type`.
 	 * @param ctx the parse tree

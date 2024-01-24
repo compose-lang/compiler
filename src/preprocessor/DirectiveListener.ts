@@ -1,6 +1,6 @@
 // Generated from Directive.g4 by ANTLR 4.13.1
 
-import {ParseTreeListener} from "npm:antlr4";
+import {ParseTreeListener} from 'npm:antlr4';
 
 
 import { DirectiveContext } from "./DirectiveParser.ts";

@@ -10,7 +10,7 @@ import {
 	RuleContext,
 	PredictionContextCache,
 	Token
-} from "npm:antlr4";
+} from 'npm:antlr4';
 export default class DirectiveLexer extends Lexer {
 	public static readonly T__0 = 1;
 	public static readonly T__1 = 2;
@@ -36,32 +36,32 @@ export default class DirectiveLexer extends Lexer {
 	public static readonly EOF = Token.EOF;
 
 	public static readonly channelNames: string[] = [ "DEFAULT_TOKEN_CHANNEL", "HIDDEN" ];
-	public static readonly literalNames: (string | null)[] = [ null, "'#if'",
-                                                            "'#IF'", "'#else if'",
-                                                            "'#elif'", "'#ELSE IF'",
-                                                            "'#ELIF'", "'#else'",
-                                                            "'#ELSE'", "'#end'",
-                                                            "'#endif'",
-                                                            "'#END'", "'#ENDIF'",
-                                                            "'true'", "'TRUE'",
-                                                            "'1'", "'false'",
+	public static readonly literalNames: (string | null)[] = [ null, "'#if'", 
+                                                            "'#IF'", "'#else if'", 
+                                                            "'#elif'", "'#ELSE IF'", 
+                                                            "'#ELIF'", "'#else'", 
+                                                            "'#ELSE'", "'#end'", 
+                                                            "'#endif'", 
+                                                            "'#END'", "'#ENDIF'", 
+                                                            "'true'", "'TRUE'", 
+                                                            "'1'", "'false'", 
                                                             "'FALSE'", "'0'" ];
-	public static readonly symbolicNames: (string | null)[] = [ null, null,
-                                                             null, null,
-                                                             null, null,
-                                                             null, null,
-                                                             null, null,
-                                                             null, null,
-                                                             null, null,
-                                                             null, null,
-                                                             null, null,
-                                                             null, "IDENTIFIER",
+	public static readonly symbolicNames: (string | null)[] = [ null, null, 
+                                                             null, null, 
+                                                             null, null, 
+                                                             null, null, 
+                                                             null, null, 
+                                                             null, null, 
+                                                             null, null, 
+                                                             null, null, 
+                                                             null, null, 
+                                                             null, "IDENTIFIER", 
                                                              "WS", "TRAILER" ];
 	public static readonly modeNames: string[] = [ "DEFAULT_MODE", ];
 
 	public static readonly ruleNames: string[] = [
-		"T__0", "T__1", "T__2", "T__3", "T__4", "T__5", "T__6", "T__7", "T__8",
-		"T__9", "T__10", "T__11", "T__12", "T__13", "T__14", "T__15", "T__16",
+		"T__0", "T__1", "T__2", "T__3", "T__4", "T__5", "T__6", "T__7", "T__8", 
+		"T__9", "T__10", "T__11", "T__12", "T__13", "T__14", "T__15", "T__16", 
 		"T__17", "IDENTIFIER", "Letter", "LetterOrDigit", "WS", "TRAILER",
 	];
 
