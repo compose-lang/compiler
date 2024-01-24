@@ -7,6 +7,8 @@ import CompilationUnit from "../compiler/CompilationUnit.ts";
 import Global from "./Global.ts";
 import Prototype from "../declaration/Prototype.ts";
 import { assertTrue } from "../../deps.ts";
+import StringPool from "./StringPool.ts";
+import DataPool from "./DataPool.ts";
 
 export default class WasmModule extends Module {
 
@@ -14,6 +16,8 @@ export default class WasmModule extends Module {
     globalsByName = new Map<string, Global>();
     functionsList: IFunctionDeclaration[] = [];
     functionsByName = new Map<string, Map<Prototype, number>>();
+    dataPool = new DataPool();
+    stringPool = new StringPool(this.dataPool);
 
     constructor(ptr?: number) {
         super(ptr);
@@ -24,6 +28,10 @@ export default class WasmModule extends Module {
     addMemory(minPages: number, maxPages?: number) {
         maxPages = Math.max(minPages, maxPages || 0);
         this.memory.set(minPages, maxPages);
+    }
+
+    addString(value: string): [string, number] {
+        return this.stringPool.add(value);
     }
 
     declareImportedGlobal(unit: CompilationUnit, variable: Variable) {

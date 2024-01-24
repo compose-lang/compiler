@@ -7,6 +7,7 @@ import IExpression from "../expression/IExpression.ts";
 import VoidType from "../type/VoidType.ts";
 import RestParameter from "../parameter/RestParameter.ts";
 import {assertTrue, assertEquals} from "../../deps.ts";
+import UnresolvedIdentifierExpression from "../expression/UnresolvedIdentifierExpression.ts";
 
 enum Score {
     WORSE = -1,
@@ -18,20 +19,28 @@ export default abstract class FunctionFinder {
 
     static findDeclaration(context: Context, call: FunctionCall): IFunctionDeclaration {
         const argTypes = call.args.map(x => x.check(context));
-        const finder = FunctionFinder.newFinder(context, call, argTypes);
+        const finder = FunctionFinder.newFinder(context, call.parent, call.id, argTypes, call.genericTypes);
         return finder ? finder.find() : null;
     }
 
-    private static newFinder(context: Context, call: FunctionCall, argTypes: IType[]): FunctionFinder {
-        if(call.parent) {
-            if(call.isGeneric())
+    static findBuiltin(context: Context, parentName: string | null, methodName: string, argTypes: IType[]) {
+        const parent = new UnresolvedIdentifierExpression(new Identifier(parentName));
+        const id = new Identifier(methodName);
+        const finder = FunctionFinder.newFinder(context, parent, id, argTypes);
+        return finder ? finder.find() : null;
+    }
+
+    private static newFinder(context: Context, parent: IExpression, id: Identifier, argTypes: IType[], genericTypes: IType[] = null): FunctionFinder {
+        const isGeneric = genericTypes && genericTypes.length > 0;
+        if(parent) {
+            if(isGeneric)
                 return null; // TODO
             else
-                return new MemberSimpleFinder(context, call.parent, call.id, argTypes);
-        } else if(call.isGeneric())
-            return new GlobalGenericsFinder(context, call.id, call.genericTypes, argTypes);
+                return new MemberSimpleFinder(context, parent, id, argTypes);
+        } else if(isGeneric)
+            return new GlobalGenericsFinder(context, id, genericTypes, argTypes);
         else
-            return new GlobalSimpleFinder(context, call.id, argTypes);
+            return new GlobalSimpleFinder(context, id, argTypes);
     }
 
     context: Context;
