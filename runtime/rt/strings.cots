@@ -1,0 +1,44 @@
+export default class String {
+
+    static fromUTF8(bytes: u8[]): string {
+        const chars: char[] = [];
+        for(let i=0; i < bytes.length; ) {
+            const byte1 = bytes[i++];
+            if((byte1 & 0x80) == 0) {
+                chars.push(byte1);
+            } else if ((byte1 & 0xE0) == 0xC0) {
+                const byte2 = bytes[i++];
+                const codePoint: u16 = ((byte1 & 0x1F) << 6) | byte2;
+                // assert codePoint < 0x80
+                chars.push(codePoint);
+            } else if((byte1 & 0xF0) == 0xE0) {
+                const byte2 = bytes[i++];
+                const byte3 = bytes[i++];
+                const codePoint: u16 = ((byte1 & 0x0F) << 12) | (byte2 << 6) | byte3;
+                // assert codePoint < 0x0800
+                chars.push(codePoint);
+            } else if((byte1 & 0xF8) == 0xF0) {
+                const byte2 = bytes[i++];
+                const byte3 = bytes[i++];
+                const byte4 = bytes[i++];
+                const codePoint: u32 = ((byte1 & 0x07) << 0x12) | (byte2 << 0x0C) | (byte3 << 0x06) | byte4;
+                if(codePoint <= 0xFFFF) {
+                    chars.push(codePoint & 0xFFFF);
+                } else {
+                    codePoint -= 0x10000;
+                    chars.push(codePoint >>> 10 & 0x3FF | 0xD800);
+                    chars.push(0xDC00 | codePoint & 0x3FF);
+                }
+            }
+            // throw invalid utf-8
+        }
+        return new String(chars);
+    }
+
+    private readonly chars: char[];
+
+    constructor(chars: char[]) {
+        this.chars = chars;
+    }
+
+}
