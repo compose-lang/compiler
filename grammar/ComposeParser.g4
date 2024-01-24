@@ -83,6 +83,7 @@ value_type_or_null:
 native_type:
     boolean_type
     | number_type
+    | char_type
     | string_type
     | any_type
     ;
@@ -95,14 +96,22 @@ boolean_type:
     BOOLEAN
     ;
 
+char_type:
+    CHAR
+    ;
+
 number_type:
     integer_type
     | decimal_type
     ;
 
 integer_type:
-    i32_type
+    i8_type
+    | i16_type
+    | i32_type
     | i64_type
+    | u8_type
+    | u16_type
     | u32_type
     | u64_type
     ;
@@ -112,12 +121,28 @@ decimal_type:
     | f64_type
     ;
 
+i8_type:
+    I8
+    ;
+
+i16_type:
+    I16
+    ;
+
 i32_type:
     I32
     ;
 
 i64_type:
     I64
+    ;
+
+u8_type:
+    U8
+    ;
+
+u16_type:
+    U16
     ;
 
 u32_type:
@@ -188,7 +213,7 @@ return_types:
 
 parameter:
     attribute_type_or_null                          # AttributeParameter
-    | ETC? identifier COLON value_type_or_null     # TypedParameter
+    | ETC? identifier COLON value_type_or_null      # TypedParameter
     | identifier COLON function_type_or_null        # FunctionParameter
     ;
 
@@ -196,8 +221,7 @@ class_declaration:
     accessibility? ABSTRACT? CLASS id = user_ref ( LPAR attribute_ref (COMMA attribute_ref)* RPAR )?
             ( EXTENDS user_ref (COMMA user_ref)* )?
         LCURL
-            field_declaration*
-            function_declaration[true]*
+            (field_declaration | function_declaration[true])*
         RCURL
     ;
 
@@ -212,7 +236,7 @@ accessibility:
     ;
 
 field_declaration:
-    accessibility? STATIC? identifier COLON value_type_or_null SEMI
+    accessibility? STATIC? READONLY? identifier COLON value_type_or_null SEMI
     ;
 
 function_declaration[boolean as_member]:

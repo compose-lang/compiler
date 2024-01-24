@@ -26,7 +26,7 @@ import ComposeParser, {
     BitShiftExpressionContext,
     BitXorExpressionContext,
     Boolean_typeContext,
-    BooleanLiteralContext,
+    BooleanLiteralContext, Char_typeContext,
     CharLiteralContext,
     ChildCallExpressionContext,
     Class_declarationContext,
@@ -54,9 +54,9 @@ import ComposeParser, {
     Function_typeContext,
     FunctionParameterContext,
     Generic_parameterContext,
-    Global_statementContext,
+    Global_statementContext, I16_typeContext,
     I32_typeContext,
-    I64_typeContext,
+    I64_typeContext, I8_typeContext,
     IdentifierContext,
     IdentifierExpressionContext,
     If_statementContext,
@@ -94,9 +94,9 @@ import ComposeParser, {
     Struct_declarationContext,
     TernaryExpressionContext,
     Throw_statementContext,
-    TypedParameterContext,
+    TypedParameterContext, U16_typeContext,
     U32_typeContext,
-    U64_typeContext, Unary_statementContext,
+    U64_typeContext, U8_typeContext, Unary_statementContext,
     UnaryBitNotExpressionContext,
     UnaryNotExpressionContext, User_refContext, User_typeContext, UserTypeContext,
     Value_type_or_nullContext
@@ -198,6 +198,11 @@ import preprocessedStream from "./PreprocessedStream.ts";
 import ItemExpression from "../expression/ItemExpression.ts";
 import StructDeclaration from "../declaration/StructDeclaration.ts";
 import UnresolvedUserType from "../type/UnresolvedUserType.ts";
+import Int8Type from "../type/Int8Type.ts";
+import Int16Type from "../type/Int16Type.ts";
+import CharType from "../type/CharType.ts";
+import UInt8Type from "../type/UInt8Type.ts";
+import UInt16Type from "../type/UInt16Type.ts";
 
 interface IndexedNode {
     __id?: number;
@@ -391,6 +396,10 @@ export default class ComposeBuilder extends ComposeParserListener {
 
     exitBoolean_type = (ctx: Boolean_typeContext) => {
         this.setNodeValue(ctx, BooleanType.instance);
+    }
+
+    exitChar_type = (ctx: Char_typeContext) => {
+        this.setNodeValue(ctx, CharType.instance);
     }
 
     exitString_type = (ctx: String_typeContext) => {
@@ -732,12 +741,28 @@ export default class ComposeBuilder extends ComposeParserListener {
         this.setNodeValue(ctx, StatementList.from(statements));
     }
 
+    exitI8_type = (ctx: I8_typeContext) => {
+        this.setNodeValue(ctx, Int8Type.instance);
+    }
+
+    exitI16_type = (ctx: I16_typeContext) => {
+        this.setNodeValue(ctx, Int16Type.instance);
+    }
+
     exitI32_type = (ctx: I32_typeContext) => {
         this.setNodeValue(ctx, Int32Type.instance);
     }
 
     exitI64_type = (ctx: I64_typeContext) => {
         this.setNodeValue(ctx, Int64Type.instance);
+    }
+
+    exitU8_type = (ctx: U8_typeContext) => {
+        this.setNodeValue(ctx, UInt8Type.instance);
+    }
+
+    exitU16_type = (ctx: U16_typeContext) => {
+        this.setNodeValue(ctx, UInt16Type.instance);
     }
 
     exitU32_type = (ctx: U32_typeContext) => {

@@ -3,7 +3,6 @@ import NumberPrecedence from "./NumberPrecedence.ts";
 import Context from "../context/Context.ts";
 import WasmModule from "../module/WasmModule.ts";
 import BinaryOperator from "../expression/BinaryOperator.ts";
-import UInt32Type from "./UInt32Type.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResult from "../expression/IResult.ts";
 import IExpression from "../expression/IExpression.ts";
@@ -12,17 +11,18 @@ import UnaryOperator from "../expression/UnaryOperator.ts";
 import {Type} from "../binaryen/binaryen_wasm.d.ts";
 /// <reference types="../binaryen/binaryen_wasm.d.ts" />
 import {i32} from "../binaryen/binaryen_wasm.js";
+import Int32Type from "./Int32Type.ts";
 
-export default class Int32Type extends IntegerType {
+export default class Int8Type extends IntegerType {
 
-    static instance = new Int32Type();
+    static instance = new Int8Type();
 
     private constructor() {
-        super("i32");
+        super("i8");
     }
 
     get precedence(): NumberPrecedence {
-        return NumberPrecedence.Int32;
+        return NumberPrecedence.Int8;
     }
 
     asType(context: Context): Type {
@@ -30,7 +30,7 @@ export default class Int32Type extends IntegerType {
     }
 
     compileAdd(context: Context, module: WasmModule, flags: CompilerFlags, left: IResult, right: IResult, tryReverse: boolean): IResult {
-        if(right.type instanceof IntegerType && right.type.precedence <= NumberPrecedence.Int32) {
+        if(right.type instanceof IntegerType && right.type.precedence <= NumberPrecedence.Int8) {
             return { ref: module.i32.add(left.ref, right.ref), type: this };
         } else
             return super.compileAdd(context, module, flags, left, right, tryReverse);

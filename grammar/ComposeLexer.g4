@@ -2,13 +2,18 @@ lexer grammar ComposeLexer;
 
 import AssemblyLexer;
 
+I8: 'i8';
+I16: 'i16';
 I32: 'i32';
 I64: 'i64';
+U8: 'u8';
+U16: 'u16';
 U32: 'u32';
 U64: 'u64';
 F32: 'f32';
 F64: 'f64';
 V128: 'v128';
+CHAR: 'char';
 STRING: 'string';
 BOOLEAN: 'boolean';
 ANY: 'any';
@@ -27,6 +32,8 @@ NATIVE: 'native';
 PUBLIC: 'public';
 PROTECTED: 'protected';
 PRIVATE: 'private';
+
+READONLY: 'readonly';
 
 CONST: 'const';
 LET: 'let';

@@ -1,6 +1,7 @@
 dist
 *.js
 *.map
+*.bak
 grammar/gen
 /opcodes/gc/
 /dumps/
