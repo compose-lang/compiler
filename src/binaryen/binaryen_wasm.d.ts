@@ -1243,6 +1243,7 @@ export declare class Module {
     };
     get arrays(): {
         newFromInit: (heapType: HeapType, size: ExpressionRef, init: ExpressionRef) => ExpressionRef;
+        newFromData: (heapType: HeapType, name: string, offset: ExpressionRef, size: ExpressionRef) => ExpressionRef;
         newFromItems: (heapType: HeapType, values: ExpressionRef[]) => ExpressionRef;
         copy: (destArray: ExpressionRef, destItem: ExpressionRef, srcArray: ExpressionRef, srcItem: ExpressionRef, numItems: ExpressionRef) => ExpressionRef;
         getItem: (array: ExpressionRef, item: ExpressionRef, type: Type, signed: boolean) => ExpressionRef;

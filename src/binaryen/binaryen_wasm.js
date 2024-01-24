@@ -1790,7 +1790,8 @@ export class Module {
     }
     get arrays() {
         return {
-            newFromInit: (heapType, size, init) => JSModule['BinaryenArrayNew'](this.ptr, heapType, size, init),
+            newFromInit: (heapType, size, init) => JSModule['_BinaryenArrayNew'](this.ptr, heapType, size, init),
+            newFromData: (heapType, name, offset, size) => JSModule['_BinaryenArrayNewData'](this.ptr, heapType, strToStack(name), offset, size),
             newFromItems: (heapType, values) => {
                 const ptr = _malloc(Math.max(8, values.length * 4));
                 let offset = ptr;
