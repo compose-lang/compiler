@@ -23,24 +23,20 @@ export default abstract class FunctionFinder {
         return finder ? finder.find() : null;
     }
 
-    static findBuiltin(context: Context, parentName: string | null, methodName: string, argTypes: IType[]) {
+    static findRuntimeDeclaration(context: Context, parentName: string | null, methodName: string, argTypes: IType[], typeArguments: IType[] = null) {
         const parent = new UnresolvedIdentifierExpression(new Identifier(parentName));
         const id = new Identifier(methodName);
-        const finder = FunctionFinder.newFinder(context, parent, id, argTypes);
+        const finder = FunctionFinder.newFinder(context, parent, id, argTypes, typeArguments, true);
         return finder ? finder.find() : null;
     }
 
-    private static newFinder(context: Context, parent: IExpression, id: Identifier, argTypes: IType[], genericTypes: IType[] = null): FunctionFinder {
-        const isGeneric = genericTypes && genericTypes.length > 0;
-        if(parent) {
-            if(isGeneric)
-                return null; // TODO
-            else
-                return new MemberSimpleFinder(context, parent, id, argTypes);
-        } else if(isGeneric)
-            return new GlobalGenericsFinder(context, id, genericTypes, argTypes);
+    private static newFinder(context: Context, parent: IExpression, id: Identifier, argTypes: IType[], typeArguments: IType[] = null, isRuntime = false): FunctionFinder {
+        const isGeneric = typeArguments && typeArguments.length > 0;
+        const factory = FinderFactories.get(isRuntime).get(isGeneric).get(!!parent);
+        if(!factory)
+            throw new Error("Not implemented yet!")
         else
-            return new GlobalSimpleFinder(context, id, argTypes);
+            return factory(context, parent, id, argTypes, typeArguments);
     }
 
     context: Context;
@@ -72,7 +68,7 @@ export default abstract class FunctionFinder {
     }
 
     protected isCompatible(decl: IFunctionDeclaration) {
-        let argTypes = Array.from(this.argTypes);
+        const argTypes = Array.from(this.argTypes);
         for(let i=0; i < decl.parameters.length; i++) {
             const param = decl.parameters[i];
             if(argTypes.length == 0 && param.defaultValue == null)
@@ -142,7 +138,7 @@ class GlobalGenericsFinder extends FunctionFinder {
 
     typeArguments: IType[];
 
-    constructor(context: Context, id: Identifier, typeArguments: IType[], argTypes: IType[]) {
+    constructor(context: Context, id: Identifier, argTypes: IType[], typeArguments: IType[]) {
         super(context, id, argTypes);
         this.typeArguments = typeArguments;
     }
@@ -161,7 +157,7 @@ class GlobalGenericsFinder extends FunctionFinder {
 
 class GlobalSimpleFinder extends FunctionFinder {
 
-    protected resolveGenericType(decl: IFunctionDeclaration, type: IType) {
+    protected resolveGenericType(_decl: IFunctionDeclaration, type: IType) {
         return type;
     }
 
@@ -183,8 +179,49 @@ class MemberSimpleFinder extends FunctionFinder {
         this.context = type.prepareContext(this.context);
     }
 
-    protected resolveGenericType(decl: IFunctionDeclaration, type: IType) {
+    protected resolveGenericType(_decl: IFunctionDeclaration, type: IType) {
         return type;
     }
 
 }
+
+type FinderFactory = (context: Context, parent: IExpression, id: Identifier, argTypes: IType[], typeArguments: IType[]) => FunctionFinder;
+
+const FinderFactories = new Map<boolean, Map<boolean, Map<boolean, FinderFactory>>>([
+    // not runtime
+    [ false, new Map<boolean, Map<boolean, FinderFactory>>([
+        // not generic
+        [ false, new Map<boolean, FinderFactory>([
+            // not member
+            [ false, (context, _parent, id, argTypes, _typeArguments) => new GlobalSimpleFinder(context, id, argTypes) ],
+            // member
+            [ true, (context, parent, id, argTypes, _typeArguments) => new MemberSimpleFinder(context, parent, id, argTypes) ]
+        ]) ],
+        // generic
+        [ true, new Map<boolean, FinderFactory>([
+            // not member
+            [ false, (context, _parent, id, argTypes, typeArguments) => new GlobalGenericsFinder(context, id, argTypes, typeArguments) ],
+            // member
+            [ true, null ] // TODO
+        ]) ]
+    ])],
+    // runtime
+    [ true, new Map<boolean, Map<boolean, FinderFactory>>([
+        // not generic
+        [ false, new Map<boolean, FinderFactory>([
+            // not member
+            [ false, null ], // TODO
+            // member
+            [ true, null ] // TODO
+        ]) ],
+        // generic
+        [ true, new Map<boolean, FinderFactory>([
+            // not member
+            [ false, null ], // TODO
+            // member
+            [ true, null ] // TODO
+        ]) ]
+    ])],
+])
+
+
