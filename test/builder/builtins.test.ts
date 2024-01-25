@@ -8,7 +8,7 @@ import {FileStream} from "../../src/platform/deno/Antlr4FileStream.ts";
 Deno.test('parses String class',  () => {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = dirname(dirname(dirname(__filename)));
-    const unitPath = __dirname + "/runtime/rt/strings.cots";
+    const unitPath = __dirname + "/runtime/core/strings.cots";
     const unit = ComposeBuilder.parse_unit_stream(new FileStream(unitPath));
     assertTrue(unit);
     assertEquals(unit.declarations.length, 1);
