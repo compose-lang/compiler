@@ -29,7 +29,7 @@ export default class StringLiteral extends LiteralBase<string> {
     }
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResult {
-        const decl = FunctionFinder.findBuiltin(context, "String", "fromUTF8", [ new ArrayType(UInt8Type.instance) ]);
+        const decl = FunctionFinder.findRuntimeDeclaration(context, "String", "fromUTF8", [ new ArrayType(UInt8Type.instance) ]);
         const charsRef = this.compileChars(context, module, flags, body);
         const result = module.call(decl.name, [charsRef], decl.returnType.asType(context));
         return { ref: result, type: decl.returnType };
