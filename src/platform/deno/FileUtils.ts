@@ -59,6 +59,10 @@ export function readPathSync(path: string) {
     return Deno.readFileSync(path); // TODO options
 }
 
+export function readDirSync(path: string) {
+    return Deno.readDirSync(path);
+}
+
 export function dirname(path: string): string {
     return paths.dirname(path);
 }
@@ -66,7 +70,6 @@ export function dirname(path: string): string {
 export function filename(path: string): string {
     return paths.basename(path, paths.extname(path));
 }
-
 
 export function tmpdir(): string {
     return Deno.makeTempDirSync();

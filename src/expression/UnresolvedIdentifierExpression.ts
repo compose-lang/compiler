@@ -70,7 +70,7 @@ export default class UnresolvedIdentifierExpression extends ExpressionBase {
     private resolve(context: Context) {
         if(!this.resolved) {
             this.resolved = this.resolveLocalVariable(context);
-            assertTrue(this.resolved, "Could not resolveType '" + this.name + "' at " + this.fragment.toString());
+            assertTrue(this.resolved, "Could not resolve symbol '" + this.name + (this.fragment ? "' at " + this.fragment.toString() : "'"));
         }
     }
 

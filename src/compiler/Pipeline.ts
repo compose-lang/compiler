@@ -3,10 +3,11 @@ import IWasmTarget from "./IWasmTarget.ts";
 import Context from "../context/Context.ts";
 import ComposeBuilder from "../builder/ComposeBuilder.ts";
 import PipelineOptions from "./PipelineOptions.ts";
-import { writePathSync } from "../platform/deno/FileUtils.ts";
+import {dirname, fileExistsSync, readDirSync, writePathSync} from "../platform/deno/FileUtils.ts";
 import CiCdUtils from "../utils/CiCdUtils.ts";
 import { FileStream } from "../platform/deno/Antlr4FileStream.ts";
 import { CharStream } from "npm:antlr4";
+import {fileURLToPath} from "../platform/deno/URLUtils.ts";
 
 // TODO import errors_code from "../../runtime/util/error.cots" with { type: "text" };
 const BUILTINS_CODE: string[] = [ /* errors_code as unknown as string */ ];
@@ -61,7 +62,16 @@ export default class Pipeline {
     }
 
     locateRuntimeClassContext(className: string): Context {
-        throw new Error("Not implemented yet!")
+        const __filename = fileURLToPath(import.meta.url);
+        const __dirname = dirname(dirname(dirname(__filename))) + "/runtime";
+        const path = Array.from(readDirSync(__dirname))
+            .filter(entry => entry.isDirectory)
+            .map(entry => __dirname + "/" + entry.name + "/" + className + ".cots")
+            .find( path => fileExistsSync(path));
+        if(!path)
+            throw new Error(`Could not locate '${className}' runtime class!`);
+        const unit = this.addSource(path);
+        return unit.context;
     }
 
     declareUnits() {
