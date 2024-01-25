@@ -90,7 +90,6 @@ export default class Pipeline {
     }
 
     private static parseAndRegisterBuiltins(context: Context) {
-        // parse and register cots builtins
         BUILTINS_CODE.forEach(code => Pipeline.parseAndRegisterBuiltin(code, context));
     }
 
