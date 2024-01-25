@@ -55,9 +55,13 @@ export default class Pipeline {
         this.units.push(unit);
         if (this.options.logPaths && unit.path != "<memory>")
             console.log("Units paths: " + this.units.map(u => u.path).join(", "));
-        unit.context = Context.newGlobalsContext();
+        unit.context = Context.newGlobalsContext(className => this.locateRuntimeClassContext(className));
         unit.processImports(this.options);
         unit.populateContextAndCheck(Pipeline.parseAndRegisterBuiltins, this.options);
+    }
+
+    locateRuntimeClassContext(className: string): Context {
+        throw new Error("Not implemented yet!")
     }
 
     declareUnits() {

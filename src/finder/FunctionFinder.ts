@@ -31,7 +31,7 @@ export default abstract class FunctionFinder {
     }
 
     private static newFinder(context: Context, parent: IExpression, id: Identifier, argTypes: IType[], typeArguments: IType[] = null, isRuntime = false): FunctionFinder {
-        const isGeneric = typeArguments && typeArguments.length > 0;
+        const isGeneric = typeArguments ? typeArguments.length > 0 : false;
         const factory = FinderFactories.get(isRuntime).get(isGeneric).get(!!parent);
         if(!factory)
             throw new Error("Not implemented yet!")
@@ -185,6 +185,16 @@ class MemberSimpleFinder extends FunctionFinder {
 
 }
 
+class RuntimeMemberSimpleFinder extends MemberSimpleFinder {
+
+    protected resolveContext(): void {
+        const context = this.context.globals;
+        this.context = context.resolveRuntimeClassContext(this.parent);
+        super.resolveContext();
+    }
+
+}
+
 type FinderFactory = (context: Context, parent: IExpression, id: Identifier, argTypes: IType[], typeArguments: IType[]) => FunctionFinder;
 
 const FinderFactories = new Map<boolean, Map<boolean, Map<boolean, FinderFactory>>>([
@@ -212,7 +222,7 @@ const FinderFactories = new Map<boolean, Map<boolean, Map<boolean, FinderFactory
             // not member
             [ false, null ], // TODO
             // member
-            [ true, null ] // TODO
+            [ true, (context, parent, id, argTypes, _typeArguments) => new RuntimeMemberSimpleFinder(context, parent, id, argTypes) ]
         ]) ],
         // generic
         [ true, new Map<boolean, FinderFactory>([

@@ -13,18 +13,21 @@ import CompilationUnit from "../compiler/CompilationUnit.ts";
 import {assertTrue, assertFalse} from "../../deps.ts";
 import StructDeclaration from "../declaration/StructDeclaration.ts";
 import StructDeclarationBase from "../declaration/StructDeclarationBase.ts";
+import UnresolvedIdentifierExpression from "../expression/UnresolvedIdentifierExpression.ts";
+
+type RuntimeClassContextLocator = (className: string) => Context;
 
 export default class Context {
 
-    static newGlobalsContext(): Context {
-        const context = new Context();
+    static newGlobalsContext(runtimeClassContextLocator: RuntimeClassContextLocator): Context {
+        const context = new GlobalContext(runtimeClassContextLocator);
         context.globals = context;
         context.calling = null;
         context.parent = null;
         return context;
     }
 
-    globals: Context;
+    globals: GlobalContext;
     calling: Context | null = null;
     parent: Context | null = null;
     attributes = new Map<string, AttributeDeclaration>();
@@ -35,12 +38,8 @@ export default class Context {
     locals = new Map<string, Variable>();
     values = new Map<string, IExpression>();
 
-    protected constructor(globals?: Context) {
-        this.globals = globals || this;
-    }
-
     isGlobal() {
-        return this === this.globals;
+        return false;
     }
 
     newLocalContext(): Context {
@@ -125,7 +124,7 @@ export default class Context {
     }
 
     registerGlobal(global: Variable) {
-        if(this.globals && this.globals!=this)
+        if(this.globals && !this.isGlobal())
             this.globals.registerGlobal(global);
         else
             this.registerLocal(global);
@@ -157,7 +156,7 @@ export default class Context {
             return result
         else if(this.parent)
             return this.parent.getRegisteredAttribute(id);
-        else if(this.globals && this.globals != this)
+        else if(this.globals && !this.isGlobal())
             return this.globals.getRegisteredAttribute(id);
         else
             return null;
@@ -169,7 +168,7 @@ export default class Context {
             return result
         else if(this.parent)
             return this.parent.getRegisteredEnum(id);
-        else if(this.globals && this.globals != this)
+        else if(this.globals && !this.isGlobal())
             return this.globals.getRegisteredEnum(id);
         else
             return null;
@@ -189,7 +188,7 @@ export default class Context {
             return result
         else if(this.parent)
             return this.parent.getRegisteredStruct(id);
-        else if(this.globals && this.globals != this)
+        else if(this.globals && !this.isGlobal())
             return this.globals.getRegisteredStruct(id);
         else
             return null;
@@ -200,7 +199,7 @@ export default class Context {
             return result
         else if(this.parent)
             return this.parent.getRegisteredClass(id);
-        else if(this.globals && this.globals != this)
+        else if(this.globals && !this.isGlobal())
             return this.globals.getRegisteredClass(id);
         else
             return null;
@@ -216,7 +215,7 @@ export default class Context {
         // collect parents first, override with locals
         if(this.parent !== null)
             this.parent.collectFunctions(id, map);
-        else if(this != this.globals)
+        else if(this.globals && !this.isGlobal())
             this.globals.collectFunctions(id, map);
         if(this.functions.has(id.value)) {
             const local = this.functions.get(id.value);
@@ -224,8 +223,40 @@ export default class Context {
         }
     }
 
-    withTypeMap(typeMap: Map<string, IType>) {
+    withTypeMap(_typeMap: Map<string, IType>) {
         return this;
+    }
+
+}
+
+class GlobalContext extends Context {
+
+    readonly runtimeClassContexts = new Map<string, Context>();
+    readonly runtimeClassContextLocator: RuntimeClassContextLocator;
+
+    constructor(runtimeClassContextLocator: RuntimeClassContextLocator) {
+        super();
+        this.globals = this;
+        this.runtimeClassContextLocator = runtimeClassContextLocator;
+    }
+
+    isGlobal() {
+        return true;
+    }
+
+    resolveRuntimeClassContext(parent: IExpression): Context {
+        if(parent instanceof UnresolvedIdentifierExpression) {
+            if(!this.runtimeClassContexts.has(parent.name)) {
+                const context = this.runtimeClassContextLocator(parent.name);
+                if(context) {
+                    this.runtimeClassContexts.set(parent.name, context);
+                } else {
+                    throw new Error(`Could not locate class '${parent.name}'`)
+                }
+            }
+            return this.runtimeClassContexts.get(parent.name) || null;
+        }
+        throw new Error("Method not implemented.");
     }
 
 }
