@@ -54,7 +54,7 @@ export default class IfStatement extends StatementBase {
         this.blocks.forEach(block => {
             if(block.condition)
                 block.condition.declare(context, module);
-            block.statements.declare(context, module);
+            block.statements.declare(context.newChildContext(), module);
         })
     }
 
@@ -62,7 +62,7 @@ export default class IfStatement extends StatementBase {
         this.blocks.forEach(block => {
             if(block.condition)
                 block.condition.rehearse(context, module, body);
-            block.statements.rehearse(context, module, body);
+            block.statements.rehearse(context.newChildContext(), module, body);
         })
     }
 
@@ -78,7 +78,7 @@ export default class IfStatement extends StatementBase {
     private compileBlock(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, typeMap: TypeMap, block: IfBlock, remaining: IfBlock[]): IResults {
         if(block.condition) {
             const condition = block.condition.compile(context, module, flags, body);
-            const ifTrue = block.statements.compile(context, module, flags, body) || null;
+            const ifTrue = block.statements.compile(context.newChildContext(), module, flags, body) || null;
             let ifFalse: IResults = { refs: null, type: VoidType.instance };
             if(remaining.length) {
                 const block = remaining.splice(0, 1)[0];
@@ -90,7 +90,7 @@ export default class IfStatement extends StatementBase {
                 )
             return { refs: [ref], type: typeMap.inferType(context) };
         } else { // final else
-            const results = block.statements.compile(context, module, flags, body) || null;
+            const results = block.statements.compile(context.newChildContext(), module, flags, body) || null;
             if(results && results.type && results.type!=VoidType.instance)
                 typeMap.add(results.type);
             const ref = module.block(null, results.refs! );
