@@ -1,7 +1,7 @@
 import { dirname, fileExistsSync} from "../platform/deno/FileUtils.ts";
 
 const FileSourceResolver = (unitURL: URL, importSource: string): URL | null => {
-    if(unitURL.protocol != "file")
+    if(unitURL.protocol != "file:")
         throw new Error(`Unsupported protocol "${unitURL.protocol}" !`)
     const unitPath = unitURL.pathname;
     let dirPath = dirname(unitPath);

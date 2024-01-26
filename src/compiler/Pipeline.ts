@@ -51,10 +51,10 @@ export default class Pipeline {
     }
 
     addUnit(unit: CompilationUnit) {
-        if (this.options.logUrls && unit.url.protocol != "blob")
+        if (this.options.logUrls && unit.url.protocol != "blob:")
             console.log("Adding unit: " + unit.url + " to " + this.units.map(u => u.url.toString()).join(", "));
         this.units.push(unit);
-        if (this.options.logUrls && unit.url.protocol != "blob")
+        if (this.options.logUrls && unit.url.protocol != "blob:")
             console.log("Units paths: " + this.units.map(u => u.url.toString()).join(", "));
         unit.context = Context.newGlobalsContext(className => this.locateRuntimeClassContext(className));
         unit.processImports(this.options);
