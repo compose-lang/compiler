@@ -24,19 +24,31 @@ export default class Pipeline {
     }
 
     build(units: CompilationUnit[]): IWasmTarget[] {
-        if (this.options.parseAndCheck) {
-            units.forEach(unit => this.addUnit(unit), this);
-            if (this.options.declare) {
-                this.declareUnits();
-                if (this.options.compile) {
-                    this.compileUnits();
-                    if (this.options.assemble) {
-                        return this.assembleModules();
+        const unitsToProcess = new Set<CompilationUnit>(units);
+        const processedUnits = new Set<CompilationUnit>();
+        while(unitsToProcess.size > 0) {
+            const unit = unitsToProcess.values().next().value;
+            unitsToProcess.delete(unit);
+            processedUnits.add(unit);
+            if (this.options.check) {
+                this.addUnit(unit);
+                if (this.options.declare) {
+                    unit.declare(this.options)
+                    if (this.options.compile) {
+                        unit.compileAtoms(this.options);
                     }
                 }
+            } else {
+                this.units.push(unit)
             }
+            // add units discovered during compilation
+            this.units.filter(unit => !processedUnits.has(unit)).forEach(unit => unitsToProcess.add(unit));
         }
-        return null;
+        if (processedUnits.size > 0 && this.options.assemble) {
+            return this.assembleModules();
+        } else {
+            return null;
+        }
     }
 
     addSource(url: URL): CompilationUnit {
@@ -76,14 +88,6 @@ export default class Pipeline {
         unit.module.url = new URL("file://" + __dirname + "/" + className + ".cots");
         // end TODO
         return unit.context;
-    }
-
-    declareUnits() {
-        this.units.forEach(unit => unit.declare(this.options), this);
-    }
-
-    private compileUnits() {
-        this.units.forEach(unit => unit.compileAtoms(this.options), this);
     }
 
     assembleModules(): IWasmTarget[] {
