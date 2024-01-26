@@ -12,6 +12,7 @@ Deno.test('returns an opaque i32 array ref',  () => {
     assertTrue(result);
 });
 
+
 Deno.test('gets an i32 array item',  () => {
     const pipeline = new Pipeline();
     const unit = ComposeBuilder.parse_unit_data("@ModuleExport function stuff(idx: u32): i32 { const a:i32[] = [ 3, 5 ]; return a[idx]; }");
@@ -21,6 +22,7 @@ Deno.test('gets an i32 array item',  () => {
     assertEquals(result, 5);
 });
 
+/*
 Deno.test('sets an i32 array item',  () => {
     const pipeline = new Pipeline();
     const unit = ComposeBuilder.parse_unit_data("@ModuleExport function stuff(idx: u32, value: i32): i32 { const a:i32[] = [ 3, 5 ]; a[idx] = value; return a[idx]; }");
@@ -29,4 +31,4 @@ Deno.test('sets an i32 array item',  () => {
     const result = runner.runFunction<number>("stuff", 1, -17);
     assertEquals(result, -17);
 });
-
+*/

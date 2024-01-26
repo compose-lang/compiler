@@ -70,7 +70,7 @@ export default class ArrayLiteral extends LiteralBase<any[]> {
     }
 
     private compileItems(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): ExpressionRef {
-        const elemType = {type: this.type.elementType.asType(context), packedType: PackedType.NotPacked, mutable: true};
+        const elemType = {type: this.type.elementType.asType(context), packedType: PackedType.NotPacked, mutable: false};
         const arrayGCType = HeapTypeRegistry.instance.getArrayGCType(elemType, true);
         const valueRefs = this.value.map(v => v.compile(context, module, flags, body)).map(r => r.ref);
         return module.arrays.newFromItems(arrayGCType.heapType, valueRefs);
