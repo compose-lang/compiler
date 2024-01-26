@@ -41,7 +41,7 @@ export default class ClassDeclaration extends StructDeclarationBase implements I
         context.registerClass(this);
     }
 
-    check(context: Context): IType {
+    check(_context: Context): IType {
         // this.attributes.forEach(a => a.check(context));
         // this.parents.forEach(p => p.check)
         // this.fields.forEach(p => p.check)
@@ -50,10 +50,12 @@ export default class ClassDeclaration extends StructDeclarationBase implements I
     }
 
     declare(context: Context, module: WasmModule): void {
-        this.functions.forEach(f => f.declare(context, module));
+        // prevent reentrance and duplicates
+        if(module.declareClass(this))
+            this.functions.forEach(f => f.declare(context, module));
     }
 
-    collectInstanceFunctions(id: Identifier, map: Map<string, IFunctionDeclaration>) {
+    collectMemberFunctions(id: Identifier, map: Map<string, IFunctionDeclaration>) {
         this.functions.filter(f => !f.isStatic).filter(f => f.name == id.value).forEach(f => map.set(f.functionType().toString(), f));
     }
 

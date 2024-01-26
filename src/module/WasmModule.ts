@@ -10,6 +10,7 @@ import { assertTrue } from "../../deps.ts";
 import StringPool from "./StringPool.ts";
 import DataPool from "./DataPool.ts";
 import {MEMORY_BLOB_URL} from "../utils/Constants.ts";
+import ClassDeclaration from "../declaration/ClassDeclaration.ts";
 
 export default class WasmModule extends Module {
     _url: URL;
@@ -19,6 +20,7 @@ export default class WasmModule extends Module {
     functionsByName = new Map<string, Map<Prototype, number>>();
     dataPool = new DataPool();
     stringPool = new StringPool(this.dataPool);
+    declaredClasses = new Set<ClassDeclaration>();
 
     constructor(url: URL = MEMORY_BLOB_URL, ptr?: number) {
         super(ptr);
@@ -94,6 +96,13 @@ export default class WasmModule extends Module {
     getFunctionByDecl(decl: IFunctionDeclaration): number {
         const prototypes = this.functionsByName.get(decl.name);
         return prototypes.get(decl.prototype());
+    }
+
+    declareClass(decl: ClassDeclaration): boolean {
+        if(this.declaredClasses.has(decl))
+            return false;
+        this.declaredClasses.add(decl);
+        return true;
     }
 
 
