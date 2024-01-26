@@ -14,6 +14,7 @@ import {assertTrue, assertFalse} from "../../deps.ts";
 import StructDeclaration from "../declaration/StructDeclaration.ts";
 import StructDeclarationBase from "../declaration/StructDeclarationBase.ts";
 import UnresolvedIdentifierExpression from "../expression/UnresolvedIdentifierExpression.ts";
+import ArrayType from "../type/ArrayType.ts";
 
 type RuntimeClassContextLocator = (className: string) => Context;
 
@@ -66,6 +67,14 @@ export default class Context {
         return context;
     }
 
+    newMemberContext(type: IType): Context {
+        const context = new MemberContext(type);
+        context.globals = this.globals;
+        context.calling = this.calling;
+        context.parent = this;
+        return context;
+    }
+
     newImportsContext(type: ImportsType): Context {
         const context = new ImportsContext(type);
         context.globals = this.globals;
@@ -109,7 +118,7 @@ export default class Context {
     }
 
     registerLocal(local: Variable) {
-        assertFalse(this.locals.has(local.name));
+        assertFalse(this.locals.has(local.name), `duplicate local: ${local.name}`);
         this.locals.set(local.name, local);
     }
 
@@ -261,7 +270,7 @@ class GlobalContext extends Context {
 
 }
 
-class StaticContext extends Context {
+class TypedContext extends Context {
 
     type: IType;
 
@@ -269,11 +278,26 @@ class StaticContext extends Context {
         super();
         this.type = type;
     }
+}
+
+class StaticContext extends TypedContext {
 
     protected collectFunctions(id: Identifier, map: Map<string, IFunctionDeclaration>) {
         super.collectFunctions(id, map);
         if(this.type instanceof ClassType)
             this.type.klass.collectStaticFunctions(id, map);
+    }
+}
+
+class MemberContext extends TypedContext {
+
+    protected collectFunctions(id: Identifier, map: Map<string, IFunctionDeclaration>) {
+        super.collectFunctions(id, map);
+        if(this.type instanceof ClassType)
+            this.type.klass.collectMemberFunctions(id, map);
+        // TODO remove, below is tactical, until we use a class for Arrays
+        else if(this.type instanceof ArrayType)
+            this.type.collectMemberFunctions(id, map);
     }
 }
 

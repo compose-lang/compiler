@@ -14,6 +14,9 @@ import {Type} from "../binaryen/binaryen_wasm.d.ts";
 import { PackedType } from "../binaryen/binaryen_wasm.js";
 import {assertTrue} from "../../deps.ts";
 import TypeInfo from "../reflection/TypeInfo.ts";
+// can't use index.ts here because MissingType needs TypeBase
+let MissingType: typeof import("./MissingType.ts").default;
+import("./MissingType.ts").then(module => MissingType = module.default);
 
 
 export default abstract class TypeBase extends CodeFragment implements IType {
@@ -30,11 +33,11 @@ export default abstract class TypeBase extends CodeFragment implements IType {
     }
 
     isAssignableFrom(_context: Context, type: IType): boolean {
-        return type === this;
+        return type === this || type == MissingType.instance;
     }
 
     prepareContext(context: Context): Context {
-        return context;
+        return context.newMemberContext(this);
     }
 
     abstract defaultValue(): IExpression;
