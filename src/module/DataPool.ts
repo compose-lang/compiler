@@ -17,10 +17,10 @@ export default class DataPool {
 
     compile(module: WasmModule) {
         if(this.segments.length == 0)
-            module.memory.set(0, -1);
+            module.memory.set(1, -1);
         else {
             const segments = this.segments.map(segment => Object.assign({}, segment, { offset: module.i32.const(segment.offset) }))
-            module.memory.set(0, -1, null, segments, false, false, "data");
+            module.memory.set(1, -1, null, segments, false, false, "data");
         }
     }
 

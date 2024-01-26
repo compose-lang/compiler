@@ -23,6 +23,8 @@ export default class WasmModule extends Module {
         super(ptr);
         if(!ptr) {
             this.setFeatures(Feature.BulkMemory, Feature.GC, Feature.ReferenceTypes);
+            // need a minimal memory for compilation to succeed, will be replaced by dataPool
+            this.memory.set(this.i32.const(1), this.i32.const(1));
         }
     }
     addString(value: string): [number, number, number] {

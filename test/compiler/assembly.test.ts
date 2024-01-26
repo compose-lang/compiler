@@ -9,5 +9,5 @@ Deno.test('reads memory.size',  () => {
     const wasmTarget = pipeline.build([unit])[0];
     const runner = Runner.of(wasmTarget.asWasmSource());
     const result = runner.runFunction<number>("memory_size");
-    assertEquals(result, 3);
+    assertEquals(result, 1);
  });
