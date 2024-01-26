@@ -82,7 +82,7 @@ export default class DeclareInstanceStatement extends StatementBase implements I
         return { refs: [result], type: VoidType.instance };
     }
 
-    private asVariable(context: Context, type: IType) {
+    private asVariable(_context: Context, type: IType) {
         return new Variable(this.modifier, this.id, type);
     }
 

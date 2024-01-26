@@ -17,7 +17,7 @@ export default class Int64Type extends IntegerType {
         return NumberPrecedence.Int64;
     }
 
-    asType(context: Context): Type {
+    asType(_context: Context): Type {
         return i64;
     }
 

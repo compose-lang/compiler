@@ -16,8 +16,9 @@ Deno.test('compiles and runs a function using imported globals',  () => {
     const wasmTargets = pipeline.build([unit]);
     assertEquals(wasmTargets.length, 2);
     assertEquals(pipeline.units.length, 2);
-    const sourceLocator: ISourceLocator = (path: string) => {
-        const index = pipeline.units.findIndex(unit => unit.path == path);
+    const sourceLocator: ISourceLocator = (url: URL) => {
+        const urlStr = url.toString();
+        const index = pipeline.units.findIndex(unit => unit.url.toString() == urlStr);
         assertTrue(index >= 0);
         return wasmTargets[index].asWasmSource();
     }

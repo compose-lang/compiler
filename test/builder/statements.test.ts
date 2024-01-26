@@ -19,7 +19,7 @@ Deno.test('parses a declare statement',  () => {
     assertTrue(stmts[0].expression instanceof IntegerLiteral);
     assertEquals(stmts[0].expression.value, 2);
     assertTrue(stmts[1] instanceof DeclareInstanceStatement);
-    assertEquals(Int64Type.instance, stmts[1].type);
+    assertEquals(stmts[1].type, Int64Type.instance);
     assertTrue(stmts[1].expression instanceof IntegerLiteral);
     assertEquals(stmts[1].expression.value, 3);
 });

@@ -15,11 +15,11 @@ export default abstract class NumberType extends NativeType implements IValueTyp
 
     abstract get precedence(): NumberPrecedence;
 
-    asTypeInfo(context: Context): TypeInfo {
+    asTypeInfo(_context: Context): TypeInfo {
         return ReflectionRegistry.instance.getNativeTypeInfo(this);
     }
 
-    isAssignableFrom(context: Context, type: IType): boolean {
+    isAssignableFrom(_context: Context, type: IType): boolean {
         return type instanceof NumberType || type === MissingType.instance;
     }
 

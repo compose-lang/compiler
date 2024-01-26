@@ -3,7 +3,6 @@ import NumberPrecedence from "./NumberPrecedence.ts";
 import Context from "../context/Context.ts";
 import WasmModule from "../module/WasmModule.ts";
 import BinaryOperator from "../expression/BinaryOperator.ts";
-import UInt32Type from "./UInt32Type.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResult from "../expression/IResult.ts";
 import IExpression from "../expression/IExpression.ts";
@@ -25,7 +24,7 @@ export default class Int32Type extends IntegerType {
         return NumberPrecedence.Int32;
     }
 
-    asType(context: Context): Type {
+    asType(_context: Context): Type {
         return i32;
     }
 
