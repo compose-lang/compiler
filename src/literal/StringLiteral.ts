@@ -37,10 +37,10 @@ export default class StringLiteral extends LiteralBase<string> {
 
 
     private compileChars(_context: Context, module: WasmModule, _flags: CompilerFlags, _body: FunctionBody): ExpressionRef {
-        const [name, size] = module.addString(this.value);
+        const [index, offset, size] = module.addString(this.value);
         const elemType = {type: i32, packedType: PackedType.Int8, mutable: false};
         const arrayGCType = HeapTypeRegistry.instance.getArrayGCType(elemType, true);
-        return module.arrays.newFromData(arrayGCType.heapType, name, 0, size);
+        return module.arrays.newFromData(arrayGCType.heapType, index.toString(), module.i32.const(offset), module.i32.const(size));
     }
 
 }

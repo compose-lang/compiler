@@ -22,15 +22,10 @@ export default class WasmModule extends Module {
     constructor(ptr?: number) {
         super(ptr);
         if(!ptr) {
-            this.setFeatures(Feature.GC, Feature.ReferenceTypes);
+            this.setFeatures(Feature.BulkMemory, Feature.GC, Feature.ReferenceTypes);
         }
     }
-    addMemory(minPages: number, maxPages?: number) {
-        maxPages = Math.max(minPages, maxPages || 0);
-        this.memory.set(minPages, maxPages);
-    }
-
-    addString(value: string): [string, number] {
+    addString(value: string): [number, number, number] {
         return this.stringPool.add(value);
     }
 

@@ -91,6 +91,8 @@ export default class CompilationUnit {
         this.module.globalsList.forEach(glob => glob.compile(this.context, this.module, options.compilerFlags, null), this);
         // compile functions in the order of their registration in the functions section
         this.module.functionsList.forEach(decl => decl.compile(this.context, this.module, options.compilerFlags, null), this);
+        // compile memory segments, now complete
+        this.module.dataPool.compile(this.module);
     }
 
     assembleModule(wasmTarget: IWasmTarget, options: PipelineOptions) {

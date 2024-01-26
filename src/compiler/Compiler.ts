@@ -16,7 +16,6 @@ export function compileFile(sourceFile: string, targetDir: string) {
         })
     const pipeline = new Pipeline(options);
     const unit = ComposeBuilder.parse_unit_stream(new FileStream(sourceFile));
-    unit.module.addMemory(3);
     return pipeline.build([unit])[0];
 
 }
@@ -24,7 +23,6 @@ export function compileFile(sourceFile: string, targetDir: string) {
 export function compileString(sourceCode: string) {
     const pipeline = new Pipeline();
     const unit = ComposeBuilder.parse_unit_stream(new CharStream(sourceCode));
-    unit.module.addMemory(3);
     return pipeline.build([unit])[0];
 
 }
