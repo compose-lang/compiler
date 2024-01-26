@@ -9,7 +9,7 @@ export default class PipelineOptions {
 
     static DEFAULTS = new PipelineOptions();
 
-    parseAndCheck = true;
+    check = true;
     declare = true;
     compile = true;
     validate = true;
