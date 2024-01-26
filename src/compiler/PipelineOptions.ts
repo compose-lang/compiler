@@ -17,14 +17,14 @@ export default class PipelineOptions {
     assemble = true;
     optimize = false;
     merge = false;
-    logPaths = false;
+    logUrls = false;
     debugDir: string = null;
     dumpWatPath: string = null;
     dumpWasmPath: string = null;
     compilerFlags = CompilerFlags.DEFAULTS;
-    resolveSource: (source: string, path: string) => string = FileSourceResolver;
+    resolveSource: (source: URL, path: string) => URL = FileSourceResolver;
     provideTarget: (unit: CompilationUnit) => IWasmTarget = () => new WasmBufferTarget();
-    sourceAdded: (path: string) => CompilationUnit = null;
+    sourceAdded: (ur: URL) => CompilationUnit = null;
 
     with(setter: (options: PipelineOptions) => void) {
         const options = new PipelineOptions();

@@ -7,16 +7,16 @@ import IWasmTarget from "./IWasmTarget.ts";
 import PipelineOptions from "./PipelineOptions.ts";
 import { writePathSync } from "../platform/deno/FileUtils.ts";
 
+
 export default class CompilationUnit {
 
-    private _path: string = "<memory>";
     imports: ImportStatement[] = [];
     statements: IGlobalStatement[] = [];
     declarations: IDeclaration[] = [];
     mainExport: any = null;
     childExports: any[] = [];
     context: Context = null;
-    module = new WasmModule(this._path);
+    module = new WasmModule();
 
     constructor(imports: ImportStatement[], statements: IGlobalStatement[], declarations: IDeclaration[], mainExport: any, childExports: any[]) {
         this.imports = imports;
@@ -26,24 +26,20 @@ export default class CompilationUnit {
         this.childExports = childExports;
     }
 
-    get path() {
-        return this._path;
+    get url(): URL {
+        return this.module.url;
     }
 
-    set path(value: string) {
-        if (value != this._path) {
-            if (value == "<memory>")
-                throw new Error("Changing path from " + this._path + " to <memory>");
-            this._path = value;
-        }
+    set url(value: URL) {
+        this.module.url = value;
     }
 
    processImports(options: PipelineOptions) {
-       if(options.logPaths)
-           console.log("Unit path before process imports: " + this.path);
+       if(options.logUrls)
+           console.log("Unit path before process imports: " + this.url);
        this.imports.forEach(imp => imp.process(this, options), this);
-       if(options.logPaths)
-           console.log("Unit path after process imports: " + this.path);
+       if(options.logUrls)
+           console.log("Unit path after process imports: " + this.url);
     }
 
     populateContextAndCheck(parseBuiltins: (context: Context) => void, options: PipelineOptions) {
@@ -52,14 +48,14 @@ export default class CompilationUnit {
         // register special builtins
         this.context.registerBuiltins();
         // register imports
-        if(options.logPaths)
-            console.log("Unit path before register imports: " + this.path);
+        if(options.logUrls)
+            console.log("Unit path before register imports: " + this.url);
         this.imports.forEach(imp => imp.register(this.context), this);
-        if(options.logPaths)
-            console.log("Unit path before check imports: " + this.path);
+        if(options.logUrls)
+            console.log("Unit path before check imports: " + this.url);
         this.imports.forEach(imp => imp.check(this.context), this);
-        if(options.logPaths)
-            console.log("Unit path after check imports: " + this.path);
+        if(options.logUrls)
+            console.log("Unit path after check imports: " + this.url);
         // register declarations
         this.declarations.forEach(decl => decl.register(this.context), this);
         // register then check globals (once declarations are registered)
@@ -70,11 +66,11 @@ export default class CompilationUnit {
     }
 
     declare(options: PipelineOptions) {
-        if(options.logPaths)
-            console.log("Unit path before declare imports: " + this.path);
+        if(options.logUrls)
+            console.log("Unit path before declare imports: " + this.url);
         this.imports.forEach(imp => imp.declare(this.context, this.module), this);
-        if(options.logPaths)
-            console.log("Unit path after declare imports: " + this.path);
+        if(options.logUrls)
+            console.log("Unit path after declare imports: " + this.url);
         this.declarations.filter(decl => decl.isModuleImport()).forEach(decl => decl.declare(this.context, this.module), this);
         this.declarations.filter(decl => !decl.isModuleImport()).forEach(decl => decl.declare(this.context, this.module), this);
         this.statements.forEach(stmt => stmt.declare(this.context, this.module), this);
@@ -82,11 +78,11 @@ export default class CompilationUnit {
     }
 
     compileAtoms(options: PipelineOptions) {
-        if(options.logPaths)
-            console.log("Unit path before compile imports: " + this.path);
+        if(options.logUrls)
+            console.log("Unit path before compile imports: " + this.url);
         this.imports.forEach(imp => imp.compile(this.context, this.module, options.compilerFlags, null), this);
-        if(options.logPaths)
-            console.log("Unit path after compile imports: " + this.path);
+        if(options.logUrls)
+            console.log("Unit path after compile imports: " + this.url);
         // compile globals in the order of their registration in the globals section
         this.module.globalsList.forEach(glob => glob.compile(this.context, this.module, options.compilerFlags, null), this);
         // compile functions in the order of their registration in the functions section
@@ -97,9 +93,10 @@ export default class CompilationUnit {
 
     assembleModule(wasmTarget: IWasmTarget, options: PipelineOptions) {
         let mapFilePath: string = undefined;
-        if(options.compilerFlags.debug && this.path!="<memory>") {
+        if(options.compilerFlags.debug && this.url.protocol!="blob") {
             if(options.debugDir) {
-                const thisName = this.path.substring(this.path.lastIndexOf("/"));
+                const urlStr = this.url.toString();
+                const thisName = urlStr.substring(urlStr.lastIndexOf("/"));
                 mapFilePath = options.debugDir + thisName + ".map";
             }
         }

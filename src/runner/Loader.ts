@@ -23,7 +23,7 @@ export default class Loader {
         for(const key in this.imports)
             imports[key] = this.imports[key].imports;
         const instance = new WebAssembly.Instance(module, imports);
-        const runnable = {path: source.path, module, instance};
+        const runnable = {url: source.url, module, instance};
         runnables.push(runnable);
         return runnable;
     }

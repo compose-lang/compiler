@@ -1,5 +1,5 @@
 import IWasmSource from "./IWasmSource.ts";
 
-type ISourceLocator = (path: string) => IWasmSource;
+type ISourceLocator = (url: URL) => IWasmSource;
 
 export default ISourceLocator;

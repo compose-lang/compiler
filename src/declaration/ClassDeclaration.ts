@@ -29,7 +29,7 @@ export default class ClassDeclaration extends StructDeclarationBase implements I
         this.functions.forEach(f => f.parentClass = this);
     }
 
-    getIType(context: Context) {
+    getIType(_context: Context) {
         return new ClassType(this.id, this);
     }
     set unit(unit: CompilationUnit) {

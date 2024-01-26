@@ -1,6 +1,9 @@
 import { dirname, fileExistsSync} from "../platform/deno/FileUtils.ts";
 
-const FileSourceResolver = (unitPath: string, importSource: string) => {
+const FileSourceResolver = (unitURL: URL, importSource: string): URL | null => {
+    if(unitURL.protocol != "file")
+        throw new Error(`Unsupported protocol "${unitURL.protocol}" !`)
+    const unitPath = unitURL.pathname;
     let dirPath = dirname(unitPath);
     const parts = importSource.split("/");
     for(let i=0 ; i < parts.length; i++) {
@@ -11,9 +14,9 @@ const FileSourceResolver = (unitPath: string, importSource: string) => {
             dirPath = dirPath + "/" + part;
     }
     if(fileExistsSync(dirPath))
-        return dirPath;
+        return new URL("file://" + dirPath);
     else if(fileExistsSync(dirPath + ".cots"))
-        return dirPath + ".cots";
+        return  new URL("file://" + dirPath + ".cots");
     else
         return null;
 }

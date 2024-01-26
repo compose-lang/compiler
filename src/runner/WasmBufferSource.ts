@@ -1,8 +1,9 @@
 import IWasmSource from "./IWasmSource.ts";
+import {MEMORY_BLOB_URL} from "../utils/Constants.ts";
 
 export default class WasmBufferSource implements IWasmSource {
 
-    readonly path = "<memory>";
+    readonly url = MEMORY_BLOB_URL;
     bytes: ArrayBuffer
 
     constructor(bytes: ArrayBuffer) {

@@ -9,9 +9,10 @@ import Prototype from "../declaration/Prototype.ts";
 import { assertTrue } from "../../deps.ts";
 import StringPool from "./StringPool.ts";
 import DataPool from "./DataPool.ts";
+import {MEMORY_BLOB_URL} from "../utils/Constants.ts";
 
 export default class WasmModule extends Module {
-    url: string;
+    _url: URL;
     globalsList: Global[] = [];
     globalsByName = new Map<string, Global>();
     functionsList: IFunctionDeclaration[] = [];
@@ -19,26 +20,39 @@ export default class WasmModule extends Module {
     dataPool = new DataPool();
     stringPool = new StringPool(this.dataPool);
 
-    constructor(url: string, ptr?: number) {
+    constructor(url: URL = MEMORY_BLOB_URL, ptr?: number) {
         super(ptr);
         if(!ptr) {
             this.setFeatures(Feature.BulkMemory, Feature.GC, Feature.ReferenceTypes);
             // need a minimal memory for compilation to succeed, will be replaced by dataPool
             this.memory.set(this.i32.const(1), this.i32.const(1));
         }
-        this.url = url;
+        this._url = url;
     }
+
+    get url() {
+        return this._url;
+    }
+
+    set url(value: URL) {
+        if (value != this._url) {
+            if (value == MEMORY_BLOB_URL)
+                throw new Error(`Changing path from ${this._url} to ${MEMORY_BLOB_URL.toString()}`);
+            this._url = value;
+        }
+    }
+
     addString(value: string): [number, number, number] {
         return this.stringPool.add(value);
     }
 
     declareImportedGlobal(unit: CompilationUnit, variable: Variable) {
-        this.globals.addImport(variable.name, unit.path, variable.name, variable.type.asType(unit.context), false);
+        this.globals.addImport(variable.name, unit.url.toString(), variable.name, variable.type.asType(unit.context), false);
     }
 
     declareImportedFunction(decl: IFunctionDeclaration) {
         const unit = decl.unit;
-        this.functions.addImport(decl.fullName, unit.module.url, decl.fullName, decl.prototype().asType(unit.context), decl.returnType.asType(unit.context));
+        this.functions.addImport(decl.fullName, unit.module.url.toString(), decl.fullName, decl.prototype().asType(unit.context), decl.returnType.asType(unit.context));
     }
 
     declareGlobal(unit: CompilationUnit, variable: Variable, value: IExpression, mutable: boolean, exported: boolean): number {

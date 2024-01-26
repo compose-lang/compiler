@@ -73,7 +73,7 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
         const funcref = module.functions.add(this.name, this.functionType().asType(context), results.type.asType(context), locals, block);
         body.setLocalNames(funcref);
         if(flags.debug) {
-            const file = module.addDebugInfoFileName(this.fragment.path);
+            const file = module.addDebugInfoFileName(this.fragment.url.toString());
             const func = new Function(funcref);
             body.debugFragments.forEach((fragment, ref) => func.setDebugLocation(ref, file, fragment.startLocation.line + 1, fragment.startLocation.column + 1))            ;
         }

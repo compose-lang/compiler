@@ -39,23 +39,23 @@ export default class Pipeline {
         return null;
     }
 
-    addSource(path: string): CompilationUnit {
-        if (this.options.logPaths)
-            console.log("Adding source: " + path);
-        let unit = this.units.find(unit => unit.path == path);
+    addSource(url: URL): CompilationUnit {
+        if (this.options.logUrls)
+            console.log("Adding source: " + url.toString());
+        let unit = this.units.find(unit => unit.url == url);
         if (!unit) {
-            unit = ComposeBuilder.parse_unit_stream(new FileStream(path));
+            unit = ComposeBuilder.parse_unit_stream(new FileStream(url.pathname));
             this.addUnit(unit);
         }
         return unit;
     }
 
     addUnit(unit: CompilationUnit) {
-        if (this.options.logPaths && unit.path != "<memory>")
-            console.log("Adding unit: " + unit.path + " to " + this.units.map(u => u.path).join(", "));
+        if (this.options.logUrls && unit.url.protocol != "blob")
+            console.log("Adding unit: " + unit.url + " to " + this.units.map(u => u.url.toString()).join(", "));
         this.units.push(unit);
-        if (this.options.logPaths && unit.path != "<memory>")
-            console.log("Units paths: " + this.units.map(u => u.path).join(", "));
+        if (this.options.logUrls && unit.url.protocol != "blob")
+            console.log("Units paths: " + this.units.map(u => u.url.toString()).join(", "));
         unit.context = Context.newGlobalsContext(className => this.locateRuntimeClassContext(className));
         unit.processImports(this.options);
         unit.populateContextAndCheck(Pipeline.parseAndRegisterBuiltins, this.options);
@@ -70,10 +70,10 @@ export default class Pipeline {
             .find( path => fileExistsSync(path));
         if(!path)
             throw new Error(`Could not locate '${className}' runtime class!`);
-        const unit = this.addSource(path);
-        // TODO use web URLs
+        const unit = this.addSource(new URL("file://" + path));
+        // TODO support GitHub URLs
         __dirname = dirname(path);
-        unit.module.url = "file:///" + __dirname + "/" + className + ".cots";
+        unit.module.url = new URL("file://" + __dirname + "/" + className + ".cots");
         // end TODO
         return unit.context;
     }

@@ -203,6 +203,7 @@ import Int16Type from "../type/Int16Type.ts";
 import CharType from "../type/CharType.ts";
 import UInt8Type from "../type/UInt8Type.ts";
 import UInt16Type from "../type/UInt16Type.ts";
+import {MEMORY_BLOB_URL} from "../utils/Constants.ts";
 
 interface IndexedNode {
     __id?: number;
@@ -216,7 +217,8 @@ export default class ComposeBuilder extends ComposeParserListener {
 
     static parse_unit_stream(stream: CharStream, directives?: Map<string, boolean>): CompilationUnit | null {
         const unit = ComposeBuilder.doParse<CompilationUnit>((parser: ComposeParser) => parser.compilation_unit(), stream, directives);
-        unit.path = (stream["fileName" as keyof typeof stream] as unknown as string) || "<memory>";
+        const fileName = stream["fileName" as keyof typeof stream] as unknown as string;
+        unit.url = fileName ? new URL("file://" + fileName) : MEMORY_BLOB_URL;
         return unit;
     }
 
@@ -269,13 +271,14 @@ export default class ComposeBuilder extends ComposeParserListener {
 
     static doParse<T>(rule: (parser: ComposeParser) => ParseTree, stream: CharStream, directives?: Map<string, boolean>): T | null {
         try {
-            const path: string = (stream["fileName" as keyof typeof stream] as unknown as string) || "<memory>";
+            const fileName = stream["fileName" as keyof typeof stream] as unknown as string;
+            const url = fileName ? new URL("file://" + fileName) : MEMORY_BLOB_URL;
             stream = preprocessedStream(stream, directives);
             const lexer = new ComposeLexer(stream);
             const tokenStream = new CommonTokenStream(lexer);
             const parser = new ComposeParser(tokenStream);
             const tree = rule(parser);
-            const builder = new ComposeBuilder(parser, path);
+            const builder = new ComposeBuilder(parser, url);
             const walker = new ParseTreeWalker();
             walker.walk(builder, tree);
             return builder.getNodeValue<T>(tree);
@@ -287,14 +290,14 @@ export default class ComposeBuilder extends ComposeParserListener {
     }
 
     parser: ComposeParser;
-    path: string;
+    url: URL;
     nodeValues = new Map<number, object>();
     nextNodeId = 0;
 
-    constructor(parser: ComposeParser, path: string) {
+    constructor(parser: ComposeParser, url: URL) {
         super();
         this.parser = parser;
-        this.path = path;
+        this.url = url;
     }
 
     getNodeValue<T>(node: ParseTree): T | null {
@@ -325,7 +328,7 @@ export default class ComposeBuilder extends ComposeParserListener {
         if(!codeSection.fragment) {
             const first = this.findFirstValidToken(node.start.tokenIndex);
             const last = this.findLastValidToken(node.stop!.tokenIndex);
-            codeSection.fragment = Fragment.fromTokens(this.path, first!, last!);
+            codeSection.fragment = Fragment.fromTokens(this.url, first!, last!);
         }
     }
 

@@ -1,4 +1,4 @@
 export default interface IWasmSource {
-    readonly path: string;
+    readonly url: URL;
     compile(): WebAssembly.Module;
 }
