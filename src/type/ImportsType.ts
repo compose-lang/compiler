@@ -9,7 +9,7 @@ import BinaryOperator from "../expression/BinaryOperator.ts";
 import UnaryOperator from "../expression/UnaryOperator.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResult from "../expression/IResult.ts";
-import {Type} from "../binaryen/binaryen_wasm.d.ts";
+import {PackedType, Type} from "../binaryen/binaryen_wasm.d.ts";
 import {assertTrue} from "../../deps.ts";
 import TypeInfo from "../reflection/TypeInfo.ts";
 
@@ -42,6 +42,11 @@ export default class ImportsType extends Map<string, IFunctionDeclaration> imple
     asTypeInfo(context: Context): TypeInfo {
         assertTrue(false); // should never get there
     }
+
+    packedType(): PackedType {
+        assertTrue(false); // should never get there
+    }
+
 
     prepareContext(context: Context): Context {
         return context.newImportsContext(this);

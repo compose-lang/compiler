@@ -5,13 +5,12 @@ import WasmModule from "../module/WasmModule.ts";
 import IExpression from "../expression/IExpression.ts";
 import UnaryOperator from "../expression/UnaryOperator.ts";
 import BinaryOperator from "../expression/BinaryOperator.ts";
-import Int32Type from "./Int32Type.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResult from "../expression/IResult.ts";
 import FunctionBody from "../module/FunctionBody.ts";
-import {Type} from "../binaryen/binaryen_wasm.d.ts";
+import { Type } from "../binaryen/binaryen_wasm.d.ts";
 /// <reference types="../binaryen/binaryen_wasm.d.ts" />
-import {i32} from "../binaryen/binaryen_wasm.js";
+import { i32, PackedType } from "../binaryen/binaryen_wasm.js";
 import Int16Type from "./Int16Type.ts";
 import UInt32Type from "./UInt32Type.ts";
 
@@ -27,8 +26,12 @@ export default class UInt16Type extends IntegerType {
         return NumberPrecedence.UInt16;
     }
 
-    asType(context: Context): Type {
+    asType(_context: Context): Type {
         return i32;
+    }
+
+    packedType(): typeof PackedType {
+        return PackedType.Int16;
     }
 
     compileAdd(context: Context, module: WasmModule, flags: CompilerFlags, left: IResult, right: IResult, tryReverse: boolean): IResult {

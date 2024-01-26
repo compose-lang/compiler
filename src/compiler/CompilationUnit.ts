@@ -16,7 +16,7 @@ export default class CompilationUnit {
     mainExport: any = null;
     childExports: any[] = [];
     context: Context = null;
-    module = new WasmModule();
+    module = new WasmModule(this._path);
 
     constructor(imports: ImportStatement[], statements: IGlobalStatement[], declarations: IDeclaration[], mainExport: any, childExports: any[]) {
         this.imports = imports;

@@ -10,6 +10,8 @@ import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResult from "../expression/IResult.ts";
 import FunctionBody from "../module/FunctionBody.ts";
 import {Type} from "../binaryen/binaryen_wasm.d.ts";
+/// <reference types="../binaryen/binaryen_wasm.d.ts" />
+import { PackedType } from "../binaryen/binaryen_wasm.js";
 import {assertTrue} from "../../deps.ts";
 import TypeInfo from "../reflection/TypeInfo.ts";
 
@@ -23,7 +25,11 @@ export default abstract class TypeBase extends CodeFragment implements IType {
     abstract asType(context: Context): Type;
     abstract asTypeInfo(context: Context): TypeInfo;
 
-    isAssignableFrom(context: Context, type: IType): boolean {
+    packedType(): typeof PackedType {
+        return PackedType.NotPacked;
+    }
+
+    isAssignableFrom(_context: Context, type: IType): boolean {
         return type === this;
     }
 

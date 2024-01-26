@@ -27,6 +27,7 @@ export default class FunctionType extends UserType {
         return new NullLiteral();
     }
 
+    // deno-lint-ignore no-explicit-any
     equals(other: any) {
         return this == other || (other instanceof FunctionType && this.equalsFunctionType(other));
     }
@@ -54,7 +55,7 @@ export default class FunctionType extends UserType {
         return true;
     }
 
-    prepareContext(context: Context): Context {
+    prepareContext(_context: Context): Context {
         assertTrue(false); // TODO
     }
 
@@ -63,7 +64,7 @@ export default class FunctionType extends UserType {
         return createType(types);
     }
 
-    asTypeInfo(context: Context): TypeInfo {
+    asTypeInfo(_context: Context): TypeInfo {
         assertTrue(false); // should never get there
     }
 
@@ -77,12 +78,13 @@ export default class FunctionType extends UserType {
         switch(values.length) {
             case 0:
                 return "()";
-            case 1:
+            case 1: {
                 const value = values[0];
-                if(value.indexOf(":")>=0)
+                if (value.indexOf(":") >= 0)
                     return "(" + value + ")";
                 else
                     return value;
+            }
             default:
                 return "(" + values.join(", ") + ")";
         }

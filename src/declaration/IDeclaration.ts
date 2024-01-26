@@ -12,6 +12,7 @@ export default interface IDeclaration extends ICodeFragment {
     annotations: Annotation[];
     exportType: ExportType;
     name: string;
+    fullName: string;
 
     isModuleImport(): boolean;
     isModuleExport(): boolean;

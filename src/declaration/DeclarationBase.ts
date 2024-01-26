@@ -24,6 +24,10 @@ export default abstract class DeclarationBase extends CodeFragment implements ID
         return this.id.value;
     }
 
+    get fullName(): string {
+        return this.id.value;
+    }
+
     get unit() {
         return this._unit;
     }

@@ -7,7 +7,7 @@ import UnaryOperator from "../expression/UnaryOperator.ts";
 import BinaryOperator from "../expression/BinaryOperator.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResult from "../expression/IResult.ts";
-import {Type} from "../binaryen/binaryen_wasm.d.ts";
+import {PackedType, Type} from "../binaryen/binaryen_wasm.d.ts";
 import TypeInfo from "../reflection/TypeInfo.ts";
 
 export default interface IType {
@@ -20,6 +20,7 @@ export default interface IType {
 
     asType(context: Context): Type;
     asTypeInfo(context: Context): TypeInfo;
+    packedType(): PackedType;
 
     prepareContext(context: Context): Context;
 

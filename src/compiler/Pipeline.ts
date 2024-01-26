@@ -63,7 +63,7 @@ export default class Pipeline {
 
     locateRuntimeClassContext(className: string): Context {
         const __filename = fileURLToPath(import.meta.url);
-        const __dirname = dirname(dirname(dirname(__filename))) + "/runtime";
+        let __dirname = dirname(dirname(dirname(__filename))) + "/runtime";
         const path = Array.from(readDirSync(__dirname))
             .filter(entry => entry.isDirectory)
             .map(entry => __dirname + "/" + entry.name + "/" + className + ".cots")
@@ -71,6 +71,10 @@ export default class Pipeline {
         if(!path)
             throw new Error(`Could not locate '${className}' runtime class!`);
         const unit = this.addSource(path);
+        // TODO use web URLs
+        __dirname = dirname(path);
+        unit.module.url = "file:///" + __dirname + "/" + className + ".cots";
+        // end TODO
         return unit.context;
     }
 

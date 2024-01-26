@@ -19,7 +19,7 @@ export default class DataPool {
         if(this.segments.length == 0)
             module.memory.set(1, -1);
         else {
-            const segments = this.segments.map(segment => Object.assign({}, segment, { offset: module.i32.const(segment.offset) }))
+            const segments = this.segments.map(segment => Object.assign({}, segment, { offset: segment.passive ? 0 : module.i32.const(segment.offset) }))
             module.memory.set(1, -1, null, segments, false, false, "data");
         }
     }

@@ -62,10 +62,10 @@ export default class ArrayLiteral extends LiteralBase<any[]> {
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResult {
         const itemsRef = this.compileItems(context, module, flags, body);
-        const arrayType = this.type.asType(context);
-        const arrayHeapType = TypeBuilder.heapTypeFromType(arrayType);
+        const wrapperType = this.type.asType(context);
+        const wrapperHeapType = TypeBuilder.heapTypeFromType(wrapperType);
         const arrayInfo = ReflectionRegistry.instance.getArrayTypeInfo(context, this.type.elementType);
-        const structRef = module.structs.newFromFields(arrayHeapType, [ module.i32.const(arrayInfo.typeIndex), itemsRef ]);
+        const structRef = module.structs.newFromFields(wrapperHeapType, [ module.i32.const(arrayInfo.typeIndex), itemsRef ]);
         return { ref: structRef, type: this.type }
     }
 

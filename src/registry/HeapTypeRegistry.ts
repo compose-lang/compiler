@@ -38,7 +38,7 @@ export default class HeapTypeRegistry {
         return { type: this.getTypeFromHeapType(heapType, nullable), heapType };
     }
 
-    getWrapperGCType(fieldType: FieldType, nullable = true): GCType {
+    getWrapperGCType(fieldType: FieldType, nullable = false): GCType {
         const wrappedTypeName = HeapTypeRegistry.fieldTypeName(fieldType);
         if (!this.wrapperTypesMap.has(wrappedTypeName)) {
             const builder = new TypeBuilder(1);

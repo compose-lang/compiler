@@ -11,7 +11,7 @@ import StringPool from "./StringPool.ts";
 import DataPool from "./DataPool.ts";
 
 export default class WasmModule extends Module {
-
+    url: string;
     globalsList: Global[] = [];
     globalsByName = new Map<string, Global>();
     functionsList: IFunctionDeclaration[] = [];
@@ -19,13 +19,14 @@ export default class WasmModule extends Module {
     dataPool = new DataPool();
     stringPool = new StringPool(this.dataPool);
 
-    constructor(ptr?: number) {
+    constructor(url: string, ptr?: number) {
         super(ptr);
         if(!ptr) {
             this.setFeatures(Feature.BulkMemory, Feature.GC, Feature.ReferenceTypes);
             // need a minimal memory for compilation to succeed, will be replaced by dataPool
             this.memory.set(this.i32.const(1), this.i32.const(1));
         }
+        this.url = url;
     }
     addString(value: string): [number, number, number] {
         return this.stringPool.add(value);
@@ -33,6 +34,11 @@ export default class WasmModule extends Module {
 
     declareImportedGlobal(unit: CompilationUnit, variable: Variable) {
         this.globals.addImport(variable.name, unit.path, variable.name, variable.type.asType(unit.context), false);
+    }
+
+    declareImportedFunction(decl: IFunctionDeclaration) {
+        const unit = decl.unit;
+        this.functions.addImport(decl.fullName, unit.module.url, decl.fullName, decl.prototype().asType(unit.context), decl.returnType.asType(unit.context));
     }
 
     declareGlobal(unit: CompilationUnit, variable: Variable, value: IExpression, mutable: boolean, exported: boolean): number {

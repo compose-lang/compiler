@@ -30,10 +30,14 @@ export default abstract class FunctionDeclarationBase extends DeclarationBase im
         this.returnType = proto.returnType || null;
     }
 
+    get fullName(): string {
+        return this.parentClass ? this.parentClass.name + ":" + super.fullName : super.fullName;
+    }
+
     abstract get isStatic(): boolean;
     abstract compile(context: Context, module: WasmModule, flags: CompilerFlags): void;
 
-    isConst(context: Context): boolean {
+    isConst(_context: Context): boolean {
         return false;
     }
 

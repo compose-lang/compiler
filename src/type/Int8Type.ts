@@ -8,9 +8,9 @@ import IResult from "../expression/IResult.ts";
 import IExpression from "../expression/IExpression.ts";
 import FunctionBody from "../module/FunctionBody.ts";
 import UnaryOperator from "../expression/UnaryOperator.ts";
-import {Type} from "../binaryen/binaryen_wasm.d.ts";
+import { Type } from "../binaryen/binaryen_wasm.d.ts";
 /// <reference types="../binaryen/binaryen_wasm.d.ts" />
-import {i32} from "../binaryen/binaryen_wasm.js";
+import { i32, PackedType } from "../binaryen/binaryen_wasm.js";
 import Int32Type from "./Int32Type.ts";
 
 export default class Int8Type extends IntegerType {
@@ -27,6 +27,10 @@ export default class Int8Type extends IntegerType {
 
     asType(context: Context): Type {
         return i32;
+    }
+
+    packedType(): typeof PackedType {
+        return PackedType.Int8;
     }
 
     compileAdd(context: Context, module: WasmModule, flags: CompilerFlags, left: IResult, right: IResult, tryReverse: boolean): IResult {
