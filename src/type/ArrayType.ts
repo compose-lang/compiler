@@ -10,6 +10,15 @@ import {assertTrue} from "../../deps.ts";
 import {IntegerType} from "./index.ts";
 import TypeInfo from "../reflection/TypeInfo.ts";
 import ReflectionRegistry from "../registry/ReflectionRegistry.ts";
+import Identifier from "../builder/Identifier.ts";
+import IFunctionDeclaration from "../declaration/IFunctionDeclaration.ts";
+import AnyType from "./AnyType.ts";
+import VoidType from "./VoidType.ts";
+import Prototype from "../declaration/Prototype.ts";
+import ParameterList from "../parameter/ParameterList.ts";
+import TypedParameter from "../parameter/TypedParameter.ts";
+import WasmModule from "../module/WasmModule.ts";
+import CompilerFlags from "../compiler/CompilerFlags.ts";
 
 interface ArrayTypeOptions {
     nullable?: boolean;
@@ -48,4 +57,37 @@ export default class ArrayType extends CollectionType {
         assertTrue(itemType instanceof IntegerType)
         return this.elementType;
     }
+
+    // TODO remove, below is tactical, until we use a class for Arrays
+    collectMemberFunctions(id: Identifier, map: Map<string, IFunctionDeclaration>) {
+        if(id.value == "push") {
+            map.set(PUSH_DECL.functionType().toString(), PUSH_DECL);
+        }
+    }
 }
+
+// TODO remove, below is tactical, until we use a class for Arrays
+let PUSH_DECL: IFunctionDeclaration;
+
+import("../declaration/BuiltinFunctionDeclaration.ts")
+    .then(module => {
+        const BuiltinFunctionDeclaration = module.default;
+        class PushFunctionDeclaration extends BuiltinFunctionDeclaration {
+
+            constructor() {
+                const valueParam = new TypedParameter(new Identifier("value"), AnyType.instance);
+                const params = ParameterList.from([valueParam]);
+                const prototype = new Prototype(new Identifier("push"), null, params, VoidType.instance)
+                super(null, prototype);
+            }
+
+            compile(context: Context, module: WasmModule, flags: CompilerFlags) {
+                // TODO
+                assertTrue(false);
+            }
+        }
+
+        PUSH_DECL = new PushFunctionDeclaration();
+    });
+
+
