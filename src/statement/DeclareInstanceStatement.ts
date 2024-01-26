@@ -48,7 +48,7 @@ export default class DeclareInstanceStatement extends StatementBase implements I
             assertTrue(this.expression.isConst(context));
         let type = this.expression.check(context);
         if(this.type) {
-            assertTrue(this.type.isAssignableFrom(context, type));
+            assertTrue(this.type.isAssignableFrom(context, type), `can't assign ${type.typeName} to ${this.type.typeName}`);
             this.expression.resolveType(context, this.type);
             type = this.type;
         }
