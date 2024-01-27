@@ -63,6 +63,8 @@ export default class Pipeline {
     }
 
     addUnit(unit: CompilationUnit) {
+        if(this.units.indexOf(unit) >= 0)
+            return;
         if (this.options.logUrls && unit.url.protocol != "blob:")
             console.log("Adding unit: " + unit.url + " to " + this.units.map(u => u.url.toString()).join(", "));
         this.units.push(unit);
