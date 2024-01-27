@@ -75,6 +75,8 @@ export default class BinaryExpression extends ExpressionBase {
         switch(this.operator) {
             case BinaryOperator.PLUS:
                 return leftResult.type.compileAdd(context, module, flags, leftResult, rightResult, true);
+            case BinaryOperator.MINUS:
+                return leftResult.type.compileSubtract(context, module, flags, leftResult, rightResult);
             case BinaryOperator.LSHIFT:
             case BinaryOperator.RSHIFT:
             case BinaryOperator.BIT_AND:

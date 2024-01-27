@@ -12,6 +12,9 @@ import FunctionBody from "../module/FunctionBody.ts";
 import {Type} from "../binaryen/binaryen_wasm.d.ts";
 /// <reference types="../binaryen/binaryen_wasm.d.ts" />
 import {i32} from "../binaryen/binaryen_wasm.js";
+import Comparator from "../expression/Comparator.ts";
+import BooleanType from "./BooleanType.ts";
+import NumberType from "./NumberType.ts";
 
 export default class UInt32Type extends IntegerType {
 
@@ -25,7 +28,7 @@ export default class UInt32Type extends IntegerType {
         return NumberPrecedence.UInt32;
     }
 
-    asType(context: Context): Type {
+    asType(_context: Context): Type {
         return i32;
     }
 
@@ -36,6 +39,32 @@ export default class UInt32Type extends IntegerType {
             return { ref: module.i32.add(left.ref, right.ref), type: this };
         } else
             return super.compileAdd(context, module, flags, left, right, tryReverse);
+    }
+
+    compileSubtract(context: Context, module: WasmModule, flags: CompilerFlags, left: IResult, right: IResult): IResult {
+        if(right.type instanceof Int32Type) {
+            return { ref: module.i32.sub(left.ref, right.ref), type: right.type };
+        } else if(right.type instanceof UInt32Type) {
+            return { ref: module.i32.sub(left.ref, right.ref), type: this };
+        } else
+            return super.compileSubtract(context, module, flags, left, right);
+    }
+
+    compileCompare(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, left: IResult, right: IResult, comparator: Comparator): IResult {
+        // TODO deal with type, size and sign of right type
+        if(right.type instanceof NumberType) {
+            switch(comparator) {
+                case Comparator.GT:
+                    return { ref: module.i32.gt_u(left.ref, right.ref), type: BooleanType.instance };
+                case Comparator.GTE:
+                    return { ref: module.i32.gte_u(left.ref, right.ref), type: BooleanType.instance };
+                case Comparator.LT:
+                    return { ref: module.i32.lt_u(left.ref, right.ref), type: BooleanType.instance };
+                case Comparator.LTE:
+                    return { ref: module.i32.lte_u(left.ref, right.ref), type: BooleanType.instance };
+            }
+        }
+        return super.compileCompare(context, module, flags, body, left, right, comparator);
     }
 
     compileBinaryBitsOperator(context: Context, module: WasmModule, flags: CompilerFlags, left: IResult, right: IResult, operator: BinaryOperator): IResult {

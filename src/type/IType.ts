@@ -9,6 +9,7 @@ import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResult from "../expression/IResult.ts";
 import {PackedType, Type} from "../binaryen/binaryen_wasm.d.ts";
 import TypeInfo from "../reflection/TypeInfo.ts";
+import Comparator from "../expression/Comparator.ts";
 
 export default interface IType {
 
@@ -30,11 +31,13 @@ export default interface IType {
     checkEquals(context: Context, rightType: IType): IType;
 
     checkCompare(context: Context, rightType: IType): IType;
+    compileCompare(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, left: IResult, right: IResult, comparator: Comparator): IResult;
 
     checkAdd(context: Context, rightType: IType, tryReverse: boolean): IType;
     compileAdd(context: Context, module: WasmModule, flags: CompilerFlags, left: IResult, right: IResult, tryReverse: boolean): IResult;
 
     checkSubtract(context: Context, rightType: IType): IType;
+    compileSubtract(context: Context, module: WasmModule, flags: CompilerFlags, leftResult: IResult, rightResult: IResult): IResult;
 
     checkMultiply(context: Context, rightType: IType, tryReverse: boolean): IType;
 

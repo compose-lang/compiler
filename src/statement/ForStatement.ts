@@ -6,7 +6,6 @@ import Context from "../context/Context.ts";
 import IExpression from "../expression/IExpression.ts";
 import DeclareInstanceStatement from "./DeclareInstanceStatement.ts";
 import StatementList from "./StatementList.ts";
-import VoidType from "../type/VoidType.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResults from "./IResults.ts";
 import {assertTrue} from "../../deps.ts";

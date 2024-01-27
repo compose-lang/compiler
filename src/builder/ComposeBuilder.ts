@@ -99,7 +99,7 @@ import ComposeParser, {
     U64_typeContext, U8_typeContext, Unary_statementContext,
     UnaryBitNotExpressionContext,
     UnaryNotExpressionContext, User_refContext, User_typeContext, UserTypeContext,
-    Value_type_or_nullContext
+    Value_type_or_nullContext, While_statementContext
 } from "../parser/ComposeParser.ts";
 import ComposeLexer from "../parser/ComposeLexer.ts";
 import ComposeParserListener from "../parser/ComposeParserListener.ts";
@@ -204,6 +204,7 @@ import CharType from "../type/CharType.ts";
 import UInt8Type from "../type/UInt8Type.ts";
 import UInt16Type from "../type/UInt16Type.ts";
 import {MEMORY_BLOB_URL} from "../utils/Constants.ts";
+import WhileStatement from "../statement/WhileStatement.ts";
 
 interface IndexedNode {
     __id?: number;
@@ -997,6 +998,12 @@ export default class ComposeBuilder extends ComposeParserListener {
         const loopStatements = ctx.embeddable_statement_list().map(child => this.getNodeValue<IStatement>(child), this);
         const statements = this.getNodeValue<StatementList>(ctx.statements());
         this.setNodeValue(ctx, new ForStatement(declare_ones, checkExpressions, StatementList.from(loopStatements), statements));
+    }
+
+    exitWhile_statement = (ctx: While_statementContext) => {
+        const condition = this.getNodeValue<IExpression>(ctx.expression());
+        const statements = this.getNodeValue<StatementList>(ctx.statements());
+        this.setNodeValue(ctx, new WhileStatement(condition, statements));
     }
 
     exitUnary_statement = (ctx: Unary_statementContext) => {

@@ -12,6 +12,7 @@ import IResult from "../expression/IResult.ts";
 import {PackedType, Type} from "../binaryen/binaryen_wasm.d.ts";
 import {assertTrue} from "../../deps.ts";
 import TypeInfo from "../reflection/TypeInfo.ts";
+import Comparator from "../expression/Comparator.ts";
 
 export default class ImportsType extends Map<string, IFunctionDeclaration> implements IType {
 
@@ -68,7 +69,15 @@ export default class ImportsType extends Map<string, IFunctionDeclaration> imple
         assertTrue(false, "Should never get there!");
     }
 
+    compileCompare(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, left: IResult, right: IResult, comparator: Comparator): IResult {
+        assertTrue(false, "Should never get there!");
+    }
+
     checkAdd(context: Context, rightType: IType, tryReverse: boolean): IType {
+        assertTrue(false, "Should never get there!");
+    }
+
+    compileAdd(context: Context, module: WasmModule, flags: CompilerFlags, left: IResult, right: IResult, tryReverse: boolean): IResult {
         assertTrue(false, "Should never get there!");
     }
 
@@ -76,11 +85,11 @@ export default class ImportsType extends Map<string, IFunctionDeclaration> imple
         assertTrue(false, "Should never get there!");
     }
 
-    checkMultiply(context: Context, rightType: IType, tryReverse: boolean): IType {
+    compileSubtract(context: Context, module: WasmModule, flags: CompilerFlags, leftResult: IResult, rightResult: IResult): IResult {
         assertTrue(false, "Should never get there!");
     }
 
-    compileAdd(context: Context, module: WasmModule, flags: CompilerFlags, left: IResult, right: IResult, tryReverse: boolean): IResult {
+    checkMultiply(context: Context, rightType: IType, tryReverse: boolean): IType {
         assertTrue(false, "Should never get there!");
     }
 

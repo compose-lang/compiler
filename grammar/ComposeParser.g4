@@ -290,6 +290,7 @@ embeddable_statement:
 standalone_statement:
     if_statement
     | for_statement
+    | while_statement
     | try_statement
     | throw_statement
     | break_statement
@@ -344,6 +345,11 @@ for_statement:
         SEMI
         (embeddable_statement (COMMA embeddable_statement)*)?
         RPAR
+        statements
+    ;
+
+while_statement:
+    WHILE LPAR expression RPAR
         statements
     ;
 

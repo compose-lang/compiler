@@ -14,6 +14,7 @@ import {Type} from "../binaryen/binaryen_wasm.d.ts";
 import { PackedType } from "../binaryen/binaryen_wasm.js";
 import {assertTrue} from "../../deps.ts";
 import TypeInfo from "../reflection/TypeInfo.ts";
+import Comparator from "../expression/Comparator.ts";
 // can't use index.ts here because MissingType needs TypeBase
 let MissingType: typeof import("./MissingType.ts").default;
 import("./MissingType.ts").then(module => MissingType = module.default);
@@ -50,23 +51,27 @@ export default abstract class TypeBase extends CodeFragment implements IType {
             return this.convertTypedExpression(type, expression);
     }
 
-    convertTypedExpression(type: IType, expression: IExpression): IExpression {
+    convertTypedExpression(_type: IType, _expression: IExpression): IExpression {
         assertTrue(false); // TODO
     }
 
-    checkMember(context: Context, memberId: Identifier): IType {
+    checkMember(_context: Context, _memberId: Identifier): IType {
         assertTrue(false);
     }
 
-    checkItem(context: Context, item: IExpression): IType {
+    checkItem(_context: Context, _item: IExpression): IType {
         assertTrue(false);
     }
 
-    checkEquals(context: Context, rightType: IType): IType {
+    checkEquals(_context: Context, _rightType: IType): IType {
         assertTrue(false);
     }
 
-    checkCompare(context: Context, rightType: IType): IType {
+    checkCompare(_context: Context, _rightType: IType): IType {
+        assertTrue(false);
+    }
+
+    compileCompare(_context: Context, _module: WasmModule, _flags: CompilerFlags, _body: FunctionBody, _left: IResult, _right: IResult, _comparator: Comparator): IResult {
         assertTrue(false);
     }
 
@@ -84,7 +89,11 @@ export default abstract class TypeBase extends CodeFragment implements IType {
             assertTrue(false);
     }
 
-    checkSubtract(context: Context, rightType: IType): IType {
+    checkSubtract(_context: Context, _rightType: IType): IType {
+        assertTrue(false);
+    }
+
+    compileSubtract(_context: Context, _module: WasmModule, _flags: CompilerFlags, _left: IResult, _right: IResult): IResult {
         assertTrue(false);
     }
 
@@ -95,19 +104,19 @@ export default abstract class TypeBase extends CodeFragment implements IType {
             assertTrue(false);
     }
 
-    checkBinaryBitsOperator(context: Context, operator: BinaryOperator, rightType: IType): IType {
+    checkBinaryBitsOperator(_context: Context, _operator: BinaryOperator, _rightType: IType): IType {
         assertTrue(false);
     }
 
-    compileBinaryBitsOperator(context: Context, module: WasmModule, flags: CompilerFlags, left: IResult, right: IResult, operator: BinaryOperator): IResult {
+    compileBinaryBitsOperator(_context: Context, _module: WasmModule, _flags: CompilerFlags, _left: IResult, _right: IResult, _operator: BinaryOperator): IResult {
         assertTrue(false);
     }
 
-    checkUnaryOperator(context: Context, operator: UnaryOperator): IType {
+    checkUnaryOperator(_context: Context, _operator: UnaryOperator): IType {
         assertTrue(false);
     }
 
-    compileUnaryOperator(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, expression: IExpression, operator: UnaryOperator): IResult {
+    compileUnaryOperator(_context: Context, _module: WasmModule, _flags: CompilerFlags, _body: FunctionBody, _expression: IExpression, _operator: UnaryOperator): IResult {
         assertTrue(false);
     }
 
