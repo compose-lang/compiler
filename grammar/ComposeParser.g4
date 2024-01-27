@@ -291,6 +291,7 @@ standalone_statement:
     if_statement
     | for_statement
     | while_statement
+    | do_while_statement
     | try_statement
     | throw_statement
     | break_statement
@@ -351,6 +352,11 @@ for_statement:
 while_statement:
     WHILE LPAR expression RPAR
         statements
+    ;
+
+do_while_statement:
+    DO LCURL statement* RCURL
+        WHILE LPAR expression RPAR
     ;
 
 if_statement:
