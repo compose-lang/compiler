@@ -50,7 +50,7 @@ export default class DoWhileStatement extends StatementBase {
         const results = this.statements.compile(loopContext, module, flags, body);
         const branch = module.br(label);
         results.refs.push(module.if(condition.ref, branch));
-        const ref = module.loop(label, module.block(null, results.refs, results.type.asType(loopContext)));
+        const ref = module.loop(label, module.block("loop_body_" + this.fragment.startLocation.tokenIndex, results.refs, results.type.asType(loopContext)));
         return { refs: [ ref ], type: results.type };
     }
 

@@ -49,7 +49,7 @@ export default class WhileStatement extends StatementBase {
         const loopContext = context.newChildContext()
         const results = this.statements.compile(loopContext, module, flags, body);
         results.refs.push(module.br(label));
-        const loopBody = module.if(condition.ref, module.block(null, results.refs, results.type.asType(loopContext)));
+        const loopBody = module.if(condition.ref, module.block("loop_body_" + this.fragment.startLocation.tokenIndex, results.refs, results.type.asType(loopContext)));
         const ref = module.loop(label, loopBody);
         return { refs: [ ref ], type: results.type };
     }
