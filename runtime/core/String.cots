@@ -2,7 +2,7 @@ export default class String {
 
     static fromUTF8(bytes: u8[]): string {
         const chars: char[] = [];
-        for(let i=0; i < bytes.length; ) {
+        for(let i:u32=0; i<bytes.length; ) {
             const byte1 = bytes[i++];
             if((byte1 & 0x80) == 0) {
                 chars.push(byte1);
@@ -23,11 +23,14 @@ export default class String {
                 const byte4 = bytes[i++];
                 const codePoint: u32 = ((byte1 & 0x07) << 0x12) | (byte2 << 0x0C) | (byte3 << 0x06) | byte4;
                 if(codePoint <= 0xFFFF) {
-                    chars.push(codePoint & 0xFFFF);
+                    const word: u16 = codePoint & 0xFFFF;
+                    chars.push(word);
                 } else {
                     codePoint -= 0x10000;
-                    chars.push(codePoint >>> 10 & 0x3FF | 0xD800);
-                    chars.push(0xDC00 | codePoint & 0x3FF);
+                    let word: u16 = codePoint >>> 10 & 0x3FF | 0xD800;
+                    chars.push(word);
+                    word = 0xDC00 | codePoint & 0x3FF;
+                    chars.push(word);
                 }
             }
             // throw invalid utf-8

@@ -29,6 +29,7 @@ export default interface IType {
     checkItem(context: Context, item: IExpression): IType;
 
     checkEquals(context: Context, rightType: IType): IType;
+    compileEquals(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, left: IResult, right: IResult, reverse: boolean): IResult;
 
     checkCompare(context: Context, rightType: IType): IType;
     compileCompare(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, left: IResult, right: IResult, comparator: Comparator): IResult;
@@ -45,7 +46,6 @@ export default interface IType {
     compileBinaryBitsOperator(context: Context, module: WasmModule, flags: CompilerFlags, left: IResult, right: IResult, operator: BinaryOperator): IResult;
 
     checkUnaryOperator(context: Context, operator: UnaryOperator): IType;
-
     compileUnaryOperator(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, expression: IExpression, operator: UnaryOperator): IResult;
 
     convertExpression(context: Context, expression: IExpression): IExpression;

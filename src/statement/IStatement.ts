@@ -8,8 +8,9 @@ import CompilationUnit from "../compiler/CompilationUnit.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResults from "./IResults.ts";
 import {ExpressionRef} from "../binaryen/binaryen_wasm.d.ts";
+import IFragment from "../builder/IFragment.ts";
 
-export default interface IStatement {
+export default interface IStatement extends IFragment {
 
     unit: CompilationUnit;
     annotations: Annotation[];

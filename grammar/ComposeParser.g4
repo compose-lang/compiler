@@ -228,7 +228,7 @@ class_declaration:
 struct_declaration:
     STRUCT id = user_ref ( LPAR attribute_ref (COMMA attribute_ref)* RPAR )?
         ( EXTENDS user_ref (COMMA user_ref)* )?
-        SEMI
+        ((LCURL field_declaration* RCURL) | SEMI)
     ;
 
 accessibility:

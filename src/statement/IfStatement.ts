@@ -8,12 +8,13 @@ import Context from "../context/Context.ts";
 import TypeMap from "../type/TypeMap.ts";
 import BooleanType from "../type/BooleanType.ts";
 import VoidType from "../type/VoidType.ts";
-import OpCode from "../compiler/OpCode.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResults from "./IResults.ts";
 import {assertTrue} from "../../deps.ts";
+import Fragment from "../builder/Fragment.ts";
 
 export interface IfBlock {
+    fragment: Fragment;
     condition: IExpression;
     statements: StatementList;
 }
@@ -62,7 +63,9 @@ export default class IfStatement extends StatementBase {
         this.blocks.forEach(block => {
             if(block.condition)
                 block.condition.rehearse(context, module, body);
+            body.createAndPushLocalsScope(block.fragment.startLocation.tokenIndex);
             block.statements.rehearse(context.newChildContext(), module, body);
+            body.popLocalsScope(block.fragment.startLocation.tokenIndex);
         })
     }
 
@@ -76,6 +79,7 @@ export default class IfStatement extends StatementBase {
     }
 
     private compileBlock(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, typeMap: TypeMap, block: IfBlock, remaining: IfBlock[]): IResults {
+        body.pushLocalsScope(block.fragment.startLocation.tokenIndex);
         if(block.condition) {
             const condition = block.condition.compile(context, module, flags, body);
             const ifTrue = block.statements.compile(context.newChildContext(), module, flags, body) || null;
@@ -88,12 +92,14 @@ export default class IfStatement extends StatementBase {
                 module.block(null, ifTrue.refs!, ifTrue.type.asType(context)),
                 ifFalse.refs ? module.block(null, ifFalse.refs!, ifFalse.type.asType(context)) : undefined
                 )
+            body.popLocalsScope(block.fragment.startLocation.tokenIndex);
             return { refs: [ref], type: typeMap.inferType(context) };
         } else { // final else
             const results = block.statements.compile(context.newChildContext(), module, flags, body) || null;
             if(results && results.type && results.type!=VoidType.instance)
                 typeMap.add(results.type);
             const ref = module.block(null, results.refs! );
+            body.popLocalsScope(block.fragment.startLocation.tokenIndex);
             return { refs: [ ref ], type: results.type };
         }
     }

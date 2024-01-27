@@ -553,7 +553,7 @@ export declare class Module {
     addCustomSection(name: string, contents: Uint8Array): void;
     addDebugInfoFileName(filename: string): number;
     getDebugInfoFileName(index: number): string | null;
-    validate(): number;
+    validate(out?: (...data: any[]) => void): boolean;
     optimize(): void;
     optimizeFunction(func: string | FunctionRef): void;
     runPasses(passes: string[]): void;
@@ -1203,7 +1203,7 @@ export declare class Module {
         getInfo: (tag: TagRef) => TagInfo;
     };
     get memory(): {
-        init: (segment: string, dest: ExpressionRef, offset: ExpressionRef, size: ExpressionRef, name?: string) => ExpressionRef;
+        init: (data: string, dest: ExpressionRef, offset: ExpressionRef, size: ExpressionRef, name?: string) => ExpressionRef;
         has: () => boolean;
         size: (name?: string, memory64?: boolean) => ExpressionRef;
         grow: (value: ExpressionRef, name?: string, memory64?: boolean) => ExpressionRef;
@@ -1212,7 +1212,7 @@ export declare class Module {
         set: (initial: number, maximum: number, exportName?: string | null, segments?: SegmentInfo[] | null, shared?: boolean, memory64?: boolean, internalName?: string) => void;
         getInfo: (name?: string) => MemoryInfo;
         countSegments: () => number;
-        getSegmentInfoByIndex: (index: number) => SegmentInfo;
+        getSegmentInfo: (name: string) => SegmentInfo;
         countElementSegments: () => number;
         getElementSegmentByIndex: (index: number) => ElementSegmentRef;
         getElementSegmentInfo: (segment: ElementSegmentRef) => ElementSegmentInfo;
@@ -1301,6 +1301,7 @@ export declare class TypeBuilder {
     buildAndDispose(): TypeBuilderResult;
 }
 export interface SegmentInfo {
+    name?: string;
     offset: ExpressionRef;
     data: Uint8Array;
     passive?: boolean;

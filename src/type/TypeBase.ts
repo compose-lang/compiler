@@ -67,6 +67,10 @@ export default abstract class TypeBase extends CodeFragment implements IType {
         assertTrue(false);
     }
 
+    compileEquals(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, left: IResult, right: IResult, reverse: boolean): IResult {
+        assertTrue(false);
+    }
+
     checkCompare(_context: Context, _rightType: IType): IType {
         assertTrue(false);
     }

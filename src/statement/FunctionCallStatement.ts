@@ -36,7 +36,7 @@ export default class FunctionCallStatement extends StatementBase {
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults {
         const result = this.call.compile(context, module, flags, body);
-        const ref = module.drop(result.ref);
+        const ref = result.type == VoidType.instance ? result.ref : module.drop(result.ref);
         return { refs: [ref], type: VoidType.instance};
     }
 

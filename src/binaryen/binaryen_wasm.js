@@ -17,6 +17,7 @@ const __i32_store = JSModule['__i32_store'];
 const __i32_load = JSModule['__i32_load'];
 const utils = JSModule['utils'];
 const swapOut = utils.swapOut;
+const swapErr = utils.swapErr;
 const _BinaryenSizeofLiteral = utils._BinaryenSizeofLiteral;
 const _BinaryenSizeofAllocateAndWriteResult = utils._BinaryenSizeofAllocateAndWriteResult;
 function preserveStack(func) {
@@ -769,8 +770,19 @@ export class Module {
     getDebugInfoFileName(index) {
         return UTF8ToString(JSModule['_BinaryenModuleGetDebugInfoFileName'](this.ptr, index));
     }
-    validate() {
-        return JSModule['_BinaryenModuleValidate'](this.ptr);
+    validate(out) {
+        if (out) {
+            const oldErr = swapErr(out);
+            try {
+                return JSModule['_BinaryenModuleValidate'](this.ptr);
+            }
+            finally {
+                swapErr(oldErr);
+            }
+        }
+        else {
+            return JSModule['_BinaryenModuleValidate'](this.ptr);
+        }
     }
     optimize() {
         return JSModule['_BinaryenModuleOptimize'](this.ptr);
@@ -1680,7 +1692,7 @@ export class Module {
     }
     get memory() {
         return {
-            init: (segment, dest, offset, size, name) => preserveStack(() => JSModule['_BinaryenMemoryInit'](this.ptr, strToStack(segment), dest, offset, size, strToStack(name))),
+            init: (data, dest, offset, size, name) => preserveStack(() => JSModule['_BinaryenMemoryInit'](this.ptr, strToStack(data), dest, offset, size, strToStack(name))),
             has: () => Boolean(JSModule['_BinaryenHasMemory'](this.ptr)),
             size: (name, memory64) => JSModule['_BinaryenMemorySize'](this.ptr, strToStack(name), memory64),
             grow: (value, name, memory64) => JSModule['_BinaryenMemoryGrow'](this.ptr, value, strToStack(name), memory64),
@@ -1688,19 +1700,21 @@ export class Module {
             fill: (dest, value, size, name) => JSModule['_BinaryenMemoryFill'](this.ptr, dest, value, size, strToStack(name)),
             set: (initial, maximum, exportName, segments, shared, memory64, internalName) => preserveStack(() => {
                 const segmentsLen = segments ? segments.length : 0;
+                const names = new Array(segmentsLen);
                 const datas = new Array(segmentsLen);
                 const lengths = new Array(segmentsLen);
                 const passives = new Array(segmentsLen);
                 const offsets = new Array(segmentsLen);
                 for (let i = 0; i < segmentsLen; i++) {
-                    const { data, offset, passive } = segments[i];
+                    const { name, data, offset, passive } = segments[i];
+                    names[i] = strToStack(name);
                     datas[i] = _malloc(data.length);
                     HEAP8.set(data, datas[i]);
                     lengths[i] = data.length;
                     passives[i] = passive;
                     offsets[i] = offset;
                 }
-                const ret = JSModule['_BinaryenSetMemory'](this.ptr, initial, maximum, strToStack(exportName), i32sToStack(datas), i8sToStack(passives), i32sToStack(offsets), i32sToStack(lengths), segmentsLen, shared, memory64, strToStack(internalName));
+                const ret = JSModule['_BinaryenSetMemory'](this.ptr, initial, maximum, strToStack(exportName), i32sToStack(names), i32sToStack(datas), i8sToStack(passives), i32sToStack(offsets), i32sToStack(lengths), segmentsLen, shared, memory64, strToStack(internalName));
                 for (let i = segmentsLen - 1; i >= 0; i--) {
                     _free(datas[i]);
                 }
@@ -1718,16 +1732,16 @@ export class Module {
                 }, withMax);
             },
             countSegments: () => JSModule['_BinaryenGetNumMemorySegments'](this.ptr),
-            getSegmentInfoByIndex: (index) => {
-                const passive = Boolean(JSModule['_BinaryenGetMemorySegmentPassive'](this.ptr, index));
-                const offset = passive ? 0 : JSModule['_BinaryenGetMemorySegmentByteOffset'](this.ptr, index);
-                const size = JSModule['_BinaryenGetMemorySegmentByteLength'](this.ptr, index);
+            getSegmentInfo: (name) => {
+                const passive = Boolean(JSModule['_BinaryenGetMemorySegmentPassive'](this.ptr, strToStack(name)));
+                const offset = passive ? 0 : JSModule['_BinaryenGetMemorySegmentByteOffset'](this.ptr, strToStack(name));
+                const size = JSModule['_BinaryenGetMemorySegmentByteLength'](this.ptr, strToStack(name));
                 const ptr = _malloc(size);
-                JSModule['_BinaryenCopyMemorySegmentData'](this.ptr, index, ptr);
+                JSModule['_BinaryenCopyMemorySegmentData'](this.ptr, strToStack(name), ptr);
                 const data = new Uint8Array(size);
                 data.set(HEAP8.subarray(ptr, ptr + size));
                 _free(ptr);
-                return { offset, data, passive };
+                return { name, offset, data, passive };
             },
             countElementSegments: () => JSModule['_BinaryenGetNumElementSegments'](this.ptr),
             getElementSegmentByIndex: (index) => JSModule['_BinaryenGetElementSegmentByIndex'](this.ptr, index),

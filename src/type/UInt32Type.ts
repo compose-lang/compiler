@@ -50,6 +50,12 @@ export default class UInt32Type extends IntegerType {
             return super.compileSubtract(context, module, flags, left, right);
     }
 
+    compileEquals(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, left: IResult, right: IResult, reverse: boolean): IResult {
+        // TODO deal with type, size and sign of right type
+        const ref = reverse ? module.i32.ne(left.ref, right.ref) : module.i32.eq(left.ref, right.ref);
+        return { ref, type: BooleanType.instance };
+    }
+
     compileCompare(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, left: IResult, right: IResult, comparator: Comparator): IResult {
         // TODO deal with type, size and sign of right type
         if(right.type instanceof NumberType) {
@@ -57,22 +63,23 @@ export default class UInt32Type extends IntegerType {
                 case Comparator.GT:
                     return { ref: module.i32.gt_u(left.ref, right.ref), type: BooleanType.instance };
                 case Comparator.GTE:
-                    return { ref: module.i32.gte_u(left.ref, right.ref), type: BooleanType.instance };
+                    return { ref: module.i32.ge_u(left.ref, right.ref), type: BooleanType.instance };
                 case Comparator.LT:
                     return { ref: module.i32.lt_u(left.ref, right.ref), type: BooleanType.instance };
                 case Comparator.LTE:
-                    return { ref: module.i32.lte_u(left.ref, right.ref), type: BooleanType.instance };
+                    return { ref: module.i32.le_u(left.ref, right.ref), type: BooleanType.instance };
             }
         }
         return super.compileCompare(context, module, flags, body, left, right, comparator);
     }
 
     compileBinaryBitsOperator(context: Context, module: WasmModule, flags: CompilerFlags, left: IResult, right: IResult, operator: BinaryOperator): IResult {
-        if(right.type instanceof UInt32Type) {
+        if(right.type.asType(context) == i32) {
             switch(operator) {
                 case BinaryOperator.LSHIFT:
                     return { ref: module.i32.shl(left.ref, right.ref), type: this };
                 case BinaryOperator.RSHIFT:
+                case BinaryOperator.URSHIFT:
                     return { ref: module.i32.shr_u(left.ref, right.ref), type: this };
                 case BinaryOperator.BIT_AND:
                     return { ref: module.i32.and(left.ref, right.ref), type: this };
@@ -101,13 +108,19 @@ export default class UInt32Type extends IntegerType {
                 expression.compileAssign(context, module, body);
                 expression.compile(context, module, body);
                 return this;
-            case UnaryOperator.POST_INC:
-                expression.compile(context, module, body);
-                expression.compile(context, module, body);
-                body.addOpCode(OpCode.I32_CONST, [1]);
-                body.addOpCode(OpCode.I32_ADD);
-                expression.compileAssign(context, module, body);
-                return this;
+                */
+            case UnaryOperator.POST_INC: {
+                const refs: number[] = [];
+                let value = expression.compile(context, module, flags, body);
+                const type = value.type;
+                refs.push(value.ref);
+                value = expression.compile(context, module, flags, body);
+                const result = module.i32.add(value.ref, module.i32.const(1));
+                value = expression.compileAssign(context, module, flags, body, result);
+                refs.push(value.ref);
+                return {ref: module.block(null, refs, value.type.asType(context)), type};
+            }
+                /*
             case UnaryOperator.POST_DEC:
                 expression.compile(context, module, body);
                 expression.compile(context, module, body);
@@ -115,8 +128,7 @@ export default class UInt32Type extends IntegerType {
                 body.addOpCode(OpCode.I32_SUB);
                 expression.compileAssign(context, module, body);
                 return this; */
-            case UnaryOperator.BIT_NOT:
-            {
+            case UnaryOperator.BIT_NOT: {
                 const result = expression.compile(context, module, flags, body);
                 const ref = module.i32.xor(result.ref, module.i32.const(-1));
                 return { ref, type: this };

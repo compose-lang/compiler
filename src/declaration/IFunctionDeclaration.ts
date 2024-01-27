@@ -14,11 +14,11 @@ export default interface IFunctionDeclaration extends IDeclaration, ICompilable 
     parameters: ParameterList;
     returnType: IType;
 
-    functionType(): FunctionType;
-    prototype(): Prototype;
+    functionType(context: Context): FunctionType;
+    prototype(context: Context): Prototype;
     isGeneric(): boolean;
     resolveGenericType(type: IType, typeArguments: IType[]): IType;
-    instantiateGeneric(typeArguments: IType[]): IFunctionDeclaration;
+    instantiateGeneric(context: Context, typeArguments: IType[]): IFunctionDeclaration;
 
     isConst(context: Context): boolean;
 }

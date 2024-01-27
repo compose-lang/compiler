@@ -44,6 +44,8 @@ export default class MemberExpression extends ExpressionBase {
             const signed = false; // non-packed cannot be signed elemType==Int32Type.instance || elemType==Int64Type.instance;
             const ref = module.structs.getMember(parent.ref, index, type.asType(context), signed);
             return { ref, type };
+        } else if(parent.type instanceof ArrayType && "length" == this.id.value) {
+            return parent.type.compileLength(context, module, flags, body, parent);
         } else
             assertFalse(true, "Not supported yet!")
     }

@@ -10,6 +10,7 @@ import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResult from "./IResult.ts";
 import args = Deno.args;
 import HeapTypeRegistry from "../registry/HeapTypeRegistry.ts";
+import ReflectionRegistry from "../registry/ReflectionRegistry.ts";
 
 export default class ConstructorExpression extends ExpressionBase {
 
@@ -52,7 +53,9 @@ export default class ConstructorExpression extends ExpressionBase {
         const type = struct.getIType(context);
         // TODO for now, assume all fields are populated in correct sequence with correct type
         const fieldRefs = this.args.map(args => args.compile(context, module, flags, body)).map(res => res.ref );
-        const gcType = HeapTypeRegistry.instance.getStructGCType(context, type, true);
+        const typeInfo = type.asTypeInfo(context);
+        fieldRefs.unshift(module.i32.const(typeInfo.typeIndex));
+        const gcType = HeapTypeRegistry.instance.getStructGCType(context, type, false);
         const ref = module.structs.newFromFields(gcType.heapType, fieldRefs);
         return { ref, type };
     }

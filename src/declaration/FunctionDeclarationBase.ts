@@ -41,12 +41,14 @@ export default abstract class FunctionDeclarationBase extends DeclarationBase im
         return false;
     }
 
-    functionType(): FunctionType {
-        return new FunctionType(this.parameters, this.returnType);
+    functionType(context: Context): FunctionType {
+        const parentType = (this.parentClass && !this.isStatic) ? this.parentClass.getIType(context) : null;
+        return new FunctionType(parentType, this.parameters, this.returnType);
     }
 
-    prototype(): Prototype {
-        return new Prototype(this.id, this.generics, this.parameters, this.returnType);
+    prototype(context: Context): Prototype {
+        const parentType = (this.parentClass && !this.isStatic) ? this.parentClass.getIType(context) : null;
+        return new Prototype(parentType, this.id, this.generics, this.parameters, this.returnType);
     }
 
     isGeneric() {
@@ -62,7 +64,7 @@ export default abstract class FunctionDeclarationBase extends DeclarationBase im
         return index >= 0 ? typeArguments[index] : type;
     }
 
-    instantiateGeneric(typeArguments: IType[]): IFunctionDeclaration {
+    instantiateGeneric(context: Context, typeArguments: IType[]): IFunctionDeclaration {
         assertTrue(false);
     }
 

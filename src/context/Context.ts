@@ -112,7 +112,7 @@ export default class Context {
         if(!this.functions.has(decl.name))
             this.functions.set(decl.name, new Map<string, IFunctionDeclaration>());
         const protos = this.functions.get(decl.name);
-        const proto = decl.functionType().toString();
+        const proto = decl.functionType(this).toString();
         assertTrue(!protos.has(proto));
         protos.set(proto, decl);
     }
@@ -285,7 +285,7 @@ class StaticContext extends TypedContext {
     protected collectFunctions(id: Identifier, map: Map<string, IFunctionDeclaration>) {
         super.collectFunctions(id, map);
         if(this.type instanceof ClassType)
-            this.type.klass.collectStaticFunctions(id, map);
+            this.type.klass.collectStaticFunctions(null, id, map);
     }
 }
 
@@ -294,10 +294,10 @@ class MemberContext extends TypedContext {
     protected collectFunctions(id: Identifier, map: Map<string, IFunctionDeclaration>) {
         super.collectFunctions(id, map);
         if(this.type instanceof ClassType)
-            this.type.klass.collectMemberFunctions(id, map);
+            this.type.klass.collectMemberFunctions(this, id, map);
         // TODO remove, below is tactical, until we use a class for Arrays
         else if(this.type instanceof ArrayType)
-            this.type.collectMemberFunctions(id, map);
+            this.type.collectMemberFunctions(this, id, map);
     }
 }
 

@@ -9,3 +9,7 @@ export function assertFalse(expression: boolean, message?: string) {
 export function assertEquals(a: boolean, b: boolean, message?: string) {
     console.assert(a === b, message);
 }
+
+export function assertNotEquals(a: boolean, b: boolean, message?: string) {
+    console.assert(a !== b, message);
+}

@@ -13,7 +13,7 @@ export default class AssertFunction extends NativeFunctionDeclaration {
     constructor(unit: CompilationUnit) {
         const functionId = new Identifier("assert");
         const params = [new TypedParameter(new Identifier("value"), AnyType.instance)]
-        const proto = new Prototype(functionId, null, ParameterList.from(params), VoidType.instance);
+        const proto = new Prototype(null, functionId, null, ParameterList.from(params), VoidType.instance);
         const instructions: Instruction[] = []; // TODO
         super(Accessibility.PUBLIC, proto, instructions);
         this.unit = unit;

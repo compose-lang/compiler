@@ -11,6 +11,7 @@ import StringPool from "./StringPool.ts";
 import DataPool from "./DataPool.ts";
 import {MEMORY_BLOB_URL} from "../utils/Constants.ts";
 import ClassDeclaration from "../declaration/ClassDeclaration.ts";
+import Context from "../context/Context.ts";
 
 export default class WasmModule extends Module {
     _url: URL;
@@ -21,9 +22,11 @@ export default class WasmModule extends Module {
     dataPool = new DataPool();
     stringPool = new StringPool(this.dataPool);
     declaredClasses = new Set<ClassDeclaration>();
+    contextGetter?: () => Context;
 
-    constructor(url: URL = MEMORY_BLOB_URL, ptr?: number) {
+    constructor(contextGetter?: () => Context, url: URL = MEMORY_BLOB_URL, ptr?: number) {
         super(ptr);
+        this.contextGetter = contextGetter;
         if(!ptr) {
             this.setFeatures(Feature.BulkMemory, Feature.GC, Feature.ReferenceTypes);
             // need a minimal memory for compilation to succeed, will be replaced by dataPool
@@ -54,7 +57,7 @@ export default class WasmModule extends Module {
 
     declareImportedFunction(decl: IFunctionDeclaration) {
         const unit = decl.unit;
-        this.functions.addImport(decl.fullName, unit.module.url.toString(), decl.fullName, decl.prototype().asType(unit.context), decl.returnType.asType(unit.context));
+        this.functions.addImport(decl.fullName, unit.module.url.toString(), decl.fullName, decl.prototype(this.contextGetter()).asType(unit.context), decl.returnType.asType(unit.context));
     }
 
     declareGlobal(unit: CompilationUnit, variable: Variable, value: IExpression, mutable: boolean, exported: boolean): number {
@@ -87,7 +90,7 @@ export default class WasmModule extends Module {
 
     declareFunction(decl: IFunctionDeclaration) {
         const prototypes = this.getPrototypesMap(decl);
-        const prototype = decl.prototype();
+        const prototype = decl.prototype(this.contextGetter());
         assertTrue(!prototypes.has(prototype));
         prototypes.set(prototype, this.functionsList.length);
         this.functionsList.push(decl);
@@ -95,7 +98,7 @@ export default class WasmModule extends Module {
 
     getFunctionByDecl(decl: IFunctionDeclaration): number {
         const prototypes = this.functionsByName.get(decl.name);
-        return prototypes.get(decl.prototype());
+        return prototypes.get(decl.prototype(this.contextGetter()));
     }
 
     declareClass(decl: ClassDeclaration): boolean {

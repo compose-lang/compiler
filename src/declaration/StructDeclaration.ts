@@ -5,12 +5,9 @@ import Context from "../context/Context.ts";
 import IType from "../type/IType.ts";
 import StructType from "../type/StructType.ts";
 import StructDeclarationBase from "./StructDeclarationBase.ts";
+import FieldList from "../builder/FieldList.ts";
 
 export default class StructDeclaration extends StructDeclarationBase implements IDeclaration {
-
-    constructor(id: Identifier, attributes: IdentifierList, parents: IdentifierList) {
-        super(id, attributes, parents);
-    }
 
     getIType(context: Context) {
         return new StructType(this.id, this);

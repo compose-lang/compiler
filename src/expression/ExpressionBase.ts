@@ -1,3 +1,4 @@
+// deno-lint-ignore-file no-unused-vars
 import CodeFragment from "../builder/CodeFragment.ts";
 import IExpression from "./IExpression.ts";
 import WasmModule from "../module/WasmModule.ts";

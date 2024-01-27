@@ -112,8 +112,8 @@ export default abstract class FunctionFinder {
     }
 
     protected compareSpecificity(decl1: IFunctionDeclaration, decl2: IFunctionDeclaration): Score {
-        const types1 = decl1.functionType().parameters.map(param => param.type);
-        const types2 = decl2.functionType().parameters.map(param => param.type);
+        const types1 = decl1.functionType(this.context).parameters.map(param => param.type);
+        const types2 = decl2.functionType(this.context).parameters.map(param => param.type);
         for(let i=0; i < this.argTypes.length; i++) {
             const type1 = types1[i];
             const type2 = types2[i];
@@ -149,7 +149,7 @@ class GlobalGenericsFinder extends FunctionFinder {
 
     find(): IFunctionDeclaration {
         const decl = super.find();
-        return decl ? decl.instantiateGeneric(this.typeArguments) : null;
+        return decl ? decl.instantiateGeneric(this.context, this.typeArguments) : null;
     }
 
 }

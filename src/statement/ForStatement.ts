@@ -8,45 +8,87 @@ import DeclareInstanceStatement from "./DeclareInstanceStatement.ts";
 import StatementList from "./StatementList.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResults from "./IResults.ts";
-import {assertTrue} from "../../deps.ts";
+import {assertEquals} from "../../deps.ts";
+import BooleanType from "../type/BooleanType.ts";
+import VoidType from "../type/VoidType.ts";
+import {ExpressionRef} from "../binaryen/binaryen_wasm.d.ts";
 
 export default class ForStatement extends StatementBase {
 
     locals: DeclareInstanceStatement[];
-    checkExpressions: IExpression[];
-    loopStatements: StatementList;
+    conditions: IExpression[];
+    incrementers: StatementList;
     statements: StatementList;
 
-    constructor(locals: DeclareInstanceStatement[], checkExpressions: IExpression[], loopStatements: StatementList, statements: StatementList) {
+    constructor(locals: DeclareInstanceStatement[], conditions: IExpression[], incrementers: StatementList, statements: StatementList) {
         super();
         this.locals = locals;
-        this.checkExpressions = checkExpressions;
-        this.loopStatements = loopStatements;
+        this.conditions = conditions;
+        this.incrementers = incrementers;
         this.statements = statements;
     }
 
     check(context: Context): IType {
         context = context.newChildContext();
         this.locals.forEach(local => local.check(context), this);
-        this.checkExpressions.forEach(exp => exp.check(context), this);
-        this.loopStatements.check(context, null);
+        this.conditions.forEach(exp => assertEquals(exp.check(context), BooleanType.instance), this);
+        this.incrementers.check(context, null);
         return this.statements.check(context, null);
     }
 
     declare(context: Context, module: WasmModule): void {
         context = context.newChildContext();
         this.locals.forEach(local => local.declare(context, module), this);
-        this.checkExpressions.forEach(exp => exp.declare(context, module), this);
-        this.loopStatements.declare(context, module);
+        this.conditions.forEach(exp => exp.declare(context, module), this);
+        this.incrementers.declare(context, module);
         this.statements.declare(context, module);
     }
 
     rehearse(context: Context, module: WasmModule, body: FunctionBody): void {
-        assertTrue(false); // TODO
+        context = context.newChildContext();
+        body.createAndPushLocalsScope(this.fragment.startLocation.tokenIndex);
+        this.locals.forEach(local => local.rehearse(context, module, body), this);
+        this.conditions.forEach(exp => exp.rehearse(context, module, body), this);
+        this.incrementers.rehearse(context, module, body);
+        this.statements.rehearse(context, module, body);
+        body.popLocalsScope(this.fragment.startLocation.tokenIndex);
     }
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults {
-        assertTrue(false); // TODO
+        // TODO support labels in the language
+        const label = "loop_" + this.fragment.startLocation.tokenIndex;
+        context = context.newChildContext();
+        body.pushLocalsScope(this.fragment.startLocation.tokenIndex);
+        // execute declare statements outside the loop
+        const locals = this.locals.length ?
+            this.locals.map(local => local.compile(context, module, flags, body), this)
+                .reduce((previous, current) => {
+                    return { refs: previous.refs.concat(current.refs), type: previous.type };
+                    })
+            : { refs: [], type: VoidType.instance };
+        // compile conditions expression
+        const conditions = this.conditions.map(condition => condition.compile(context, module, flags, body), this);
+        let condition: ExpressionRef = null;
+        while(conditions.length > 0) {
+            const c = conditions.shift();
+            condition = condition ? module.i32.and(condition, c.ref) : c.ref;
+        }
+        // compile body
+        const results = this.statements.compile(context, module, flags, body);
+        // compile incrementers
+        const incrementers = this.incrementers.map(incrementer => incrementer.compile(context, module, flags, body), this);
+        // merge statements
+        const refs = results.refs
+            .concat(incrementers.map(result => result.refs).flat());
+        // compile branch
+        refs.push(module.br(label));
+        // compile loop body
+        const loopBody = module.if(condition, module.block("loop_body_" + this.fragment.startLocation.tokenIndex, refs, results.type.asType(context)));
+        const branch = module.loop(label, loopBody);
+        // add it to locals and return
+        locals.refs.push(branch);
+        body.popLocalsScope(this.fragment.startLocation.tokenIndex);
+        return { refs: locals.refs, type: results.type };
     }
 
 }

@@ -65,6 +65,10 @@ export default class ImportsType extends Map<string, IFunctionDeclaration> imple
         assertTrue(false, "Should never get there!");
     }
 
+    compileEquals(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, left: IResult, right: IResult, reverse: boolean): IResult {
+        assertTrue(false, "Should never get there!");
+    }
+
     checkCompare(context: Context, rightType: IType): IType {
         assertTrue(false, "Should never get there!");
     }

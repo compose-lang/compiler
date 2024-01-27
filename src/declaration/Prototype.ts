@@ -4,14 +4,15 @@ import FunctionType from "../type/FunctionType.ts";
 import IType from "../type/IType.ts";
 import GenericParameter from "./GenericParameter.ts";
 import {equalArrays} from "../utils/ObjectUtils.ts";
+import ClassType from "../type/ClassType.ts";
 
 export default class Prototype extends FunctionType {
 
     id: Identifier;
     generics: GenericParameter[];
 
-    constructor(id: Identifier, generics: GenericParameter[], parameters: ParameterList, returnType: IType) {
-        super(parameters, returnType);
+    constructor(parentType: ClassType, id: Identifier, generics: GenericParameter[], parameters: ParameterList, returnType: IType) {
+        super(parentType, parameters, returnType);
         this.id = id;
         this.generics = generics;
     }

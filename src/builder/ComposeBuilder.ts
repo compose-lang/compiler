@@ -139,12 +139,7 @@ import UnresolvedIdentifierExpression from "../expression/UnresolvedIdentifierEx
 import IStatement from "../statement/IStatement.ts";
 import ReturnStatement from "../statement/ReturnStatement.ts";
 import ConcreteFunctionDeclaration from "../declaration/ConcreteFunctionDeclaration.ts";
-import Int32Type from "../type/Int32Type.ts";
-import Float32Type from "../type/Float32Type.ts";
-import Float64Type from "../type/Float64Type.ts";
-import Int64Type from "../type/Int64Type.ts";
-import UInt64Type from "../type/UInt64Type.ts";
-import UInt32Type from "../type/UInt32Type.ts";
+import { Int32Type, UInt32Type, Int64Type, UInt64Type, Float32Type, Float64Type } from "../type/index.ts";
 import InstanceModifier from "../statement/InstanceModifier.ts";
 import Annotation from "./Annotation.ts";
 import FunctionCall from "../expression/FunctionCall.ts";
@@ -450,7 +445,7 @@ export default class ComposeBuilder extends ComposeParserListener {
             returnType = returnTypes[0];
         else if(returnTypes.length > 1)
             returnType = new TupleType(returnTypes);
-        this.setNodeValue(ctx, new FunctionType(ParameterList.from(parameters), returnType));
+        this.setNodeValue(ctx, new FunctionType(null, ParameterList.from(parameters), returnType));
     }
 
     exitFunction_type_or_null = (ctx: Function_type_or_nullContext) => {
@@ -483,7 +478,9 @@ export default class ComposeBuilder extends ComposeParserListener {
         const parents = ctx.user_ref_list()
             .slice(1) // skip id which is also a user_ref
             .map(child => this.getNodeValue<Identifier>(child), this);
-        this.setNodeValue(ctx, new StructDeclaration(id, attributes, parents));
+        const fields = ctx.field_declaration_list()
+            .map(child => this.getNodeValue<FieldDeclaration>(child), this);
+        this.setNodeValue(ctx, new StructDeclaration(id, attributes, parents, fields));
     }
 
     exitClass_declaration = (ctx: Class_declarationContext) => {
@@ -548,7 +545,7 @@ export default class ComposeBuilder extends ComposeParserListener {
             returnType = returnTypes[0];
         else if(returnTypes.length > 1)
             returnType = new TupleType(returnTypes);
-        this.setNodeValue(ctx, new Prototype(id, generics, ParameterList.from(params), returnType));
+        this.setNodeValue(ctx, new Prototype(null, id, generics, ParameterList.from(params), returnType));
     }
 
     exitGeneric_parameter = (ctx: Generic_parameterContext) => {
@@ -731,11 +728,14 @@ export default class ComposeBuilder extends ComposeParserListener {
         assertTrue(lists.length == conditions.length || lists.length == conditions.length + 1);
         const blocks: IfBlock[] = [];
         for(let i=0; i<conditions.length; i++) {
-            const block: IfBlock = { condition: conditions[i], statements: lists[i] };
+            const fragment = conditions[i].fragment;
+            const block: IfBlock = { fragment, condition: conditions[i], statements: lists[i] };
             blocks.push(block);
         }
         if(lists.length > conditions.length) {
-            const block: IfBlock = { condition: null, statements: lists.at(-1) };
+            const statements = lists.at(-1);
+            const fragment = statements.fragment;
+            const block: IfBlock = { fragment, condition: null, statements };
             blocks.push(block);
         }
         this.setNodeValue(ctx, new IfStatement(blocks));

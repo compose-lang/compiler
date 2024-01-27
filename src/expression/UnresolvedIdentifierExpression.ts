@@ -144,7 +144,7 @@ class LocalVariableExpression extends ExpressionBase {
 
     check(context: Context): IType {
         const local = context.getRegisteredLocal(this.id);
-        assertTrue(local !== null, "Could not resolveType local '" + this.name + "' at " + this.fragment.toString());
+        assertTrue(local !== null, "Could not resolve local '" + this.name + "' at " + this.fragment.toString());
         return local.type;
     }
 

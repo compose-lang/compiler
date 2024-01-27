@@ -1,6 +1,6 @@
-import { FieldType, HeapType, Type } from "../binaryen/binaryen_wasm.d.ts";
+import {FieldType, HeapType, Type} from "../binaryen/binaryen_wasm.d.ts";
 /// <reference types="../binaryen/binaryen_wasm.d.ts" />
-import { PackedType, i32, TypeBuilder } from "../binaryen/binaryen_wasm.js";
+import {i32, PackedType, TypeBuilder} from "../binaryen/binaryen_wasm.js";
 import StructTypeBase from "../type/StructTypeBase.ts";
 import Context from "../context/Context.ts";
 
@@ -12,6 +12,7 @@ export interface GCType {
 export default class HeapTypeRegistry {
 
     static readonly instance = new HeapTypeRegistry();
+    private static readonly TYPEINFO_FIELD_TYPE: FieldType = { type: i32, packedType: PackedType.NotPacked, mutable: false };
 
     private static fieldTypeName(fieldType: FieldType): string {
         return `${fieldType.type}/${fieldType.packedType}/${fieldType.mutable}`
@@ -26,7 +27,7 @@ export default class HeapTypeRegistry {
     }
 
     // TODO set heap type name using BinaryenModuleSetTypeName
-    getArrayGCType(elementType: FieldType, nullable = true): GCType {
+    getArrayGCType(elementType: FieldType, nullable: boolean): GCType {
         const elementTypeName = HeapTypeRegistry.fieldTypeName(elementType);
         if (!this.arrayTypesMap.has(elementTypeName)) {
             const builder = new TypeBuilder(1);
@@ -38,12 +39,11 @@ export default class HeapTypeRegistry {
         return { type: this.getTypeFromHeapType(heapType, nullable), heapType };
     }
 
-    getWrapperGCType(fieldType: FieldType, nullable = false): GCType {
+    getWrapperGCType(fieldType: FieldType, nullable: boolean): GCType {
         const wrappedTypeName = HeapTypeRegistry.fieldTypeName(fieldType);
         if (!this.wrapperTypesMap.has(wrappedTypeName)) {
             const builder = new TypeBuilder(1);
-            const typeInfoField: FieldType = { type: i32, packedType: PackedType.NotPacked, mutable: false };
-            builder.setStructType(0, [ typeInfoField, fieldType]);
+            builder.setStructType(0, [ HeapTypeRegistry.TYPEINFO_FIELD_TYPE, fieldType]);
             const result = builder.buildAndDispose();
             this.wrapperTypesMap.set(wrappedTypeName, result.heapTypes[0]);
         }
@@ -51,10 +51,11 @@ export default class HeapTypeRegistry {
         return { type: this.getTypeFromHeapType(heapType, nullable), heapType };
     }
 
-    getStructGCType(context: Context, structType: StructTypeBase, nullable = true): GCType {
+    getStructGCType(context: Context, structType: StructTypeBase, nullable: boolean): GCType {
         if (!this.structTypesMap.has(structType.typeName)) {
             const builder = new TypeBuilder(1);
             const fieldTypes = structType.getFieldTypes(context);
+            fieldTypes.unshift(HeapTypeRegistry.TYPEINFO_FIELD_TYPE);
             builder.setStructType(0, fieldTypes);
             const result = builder.buildAndDispose();
             this.structTypesMap.set(structType.typeName, result.heapTypes[0]);

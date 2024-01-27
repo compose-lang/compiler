@@ -37,12 +37,14 @@ export default class Int32Type extends IntegerType {
 
     compileBinaryBitsOperator(context: Context, module: WasmModule, flags: CompilerFlags, left: IResult, right: IResult, operator: BinaryOperator): IResult {
         // TODO factorize
-        if(right.type instanceof Int32Type) {
+        if(right.type.asType(context) == i32) {
             switch(operator) {
                 case BinaryOperator.LSHIFT:
                     return { ref: module.i32.shl(left.ref, right.ref), type: this };
                 case BinaryOperator.RSHIFT:
                     return { ref: module.i32.shr_s(left.ref, right.ref), type: this };
+                case BinaryOperator.URSHIFT:
+                    return { ref: module.i32.shr_u(left.ref, right.ref), type: this };
                 case BinaryOperator.BIT_AND:
                     return { ref: module.i32.and(left.ref, right.ref), type: this };
                 case BinaryOperator.BIT_OR:

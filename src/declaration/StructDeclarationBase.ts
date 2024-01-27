@@ -9,16 +9,19 @@ import StructTypeBase from "../type/StructTypeBase.ts";
 /// <reference types="../binaryen/binaryen_wasm.d.ts" />
 import {PackedType} from "../binaryen/binaryen_wasm.js";
 import { FieldType } from "../binaryen/binaryen_wasm.d.ts";
+import FieldList from "../builder/FieldList.ts";
 
 export default abstract class StructDeclarationBase extends DeclarationBase implements IDeclaration {
 
     attributes: IdentifierList;
     parents: IdentifierList;
+    fields: FieldList;
 
-    constructor(id: Identifier, attributes: IdentifierList, parents: IdentifierList) {
+    constructor(id: Identifier, attributes: IdentifierList, parents: IdentifierList, fields: FieldList) {
         super(id);
         this.attributes = attributes;
         this.parents = parents;
+        this.fields = fields;
     }
 
     get name(): string {
@@ -34,6 +37,9 @@ export default abstract class StructDeclarationBase extends DeclarationBase impl
 
     findMember(context: Context, memberId: Identifier): IClassMember {
         const name = memberId.value;
+        const field = this.fields.find(f => f.name == name) || null;
+        if(field)
+            return field;
         const attr = this.attributes.find(a => a.value == name);
         if(attr)
             return context.getRegisteredAttribute(memberId);
@@ -85,9 +91,19 @@ export default abstract class StructDeclarationBase extends DeclarationBase impl
                 .forEach(attr => {
                     namesSet.add(attr.value);
                     const decl = context.getRegisteredAttribute(attr);
-                    const fieldType = { type: decl.type.asType(context), packedType: PackedType.NotPacked, mutable: true };
+                    const fieldType = { type: decl.type.asType(context), packedType: PackedType.NotPacked, mutable: false };
                     fieldTypes.push(fieldType);
                 });
+        }
+        if (this.fields) {
+            this.fields
+                .filter(field => !namesSet.has(field.name))
+                .forEach(field => {
+                    namesSet.add(field.name);
+                    const fieldType = { type: field.type.asType(context), packedType: PackedType.NotPacked, mutable: false };
+                    fieldTypes.push(fieldType);
+                });
+
         }
     }
 }
