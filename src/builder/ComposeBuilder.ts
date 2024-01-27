@@ -38,7 +38,7 @@ import ComposeParser, {
     DecimalLiteralContext,
     DeclarationContext,
     Declare_instances_statementContext,
-    Declare_oneContext, Embeddable_statementContext,
+    Declare_oneContext, Do_while_statementContext, Embeddable_statementContext,
     Enum_declarationContext,
     Enum_itemContext,
     EqualsExpressionContext,
@@ -205,6 +205,7 @@ import UInt8Type from "../type/UInt8Type.ts";
 import UInt16Type from "../type/UInt16Type.ts";
 import {MEMORY_BLOB_URL} from "../utils/Constants.ts";
 import WhileStatement from "../statement/WhileStatement.ts";
+import DoWhileStatement from "../statement/DoWhileStatement.ts";
 
 interface IndexedNode {
     __id?: number;
@@ -1004,6 +1005,12 @@ export default class ComposeBuilder extends ComposeParserListener {
         const condition = this.getNodeValue<IExpression>(ctx.expression());
         const statements = this.getNodeValue<StatementList>(ctx.statements());
         this.setNodeValue(ctx, new WhileStatement(condition, statements));
+    }
+
+    exitDo_while_statement = (ctx: Do_while_statementContext) => {
+        const condition = this.getNodeValue<IExpression>(ctx.expression());
+        const statements = ctx.statement_list().map(stmt => this.getNodeValue<IStatement>(stmt), this);
+        this.setNodeValue(ctx, new DoWhileStatement(StatementList.from(statements), condition));
     }
 
     exitUnary_statement = (ctx: Unary_statementContext) => {

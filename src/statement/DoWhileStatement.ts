@@ -12,15 +12,15 @@ import {assertEquals, assertTrue} from "../../deps.ts";
 import BooleanType from "../type/BooleanType.ts";
 import compile = WebAssembly.compile;
 
-export default class WhileStatement extends StatementBase {
+export default class DoWhileStatement extends StatementBase {
 
-    condition: IExpression;
     statements: StatementList;
+    condition: IExpression;
 
-    constructor(condition: IExpression, statements: StatementList) {
+    constructor(statements: StatementList, condition: IExpression) {
         super();
-        this.condition = condition;
         this.statements = statements;
+        this.condition = condition;
     }
 
     check(context: Context): IType {
@@ -48,9 +48,9 @@ export default class WhileStatement extends StatementBase {
         const condition = this.condition.compile(context, module, flags, body);
         const loopContext = context.newChildContext()
         const results = this.statements.compile(loopContext, module, flags, body);
-        results.refs.push(module.br(label));
-        const loopBody = module.if(condition.ref, module.block(null, results.refs, results.type.asType(loopContext)));
-        const ref = module.loop(label, loopBody);
+        const branch = module.br(label);
+        results.refs.push(module.if(condition.ref, branch));
+        const ref = module.loop(label, module.block(null, results.refs, results.type.asType(loopContext)));
         return { refs: [ ref ], type: results.type };
     }
 

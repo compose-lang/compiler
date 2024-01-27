@@ -73,6 +73,7 @@ import { Finally_clauseContext } from "./ComposeParser.ts";
 import { Break_statementContext } from "./ComposeParser.ts";
 import { For_statementContext } from "./ComposeParser.ts";
 import { While_statementContext } from "./ComposeParser.ts";
+import { Do_while_statementContext } from "./ComposeParser.ts";
 import { If_statementContext } from "./ComposeParser.ts";
 import { StatementsContext } from "./ComposeParser.ts";
 import { Function_call_statementContext } from "./ComposeParser.ts";
@@ -857,6 +858,16 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitWhile_statement?: (ctx: While_statementContext) => void;
+	/**
+	 * Enter a parse tree produced by `ComposeParser.do_while_statement`.
+	 * @param ctx the parse tree
+	 */
+	enterDo_while_statement?: (ctx: Do_while_statementContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.do_while_statement`.
+	 * @param ctx the parse tree
+	 */
+	exitDo_while_statement?: (ctx: Do_while_statementContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.if_statement`.
 	 * @param ctx the parse tree
