@@ -46,26 +46,26 @@ export default class ForStatement extends StatementBase {
 
     rehearse(context: Context, module: WasmModule, body: FunctionBody): void {
         context = context.newChildContext();
+        body.createAndPushLocalsScope(this.fragment.startLocation.tokenIndex);
         this.locals.forEach(local => local.rehearse(context, module, body), this);
         this.conditions.forEach(exp => exp.rehearse(context, module, body), this);
         this.incrementers.rehearse(context, module, body);
         this.statements.rehearse(context, module, body);
+        body.popLocalsScope(this.fragment.startLocation.tokenIndex);
     }
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults {
         // TODO support labels in the language
         const label = "loop_" + this.fragment.startLocation.tokenIndex;
         context = context.newChildContext();
-        // declare statements execute outside the loop
+        body.pushLocalsScope(this.fragment.startLocation.tokenIndex);
+        // execute declare statements outside the loop
         const locals = this.locals.length ?
-            this.locals.map(local => {
-                local.declare(context, module);
-                return local.compile(context, module, flags, body);
-            }, this)
-            .reduce((previous, current) => {
-                return { refs: previous.refs.concat(current.refs), type: previous.type };
-            }) :
-            { refs: [], type: VoidType.instance };
+            this.locals.map(local => local.compile(context, module, flags, body), this)
+                .reduce((previous, current) => {
+                    return { refs: previous.refs.concat(current.refs), type: previous.type };
+                    })
+            : { refs: [], type: VoidType.instance };
         // compile conditions expression
         const conditions = this.conditions.map(condition => condition.compile(context, module, flags, body), this);
         let condition: ExpressionRef = null;
@@ -87,6 +87,7 @@ export default class ForStatement extends StatementBase {
         const branch = module.loop(label, loopBody);
         // add it to locals and return
         locals.refs.push(branch);
+        body.popLocalsScope(this.fragment.startLocation.tokenIndex);
         return { refs: locals.refs, type: results.type };
     }
 

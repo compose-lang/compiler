@@ -1,18 +1,16 @@
 import Identifier from "../builder/Identifier.ts";
-import Accessibility from "./Accessibility.ts";
 import IValueType from "../type/IValueType.ts";
 import IClassMember from "./IClassMember.ts";
+import FieldProperties from "./FieldProperties.ts";
 
 export default class FieldDeclaration implements IClassMember {
 
-    accessibility: Accessibility;
-    isStatic: boolean;
+    properties: FieldProperties;
     id: Identifier;
     type: IValueType;
 
-    constructor(accessibility: Accessibility, isStatic: boolean, id: Identifier, type: IValueType) {
-        this.accessibility = accessibility;
-        this.isStatic = isStatic;
+    constructor(properties: FieldProperties, id: Identifier, type: IValueType) {
+        this.properties = properties;
         this.id = id;
         this.type = type;
     }
@@ -21,5 +19,20 @@ export default class FieldDeclaration implements IClassMember {
         return this.id.value;
     }
 
+    get accessibility() {
+        return this.properties.accessibility;
+    }
+
+    get isStatic() {
+        return this.properties.isStatic;
+    }
+
+    get isReadOnly() {
+        return this.properties.isReadOnly;
+    }
+
+    get isNullable() {
+        return this.type.isNullable;
+    }
 
 }

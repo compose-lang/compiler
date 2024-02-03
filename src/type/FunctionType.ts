@@ -10,15 +10,18 @@ import {Type} from "../binaryen/binaryen_wasm.d.ts";
 import {createType} from "../binaryen/binaryen_wasm.js";
 import {assertTrue} from "../../deps.ts";
 import TypeInfo from "../reflection/TypeInfo.ts";
+import ClassType from "./ClassType.ts";
 
 export default class FunctionType extends UserType {
 
-    nullable = false;
+    isNullable = false;
+    parentType: ClassType;
     parameters: ParameterList;
     returnType: IType;
 
-    constructor(parameters: ParameterList, returnType: IType) {
+    constructor(parentType: ClassType, parameters: ParameterList, returnType: IType) {
         super();
+        this.parentType = parentType;
         this.parameters = parameters;
         this.returnType = returnType;
     }
@@ -33,7 +36,7 @@ export default class FunctionType extends UserType {
     }
 
     equalsFunctionType(other: FunctionType) {
-        return this.nullable == other.nullable && equalArrays(this.parameters, other.parameters, (p1, p2) => p1.equals(p2)) && equalObjects(this.returnType, other.returnType, (t1, t2) => t1.typeName == t2.typeName);
+        return this.isNullable == other.isNullable && equalArrays(this.parameters, other.parameters, (p1, p2) => p1.equals(p2)) && equalObjects(this.returnType, other.returnType, (t1, t2) => t1.typeName == t2.typeName);
     }
 
     get typeName(): string {
@@ -61,6 +64,8 @@ export default class FunctionType extends UserType {
 
     asType(context: Context): Type {
         const types = this.parameters.map(param => param.type.asType(context));
+        if(this.parentType)
+            types.unshift(this.parentType.asType(context));
         return createType(types);
     }
 

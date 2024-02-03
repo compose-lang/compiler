@@ -22,7 +22,7 @@ import("./MissingType.ts").then(module => MissingType = module.default);
 
 export default abstract class TypeBase extends CodeFragment implements IType {
 
-    nullable = false;
+    isNullable = false;
 
     abstract get typeName(): string;
 
@@ -42,6 +42,14 @@ export default abstract class TypeBase extends CodeFragment implements IType {
     }
 
     abstract defaultValue(): IExpression;
+
+    get isReadOnly() {
+        return true;
+    }
+
+    isMutable(): boolean {
+        return false;
+    }
 
     convertExpression(context: Context, expression: IExpression): IExpression {
         const type = expression.check(context);
@@ -64,6 +72,10 @@ export default abstract class TypeBase extends CodeFragment implements IType {
     }
 
     checkEquals(_context: Context, _rightType: IType): IType {
+        assertTrue(false);
+    }
+
+    compileEquals(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, left: IResult, right: IResult, reverse: boolean): IResult {
         assertTrue(false);
     }
 

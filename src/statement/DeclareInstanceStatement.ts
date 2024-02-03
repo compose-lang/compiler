@@ -75,6 +75,7 @@ export default class DeclareInstanceStatement extends StatementBase implements I
     }
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults {
+        this._check(context);
         const local = body.getRegisteredLocal(this.name);
         assertTrue(local);
         const value = this.expression.compile(context, module, flags, body);

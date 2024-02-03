@@ -5,8 +5,9 @@ import IType from "../type/IType.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResult from "./IResult.ts";
 import {ExpressionRef} from "../binaryen/binaryen_wasm.d.ts";
+import IFragment from "../builder/IFragment.ts";
 
-export default interface IExpression {
+export default interface IExpression extends IFragment {
 
     check(context: Context): IType;
     resolveType(context: Context, type: IType): void;

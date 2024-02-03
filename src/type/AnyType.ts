@@ -31,4 +31,8 @@ export default class AnyType extends NativeType implements IValueType {
         assertTrue(false); // should never get there
     }
 
+    convertTypedExpression(_type: IType, expression: IExpression): IExpression {
+        return expression;
+    }
+
 }

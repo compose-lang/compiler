@@ -39,7 +39,9 @@ export default class DoWhileStatement extends StatementBase {
     rehearse(context: Context, module: WasmModule, body: FunctionBody): void {
         context = context.newChildContext();
         this.condition.rehearse(context, module, body);
+        body.createAndPushLocalsScope(this.fragment.startLocation.tokenIndex);
         this.statements.rehearse(context, module, body);
+        body.popLocalsScope(this.fragment.startLocation.tokenIndex);
     }
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults {
@@ -47,10 +49,12 @@ export default class DoWhileStatement extends StatementBase {
         const label = "loop_" + this.fragment.startLocation.tokenIndex;
         const condition = this.condition.compile(context, module, flags, body);
         const loopContext = context.newChildContext()
+        body.pushLocalsScope(this.fragment.startLocation.tokenIndex);
         const results = this.statements.compile(loopContext, module, flags, body);
         const branch = module.br(label);
         results.refs.push(module.if(condition.ref, branch));
         const ref = module.loop(label, module.block("loop_body_" + this.fragment.startLocation.tokenIndex, results.refs, results.type.asType(loopContext)));
+        body.popLocalsScope(this.fragment.startLocation.tokenIndex);
         return { refs: [ ref ], type: results.type };
     }
 

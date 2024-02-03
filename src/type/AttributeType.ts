@@ -8,7 +8,7 @@ import TypeInfo from "../reflection/TypeInfo.ts";
 
 export default class AttributeType extends UserType {
 
-    nullable = false;
+    isNullable = false;
     id: Identifier;
 
     constructor(id: Identifier) {

@@ -6,7 +6,7 @@ import TypeInfo from "../reflection/TypeInfo.ts";
 
 export default class UnresolvedUserType extends UserType {
 
-    nullable = false;
+    isNullable = false;
     id: Identifier;
 
 

@@ -9,7 +9,7 @@ import TypeInfo from "../reflection/TypeInfo.ts";
 
 export default class TupleType extends UserType {
 
-    nullable = false;
+    isNullable = false;
     typeName = "Tuple";
     types: TypeList;
 

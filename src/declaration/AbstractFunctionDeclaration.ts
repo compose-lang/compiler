@@ -48,7 +48,7 @@ export default class AbstractFunctionDeclaration extends FunctionDeclarationBase
 
     compile(context: Context, module: WasmModule, flags: CompilerFlags): void {
         if(this.isModuleImport())
-            module.functions.addImport(this.name, this.getModuleImportName(), this.name, this.functionType().asType(context), this.returnType.asType(context));
+            module.functions.addImport(this.name, this.getModuleImportName(), this.name, this.functionType(context).asType(context), this.returnType.asType(context));
     }
 
 }

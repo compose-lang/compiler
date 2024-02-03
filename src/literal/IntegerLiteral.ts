@@ -2,11 +2,13 @@ import LiteralBase from "./LiteralBase.ts";
 import Context from "../context/Context.ts";
 import WasmModule from "../module/WasmModule.ts";
 import IType from "../type/IType.ts";
-import Int32Type from "../type/Int32Type.ts";
-import Int64Type from "../type/Int64Type.ts";
 import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResult from "../expression/IResult.ts";
 import FunctionBody from "../module/FunctionBody.ts";
+let Int32Type: typeof import("../type/Int32Type.ts").default;
+let Int64Type: typeof import("../type/Int64Type.ts").default;
+import("../type/Int32Type.ts").then(module => { Int32Type = module.default; })
+import("../type/Int64Type.ts").then(module => { Int64Type = module.default; })
 
 export default class IntegerLiteral extends LiteralBase<number> {
 

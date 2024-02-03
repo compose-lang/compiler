@@ -76,8 +76,12 @@ value_type:
     | value_type LT GT          #SetType
     ;
 
+mutable_value_type_or_null:
+    READONLY? value_type_or_null
+    ;
+
 value_type_or_null:
-    value_type (PIPE NULL_LITERAL)?
+    value_type ((PIPE NULL_LITERAL) | QUESTION)?
     ;
 
 native_type:
@@ -228,7 +232,7 @@ class_declaration:
 struct_declaration:
     STRUCT id = user_ref ( LPAR attribute_ref (COMMA attribute_ref)* RPAR )?
         ( EXTENDS user_ref (COMMA user_ref)* )?
-        SEMI
+        ((LCURL field_declaration* RCURL) | SEMI)
     ;
 
 accessibility:
@@ -236,7 +240,7 @@ accessibility:
     ;
 
 field_declaration:
-    accessibility? STATIC? READONLY? identifier COLON value_type_or_null SEMI
+    accessibility? STATIC? READONLY? identifier COLON mutable_value_type_or_null SEMI
     ;
 
 function_declaration[boolean as_member]:

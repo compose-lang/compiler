@@ -19,6 +19,7 @@ import { ArrayTypeContext } from "./ComposeParser.ts";
 import { SetTypeContext } from "./ComposeParser.ts";
 import { NativeTypeContext } from "./ComposeParser.ts";
 import { UserTypeContext } from "./ComposeParser.ts";
+import { Mutable_value_type_or_nullContext } from "./ComposeParser.ts";
 import { Value_type_or_nullContext } from "./ComposeParser.ts";
 import { Native_typeContext } from "./ComposeParser.ts";
 import { Any_typeContext } from "./ComposeParser.ts";
@@ -312,6 +313,16 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitUserType?: (ctx: UserTypeContext) => void;
+	/**
+	 * Enter a parse tree produced by `ComposeParser.mutable_value_type_or_null`.
+	 * @param ctx the parse tree
+	 */
+	enterMutable_value_type_or_null?: (ctx: Mutable_value_type_or_nullContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.mutable_value_type_or_null`.
+	 * @param ctx the parse tree
+	 */
+	exitMutable_value_type_or_null?: (ctx: Mutable_value_type_or_nullContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.value_type_or_null`.
 	 * @param ctx the parse tree

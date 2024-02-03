@@ -13,6 +13,7 @@ import { Type } from "../binaryen/binaryen_wasm.d.ts";
 import { i32, PackedType } from "../binaryen/binaryen_wasm.js";
 import UInt32Type from "./UInt32Type.ts";
 import Int8Type from "./Int8Type.ts";
+import Int32Type from "./Int32Type.ts";
 
 export default class UInt8Type extends IntegerType {
 
@@ -43,9 +44,13 @@ export default class UInt8Type extends IntegerType {
             return super.compileAdd(context, module, flags, left, right, tryReverse);
     }
 
+    compileEquals(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, left: IResult, right: IResult, reverse: boolean): IResult {
+        return UInt32Type.instance.compileEquals(context, module, flags, body, left, right, reverse);
+    }
+
     compileBinaryBitsOperator(context: Context, module: WasmModule, flags: CompilerFlags, left: IResult, right: IResult, operator: BinaryOperator): IResult {
         // TODO factorize
-        if(right.type instanceof UInt32Type) {
+        if(right.type.asType(context) == i32) {
             switch(operator) {
                 case BinaryOperator.LSHIFT:
                     return { ref: module.i32.shl(left.ref, right.ref), type: this };

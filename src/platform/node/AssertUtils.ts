@@ -11,3 +11,7 @@ export function assertFalse(expression: boolean, message?: string) {
 export function assertEquals(a: boolean, b: boolean, message?: string) {
     assert.deepEqual(a, b, message);
 }
+
+export function assertNotEquals(a: boolean, b: boolean, message?: string) {
+    assert.notDeepEqual(a, b, message);
+}

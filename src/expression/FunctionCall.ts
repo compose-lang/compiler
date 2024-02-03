@@ -12,6 +12,7 @@ import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResult from "./IResult.ts";
 import { assertTrue } from "../../deps.ts";
 import ArrayLiteral from "../literal/ArrayLiteral.ts";
+import BuiltinFunctionDeclaration from "../declaration/BuiltinFunctionDeclaration.ts";
 
 export default class FunctionCall extends ExpressionBase {
 
@@ -53,6 +54,11 @@ export default class FunctionCall extends ExpressionBase {
     }
 
     rehearse(context: Context, module: WasmModule, body: FunctionBody) {
+        const decl = FunctionFinder.findDeclaration(context, this);
+        assertTrue(decl);
+        // TODO tactical, should be removed once
+        if(decl instanceof BuiltinFunctionDeclaration)
+            module.declareImportedFunction(decl);
         this.args.forEach(arg => arg.rehearse(context, module, body));
     }
 
@@ -61,13 +67,16 @@ export default class FunctionCall extends ExpressionBase {
         assertTrue(decl);
         const args = this.makeArgs(context, decl);
         const argRefs = args.map(arg => arg.compile(context, module, flags, body)).map(result => result.ref);
-        const result = module.call(decl.name, argRefs, decl.returnType.asType(context));
+        const result = module.call(decl.fullName, argRefs, decl.returnType.asType(context));
         return { ref: result, type: decl.returnType };
     }
 
     private makeArgs(context: Context, decl: IFunctionDeclaration) {
         const actualArgs = Array.from(this.args);
         const convertedArgs: IExpression[] = [];
+        if(decl.parentClass) {
+            convertedArgs.push(this.parent);
+        }
         decl.parameters.forEach(param => {
             const actualArg = actualArgs.length > 0 ? actualArgs.shift() : param.defaultValue;
             assertTrue(actualArg);

@@ -16,7 +16,7 @@ import Comparator from "../expression/Comparator.ts";
 
 export default class ImportsType extends Map<string, IFunctionDeclaration> implements IType {
 
-    nullable = false;
+    isNullable = false;
     typeName: string;
 
     constructor(id: Identifier) {
@@ -30,6 +30,15 @@ export default class ImportsType extends Map<string, IFunctionDeclaration> imple
 
     defaultValue(): IExpression {
         assertTrue(false, "Should never get there!");
+    }
+
+    get isReadOnly(): boolean {
+        assertTrue(false, "Should never get there!");
+        return true;
+    }
+
+    isMutable(): boolean {
+        return false;
     }
 
     convertExpression(context: Context, expression: IExpression): IExpression {
@@ -62,6 +71,10 @@ export default class ImportsType extends Map<string, IFunctionDeclaration> imple
     }
 
     checkEquals(context: Context, rightType: IType): IType {
+        assertTrue(false, "Should never get there!");
+    }
+
+    compileEquals(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody, left: IResult, right: IResult, reverse: boolean): IResult {
         assertTrue(false, "Should never get there!");
     }
 

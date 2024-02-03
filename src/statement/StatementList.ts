@@ -9,13 +9,19 @@ import CompilerFlags from "../compiler/CompilerFlags.ts";
 import IResults from "./IResults.ts";
 import {assertTrue} from "../../deps.ts";
 import {ExpressionRef} from "../binaryen/binaryen_wasm.d.ts";
+import IFragment from "../builder/IFragment.ts";
+import Fragment from "../builder/Fragment.ts";
 
-export default class StatementList extends Array<IStatement> {
+export default class StatementList extends Array<IStatement> implements IFragment {
 
     static from(statements: IStatement[]): StatementList {
         const result = Array.from(statements);
         Object.setPrototypeOf(result, StatementList.prototype);
         return result as StatementList;
+    }
+
+    get fragment(): Fragment {
+        return this.length ? this[0].fragment : null;
     }
 
     check(context: Context, returnType: IType): IType {

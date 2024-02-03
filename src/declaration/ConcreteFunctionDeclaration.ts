@@ -63,14 +63,18 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
             module.functions.addExport(this.name, this.name); // TODO mangle name
         context = this._unit.context;
         const body = new FunctionBody();
-        const local = context.newLocalContext();
+        // first rehearse such that body knows all locals
+        let local = context.newLocalContext();
         this.parameters.rehearse(local, module, body);
         this.statements.rehearse(local, module, body);
-        // parameters are compiled by function call
-        const locals = body.compileLocals(context);
+        // now compile
+        local = context.newLocalContext();
+        this.parameters.forEach(param => param.register(local), this);
         const results = this.statements.compile(local, module, flags, body);
         const block = module.block(null, results.refs, results.type.asType(context));
-        const funcref = module.functions.add(this.name, this.functionType().asType(context), results.type.asType(context), locals, block);
+        // compile local types using calling context because parameters are compiled by function call
+        const locals = body.compileLocals(context);
+        const funcref = module.functions.add(this.name, this.functionType(context).asType(context), results.type.asType(context), locals, block);
         body.setLocalNames(funcref);
         if(flags.debug) {
             const file = module.addDebugInfoFileName(this.fragment.url.toString());
@@ -79,19 +83,20 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
         }
     }
 
-    instantiateGeneric(typeArguments: IType[]): IFunctionDeclaration {
+    instantiateGeneric(context: Context, typeArguments: IType[]): IFunctionDeclaration {
         assertTrue(this.isGeneric());
-        return GenericFunctionInstance.instantiate(this, typeArguments);
+        return GenericFunctionInstance.instantiate(context, this, typeArguments);
     }
 }
 
 class GenericFunctionInstance extends ConcreteFunctionDeclaration {
 
-    static instantiate(decl: ConcreteFunctionDeclaration, typeArguments: IType[]) {
+    static instantiate(context: Context, decl: ConcreteFunctionDeclaration, typeArguments: IType[]) {
         const name = decl.name + typeArguments.map(t => "$" + t.typeName).join("");
+        const parentType = decl.parentClass ? decl.parentClass.getIType(context) : null;
         const parameters = ParameterList.from(decl.parameters.map(param => param.withType(decl.resolveGenericType(param.type, typeArguments))));
         const returnType = decl.resolveGenericType(decl.returnType, typeArguments);
-        const proto = new Prototype(new Identifier(name), [], parameters, returnType);
+        const proto = new Prototype(parentType, new Identifier(name), [], parameters, returnType);
         const typeMap = new Map<string, IType>();
         for(let i=0; i<decl.generics.length; i++) {
             typeMap.set(decl.generics[i].name, typeArguments[i]);

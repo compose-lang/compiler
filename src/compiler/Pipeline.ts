@@ -8,6 +8,12 @@ import CiCdUtils from "../utils/CiCdUtils.ts";
 import { FileStream } from "../platform/deno/Antlr4FileStream.ts";
 import { CharStream } from "npm:antlr4";
 import {fileURLToPath} from "../platform/deno/URLUtils.ts";
+import WasmModule from "../module/WasmModule.ts";
+import ValidatorErrorFilter from "./ValidatorErrorFilter.ts";
+import Binaryen from "../binaryen/binaryen_raw_wasm.js";
+const JSModule = await Binaryen();
+type Writer = (...data: any[]) => void;
+const out: Writer = JSModule['utils']['out'];
 
 // TODO import errors_code from "../../runtime/util/error.cots" with { type: "text" };
 const BUILTINS_CODE: string[] = [ /* errors_code as unknown as string */ ];
@@ -95,7 +101,7 @@ export default class Pipeline {
     assembleModules(): IWasmTarget[] {
         return this.units.map(unit => {
             if(this.options.validate)
-                unit.module.validate();
+                this.validateModule(unit.module);
             if (this.options.emitWat) {
                 const wat = unit.module.emitText();
                 if(!CiCdUtils.isRunningInCI())
@@ -111,6 +117,12 @@ export default class Pipeline {
             }
             return wasmTarget;
         })
+    }
+
+    private validateModule(module: WasmModule) {
+        const filter = new ValidatorErrorFilter(out);
+        module.validate((...data: any[]) => filter.logMany(data));
+        filter.flush();
     }
 
     private static parseAndRegisterBuiltins(context: Context) {
