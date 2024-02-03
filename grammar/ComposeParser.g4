@@ -76,8 +76,12 @@ value_type:
     | value_type LT GT          #SetType
     ;
 
+mutable_value_type_or_null:
+    READONLY? value_type_or_null
+    ;
+
 value_type_or_null:
-    value_type (PIPE NULL_LITERAL)?
+    value_type ((PIPE NULL_LITERAL) | QUESTION)?
     ;
 
 native_type:
@@ -236,7 +240,7 @@ accessibility:
     ;
 
 field_declaration:
-    accessibility? STATIC? READONLY? identifier COLON value_type_or_null SEMI
+    accessibility? STATIC? READONLY? identifier COLON mutable_value_type_or_null SEMI
     ;
 
 function_declaration[boolean as_member]:

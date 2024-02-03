@@ -16,7 +16,7 @@ import ReflectionRegistry from "../registry/ReflectionRegistry.ts";
 
 export default abstract class StructTypeBase extends UserType implements IValueType {
 
-    nullable = false;
+    isNullable = false;
     id: Identifier;
 
     constructor(id: Identifier) {

@@ -14,7 +14,7 @@ import ClassType from "./ClassType.ts";
 
 export default class FunctionType extends UserType {
 
-    nullable = false;
+    isNullable = false;
     parentType: ClassType;
     parameters: ParameterList;
     returnType: IType;
@@ -36,7 +36,7 @@ export default class FunctionType extends UserType {
     }
 
     equalsFunctionType(other: FunctionType) {
-        return this.nullable == other.nullable && equalArrays(this.parameters, other.parameters, (p1, p2) => p1.equals(p2)) && equalObjects(this.returnType, other.returnType, (t1, t2) => t1.typeName == t2.typeName);
+        return this.isNullable == other.isNullable && equalArrays(this.parameters, other.parameters, (p1, p2) => p1.equals(p2)) && equalObjects(this.returnType, other.returnType, (t1, t2) => t1.typeName == t2.typeName);
     }
 
     get typeName(): string {

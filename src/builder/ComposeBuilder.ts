@@ -72,7 +72,7 @@ import ComposeParser, {
     Map_literalContext,
     MapLiteralContext,
     MemberExpressionContext,
-    MultiplyExpressionContext,
+    MultiplyExpressionContext, Mutable_value_type_or_nullContext,
     Native_function_declarationContext,
     Native_typeContext, NativeTypeContext, NewExpressionContext,
     NullLiteralContext,
@@ -201,6 +201,7 @@ import UInt16Type from "../type/UInt16Type.ts";
 import {MEMORY_BLOB_URL} from "../utils/Constants.ts";
 import WhileStatement from "../statement/WhileStatement.ts";
 import DoWhileStatement from "../statement/DoWhileStatement.ts";
+import NativeType from "../type/NativeType.ts";
 
 interface IndexedNode {
     __id?: number;
@@ -377,7 +378,7 @@ export default class ComposeBuilder extends ComposeParserListener {
 
     exitAttribute_type_or_null = (ctx: Attribute_type_or_nullContext) => {
         const type = this.getNodeValue<IType>(ctx.getChild(0));
-        type.nullable = ctx.NULL_LITERAL() != null;
+        type.isNullable = ctx.NULL_LITERAL() != null;
         this.setNodeValue(ctx, type);
     }
 
@@ -428,9 +429,16 @@ export default class ComposeBuilder extends ComposeParserListener {
         this.setNodeValue(ctx, new SetType(type));
     }
 
+    exitMutable_value_type_or_null = (ctx: Mutable_value_type_or_nullContext) => {
+        const type = this.getNodeValue<IType>(ctx.value_type_or_null());
+        if(type.isMutable())
+            type.isReadOnly = ctx.READONLY() != null;
+        this.setNodeValue(ctx, type);
+    }
+
     exitValue_type_or_null = (ctx: Value_type_or_nullContext) => {
         const type = this.getNodeValue<IType>(ctx.getChild(0));
-        type.nullable = ctx.NULL_LITERAL() != null;
+        type.isNullable = ctx.NULL_LITERAL() != null || ctx.QUESTION() != null;
         this.setNodeValue(ctx, type);
     }
 
@@ -450,7 +458,7 @@ export default class ComposeBuilder extends ComposeParserListener {
 
     exitFunction_type_or_null = (ctx: Function_type_or_nullContext) => {
         const type = this.getNodeValue<IType>(ctx.getChild(0));
-        type.nullable = ctx.NULL_LITERAL() != null;
+        type.isNullable = ctx.NULL_LITERAL() != null;
         this.setNodeValue(ctx, type);
     }
 
@@ -500,9 +508,12 @@ export default class ComposeBuilder extends ComposeParserListener {
 
     exitField_declaration = (ctx: Field_declarationContext) => {
         const accessibility = ComposeBuilder.readAccessibility(ctx.accessibility());
+        const isStatic = ctx.STATIC() != null;
+        const isReadOnly = ctx.READONLY() != null;
+        const props = { accessibility, isStatic, isReadOnly };
         const id = this.getNodeValue<Identifier>(ctx.identifier());
-        const type = this.getNodeValue<IValueType>(ctx.value_type_or_null());
-        this.setNodeValue(ctx, new FieldDeclaration(accessibility, ctx.STATIC() != null, id, type));
+        const type = this.getNodeValue<IValueType>(ctx.mutable_value_type_or_null());
+        this.setNodeValue(ctx, new FieldDeclaration(props, id, type));
     }
 
     exitEnum_declaration = (ctx: Enum_declarationContext) => {

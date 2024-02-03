@@ -11,10 +11,10 @@ import FunctionCall from "../../src/expression/FunctionCall.ts";
 import Accessibility from "../../src/declaration/Accessibility.ts";
 import Int32Type from "../../src/type/Int32Type.ts";
 import RestParameter from "../../src/parameter/RestParameter.ts";
-import { assertTrue, assertEquals } from "../../deps.ts";
 import StructDeclaration from "../../src/declaration/StructDeclaration.ts";
+import { assertEquals, assertFalse, assertTrue } from "../../src/platform/deno/AssertUtils.ts";
 
-
+/*
 Deno.test('parses an attribute declaration ',  () => {
     const unit = ComposeBuilder.parse_unit_data("attribute text: string;");
     assertTrue(unit);
@@ -236,4 +236,42 @@ Deno.test('parses rest parameters',  () => {
     assertEquals(param.atomicType, Int32Type.instance);
 });
 
+Deno.test("parses readonly field", () => {
+    const unit = ComposeBuilder.parse_unit_data("class Thing { readonly thing1: i32; }");
+    assertTrue(unit);
+    assertEquals(unit.declarations.length, 1);
+    const klass = unit.declarations[0];
+    assertTrue(klass instanceof ClassDeclaration);
+    const field = klass.fields[0];
+    assertTrue(field.isReadOnly);
+});
 
+Deno.test("parses nullable field", () => {
+    const unit = ComposeBuilder.parse_unit_data("class Thing { thing1: i32?; }");
+    assertTrue(unit);
+    assertEquals(unit.declarations.length, 1);
+    const klass = unit.declarations[0];
+    assertTrue(klass instanceof ClassDeclaration);
+    const field = klass.fields[0];
+    assertTrue(field.isNullable);
+});
+*/
+Deno.test("parses a readonly array field", () => {
+    const unit = ComposeBuilder.parse_unit_data("class Thing { thing1: readonly i32[]; }");
+    assertTrue(unit);
+    assertEquals(unit.declarations.length, 1);
+    const klass = unit.declarations[0];
+    assertTrue(klass instanceof ClassDeclaration);
+    const field = klass.fields[0];
+    assertTrue(field.type.isReadOnly);
+});
+
+Deno.test("parses a mutable array field", () => {
+    const unit = ComposeBuilder.parse_unit_data("class Thing { thing1: i32[]; }");
+    assertTrue(unit);
+    assertEquals(unit.declarations.length, 1);
+    const klass = unit.declarations[0];
+    assertTrue(klass instanceof ClassDeclaration);
+    const field = klass.fields[0];
+    assertFalse(field.type.isReadOnly);
+});

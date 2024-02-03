@@ -14,7 +14,10 @@ import Comparator from "../expression/Comparator.ts";
 export default interface IType {
 
     typeName: string;
-    nullable: boolean;
+    isNullable: boolean;
+    isReadOnly: boolean;
+
+    isMutable(): boolean;
 
     isAssignableFrom(context: Context, type: IType): boolean;
     defaultValue(): IExpression;
