@@ -60,7 +60,7 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
         if(this.isGeneric())
             return;
         if(this.isModuleExport())
-            module.functions.addExport(this.name, this.name); // TODO mangle name
+            module.functions.addExport(this.fullName, this.fullName); // TODO mangle name
         context = this._unit.context;
         const body = new FunctionBody();
         // first rehearse such that body knows all locals
@@ -74,7 +74,7 @@ export default class ConcreteFunctionDeclaration extends FunctionDeclarationBase
         const block = module.block(null, results.refs, results.type.asType(context));
         // compile local types using calling context because parameters are compiled by function call
         const locals = body.compileLocals(context);
-        const funcref = module.functions.add(this.name, this.functionType(context).asType(context), results.type.asType(context), locals, block);
+        const funcref = module.functions.add(this.fullName, this.functionType(context).asType(context), results.type.asType(context), locals, block);
         body.setLocalNames(funcref);
         if(flags.debug) {
             const file = module.addDebugInfoFileName(this.fragment.url.toString());

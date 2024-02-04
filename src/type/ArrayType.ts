@@ -88,6 +88,7 @@ import("../declaration/BuiltinFunctionDeclaration.ts")
             constructor(elementType: IType) {
                 const valueParam = new TypedParameter(new Identifier("value"), elementType);
                 const params = ParameterList.from([valueParam]);
+                // const fullName = `Array<${elementType.typeName}>:push`;
                 const prototype = new Prototype(CHAR_ARRAY_CLASS_DECL.getIType(null), new Identifier("push"), null, params, VoidType.instance)
                 super(null, prototype);
                 this.unit = unit;
@@ -98,6 +99,7 @@ import("../declaration/BuiltinFunctionDeclaration.ts")
             }
 
             compile(context: Context, module: WasmModule, _flags: CompilerFlags) {
+                module.functions.addExport(this.fullName, this.fullName);
                 const body = new FunctionBody();
                 // first rehearse such that body knows all locals
                 let local = context.newLocalContext();
@@ -125,7 +127,7 @@ import("../declaration/BuiltinFunctionDeclaration.ts")
                 const block = module.block(null, [ setMemberRef, copyRef, setItemRef ], none);
                 // compile local types using calling context because parameters are compiled by function call
                 const locals = body.compileLocals(context);
-                const funcref = module.functions.add(this.name, this.functionType(context).asType(context), none, locals, block);
+                const funcref = module.functions.add(this.fullName, this.functionType(context).asType(context), none, locals, block);
                 body.setLocalNames(funcref);
                 /*
                 if(flags.debug) {

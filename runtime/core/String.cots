@@ -1,5 +1,6 @@
 export default class String {
 
+    @ModuleExport
     static fromUTF8(bytes: readonly u8[]): string {
         const chars: char[] = [];
         const byte1 = bytes[0];

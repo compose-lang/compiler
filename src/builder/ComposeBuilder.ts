@@ -70,7 +70,7 @@ import ComposeParser, {
     LiteralExpressionContext,
     Map_entryContext,
     Map_literalContext,
-    MapLiteralContext,
+    MapLiteralContext, Member_function_declarationContext,
     MemberExpressionContext,
     MultiplyExpressionContext, Mutable_value_type_or_nullContext,
     Native_function_declarationContext,
@@ -501,9 +501,17 @@ export default class ComposeBuilder extends ComposeParserListener {
         const parents = ctx.user_ref_list()
             .slice(1) // skip id which is also a user_ref
             .map(child => this.getNodeValue<Identifier>(child), this);
-        const functions = ctx.function_declaration_list()
+        const functions = ctx.member_function_declaration_list()
             .map(child => this.getNodeValue<FunctionDeclarationBase>(child), this);
         this.setNodeValue(ctx, new ClassDeclaration(accessibility, ctx.ABSTRACT() != null, id, attributes, parents, fields, functions));
+    }
+
+    exitMember_function_declaration = (ctx: Member_function_declarationContext) => {
+        const annotations = ctx.annotation_list().map(child => this.getNodeValue<Annotation>(child), this);
+        const decl = this.getNodeValue<IDeclaration>(ctx.function_declaration());
+        decl.annotations = annotations;
+        this.setNodeValue(ctx, decl);
+
     }
 
     exitField_declaration = (ctx: Field_declarationContext) => {

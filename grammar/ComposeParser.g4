@@ -225,8 +225,12 @@ class_declaration:
     accessibility? ABSTRACT? CLASS id = user_ref ( LPAR attribute_ref (COMMA attribute_ref)* RPAR )?
             ( EXTENDS user_ref (COMMA user_ref)* )?
         LCURL
-            (field_declaration | function_declaration[true])*
+            (field_declaration | member_function_declaration)*
         RCURL
+    ;
+
+member_function_declaration:
+    annotation* function_declaration[true]
     ;
 
 struct_declaration:
