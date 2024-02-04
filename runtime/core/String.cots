@@ -1,7 +1,9 @@
 export default class String {
 
-    static fromUTF8(bytes: u8[]): string {
+    static fromUTF8(bytes: readonly u8[]): string {
         const chars: char[] = [];
+        const byte1 = bytes[0];
+        chars.push(byte1);
         for(let i:u32=0; i<bytes.length; ) {
             const byte1 = bytes[i++];
             if((byte1 & 0x80) == 0) {
@@ -40,7 +42,7 @@ export default class String {
 
     private readonly chars: char[];
 
-    constructor(chars: char[]) {
+    constructor(chars: readonly char[]) {
         this.chars = chars;
     }
 

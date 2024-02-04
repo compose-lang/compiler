@@ -530,12 +530,15 @@ export default class ComposeBuilder extends ComposeParserListener {
 
     exitAttributeParameter = (ctx: AttributeParameterContext) => {
         const type = this.getNodeValue<AttributeType>(ctx.attribute_type_or_null());
+        // TODO
+        // if(type.isMutable())
+        //    type.isReadOnly = ctx.READONLY() != null;
         this.setNodeValue(ctx, new AttributeParameter(type));
     }
 
     exitTypedParameter = (ctx: TypedParameterContext) => {
         const id = this.getNodeValue<Identifier>(ctx.identifier());
-        const type = this.getNodeValue<IValueType>(ctx.value_type_or_null());
+        const type = this.getNodeValue<IValueType>(ctx.mutable_value_type_or_null());
         const param = ctx.ETC() != null ? new RestParameter(id, type) : new TypedParameter(id, type);
         this.setNodeValue(ctx, param);
     }
@@ -676,8 +679,9 @@ export default class ComposeBuilder extends ComposeParserListener {
     }
 
     exitList_literal = (ctx: List_literalContext) => {
+        const readOnly = ctx.READONLY() != null;
         const items = ctx.expression_list().map(exp => this.getNodeValue<IExpression>(exp), this);
-        this.setNodeValue(ctx, new ArrayLiteral(ctx.getText(), items));
+        this.setNodeValue(ctx, new ArrayLiteral(ctx.getText(), readOnly, items));
     }
 
     exitSetLiteral = (ctx: SetLiteralContext) => {
@@ -685,8 +689,9 @@ export default class ComposeBuilder extends ComposeParserListener {
     }
 
     exitSet_literal = (ctx: Set_literalContext) => {
+        const readOnly = ctx.READONLY() != null;
         const items = ctx.expression_list().map(exp => this.getNodeValue<IExpression>(exp), this);
-        this.setNodeValue(ctx, new SetLiteral(ctx.getText(), items));
+        this.setNodeValue(ctx, new SetLiteral(ctx.getText(), readOnly, items));
     }
 
     exitMapLiteral = (ctx: MapLiteralContext) => {
@@ -694,8 +699,9 @@ export default class ComposeBuilder extends ComposeParserListener {
     }
 
     exitMap_literal = (ctx: Map_literalContext) => {
+        const readOnly = ctx.READONLY() != null;
         const items = ctx.map_entry_list().map(entry => this.getNodeValue<KeyValuePair<Identifier, IExpression>>(entry), this);
-        this.setNodeValue(ctx, new MapLiteral(ctx.getText(), items));
+        this.setNodeValue(ctx, new MapLiteral(ctx.getText(), readOnly, items));
     }
 
     exitMap_entry = (ctx: Map_entryContext) => {

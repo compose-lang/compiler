@@ -23,12 +23,6 @@ import { IntegerType, UInt32Type } from "./index.ts";
 import CompilationUnit from "../compiler/CompilationUnit.ts";
 import CharType from "./CharType.ts";
 
-interface ArrayTypeOptions {
-    nullable?: boolean;
-    itemsMutable?: boolean;
-    itemsNullable?: boolean;
-}
-
 export default class ArrayType extends CollectionType {
     constructor(elementType: IType) {
         super("array<" + elementType.typeName + ">", elementType);
@@ -38,12 +32,11 @@ export default class ArrayType extends CollectionType {
         assertTrue(false); // TODO
     }
 
-    asType(context: Context, options?: ArrayTypeOptions): Type {
-        options = Object.assign({ nullable: false, itemsMutable: false, itemsNullable: false }, options);
-        const elementType = { type: this.elementType.asType(context), packedType: this.elementType.packedType(), mutable: options.itemsMutable };
-        const arrayType = HeapTypeRegistry.instance.getArrayGCType(elementType, options.itemsNullable);
-        const valueType = { type: arrayType.type, packedType: PackedType.NotPacked, mutable: false };
-        const gcType = HeapTypeRegistry.instance.getWrapperGCType(valueType, options.nullable);
+    asType(context: Context): Type {
+        const elementType = { type: this.elementType.asType(context), packedType: this.elementType.packedType(), mutable: !this.isReadOnly };
+        const arrayType = HeapTypeRegistry.instance.getArrayGCType(elementType, false);
+        const valueType = { type: arrayType.type, packedType: PackedType.NotPacked, mutable: !this.isReadOnly };
+        const gcType = HeapTypeRegistry.instance.getWrapperGCType(valueType, false);
         return gcType.type;
     }
 
@@ -51,10 +44,9 @@ export default class ArrayType extends CollectionType {
         return ReflectionRegistry.instance.getArrayTypeInfo(context, this.elementType);
     }
 
-    compileLength(context: Context, module: WasmModule, _flags: CompilerFlags, _body: FunctionBody, parent: IResult, options?: ArrayTypeOptions): IResult {
-        options = Object.assign({ nullable: false, itemsMutable: false, itemsNullable: false }, options);
-        const elementType = { type: this.elementType.asType(context), packedType: this.elementType.packedType(), mutable: options.itemsMutable };
-        const arrayType = HeapTypeRegistry.instance.getArrayGCType(elementType, options.itemsNullable);
+    compileLength(context: Context, module: WasmModule, _flags: CompilerFlags, _body: FunctionBody, parent: IResult): IResult {
+        const elementType = { type: this.elementType.asType(context), packedType: this.elementType.packedType(), mutable: !this.isReadOnly };
+        const arrayType = HeapTypeRegistry.instance.getArrayGCType(elementType, false);
         const arrayRef = module.structs.getMember(parent.ref, 1, arrayType.type, false);
         return { ref: module.arrays.length(arrayRef), type: UInt32Type.instance };
     }
@@ -102,6 +94,7 @@ import("../declaration/BuiltinFunctionDeclaration.ts")
                 this.parentClass = CHAR_ARRAY_CLASS_DECL;
                 unit.declarations.push(this);
                 this.arrayType = new ArrayType(elementType);
+                this.arrayType.isReadOnly = false;
             }
 
             compile(context: Context, module: WasmModule, _flags: CompilerFlags) {

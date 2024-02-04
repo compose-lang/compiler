@@ -50,6 +50,7 @@ export default class StringLiteral extends LiteralBase<string> {
     private compileCharsArray(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): ExpressionRef {
         const itemsRef = this.compileItems(context, module, flags, body);
         const returnType = new ArrayType(UInt8Type.instance);
+        returnType.isReadOnly = true;
         const wrapperType = returnType.asType(context);
         const wrapperHeapType = TypeBuilder.heapTypeFromType(wrapperType);
         const arrayInfo = ReflectionRegistry.instance.getArrayTypeInfo(context, returnType.elementType);

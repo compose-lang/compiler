@@ -31,9 +31,9 @@ export default abstract class StructTypeBase extends UserType implements IValueT
     asType(context: Context): Type {
         // tactical
         if(this.typeName == "Array<char>") {
-            const elemType = { type: i32, packedType: PackedType.Int16, mutable: false };
+            const elemType = { type: i32, packedType: PackedType.Int16, mutable: true };
             const arrayType = HeapTypeRegistry.instance.getArrayGCType(elemType, false);
-            const fieldType = { type: arrayType.type, packedType: PackedType.NotPacked, mutable: false };
+            const fieldType = { type: arrayType.type, packedType: PackedType.NotPacked, mutable: true };
             const gcType = HeapTypeRegistry.instance.getWrapperGCType(fieldType, false);
             return gcType.type;
         }

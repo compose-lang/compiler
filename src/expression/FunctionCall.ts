@@ -91,7 +91,7 @@ export default class FunctionCall extends ExpressionBase {
                     items.push(convertedArg);
                 }
                 const text = "[" + items.join(", ") + "]";
-                convertedArg = new ArrayLiteral(text, items, paramType);
+                convertedArg = new ArrayLiteral(text, true, items, paramType);
             }
             convertedArgs.push(convertedArg);
         });

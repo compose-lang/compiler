@@ -14,7 +14,6 @@ import RestParameter from "../../src/parameter/RestParameter.ts";
 import StructDeclaration from "../../src/declaration/StructDeclaration.ts";
 import { assertEquals, assertFalse, assertTrue } from "../../src/platform/deno/AssertUtils.ts";
 
-/*
 Deno.test('parses an attribute declaration ',  () => {
     const unit = ComposeBuilder.parse_unit_data("attribute text: string;");
     assertTrue(unit);
@@ -255,7 +254,7 @@ Deno.test("parses nullable field", () => {
     const field = klass.fields[0];
     assertTrue(field.isNullable);
 });
-*/
+
 Deno.test("parses a readonly array field", () => {
     const unit = ComposeBuilder.parse_unit_data("class Thing { thing1: readonly i32[]; }");
     assertTrue(unit);
@@ -274,4 +273,24 @@ Deno.test("parses a mutable array field", () => {
     assertTrue(klass instanceof ClassDeclaration);
     const field = klass.fields[0];
     assertFalse(field.type.isReadOnly);
+});
+
+Deno.test("parses a readonly array parameter", () => {
+    const unit = ComposeBuilder.parse_unit_data("function Thing( bytes: readonly i8[] ): void { }");
+    assertTrue(unit);
+    assertEquals(unit.declarations.length, 1);
+    const method = unit.declarations[0];
+    assertTrue(method instanceof ConcreteFunctionDeclaration);
+    const param = method.parameters[0];
+    assertTrue(param.type.isReadOnly);
+});
+
+Deno.test("parses a mutable array parameter", () => {
+    const unit = ComposeBuilder.parse_unit_data("function Thing( bytes: i8[] ): void { }");
+    assertTrue(unit);
+    assertEquals(unit.declarations.length, 1);
+    const method = unit.declarations[0];
+    assertTrue(method instanceof ConcreteFunctionDeclaration);
+    const param = method.parameters[0];
+    assertFalse(param.type.isReadOnly);
 });

@@ -5,8 +5,15 @@ import IType from "../type/IType.ts";
 
 export default class SetLiteral extends LiteralBase<Set<any>> {
 
-    constructor(text: string, values: IExpression[]) {
+    readonly readOnly: boolean;
+
+    constructor(text: string, readOnly: boolean, values: IExpression[]) {
         super(text, new Set<IExpression>(values));
+        this.readOnly = readOnly;
+    }
+
+    get isReadOnly(): boolean {
+        return this.readOnly;
     }
 
     toNative(): Set<any> {

@@ -8,7 +8,7 @@ import StringLiteral from "../../src/literal/StringLiteral.ts";
 import ArrayLiteral from "../../src/literal/ArrayLiteral.ts";
 import SetLiteral from "../../src/literal/SetLiteral.ts";
 import MapLiteral from "../../src/literal/MapLiteral.ts";
-import { assertTrue, assertEquals } from "../../deps.ts";
+import {assertTrue, assertEquals, assertFalse} from "../../deps.ts";
 
 Deno.test('parses a null literal',  () => {
     const exp = ComposeBuilder.parse_expression("null");
@@ -76,22 +76,33 @@ Deno.test('parses a string literal',  () => {
     assertEquals(exp.value, "123");
 });
 
-Deno.test('parses a list literal',  () => {
+Deno.test('parses a mutable list literal',  () => {
     const exp = ComposeBuilder.parse_expression("[ 123, 'a', \"xyz\", 12.47, true, false, null ]");
     assertTrue(exp instanceof ArrayLiteral);
+    assertFalse(exp.isReadOnly);
     assertEquals(exp.toNative(), [ 123, 'a', "xyz", 12.47, true, false, null ]);
 });
 
-Deno.test('parses a set literal',  () => {
+Deno.test('parses a mutable set literal',  () => {
     const exp = ComposeBuilder.parse_expression("< 123, 'a', \"xyz\", 12.47, true, false, null >");
     assertTrue(exp instanceof SetLiteral);
+    assertFalse(exp.isReadOnly);
     assertEquals(exp.toNative(), new Set([ 123, 'a', "xyz", 12.47, true, false, null ]));
 });
 
-Deno.test('parses a map literal',  () => {
+Deno.test('parses a mutable map literal',  () => {
     const exp = ComposeBuilder.parse_expression("{ x: 123, y: true }");
     assertTrue(exp instanceof MapLiteral);
+    assertFalse(exp.isReadOnly);
     assertEquals(exp.toNative(), new Map<string, any>([ ["x", 123], ["y", true] ]));
 });
+
+Deno.test('parses a readonly list literal',  () => {
+    const exp = ComposeBuilder.parse_expression("readonly [ 123, 'a', \"xyz\", 12.47, true, false, null ]");
+    assertTrue(exp instanceof ArrayLiteral);
+    assertTrue(exp.isReadOnly);
+    assertEquals(exp.toNative(), [ 123, 'a', "xyz", 12.47, true, false, null ]);
+});
+
 
 

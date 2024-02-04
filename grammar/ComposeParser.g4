@@ -216,9 +216,9 @@ return_types:
     ;
 
 parameter:
-    attribute_type_or_null                          # AttributeParameter
-    | ETC? identifier COLON value_type_or_null      # TypedParameter
-    | identifier COLON function_type_or_null        # FunctionParameter
+    READONLY? attribute_type_or_null                    # AttributeParameter
+    | ETC? identifier COLON mutable_value_type_or_null  # TypedParameter
+    | identifier COLON function_type_or_null            # FunctionParameter
     ;
 
 class_declaration:
@@ -478,15 +478,15 @@ literal_expression:
     ;
 
 list_literal:
-    LBRAK ( exp = expression (COMMA exp = expression)* )? RBRAK
+    READONLY? LBRAK ( exp = expression (COMMA exp = expression)* )? RBRAK
     ;
 
 set_literal:
-    LT ( exp = expression (COMMA exp = expression)* )? GT
+    READONLY? LT ( exp = expression (COMMA exp = expression)* )? GT
     ;
 
 map_literal:
-    LCURL ( entry = map_entry  (COMMA entry = map_entry)* )? RCURL
+    READONLY? LCURL ( entry = map_entry  (COMMA entry = map_entry)* )? RCURL
     ;
 
 map_entry:

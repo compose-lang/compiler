@@ -19,11 +19,17 @@ import ReflectionRegistry from "../registry/ReflectionRegistry.ts";
 export default class ArrayLiteral extends LiteralBase<any[]> {
 
     type: ArrayType = null;
+    readonly readOnly: boolean;
 
-    constructor(text: string, values: IExpression[], elemType?: IType) {
+    constructor(text: string, readOnly: boolean, values: IExpression[], elemType?: IType) {
         super(text, values);
+        this.readOnly = readOnly;
         if(elemType)
             this.type = new ArrayType(elemType);
+    }
+
+    get isReadOnly(): boolean {
+        return this.readOnly;
     }
 
     toNative(): any[] {
@@ -34,6 +40,7 @@ export default class ArrayLiteral extends LiteralBase<any[]> {
         if(this.type == null) {
             const elemType = this.checkElementType(context);
             this.type = new ArrayType(elemType);
+            this.type.isReadOnly = this.readOnly;
         }
         return this.type;
     }
@@ -70,7 +77,8 @@ export default class ArrayLiteral extends LiteralBase<any[]> {
     }
 
     private compileItems(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): ExpressionRef {
-        const elemType = {type: this.type.elementType.asType(context), packedType: this.type.elementType.packedType(), mutable: false};
+        const elementType = this.type.elementType;
+        const elemType = {type: elementType.asType(context), packedType: elementType.packedType(), mutable: !this.readOnly};
         const arrayGCType = HeapTypeRegistry.instance.getArrayGCType(elemType, false);
         const valueRefs = this.value.map(v => v.compile(context, module, flags, body)).map(r => r.ref);
         return module.arrays.newFromItems(arrayGCType.heapType, valueRefs);

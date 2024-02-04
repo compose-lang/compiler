@@ -7,8 +7,15 @@ import IType from "../type/IType.ts";
 
 export default class MapLiteral extends LiteralBase<Map<any, any>> {
 
-    constructor(text: string, entries: KeyValuePair<Identifier, IExpression>[]) {
+    readonly readOnly: boolean;
+
+    constructor(text: string, readOnly: boolean, entries: KeyValuePair<Identifier, IExpression>[]) {
         super(text, new Map<Identifier, IExpression>(entries.map(e => e.asArray())));
+        this.readOnly = readOnly;
+    }
+
+    get isReadOnly(): boolean {
+        return this.readOnly;
     }
 
     toNative(): Map<any, any> {

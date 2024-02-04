@@ -91,7 +91,7 @@ export default abstract class StructDeclarationBase extends DeclarationBase impl
                 .forEach(attr => {
                     namesSet.add(attr.value);
                     const decl = context.getRegisteredAttribute(attr);
-                    const fieldType = { type: decl.type.asType(context), packedType: PackedType.NotPacked, mutable: false };
+                    const fieldType = { type: decl.type.asType(context), packedType: PackedType.NotPacked, mutable: false }; // TODO support mutable attributes
                     fieldTypes.push(fieldType);
                 });
         }
@@ -100,7 +100,7 @@ export default abstract class StructDeclarationBase extends DeclarationBase impl
                 .filter(field => !namesSet.has(field.name))
                 .forEach(field => {
                     namesSet.add(field.name);
-                    const fieldType = { type: field.type.asType(context), packedType: PackedType.NotPacked, mutable: false };
+                    const fieldType = { type: field.type.asType(context), packedType: PackedType.NotPacked, mutable: !field.type.isReadOnly };
                     fieldTypes.push(fieldType);
                 });
 
