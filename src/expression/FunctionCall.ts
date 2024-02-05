@@ -74,7 +74,7 @@ export default class FunctionCall extends ExpressionBase {
     private makeArgs(context: Context, decl: IFunctionDeclaration) {
         const actualArgs = Array.from(this.args);
         const convertedArgs: IExpression[] = [];
-        if(decl.parentClass) {
+        if(decl.parentClass && !decl.isStatic) {
             convertedArgs.push(this.parent);
         }
         decl.parameters.forEach(param => {
