@@ -42,7 +42,8 @@ export default class MemberExpression extends ExpressionBase {
             const type = parent.type.checkMember(context, this.id);
             const index = parent.type.getMemberIndex(context, this.id);
             const signed = false; // non-packed cannot be signed elemType==Int32Type.instance || elemType==Int64Type.instance;
-            const ref = module.structs.getMember(parent.ref, index, type.asType(context), signed);
+            // increment index for TypeInfo slot
+            const ref = module.structs.getMember(parent.ref, index + 1, type.asType(context), signed);
             return { ref, type };
         } else if(parent.type instanceof ArrayType && "length" == this.id.value) {
             return parent.type.compileLength(context, module, flags, body, parent);

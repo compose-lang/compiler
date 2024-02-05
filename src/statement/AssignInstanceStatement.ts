@@ -82,7 +82,8 @@ export default class AssignInstanceStatement extends StatementBase {
         assertTrue(struct.type instanceof StructTypeBase);
         const type = struct.type.checkMember(context, this.id);
         const index = struct.type.getMemberIndex(context, this.id);
-        return { refs: [module.structs.setMember(struct.ref, index, value.ref) ], type };
+        // increment index for TypeInfo slot
+        return { refs: [module.structs.setMember(struct.ref, index + 1, value.ref) ], type };
     }
 
     compileInstance(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): IResults {
