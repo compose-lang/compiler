@@ -77,9 +77,11 @@ export default class ArrayLiteral extends LiteralBase<any[]> {
     }
 
     private compileItems(context: Context, module: WasmModule, flags: CompilerFlags, body: FunctionBody): ExpressionRef {
+        // the array must be mutable, see https://github.com/WebAssembly/gc/issues/515
         const elementType = this.type.elementType;
-        const elemType = {type: elementType.asType(context), packedType: elementType.packedType(), mutable: !this.readOnly};
-        const arrayGCType = HeapTypeRegistry.instance.getArrayGCType(elemType, false);
+        // TODO tactical: the field holding the array must be mutable, we might want to make it readonly in the future
+        const elemType = {type: elementType.asType(context), packedType: elementType.packedType(), mutable: true};
+        const arrayGCType = HeapTypeRegistry.instance.getArrayDataGCType(elemType, false);
         const valueRefs = this.value.map(v => v.compile(context, module, flags, body)).map(r => r.ref);
         return module.arrays.newFromItems(arrayGCType.heapType, valueRefs);
     }

@@ -3,6 +3,7 @@ import {FieldType, HeapType, Type} from "../binaryen/binaryen_wasm.d.ts";
 import {i32, PackedType, TypeBuilder} from "../binaryen/binaryen_wasm.js";
 import StructTypeBase from "../type/StructTypeBase.ts";
 import Context from "../context/Context.ts";
+import {assertFalse, assertTrue} from "../platform/deno/AssertUtils.ts";
 
 export interface GCType {
     type: Type;
@@ -27,7 +28,7 @@ export default class HeapTypeRegistry {
     }
 
     // TODO set heap type name using BinaryenModuleSetTypeName
-    getArrayGCType(elementType: FieldType, nullable: boolean): GCType {
+    getArrayDataGCType(elementType: FieldType, nullable: boolean): GCType {
         const elementTypeName = HeapTypeRegistry.fieldTypeName(elementType);
         if (!this.arrayTypesMap.has(elementTypeName)) {
             const builder = new TypeBuilder(1);
@@ -39,7 +40,7 @@ export default class HeapTypeRegistry {
         return { type: this.getTypeFromHeapType(heapType, nullable), heapType };
     }
 
-    getWrapperGCType(fieldType: FieldType, nullable: boolean): GCType {
+    getFieldWrapperGCType(fieldType: FieldType, nullable: boolean): GCType {
         const wrappedTypeName = HeapTypeRegistry.fieldTypeName(fieldType);
         if (!this.wrapperTypesMap.has(wrappedTypeName)) {
             const builder = new TypeBuilder(1);

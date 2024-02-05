@@ -59,8 +59,9 @@ export default class StringLiteral extends LiteralBase<string> {
 
     private compileItems(_context: Context, module: WasmModule, _flags: CompilerFlags, _body: FunctionBody): ExpressionRef {
         const [index, offset, size] = module.addString(this.value);
-        const elemType = {type: i32, packedType: PackedType.Int8, mutable: false};
-        const arrayGCType = HeapTypeRegistry.instance.getArrayGCType(elemType, false);
+        // TODO tactical the array must be mutable, see https://github.com/WebAssembly/gc/issues/515
+        const elemType = {type: i32, packedType: PackedType.Int8, mutable: true};
+        const arrayGCType = HeapTypeRegistry.instance.getArrayDataGCType(elemType, false);
         return module.arrays.newFromData(arrayGCType.heapType, index.toString(), module.i32.const(offset), module.i32.const(size));
     }
 

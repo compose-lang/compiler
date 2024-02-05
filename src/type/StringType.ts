@@ -9,6 +9,7 @@ import Context from "../context/Context.ts";
 import TypeInfo from "../reflection/TypeInfo.ts";
 import HeapTypeRegistry from "../registry/HeapTypeRegistry.ts";
 import CharType from "./CharType.ts";
+import ArrayType from "./ArrayType.ts";
 
 export default class StringType extends NativeType {
 
@@ -23,10 +24,10 @@ export default class StringType extends NativeType {
     }
 
     asType(context: Context): Type {
-        const elementType = { type: CharType.instance.asType(context), packedType: PackedType.Int16, mutable: false };
-        const classType = HeapTypeRegistry.instance.getArrayGCType(elementType, false);
-        const valueType = { type: classType.type, packedType: PackedType.NotPacked, mutable: false };
-        const gcType = HeapTypeRegistry.instance.getWrapperGCType(valueType, false);
+        const charsFieldType = new ArrayType(CharType.instance).asType(context);
+        // TODO tactical let the array field (chars) be mutable for now
+        const elementType = { type: charsFieldType, packedType: PackedType.NotPacked, mutable: true };
+        const gcType = HeapTypeRegistry.instance.getFieldWrapperGCType(elementType, false);
         return gcType.type;
     }
 

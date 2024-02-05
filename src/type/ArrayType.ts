@@ -33,10 +33,12 @@ export default class ArrayType extends CollectionType {
     }
 
     asType(context: Context): Type {
-        const elementType = { type: this.elementType.asType(context), packedType: this.elementType.packedType(), mutable: !this.isReadOnly };
-        const arrayType = HeapTypeRegistry.instance.getArrayGCType(elementType, false);
-        const valueType = { type: arrayType.type, packedType: PackedType.NotPacked, mutable: !this.isReadOnly };
-        const gcType = HeapTypeRegistry.instance.getWrapperGCType(valueType, false);
+        // the array must be mutable, see https://github.com/WebAssembly/gc/issues/515
+        const elementType = { type: this.elementType.asType(context), packedType: this.elementType.packedType(), mutable: true };
+        const arrayType = HeapTypeRegistry.instance.getArrayDataGCType(elementType, false);
+        // the array field must be mutable for resizing the array
+        const valueType = { type: arrayType.type, packedType: PackedType.NotPacked, mutable: true };
+        const gcType = HeapTypeRegistry.instance.getFieldWrapperGCType(valueType, false);
         return gcType.type;
     }
 
@@ -45,8 +47,9 @@ export default class ArrayType extends CollectionType {
     }
 
     compileLength(context: Context, module: WasmModule, _flags: CompilerFlags, _body: FunctionBody, parent: IResult): IResult {
-        const elementType = { type: this.elementType.asType(context), packedType: this.elementType.packedType(), mutable: !this.isReadOnly };
-        const arrayType = HeapTypeRegistry.instance.getArrayGCType(elementType, false);
+        // both the array and the field holding it must be mutable, see https://github.com/WebAssembly/gc/issues/515
+        const elementType = { type: this.elementType.asType(context), packedType: this.elementType.packedType(), mutable: true };
+        const arrayType = HeapTypeRegistry.instance.getArrayDataGCType(elementType, false);
         const arrayRef = module.structs.getMember(parent.ref, 1, arrayType.type, false);
         return { ref: module.arrays.length(arrayRef), type: UInt32Type.instance };
     }

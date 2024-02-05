@@ -6,13 +6,15 @@ import IValueType from "./IValueType.ts";
 import NullType from "./NullType.ts";
 import BooleanType from "./BooleanType.ts";
 import {FieldType, Type } from "../binaryen/binaryen_wasm.d.ts";
-/// <reference types="../binaryen/binaryen_wasm.d.ts" />
-import { PackedType, i32 } from "../binaryen/binaryen_wasm.js";
 import {assertTrue} from "../../deps.ts";
 import StructDeclarationBase from "../declaration/StructDeclarationBase.ts";
 import HeapTypeRegistry from "../registry/HeapTypeRegistry.ts";
 import TypeInfo from "../reflection/TypeInfo.ts";
 import ReflectionRegistry from "../registry/ReflectionRegistry.ts";
+let ArrayType : typeof import("./ArrayType.ts").default;
+import("./ArrayType.ts").then(module => ArrayType = module.default);
+let CharType: typeof import("./CharType.ts").default;
+import("./CharType.ts").then(module => CharType = module.default);
 
 export default abstract class StructTypeBase extends UserType implements IValueType {
 
@@ -31,11 +33,7 @@ export default abstract class StructTypeBase extends UserType implements IValueT
     asType(context: Context): Type {
         // tactical
         if(this.typeName == "Array<char>") {
-            const elemType = { type: i32, packedType: PackedType.Int16, mutable: true };
-            const arrayType = HeapTypeRegistry.instance.getArrayGCType(elemType, false);
-            const fieldType = { type: arrayType.type, packedType: PackedType.NotPacked, mutable: true };
-            const gcType = HeapTypeRegistry.instance.getWrapperGCType(fieldType, false);
-            return gcType.type;
+            return new ArrayType(CharType.instance).asType(context);
         }
         // end tactical
         const gcType = HeapTypeRegistry.instance.getStructGCType(context,  this,  false);
