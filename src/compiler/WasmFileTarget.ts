@@ -10,6 +10,7 @@ export default class WasmFileTarget extends WasmTargetBase {
     file: Deno.FsFile;
 
     constructor(targetURL: URL) {
+        assertTrue(targetURL.protocol == "file:")
         super();
         this.targetURL = targetURL;
     }

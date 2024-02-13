@@ -1,12 +1,14 @@
 import { readPathSync, statSync } from "../platform/deno/FileUtils.ts";
 import IWasmSource from "./IWasmSource.ts";
 import {fileURLToPath} from "../platform/deno/URLUtils.ts";
+import {assertTrue} from "../platform/deno/AssertUtils.ts";
 
 export default class WasmFileSource implements IWasmSource {
 
     readonly url: URL;
 
     constructor(url: URL) {
+        assertTrue(url.protocol == "file:")
         this.url = url;
     }
 
