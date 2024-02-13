@@ -53,7 +53,7 @@ import ComposeParser, {
     Function_type_or_nullContext,
     Function_typeContext,
     FunctionParameterContext,
-    Generic_parameterContext,
+    Generic_parameterContext, Generic_refContext,
     Global_statementContext, I16_typeContext,
     I32_typeContext,
     I64_typeContext, I8_typeContext,
@@ -104,6 +104,7 @@ import ComposeParser, {
 import ComposeLexer from "../parser/ComposeLexer.ts";
 import ComposeParserListener from "../parser/ComposeParserListener.ts";
 import Identifier from "./Identifier.ts";
+import GenericsId from "./GenericsId.ts";
 import Fragment from "./Fragment.ts";
 import CodeFragment from "./CodeFragment.ts";
 import StringType from "../type/StringType.ts";
@@ -201,7 +202,6 @@ import UInt16Type from "../type/UInt16Type.ts";
 import {MEMORY_BLOB_URL} from "../utils/Constants.ts";
 import WhileStatement from "../statement/WhileStatement.ts";
 import DoWhileStatement from "../statement/DoWhileStatement.ts";
-import NativeType from "../type/NativeType.ts";
 
 interface IndexedNode {
     __id?: number;
@@ -485,25 +485,33 @@ export default class ComposeBuilder extends ComposeParserListener {
             .map(child => this.getNodeValue<Identifier>(child), this);
         const parents = ctx.user_ref_list()
             .slice(1) // skip id which is also a user_ref
-            .map(child => this.getNodeValue<Identifier>(child), this);
+            .map(child => this.getNodeValue<Identifier>(child), this)
+            .map(id => GenericsId.of(id));
         const fields = ctx.field_declaration_list()
             .map(child => this.getNodeValue<FieldDeclaration>(child), this);
-        this.setNodeValue(ctx, new StructDeclaration(id, attributes, parents, fields));
+        this.setNodeValue(ctx, new StructDeclaration(GenericsId.of(id), attributes, parents, fields));
     }
 
     exitClass_declaration = (ctx: Class_declarationContext) => {
         const accessibility = ComposeBuilder.readAccessibility(ctx.accessibility());
-        const id = this.getNodeValue<Identifier>(ctx._id);
+        const id = this.getNodeValue<GenericsId>(ctx._id);
         const attributes = ctx.attribute_ref_list()
             .map(child => this.getNodeValue<Identifier>(child), this);
         const fields = ctx.field_declaration_list()
             .map(child => this.getNodeValue<FieldDeclaration>(child), this);
-        const parents = ctx.user_ref_list()
+        const parents = ctx.generic_ref_list()
             .slice(1) // skip id which is also a user_ref
-            .map(child => this.getNodeValue<Identifier>(child), this);
+            .map(child => this.getNodeValue<GenericsId>(child), this);
         const functions = ctx.member_function_declaration_list()
             .map(child => this.getNodeValue<FunctionDeclarationBase>(child), this);
         this.setNodeValue(ctx, new ClassDeclaration(accessibility, ctx.ABSTRACT() != null, id, attributes, parents, fields, functions));
+    }
+
+    exitGeneric_ref = (ctx: Generic_refContext) => {
+        const id = this.getNodeValue<Identifier>(ctx.user_ref());
+        const params = ctx.generic_ref_list()
+            .map(child => this.getNodeValue<GenericsId>(child), this);
+        this.setNodeValue(ctx, new GenericsId(id, params));
     }
 
     exitMember_function_declaration = (ctx: Member_function_declarationContext) => {

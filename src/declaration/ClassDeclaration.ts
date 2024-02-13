@@ -11,20 +11,23 @@ import WasmModule from "../module/WasmModule.ts";
 import CompilationUnit from "../compiler/CompilationUnit.ts";
 import FieldList from "../builder/FieldList.ts";
 import StructDeclarationBase from "./StructDeclarationBase.ts";
+import GenericsId from "../builder/GenericsId.ts";
 
 export default class ClassDeclaration extends StructDeclarationBase implements IDeclaration {
 
+    abstract: boolean;
     accessibility: Accessibility;
     functions: FunctionList;
-    abstract: boolean;
+    genericId: GenericsId;
 
-    constructor(accessibility: Accessibility, isAbstract: boolean, id: Identifier, attributes: IdentifierList, parents: IdentifierList, fields: FieldList, functions: FunctionList) {
+    constructor(accessibility: Accessibility, isAbstract: boolean, id: GenericsId, attributes: IdentifierList, parents: GenericsId[], fields: FieldList, functions: FunctionList) {
         super(id, attributes, parents, fields);
-        this.accessibility = accessibility | Accessibility.PUBLIC;
         this.abstract = isAbstract;
+        this.accessibility = accessibility | Accessibility.PUBLIC;
         this.functions = functions;
         if(functions)
             this.functions.forEach(f => f.parentClass = this);
+        this.genericId = id;
     }
 
     getIType(_context: Context) {

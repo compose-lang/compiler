@@ -53,6 +53,7 @@ import { AttributeParameterContext } from "./ComposeParser.ts";
 import { TypedParameterContext } from "./ComposeParser.ts";
 import { FunctionParameterContext } from "./ComposeParser.ts";
 import { Class_declarationContext } from "./ComposeParser.ts";
+import { Generic_refContext } from "./ComposeParser.ts";
 import { Member_function_declarationContext } from "./ComposeParser.ts";
 import { Struct_declarationContext } from "./ComposeParser.ts";
 import { AccessibilityContext } from "./ComposeParser.ts";
@@ -660,6 +661,16 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitClass_declaration?: (ctx: Class_declarationContext) => void;
+	/**
+	 * Enter a parse tree produced by `ComposeParser.generic_ref`.
+	 * @param ctx the parse tree
+	 */
+	enterGeneric_ref?: (ctx: Generic_refContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.generic_ref`.
+	 * @param ctx the parse tree
+	 */
+	exitGeneric_ref?: (ctx: Generic_refContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.member_function_declaration`.
 	 * @param ctx the parse tree

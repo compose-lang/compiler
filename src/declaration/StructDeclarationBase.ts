@@ -10,15 +10,16 @@ import StructTypeBase from "../type/StructTypeBase.ts";
 import {PackedType} from "../binaryen/binaryen_wasm.js";
 import { FieldType } from "../binaryen/binaryen_wasm.d.ts";
 import FieldList from "../builder/FieldList.ts";
+import GenericsId from "../builder/GenericsId.ts";
 
 export default abstract class StructDeclarationBase extends DeclarationBase implements IDeclaration {
 
     attributes: IdentifierList;
-    parents: IdentifierList;
+    parents: GenericsId[];
     fields: FieldList;
 
-    constructor(id: Identifier, attributes: IdentifierList, parents: IdentifierList, fields: FieldList) {
-        super(id);
+    constructor(id: GenericsId, attributes: IdentifierList, parents: GenericsId[], fields: FieldList) {
+        super(id.id);
         this.attributes = attributes;
         this.parents = parents;
         this.fields = fields;
@@ -31,9 +32,11 @@ export default abstract class StructDeclarationBase extends DeclarationBase impl
     abstract getIType(context: Context): StructTypeBase;
 
     hasParent(context: Context, parent: Identifier): boolean {
-        return this.parents.some(p => p.value == parent.value)
-            || this.parents.some(p => context.getRegisteredStructBase(p).hasParent(context, parent));
+        return this.parents.some(p => p.id.value == parent.value)
+            || this.parents.some(p => context.getRegisteredStructBase(p.id).hasParent(context, parent));
     }
+
+
 
     findMember(context: Context, memberId: Identifier): IClassMember {
         const name = memberId.value;
@@ -47,7 +50,7 @@ export default abstract class StructDeclarationBase extends DeclarationBase impl
             return this.findInheritedMember(context, memberId);
     }
 
-    getMemberIndex(context: Context, memberId: Identifier) {
+    getMemberIndex(_context: Context, memberId: Identifier) {
         const name = memberId.value;
         return this.attributes.findIndex(a => a.value == name);
     }
@@ -55,7 +58,7 @@ export default abstract class StructDeclarationBase extends DeclarationBase impl
 
     private findInheritedMember(context: Context, memberId: Identifier) {
         for(let i=0; i<this.parents.length; i++) {
-            const parent = context.getRegisteredStructBase(this.parents[i]);
+            const parent = context.getRegisteredStructBase(this.parents[i].id);
             assertTrue(parent);
             const member = parent.findMember(context, memberId);
             if(member)
@@ -78,7 +81,7 @@ export default abstract class StructDeclarationBase extends DeclarationBase impl
     private _collectParentFieldTypes(context: Context, fieldTypes: FieldType[], namesSet: Set<string>) {
         if (this.parents) {
             this.parents.forEach(parent => {
-                const decl = context.getRegisteredStructBase(parent);
+                const decl = context.getRegisteredStructBase(parent.id);
                 decl._collectFieldTypes(context, fieldTypes, namesSet);
             });
         }

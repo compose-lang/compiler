@@ -222,11 +222,15 @@ parameter:
     ;
 
 class_declaration:
-    accessibility? ABSTRACT? CLASS id = user_ref ( LPAR attribute_ref (COMMA attribute_ref)* RPAR )?
-            ( EXTENDS user_ref (COMMA user_ref)* )?
+    accessibility? ABSTRACT? CLASS id = generic_ref ( LPAR attribute_ref (COMMA attribute_ref)* RPAR )?
+            ( EXTENDS generic_ref (COMMA generic_ref)* )?
         LCURL
             (field_declaration | member_function_declaration)*
         RCURL
+    ;
+
+generic_ref:
+    user_ref ( LT generic_ref ( COMMA generic_ref )* GT )?
     ;
 
 member_function_declaration:

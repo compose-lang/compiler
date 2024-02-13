@@ -15,10 +15,20 @@ export default class Location {
     column: number;
 
     constructor(token: Token, isEnd = false) {
-        this.tokenIndex = token.tokenIndex;
-        this.line = token.line;
-        this.column = token.column;
-        if(isEnd && token.text)
-            this.column += token.text.length;
+        if(token) {
+            this.tokenIndex = token.tokenIndex;
+            this.line = token.line;
+            this.column = token.column;
+            if(isEnd && token.text)
+                this.column += token.text.length;
+        }
+    }
+
+    clone(): Location {
+        const location = new Location(null);
+        location.tokenIndex = this.tokenIndex;
+        location.line = this.line;
+        location.column = this.column;
+        return location;
     }
 }

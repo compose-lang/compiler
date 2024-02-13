@@ -9,14 +9,14 @@ import FieldList from "../builder/FieldList.ts";
 
 export default class StructDeclaration extends StructDeclarationBase implements IDeclaration {
 
-    getIType(context: Context) {
+    getIType(_context: Context) {
         return new StructType(this.id, this);
     }
     register(context: Context): void {
         context.registerStruct(this);
     }
 
-    check(context: Context): IType {
+    check(_context: Context): IType {
         // TODO this.attributes.forEach(a => a.check(context));
         // TODO this.parents.forEach(p => p.check)
         return new StructType(this.id, this);

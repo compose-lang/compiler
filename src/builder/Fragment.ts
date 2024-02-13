@@ -17,6 +17,16 @@ export default class Fragment {
     endLocation: Location;
     isBreakpoint: boolean;
 
+    clone(): Fragment {
+        const fragment = new Fragment();
+        fragment.url = this.url;
+        fragment.startLocation = this.startLocation.clone();
+        fragment.endLocation = this.endLocation.clone();
+        fragment.isBreakpoint = this.isBreakpoint;
+        return fragment;
+
+    }
+
     toString(): string {
         return "line " + this.startLocation.line + " in " + this.url.toString();
     }

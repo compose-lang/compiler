@@ -22,6 +22,7 @@ import FunctionBody from "../module/FunctionBody.ts";
 import { IntegerType, UInt32Type } from "./index.ts";
 import CompilationUnit from "../compiler/CompilationUnit.ts";
 import CharType from "./CharType.ts";
+import GenericsId from "../builder/GenericsId.ts";
 
 export default class ArrayType extends CollectionType {
     constructor(elementType: IType) {
@@ -78,7 +79,7 @@ export const unit = new CompilationUnit([], [], [], null, []);
 unit.url = new URL("file:///Users/ericvergnaud/Development/compose/compiler/runtime/core/Array.cots");
 
 const ClassDeclaration = (await import("../declaration/ClassDeclaration.ts")).default;
-const CHAR_ARRAY_CLASS_DECL = new ClassDeclaration(null, false, new Identifier("Array<char>"), null, null, null, null);
+const CHAR_ARRAY_CLASS_DECL = new ClassDeclaration(null, false, GenericsId.of(new Identifier("Array<char>")), null, null, null, null);
 let PUSH_CHAR_DECL: IFunctionDeclaration;
 
 import("../declaration/BuiltinFunctionDeclaration.ts")
