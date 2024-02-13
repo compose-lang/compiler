@@ -1,4 +1,4 @@
-import { readFileSync, statSync } from "../platform/deno/FileUtils.ts";
+import { readPathSync, statSync } from "../platform/deno/FileUtils.ts";
 import IWasmSource from "./IWasmSource.ts";
 
 export default class WasmFileSource implements IWasmSource {
@@ -18,7 +18,7 @@ export default class WasmFileSource implements IWasmSource {
     }
 
     compile(): WebAssembly.Module {
-        const bytes = readFileSync(this.path)
+        const bytes = readPathSync(this.path)
         return new WebAssembly.Module(bytes);
     }
 }
