@@ -2,20 +2,22 @@ import WasmTargetBase from "./WasmTargetBase.ts";
 import WasmFileSource from "../runner/WasmFileSource.ts";
 import { assertTrue } from "../../deps.ts";
 import { writeFileSync, openFileSync, closeFileSync, readPathSync } from "../platform/deno/FileUtils.ts";
+import {fileURLToPath} from "../platform/deno/URLUtils.ts";
 
 export default class WasmFileTarget extends WasmTargetBase {
 
-    targetPath: string;
+    targetURL: URL;
     file: Deno.FsFile;
 
-    constructor(targetPath: string) {
+    constructor(targetURL: URL) {
         super();
-        this.targetPath = targetPath;
+        this.targetURL = targetURL;
     }
 
     open(): void {
         assertTrue(!this.file);
-        this.file = openFileSync(this.targetPath, { write: true, create: true, truncate: true });
+        const path = fileURLToPath(this.targetURL.toString());
+        this.file = openFileSync(path, { write: true, create: true, truncate: true });
     }
 
     close(): void {
@@ -25,11 +27,12 @@ export default class WasmFileTarget extends WasmTargetBase {
     }
 
     asWasmBuffer(): Uint8Array {
-        return readPathSync(this.targetPath);
+        const path = fileURLToPath(this.targetURL.toString());
+        return readPathSync(path);
     }
 
     asWasmSource(): WasmFileSource {
-        return new WasmFileSource(this.targetPath);
+        return new WasmFileSource(this.targetURL);
     }
 
     writeUint8Array(uint8s: Uint8Array): void {
