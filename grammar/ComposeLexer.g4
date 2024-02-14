@@ -32,6 +32,7 @@ NATIVE: 'native';
 PUBLIC: 'public';
 PROTECTED: 'protected';
 PRIVATE: 'private';
+DECLARE: 'declare';
 
 READONLY: 'readonly';
 

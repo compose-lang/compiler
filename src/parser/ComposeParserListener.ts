@@ -59,6 +59,7 @@ import { Struct_declarationContext } from "./ComposeParser.ts";
 import { AccessibilityContext } from "./ComposeParser.ts";
 import { Field_declarationContext } from "./ComposeParser.ts";
 import { Function_declarationContext } from "./ComposeParser.ts";
+import { Declare_function_declarationContext } from "./ComposeParser.ts";
 import { Abstract_function_declarationContext } from "./ComposeParser.ts";
 import { Concrete_function_declarationContext } from "./ComposeParser.ts";
 import { Native_function_declarationContext } from "./ComposeParser.ts";
@@ -721,6 +722,16 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitFunction_declaration?: (ctx: Function_declarationContext) => void;
+	/**
+	 * Enter a parse tree produced by `ComposeParser.declare_function_declaration`.
+	 * @param ctx the parse tree
+	 */
+	enterDeclare_function_declaration?: (ctx: Declare_function_declarationContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.declare_function_declaration`.
+	 * @param ctx the parse tree
+	 */
+	exitDeclare_function_declaration?: (ctx: Declare_function_declarationContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.abstract_function_declaration`.
 	 * @param ctx the parse tree

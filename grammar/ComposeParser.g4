@@ -186,7 +186,7 @@ attribute_ref:
     ;
 
 user_type:
-    user_ref
+    user_ref ( LT value_type ( COMMA value_type )* GT )?
     ;
 
 user_ref:
@@ -252,9 +252,14 @@ field_declaration:
     ;
 
 function_declaration[boolean as_member]:
-    abstract_function_declaration[$as_member]
+    declare_function_declaration
+    | abstract_function_declaration[$as_member]
     | concrete_function_declaration[$as_member]
     | native_function_declaration[$as_member]
+    ;
+
+declare_function_declaration:
+    accessibility? DECLARE FUNCTION function_prototype[true] SEMI
     ;
 
 abstract_function_declaration[boolean as_member]:
