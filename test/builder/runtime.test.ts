@@ -23,7 +23,8 @@ Deno.test('parses Array class',  () => {
     const unitPath = __dirname + "/runtime/core/Array.cots";
     const unit = ComposeBuilder.parse_unit_stream(new FileStream(unitPath));
     assertTrue(unit);
-    assertEquals(unit.declarations.length, 1);
-    assertTrue(unit.declarations[0] instanceof ClassDeclaration);
-    assertEquals(unit.declarations[0].name, "Array");
+    assertEquals(unit.declarations.length, 2);
+    assertTrue(unit.declarations[1] instanceof ClassDeclaration);
+    assertEquals(unit.declarations[1].name, "Array");
 });
+

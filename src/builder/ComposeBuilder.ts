@@ -36,7 +36,7 @@ import ComposeParser, {
     Concrete_function_declarationContext,
     Decimal_typeContext,
     DecimalLiteralContext,
-    DeclarationContext,
+    DeclarationContext, Declare_function_declarationContext,
     Declare_instances_statementContext,
     Declare_oneContext, Do_while_statementContext, Embeddable_statementContext,
     Enum_declarationContext,
@@ -53,7 +53,7 @@ import ComposeParser, {
     Function_type_or_nullContext,
     Function_typeContext,
     FunctionParameterContext,
-    Generic_parameterContext, Generic_refContext,
+    Generic_parameterContext, Generic_refContext, Getter_function_delarationContext,
     Global_statementContext, I16_typeContext,
     I32_typeContext,
     I64_typeContext, I8_typeContext,
@@ -84,7 +84,7 @@ import ComposeParser, {
     Return_typeContext,
     Return_typesContext,
     Set_literalContext,
-    SetLiteralContext, SetTypeContext,
+    SetLiteralContext, Setter_function_delarationContext, SetTypeContext,
     SimpleCallExpressionContext,
     Standalone_statementContext,
     StatementContext,
@@ -202,6 +202,9 @@ import UInt16Type from "../type/UInt16Type.ts";
 import {MEMORY_BLOB_URL} from "../utils/Constants.ts";
 import WhileStatement from "../statement/WhileStatement.ts";
 import DoWhileStatement from "../statement/DoWhileStatement.ts";
+import DeclareFunctionDeclaration from "../declaration/DeclareFunctionDeclaration.ts";
+import GetterFunctionDeclaration from "../declaration/GetterFunctionDeclaration.ts";
+import SetterFunctionDeclaration from "../declaration/SetterFunctionDeclaration.ts";
 
 interface IndexedNode {
     __id?: number;
@@ -584,6 +587,12 @@ export default class ComposeBuilder extends ComposeParserListener {
         this.setNodeValue(ctx, new GenericParameter(id, constraint));
     }
 
+    exitDeclare_function_declaration = (ctx: Declare_function_declarationContext) => {
+        const accessibility = ComposeBuilder.readAccessibility(ctx.accessibility());
+        const proto = this.getNodeValue<Prototype>(ctx.function_prototype());
+        this.setNodeValue(ctx, new DeclareFunctionDeclaration(accessibility, proto));
+    }
+
     exitAbstract_function_declaration = (ctx: Abstract_function_declarationContext) => {
         const accessibility = ComposeBuilder.readAccessibility(ctx.accessibility());
         const proto = this.getNodeValue<Prototype>(ctx.function_prototype());
@@ -596,6 +605,29 @@ export default class ComposeBuilder extends ComposeParserListener {
         const proto = this.getNodeValue<Prototype>(ctx.function_prototype());
         const stmts = ctx.statement_list().flatMap(s => this.getNodeValue<IStatement>(s));
         this.setNodeValue(ctx, new ConcreteFunctionDeclaration(accessibility, isStatic, proto, StatementList.from(stmts)));
+    }
+
+    exitGetter_function_delaration = (ctx: Getter_function_delarationContext) => {
+        const accessibility = ComposeBuilder.readAccessibility(ctx.accessibility());
+        const id = this.getNodeValue<Identifier>(ctx.identifier());
+        const returnTypes = this.getNodeValue<TypeList>(ctx.return_types()) || [];
+        let returnType: IType = null;
+        if(returnTypes.length == 1)
+            returnType = returnTypes[0];
+        else if(returnTypes.length > 1)
+            returnType = new TupleType(returnTypes);
+        const proto = new Prototype(null, id, null, null, returnType);
+        const stmts = ctx.statement_list().flatMap(s => this.getNodeValue<IStatement>(s));
+        this.setNodeValue(ctx, new GetterFunctionDeclaration(accessibility, false, proto, StatementList.from(stmts)));
+    }
+
+    exitSetter_function_delaration = (ctx: Setter_function_delarationContext) => {
+        const accessibility = ComposeBuilder.readAccessibility(ctx.accessibility());
+        const id = this.getNodeValue<Identifier>(ctx.identifier());
+        const param = this.getNodeValue<IParameter>(ctx.parameter());
+        const proto = new Prototype( null, id, null, ParameterList.from([param]), VoidType.instance);
+        const stmts = ctx.statement_list().flatMap(s => this.getNodeValue<IStatement>(s));
+        this.setNodeValue(ctx, new SetterFunctionDeclaration(accessibility, false, proto, StatementList.from(stmts)));
     }
 
     exitNative_function_declaration = (ctx: Native_function_declarationContext) => {
@@ -631,6 +663,7 @@ export default class ComposeBuilder extends ComposeParserListener {
 
     exitCompilation_unit = (ctx: Compilation_unitContext) => {
         const imports = ctx.preamble().import_statement_list().map(stmt => this.getNodeValue<ImportStatement>(stmt));
+        // deno-lint-ignore no-explicit-any
         const all = ctx.compilation_atom_list().flatMap(child => this.getNodeValue<any>(child), this);
         const globals = all.filter(a => a instanceof StatementBase); // can't use reflection on interfaces
         const declarations = all.filter(a => a instanceof DeclarationBase); // can't use reflection on interfaces

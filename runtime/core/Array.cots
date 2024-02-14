@@ -1,3 +1,10 @@
+
+@Builtin
+declare function builtin_ArrayLength(value: Array<any>): u32;
+
 export default class Array<T> {
 
+    get length(): u32 {
+        return builtin_ArrayLength(this);
+    }
 }

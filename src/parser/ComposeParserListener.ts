@@ -60,6 +60,8 @@ import { AccessibilityContext } from "./ComposeParser.ts";
 import { Field_declarationContext } from "./ComposeParser.ts";
 import { Function_declarationContext } from "./ComposeParser.ts";
 import { Declare_function_declarationContext } from "./ComposeParser.ts";
+import { Getter_function_delarationContext } from "./ComposeParser.ts";
+import { Setter_function_delarationContext } from "./ComposeParser.ts";
 import { Abstract_function_declarationContext } from "./ComposeParser.ts";
 import { Concrete_function_declarationContext } from "./ComposeParser.ts";
 import { Native_function_declarationContext } from "./ComposeParser.ts";
@@ -732,6 +734,26 @@ export default class ComposeParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitDeclare_function_declaration?: (ctx: Declare_function_declarationContext) => void;
+	/**
+	 * Enter a parse tree produced by `ComposeParser.getter_function_delaration`.
+	 * @param ctx the parse tree
+	 */
+	enterGetter_function_delaration?: (ctx: Getter_function_delarationContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.getter_function_delaration`.
+	 * @param ctx the parse tree
+	 */
+	exitGetter_function_delaration?: (ctx: Getter_function_delarationContext) => void;
+	/**
+	 * Enter a parse tree produced by `ComposeParser.setter_function_delaration`.
+	 * @param ctx the parse tree
+	 */
+	enterSetter_function_delaration?: (ctx: Setter_function_delarationContext) => void;
+	/**
+	 * Exit a parse tree produced by `ComposeParser.setter_function_delaration`.
+	 * @param ctx the parse tree
+	 */
+	exitSetter_function_delaration?: (ctx: Setter_function_delarationContext) => void;
 	/**
 	 * Enter a parse tree produced by `ComposeParser.abstract_function_declaration`.
 	 * @param ctx the parse tree

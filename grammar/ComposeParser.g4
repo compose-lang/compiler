@@ -256,10 +256,20 @@ function_declaration[boolean as_member]:
     | abstract_function_declaration[$as_member]
     | concrete_function_declaration[$as_member]
     | native_function_declaration[$as_member]
+    | {$as_member}? getter_function_delaration
+    | {$as_member}? setter_function_delaration
     ;
 
 declare_function_declaration:
     accessibility? DECLARE FUNCTION function_prototype[true] SEMI
+    ;
+
+getter_function_delaration:
+    accessibility? GET identifier LPAR RPAR (COLON return_types) ? LCURL statement* RCURL
+    ;
+
+setter_function_delaration:
+    accessibility? SET identifier LPAR parameter RPAR ( COLON VOID ) LCURL statement* RCURL
     ;
 
 abstract_function_declaration[boolean as_member]:
